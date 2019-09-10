@@ -30,6 +30,7 @@
         {
             this.btnConnect = new System.Windows.Forms.Button();
             this.btnOpenAndNew = new System.Windows.Forms.Button();
+            this.BtnGetPartData = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnConnect
@@ -50,13 +51,24 @@
             this.btnOpenAndNew.TabIndex = 1;
             this.btnOpenAndNew.Text = "打开和创建";
             this.btnOpenAndNew.UseVisualStyleBackColor = true;
-            this.btnOpenAndNew.Click += new System.EventHandler(this.btnOpenAndNew_Click);
+            this.btnOpenAndNew.Click += new System.EventHandler(this.BtnOpenAndNew_Click);
+            // 
+            // BtnGetPartData
+            // 
+            this.BtnGetPartData.Location = new System.Drawing.Point(23, 119);
+            this.BtnGetPartData.Name = "BtnGetPartData";
+            this.BtnGetPartData.Size = new System.Drawing.Size(89, 31);
+            this.BtnGetPartData.TabIndex = 2;
+            this.BtnGetPartData.Text = "读取零件属性";
+            this.BtnGetPartData.UseVisualStyleBackColor = true;
+            this.BtnGetPartData.Click += new System.EventHandler(this.BtnGetPartData_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(430, 256);
+            this.Controls.Add(this.BtnGetPartData);
             this.Controls.Add(this.btnOpenAndNew);
             this.Controls.Add(this.btnConnect);
             this.Name = "Form1";
@@ -70,6 +82,7 @@
 
         private System.Windows.Forms.Button btnConnect;
         private System.Windows.Forms.Button btnOpenAndNew;
+        private System.Windows.Forms.Button BtnGetPartData;
     }
 }
 
