@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -32,7 +33,7 @@ namespace CSharpAndSolidWorks
             }
         }
 
-        private void btnOpenAndNew_Click(object sender, EventArgs e)
+        private void BtnOpenAndNew_Click(object sender, EventArgs e)
         {
             ISldWorks swApp = Utility.ConnectToSolidWorks();
 
@@ -78,6 +79,49 @@ namespace CSharpAndSolidWorks
 
                     swApp.SendMsgToUser("Open completed.");
                 }
+            }
+        }
+
+        private void BtnGetPartData_Click(object sender, EventArgs e)
+        {
+            //请先打开零件: ..\TemplateModel\clamp1.sldprt
+
+            ISldWorks swApp = Utility.ConnectToSolidWorks();
+
+            if (swApp != null)
+            {
+                ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc; //当前零件
+
+                //获取通用属性值
+                string project = swModel.GetCustomInfoValue("", "Project");
+
+                swModel.DeleteCustomInfo2("", "Qty"); //删除指定项
+                swModel.AddCustomInfo3("", "Qty", 30, "1"); //增加通用属性值
+
+                var ConfigNames = (string[])swModel.GetConfigurationNames(); //所有配置名称
+
+                Configuration swConfig = null;
+
+                foreach (var configName in ConfigNames)//遍历所有配置
+                {
+                    swConfig = (Configuration)swModel.GetConfigurationByName(configName);
+
+                    var manger = swModel.Extension.CustomPropertyManager[configName];
+                    //删除当前配置中的属性
+                    manger.Delete2("Code");
+                    //增加一个属性到些配置
+                    manger.Add3("Code", (int)swCustomInfoType_e.swCustomInfoText, "A-" + configName, (int)swCustomPropertyAddOption_e.swCustomPropertyReplaceValue);
+                    //获取此配置中的Code属性
+                    string tempCode = manger.Get("Code");
+                    //获取此配置中的Description属性
+
+                    var tempDesc = manger.Get("Description");
+                    Debug.Print("  Name of configuration  ---> " + configName + " Desc.=" + tempCode);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please open a part first.");
             }
         }
     }
