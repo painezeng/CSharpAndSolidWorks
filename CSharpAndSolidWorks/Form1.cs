@@ -124,5 +124,42 @@ namespace CSharpAndSolidWorks
                 MessageBox.Show("Please open a part first.");
             }
         }
+
+        private void Btn_ChangeDim_Click(object sender, EventArgs e)
+        {
+            //请先打开零件: ..\TemplateModel\clamp1.sldprt
+            ISldWorks swApp = Utility.ConnectToSolidWorks();
+
+            if (swApp != null)
+            {
+                //1.增加配置
+                ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
+                string NewConfigName = "NewConfig";
+                bool boolstatus = swModel.AddConfiguration2(NewConfigName, "", "", true, false, false, true, 256);
+
+                swModel.ShowConfiguration2(NewConfigName);
+
+                //2.增加特征(选择一条边，加圆角)
+                boolstatus = swModel.Extension.SelectByID2("", "EDGE", 3.75842546947069E-03, 3.66350829162911E-02, 1.23295158888936E-03, false, 1, null, 0);
+
+                Feature feature = swModel.FeatureManager.FeatureFillet3(195, 0.000508, 0.01, 0, 0, 0, 0, null, null, null, null, null, null, null);
+
+                //3.压缩特征
+
+                feature.Select(false);
+
+                swModel.EditSuppress();
+
+                //4.修改尺寸
+                swModel.Parameter("D1@Fillet8").SystemValue = 0.000254; //0.001英寸
+
+                swModel.EditRebuild3();
+
+                //5.删除特征
+
+                feature.Select(false);
+                swModel.EditDelete();
+            }
+        }
     }
 }
