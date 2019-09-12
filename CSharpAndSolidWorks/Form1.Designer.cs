@@ -31,6 +31,7 @@
             this.btnConnect = new System.Windows.Forms.Button();
             this.btnOpenAndNew = new System.Windows.Forms.Button();
             this.BtnGetPartData = new System.Windows.Forms.Button();
+            this.Btn_ChangeDim = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnConnect
@@ -63,11 +64,23 @@
             this.BtnGetPartData.UseVisualStyleBackColor = true;
             this.BtnGetPartData.Click += new System.EventHandler(this.BtnGetPartData_Click);
             // 
+            // Btn_ChangeDim
+            // 
+            this.Btn_ChangeDim.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.Btn_ChangeDim.Location = new System.Drawing.Point(23, 170);
+            this.Btn_ChangeDim.Name = "Btn_ChangeDim";
+            this.Btn_ChangeDim.Size = new System.Drawing.Size(89, 29);
+            this.Btn_ChangeDim.TabIndex = 3;
+            this.Btn_ChangeDim.Text = "修改零件";
+            this.Btn_ChangeDim.UseVisualStyleBackColor = false;
+            this.Btn_ChangeDim.Click += new System.EventHandler(this.Btn_ChangeDim_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(430, 256);
+            this.Controls.Add(this.Btn_ChangeDim);
             this.Controls.Add(this.BtnGetPartData);
             this.Controls.Add(this.btnOpenAndNew);
             this.Controls.Add(this.btnConnect);
@@ -83,6 +96,7 @@
         private System.Windows.Forms.Button btnConnect;
         private System.Windows.Forms.Button btnOpenAndNew;
         private System.Windows.Forms.Button BtnGetPartData;
+        private System.Windows.Forms.Button Btn_ChangeDim;
     }
 }
 
