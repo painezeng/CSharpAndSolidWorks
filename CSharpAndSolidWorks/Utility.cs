@@ -46,5 +46,50 @@ namespace CSharpAndSolidWorks
                 return SwApp;
             }
         }
+
+        /// <summary>
+        /// 遍历特征
+        /// </summary>
+        /// <param name="thisFeat"></param>
+        /// <param name="isTopLevel"></param>
+        public static void TraverseFeatures(Feature thisFeat, bool isTopLevel)
+        {
+            Feature curFeat = default(Feature);
+            curFeat = thisFeat;
+
+            while ((curFeat != null))
+            {
+                //输出特征名称
+                Debug.Print(curFeat.Name);
+
+                Feature subfeat = default(Feature);
+                subfeat = (Feature)curFeat.GetFirstSubFeature();
+
+                while ((subfeat != null))
+                {
+                    TraverseFeatures(subfeat, false);
+                    Feature nextSubFeat = default(Feature);
+                    nextSubFeat = (Feature)subfeat.GetNextSubFeature();
+                    subfeat = nextSubFeat;
+                    nextSubFeat = null;
+                }
+
+                subfeat = null;
+
+                Feature nextFeat = default(Feature);
+
+                if (isTopLevel)
+                {
+                    nextFeat = (Feature)curFeat.GetNextFeature();
+                }
+                else
+                {
+                    nextFeat = null;
+                }
+
+                curFeat = nextFeat;
+                nextFeat = null;
+            }
+        }
     }
 }

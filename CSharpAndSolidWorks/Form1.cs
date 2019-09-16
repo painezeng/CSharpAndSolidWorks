@@ -161,5 +161,21 @@ namespace CSharpAndSolidWorks
                 swModel.EditDelete();
             }
         }
+
+        private void Btn_Traverse_Feature_Click(object sender, EventArgs e)
+        {
+            ISldWorks swApp = Utility.ConnectToSolidWorks();
+
+            if (swApp != null)
+            {
+                ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
+
+                //第一个特征
+                Feature swFeat = (Feature)swModel.FirstFeature();
+
+                //遍历
+                Utility.TraverseFeatures(swFeat, true);
+            }
+        }
     }
 }

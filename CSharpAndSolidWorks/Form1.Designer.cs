@@ -32,15 +32,17 @@
             this.btnOpenAndNew = new System.Windows.Forms.Button();
             this.BtnGetPartData = new System.Windows.Forms.Button();
             this.Btn_ChangeDim = new System.Windows.Forms.Button();
+            this.Btn_Traverse_Feature = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnConnect
             // 
             this.btnConnect.Location = new System.Drawing.Point(23, 28);
             this.btnConnect.Name = "btnConnect";
-            this.btnConnect.Size = new System.Drawing.Size(89, 31);
+            this.btnConnect.Size = new System.Drawing.Size(102, 31);
             this.btnConnect.TabIndex = 0;
-            this.btnConnect.Text = "测试连接";
+            this.btnConnect.Text = "1.测试连接";
+            this.btnConnect.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnConnect.UseVisualStyleBackColor = true;
             this.btnConnect.Click += new System.EventHandler(this.BtnConnect_Click);
             // 
@@ -48,9 +50,10 @@
             // 
             this.btnOpenAndNew.Location = new System.Drawing.Point(23, 74);
             this.btnOpenAndNew.Name = "btnOpenAndNew";
-            this.btnOpenAndNew.Size = new System.Drawing.Size(89, 30);
+            this.btnOpenAndNew.Size = new System.Drawing.Size(102, 30);
             this.btnOpenAndNew.TabIndex = 1;
-            this.btnOpenAndNew.Text = "打开和创建";
+            this.btnOpenAndNew.Text = "2.打开和创建";
+            this.btnOpenAndNew.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnOpenAndNew.UseVisualStyleBackColor = true;
             this.btnOpenAndNew.Click += new System.EventHandler(this.BtnOpenAndNew_Click);
             // 
@@ -58,28 +61,42 @@
             // 
             this.BtnGetPartData.Location = new System.Drawing.Point(23, 119);
             this.BtnGetPartData.Name = "BtnGetPartData";
-            this.BtnGetPartData.Size = new System.Drawing.Size(89, 31);
+            this.BtnGetPartData.Size = new System.Drawing.Size(102, 31);
             this.BtnGetPartData.TabIndex = 2;
-            this.BtnGetPartData.Text = "读取零件属性";
+            this.BtnGetPartData.Text = "3.读取零件属性";
+            this.BtnGetPartData.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BtnGetPartData.UseVisualStyleBackColor = true;
             this.BtnGetPartData.Click += new System.EventHandler(this.BtnGetPartData_Click);
             // 
             // Btn_ChangeDim
             // 
-            this.Btn_ChangeDim.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.Btn_ChangeDim.BackColor = System.Drawing.SystemColors.Control;
             this.Btn_ChangeDim.Location = new System.Drawing.Point(23, 170);
             this.Btn_ChangeDim.Name = "Btn_ChangeDim";
-            this.Btn_ChangeDim.Size = new System.Drawing.Size(89, 29);
+            this.Btn_ChangeDim.Size = new System.Drawing.Size(102, 29);
             this.Btn_ChangeDim.TabIndex = 3;
-            this.Btn_ChangeDim.Text = "修改零件";
+            this.Btn_ChangeDim.Text = "4.修改零件";
+            this.Btn_ChangeDim.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Btn_ChangeDim.UseVisualStyleBackColor = false;
             this.Btn_ChangeDim.Click += new System.EventHandler(this.Btn_ChangeDim_Click);
+            // 
+            // Btn_Traverse_Feature
+            // 
+            this.Btn_Traverse_Feature.Location = new System.Drawing.Point(23, 215);
+            this.Btn_Traverse_Feature.Name = "Btn_Traverse_Feature";
+            this.Btn_Traverse_Feature.Size = new System.Drawing.Size(102, 29);
+            this.Btn_Traverse_Feature.TabIndex = 4;
+            this.Btn_Traverse_Feature.Text = "5.遍历零件特征";
+            this.Btn_Traverse_Feature.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Btn_Traverse_Feature.UseVisualStyleBackColor = true;
+            this.Btn_Traverse_Feature.Click += new System.EventHandler(this.Btn_Traverse_Feature_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(430, 256);
+            this.Controls.Add(this.Btn_Traverse_Feature);
             this.Controls.Add(this.Btn_ChangeDim);
             this.Controls.Add(this.BtnGetPartData);
             this.Controls.Add(this.btnOpenAndNew);
@@ -97,6 +114,7 @@
         private System.Windows.Forms.Button btnOpenAndNew;
         private System.Windows.Forms.Button BtnGetPartData;
         private System.Windows.Forms.Button Btn_ChangeDim;
+        private System.Windows.Forms.Button Btn_Traverse_Feature;
     }
 }
 
