@@ -177,5 +177,22 @@ namespace CSharpAndSolidWorks
                 Utility.TraverseFeatures(swFeat, true);
             }
         }
+
+        private void Btn_Traverse_Comp_Click(object sender, EventArgs e)
+        {
+            ISldWorks swApp = Utility.ConnectToSolidWorks();
+
+            if (swApp != null)
+            {
+                ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
+
+                Configuration swConf = swModel.GetActiveConfiguration();
+
+                Component2 swRootComp = swConf.GetRootComponent();
+
+                //遍历
+                Utility.TraverseCompXform(swRootComp, 0);
+            }
+        }
     }
 }

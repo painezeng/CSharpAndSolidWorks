@@ -91,5 +91,71 @@ namespace CSharpAndSolidWorks
                 nextFeat = null;
             }
         }
+
+        /// <summary>
+        /// 遍历装配体零件
+        /// </summary>
+        /// <param name="swComp"></param>
+        /// <param name="nLevel"></param>
+        public static void TraverseCompXform(Component2 swComp, long nLevel)
+        {
+            object[] vChild;
+            Component2 swChildComp;
+            string sPadStr = "";
+            MathTransform swCompXform;
+            //  object vXform;
+            long i;
+
+            for (i = 0; i < nLevel; i++)
+            {
+                sPadStr = sPadStr + "  ";
+            }
+            swCompXform = swComp.Transform2;
+            if (swCompXform != null)
+            {
+                ModelDoc2 swModel;
+                swModel = (ModelDoc2)swComp.GetModelDoc2();
+
+                try
+                {
+                    //子零件文件名
+                    //Debug.Print(sPadStr + swComp.Name2);
+
+                    if (swComp.GetSelectByIDString() == "")
+                    {
+                        //选择id
+                        //Debug.Print(swComp.GetSelectByIDString());
+                    }
+                    else
+                    {
+                    }
+                }
+                catch
+                {
+                }
+                if (swModel != null)
+                {
+                    Debug.Print("Loading:" + swComp.Name2);
+                    //获取零件的一些信息，如属性，名字路径。
+                    string tempPartNum = swModel.get_CustomInfo2(swComp.ReferencedConfiguration, "PartNum");
+                    string tempName2 = swComp.Name2;
+                    string tempName = swModel.GetPathName();
+                    string tempConfigName = swComp.ReferencedConfiguration;
+                    string tempComponentRef = swComp.ComponentReference;
+                }
+            }
+            else
+            {
+                ModelDoc2 swModel;
+                swModel = (ModelDoc2)swComp.GetModelDoc2();
+            }
+
+            vChild = (object[])swComp.GetChildren();
+            for (i = 0; i <= (vChild.Length - 1); i++)
+            {
+                swChildComp = (Component2)vChild[i];
+                TraverseCompXform(swChildComp, nLevel + 1);
+            }
+        }
     }
 }
