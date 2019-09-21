@@ -34,13 +34,14 @@
             this.Btn_ChangeDim = new System.Windows.Forms.Button();
             this.Btn_Traverse_Feature = new System.Windows.Forms.Button();
             this.Btn_Traverse_Comp = new System.Windows.Forms.Button();
+            this.btn_Traverse_Drawing = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnConnect
             // 
             this.btnConnect.Location = new System.Drawing.Point(12, 12);
             this.btnConnect.Name = "btnConnect";
-            this.btnConnect.Size = new System.Drawing.Size(102, 31);
+            this.btnConnect.Size = new System.Drawing.Size(112, 31);
             this.btnConnect.TabIndex = 0;
             this.btnConnect.Text = "1.连接SolidWorks";
             this.btnConnect.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -51,7 +52,7 @@
             // 
             this.btnOpenAndNew.Location = new System.Drawing.Point(12, 58);
             this.btnOpenAndNew.Name = "btnOpenAndNew";
-            this.btnOpenAndNew.Size = new System.Drawing.Size(102, 30);
+            this.btnOpenAndNew.Size = new System.Drawing.Size(112, 30);
             this.btnOpenAndNew.TabIndex = 1;
             this.btnOpenAndNew.Text = "2.打开和创建";
             this.btnOpenAndNew.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -62,7 +63,7 @@
             // 
             this.BtnGetPartData.Location = new System.Drawing.Point(12, 103);
             this.BtnGetPartData.Name = "BtnGetPartData";
-            this.BtnGetPartData.Size = new System.Drawing.Size(102, 31);
+            this.BtnGetPartData.Size = new System.Drawing.Size(112, 31);
             this.BtnGetPartData.TabIndex = 2;
             this.BtnGetPartData.Text = "3.读取零件属性";
             this.BtnGetPartData.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -74,7 +75,7 @@
             this.Btn_ChangeDim.BackColor = System.Drawing.SystemColors.Control;
             this.Btn_ChangeDim.Location = new System.Drawing.Point(12, 154);
             this.Btn_ChangeDim.Name = "Btn_ChangeDim";
-            this.Btn_ChangeDim.Size = new System.Drawing.Size(102, 29);
+            this.Btn_ChangeDim.Size = new System.Drawing.Size(112, 29);
             this.Btn_ChangeDim.TabIndex = 3;
             this.Btn_ChangeDim.Text = "4.修改零件";
             this.Btn_ChangeDim.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -85,7 +86,7 @@
             // 
             this.Btn_Traverse_Feature.Location = new System.Drawing.Point(12, 199);
             this.Btn_Traverse_Feature.Name = "Btn_Traverse_Feature";
-            this.Btn_Traverse_Feature.Size = new System.Drawing.Size(102, 29);
+            this.Btn_Traverse_Feature.Size = new System.Drawing.Size(112, 29);
             this.Btn_Traverse_Feature.TabIndex = 4;
             this.Btn_Traverse_Feature.Text = "5.遍历零件特征";
             this.Btn_Traverse_Feature.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -96,17 +97,31 @@
             // 
             this.Btn_Traverse_Comp.Location = new System.Drawing.Point(135, 12);
             this.Btn_Traverse_Comp.Name = "Btn_Traverse_Comp";
-            this.Btn_Traverse_Comp.Size = new System.Drawing.Size(108, 31);
+            this.Btn_Traverse_Comp.Size = new System.Drawing.Size(122, 31);
             this.Btn_Traverse_Comp.TabIndex = 5;
             this.Btn_Traverse_Comp.Text = "6.遍历装配体";
+            this.Btn_Traverse_Comp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Btn_Traverse_Comp.UseVisualStyleBackColor = true;
             this.Btn_Traverse_Comp.Click += new System.EventHandler(this.Btn_Traverse_Comp_Click);
+            // 
+            // btn_Traverse_Drawing
+            // 
+            this.btn_Traverse_Drawing.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Traverse_Drawing.Location = new System.Drawing.Point(136, 58);
+            this.btn_Traverse_Drawing.Name = "btn_Traverse_Drawing";
+            this.btn_Traverse_Drawing.Size = new System.Drawing.Size(121, 30);
+            this.btn_Traverse_Drawing.TabIndex = 6;
+            this.btn_Traverse_Drawing.Text = "7.遍历视图与球标";
+            this.btn_Traverse_Drawing.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btn_Traverse_Drawing.UseVisualStyleBackColor = true;
+            this.btn_Traverse_Drawing.Click += new System.EventHandler(this.btn_Traverse_Drawing_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(430, 238);
+            this.Controls.Add(this.btn_Traverse_Drawing);
             this.Controls.Add(this.Btn_Traverse_Comp);
             this.Controls.Add(this.Btn_Traverse_Feature);
             this.Controls.Add(this.Btn_ChangeDim);
@@ -128,6 +143,7 @@
         private System.Windows.Forms.Button Btn_ChangeDim;
         private System.Windows.Forms.Button Btn_Traverse_Feature;
         private System.Windows.Forms.Button Btn_Traverse_Comp;
+        private System.Windows.Forms.Button btn_Traverse_Drawing;
     }
 }
 

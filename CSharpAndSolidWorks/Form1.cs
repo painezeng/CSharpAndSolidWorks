@@ -1,16 +1,10 @@
 ﻿using SolidWorks.Interop.sldworks;
 using SolidWorks.Interop.swconst;
-
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using View = SolidWorks.Interop.sldworks.View;
 
 namespace CSharpAndSolidWorks
 {
@@ -192,6 +186,90 @@ namespace CSharpAndSolidWorks
 
                 //遍历
                 Utility.TraverseCompXform(swRootComp, 0);
+            }
+        }
+
+        private void btn_Traverse_Drawing_Click(object sender, EventArgs e)
+        {
+            ISldWorks swApp = Utility.ConnectToSolidWorks();
+
+            if (swApp != null)
+            {
+                ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
+
+                DrawingDoc drawingDoc = (DrawingDoc)swModel;
+
+                //获取当前工程图中的所有图纸名称
+                var sheetNames = drawingDoc.GetSheetNames();
+
+                //遍历并找出包含k3 的工程图名称
+                string k3Name = "";
+                foreach (var kName in sheetNames)
+                {
+                    if (((String)kName).Contains("k3"))
+                    {
+                        k3Name = (String)kName;
+                    }
+                }
+                //切换图纸
+                bool bActSheet = drawingDoc.ActivateSheet(k3Name);
+
+                // 获取当前工程图对象
+                Sheet drwSheet = default(Sheet);
+                drwSheet = (Sheet)drawingDoc.GetCurrentSheet();
+
+                //获取所有的视图
+                object[] views = null;
+                views = (object[])drwSheet.GetViews();
+
+                foreach (object vView in views)
+                {
+                    var ss = (View)vView;
+                    Debug.Print(ss.GetName2());
+                }
+
+                //选中新的视图，移动位置。
+                bool boolstatus = swModel.Extension.SelectByID2("主视图1", "DRAWINGVIEW", 0, 0, 0, false, 0, null, 0);
+                //切换视图方向
+                swModel.ShowNamedView2("*Front", (int)swStandardViews_e.swFrontView);
+                //修改视图的名称
+                swModel.SelectedFeatureProperties(0, 0, 0, 0, 0, 0, 0, true, false, "主视图-1");
+
+                SelectionMgr modelSel = swModel.ISelectionManager;
+
+                //该视图对象
+                View actionView = (View)modelSel.GetSelectedObject5(1);
+
+                //位置 actionView.Position
+
+                //获取注释
+                var noteCount = actionView.GetNoteCount();
+
+                List<Note> AllNotes = new List<Note>();
+                if (noteCount > 0)
+                {
+                    Note note = (Note)actionView.GetFirstNote();
+
+                    Debug.Print(noteCount.ToString());
+                    // note.GetBalloonStyle
+                    Debug.Print(note.GetText());
+
+                    AllNotes.Add(note);
+
+                    var leaderInfo = note.GetLeaderInfo();
+
+                    for (int k = 0; k < noteCount - 1; k++)
+                    {
+                        note = (Note)note.GetNext();
+                        Debug.Print(note.GetText());
+
+                        AllNotes.Add(note);
+                    }
+
+                    swModel.EditRebuild3();
+
+                    swModel.EditDelete();
+                }
             }
         }
     }
