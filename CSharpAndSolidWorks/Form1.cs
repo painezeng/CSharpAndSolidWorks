@@ -276,8 +276,37 @@ namespace CSharpAndSolidWorks
         private void btn_InsertPart_Click(object sender, EventArgs e)
         {
             //step1:生成一个新装配并保存.
+            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            int errors = 0;
+            int warinings = 0;
+            if (swApp != null)
+            {
+                //通过GetDocumentTemplate 获取默认模板的路径 ,第一个参数可以指定类型
+                string partDefaultTemplate = swApp.GetDocumentTemplate((int)swDocumentTypes_e.swDocASSEMBLY, "", 0, 0, 0);
+                //也可以直接指定slddot asmdot drwdot
+                //partDefaultTemplate = @"xxx\..prtdot";
+
+                var newDoc = swApp.NewDocument(partDefaultTemplate, 0, 0, 0);
+
+                if (newDoc != null)
+                {
+                    //下面获取当前文件
+                    ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
+
+                    swModel.Extension.SaveAs(@"D:\09_Study\CSharpAndSolidWorks\CSharpAndSolidWorks\TemplateModel\TempAssembly.sldasm", 0, (int)swSaveAsOptions_e.swSaveAsOptions_Silent, "", ref errors, ref warinings);
+                }
+            }
+
             //step2:打开已有零件
+            string myNewPartPath = @"D:\09_Study\CSharpAndSolidWorks\CSharpAndSolidWorks\TemplateModel\clamp1.sldprt";
+            swApp.OpenDoc(myNewPartPath, (int)swDocumentTypes_e.swDocPART);
+
             //step3:切换到装配体中,利用面配合来装配零件.
+
+            AssemblyDoc assemblyDoc = swApp.ActivateDoc3("TempAssembly.sldasm", true, 0, errors);
+            swApp.ActivateDoc("TempAssembly.sldasm");
+
+            Component2 InsertedComponent = assemblyDoc.AddComponent5(myNewPartPath, 0, "", false, "", 0, 0, 0);
         }
     }
 }
