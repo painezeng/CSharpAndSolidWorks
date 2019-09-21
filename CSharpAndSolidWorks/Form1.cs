@@ -272,5 +272,12 @@ namespace CSharpAndSolidWorks
                 }
             }
         }
+
+        private void btn_InsertPart_Click(object sender, EventArgs e)
+        {
+            //step1:生成一个新装配并保存.
+            //step2:打开已有零件
+            //step3:切换到装配体中,利用面配合来装配零件.
+        }
     }
 }

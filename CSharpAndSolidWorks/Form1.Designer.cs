@@ -35,6 +35,9 @@
             this.Btn_Traverse_Feature = new System.Windows.Forms.Button();
             this.Btn_Traverse_Comp = new System.Windows.Forms.Button();
             this.btn_Traverse_Drawing = new System.Windows.Forms.Button();
+            this.btn_InsertPart = new System.Windows.Forms.Button();
+            this.btnExport = new System.Windows.Forms.Button();
+            this.btnInsertLibF = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnConnect
@@ -73,7 +76,7 @@
             // Btn_ChangeDim
             // 
             this.Btn_ChangeDim.BackColor = System.Drawing.SystemColors.Control;
-            this.Btn_ChangeDim.Location = new System.Drawing.Point(12, 154);
+            this.Btn_ChangeDim.Location = new System.Drawing.Point(12, 153);
             this.Btn_ChangeDim.Name = "Btn_ChangeDim";
             this.Btn_ChangeDim.Size = new System.Drawing.Size(112, 29);
             this.Btn_ChangeDim.TabIndex = 3;
@@ -116,11 +119,48 @@
             this.btn_Traverse_Drawing.UseVisualStyleBackColor = true;
             this.btn_Traverse_Drawing.Click += new System.EventHandler(this.btn_Traverse_Drawing_Click);
             // 
+            // btn_InsertPart
+            // 
+            this.btn_InsertPart.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_InsertPart.Location = new System.Drawing.Point(135, 103);
+            this.btn_InsertPart.Name = "btn_InsertPart";
+            this.btn_InsertPart.Size = new System.Drawing.Size(121, 30);
+            this.btn_InsertPart.TabIndex = 6;
+            this.btn_InsertPart.Text = "8.装配零件";
+            this.btn_InsertPart.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btn_InsertPart.UseVisualStyleBackColor = true;
+            this.btn_InsertPart.Click += new System.EventHandler(this.btn_InsertPart_Click);
+            // 
+            // btnExport
+            // 
+            this.btnExport.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnExport.Location = new System.Drawing.Point(136, 153);
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(121, 30);
+            this.btnExport.TabIndex = 6;
+            this.btnExport.Text = "9.导出x_t/Dwg";
+            this.btnExport.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnExport.UseVisualStyleBackColor = true;
+            // 
+            // btnInsertLibF
+            // 
+            this.btnInsertLibF.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnInsertLibF.Location = new System.Drawing.Point(135, 198);
+            this.btnInsertLibF.Name = "btnInsertLibF";
+            this.btnInsertLibF.Size = new System.Drawing.Size(121, 30);
+            this.btnInsertLibF.TabIndex = 6;
+            this.btnInsertLibF.Text = "10.插入库特征";
+            this.btnInsertLibF.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnInsertLibF.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(430, 238);
+            this.Controls.Add(this.btnInsertLibF);
+            this.Controls.Add(this.btnExport);
+            this.Controls.Add(this.btn_InsertPart);
             this.Controls.Add(this.btn_Traverse_Drawing);
             this.Controls.Add(this.Btn_Traverse_Comp);
             this.Controls.Add(this.Btn_Traverse_Feature);
@@ -144,6 +184,9 @@
         private System.Windows.Forms.Button Btn_Traverse_Feature;
         private System.Windows.Forms.Button Btn_Traverse_Comp;
         private System.Windows.Forms.Button btn_Traverse_Drawing;
+        private System.Windows.Forms.Button btn_InsertPart;
+        private System.Windows.Forms.Button btnExport;
+        private System.Windows.Forms.Button btnInsertLibF;
     }
 }
 
