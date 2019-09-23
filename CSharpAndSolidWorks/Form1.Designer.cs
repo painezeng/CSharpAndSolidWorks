@@ -141,6 +141,7 @@
             this.btnExport.Text = "9.导出x_t/Dwg";
             this.btnExport.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnExport.UseVisualStyleBackColor = true;
+            this.btnExport.Visible = false;
             // 
             // btnInsertLibF
             // 
@@ -152,6 +153,7 @@
             this.btnInsertLibF.Text = "10.插入库特征";
             this.btnInsertLibF.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnInsertLibF.UseVisualStyleBackColor = true;
+            this.btnInsertLibF.Visible = false;
             // 
             // Form1
             // 

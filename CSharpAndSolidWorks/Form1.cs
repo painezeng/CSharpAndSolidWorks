@@ -294,19 +294,54 @@ namespace CSharpAndSolidWorks
                     ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
 
                     swModel.Extension.SaveAs(@"D:\09_Study\CSharpAndSolidWorks\CSharpAndSolidWorks\TemplateModel\TempAssembly.sldasm", 0, (int)swSaveAsOptions_e.swSaveAsOptions_Silent, "", ref errors, ref warinings);
+
+                    //step2:打开已有零件
+                    string myNewPartPath = @"D:\09_Study\CSharpAndSolidWorks\CSharpAndSolidWorks\TemplateModel\clamp1.sldprt";
+                    swApp.OpenDoc(myNewPartPath, (int)swDocumentTypes_e.swDocPART);
+
+                    //step3:切换到装配体中,利用面配合来装配零件.
+
+                    AssemblyDoc assemblyDoc = swApp.ActivateDoc3("TempAssembly.sldasm", true, 0, errors);
+                    swApp.ActivateDoc("TempAssembly.sldasm");
+
+                    Component2 InsertedComponent = assemblyDoc.AddComponent5(myNewPartPath, 0, "", false, "", 0, 0, 0);
+
+                    InsertedComponent.Select(false);
+
+                    assemblyDoc.UnfixComponent();
+
+                    //step4: 配合:
+
+                    bool boolstatus = swModel.Extension.SelectByID2("Plane1", "PLANE", 0, 0, 0, false, 0, null, 0);
+
+                    boolstatus = swModel.Extension.SelectByID2("Front Plane@clamp1-1@TempAssembly", "PLANE", 0, 0, 0, true, 0, null, 0);
+                    int longstatus = 0;
+                    //重合
+                    assemblyDoc.AddMate5(0, 0, false, 0, 0.001, 0.001, 0.001, 0.001, 0, 0, 0, false, false, 0, out longstatus);
+
+                    swModel.EditRebuild3();
+                    swModel.ClearSelection();
+
+                    //距离 Todo:
+                    //boolstatus = swModel.Extension.SelectByID2("Plane2", "PLANE", 0, 0, 0, false, 0, null, 0);
+                    //boolstatus = swModel.Extension.SelectByID2("Top Plane@clamp1-1@TempAssembly", "PLANE", 0, 0, 0, true, 0, null, 0);
+                    //DistanceMateFeatureData distanceMateFeatureData = assemblyDoc.CreateMateData(5);
+                    //object[] EntitiesToMate = new object[2];
+
+                    //EntitiesToMate[0] = swModel.SelectionManager.GetSelectedObject6(1, -1);
+                    //EntitiesToMate[1] = swModel.SelectionManager.GetSelectedObject6(2, -1);
+
+                    //var EntitiesToMateVar = EntitiesToMate;
+
+                    //distanceMateFeatureData.EntitiesToMate = EntitiesToMateVar;
+
+                    //distanceMateFeatureData.MateAlignment = 0;
+
+                    //distanceMateFeatureData.FlipDimension = true;
+
+                    //assemblyDoc.CreateMate(distanceMateFeatureData);
                 }
             }
-
-            //step2:打开已有零件
-            string myNewPartPath = @"D:\09_Study\CSharpAndSolidWorks\CSharpAndSolidWorks\TemplateModel\clamp1.sldprt";
-            swApp.OpenDoc(myNewPartPath, (int)swDocumentTypes_e.swDocPART);
-
-            //step3:切换到装配体中,利用面配合来装配零件.
-
-            AssemblyDoc assemblyDoc = swApp.ActivateDoc3("TempAssembly.sldasm", true, 0, errors);
-            swApp.ActivateDoc("TempAssembly.sldasm");
-
-            Component2 InsertedComponent = assemblyDoc.AddComponent5(myNewPartPath, 0, "", false, "", 0, 0, 0);
         }
     }
 }
