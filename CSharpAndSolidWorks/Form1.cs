@@ -322,24 +322,11 @@ namespace CSharpAndSolidWorks
                     swModel.EditRebuild3();
                     swModel.ClearSelection();
 
-                    //距离 Todo:
-                    //boolstatus = swModel.Extension.SelectByID2("Plane2", "PLANE", 0, 0, 0, false, 0, null, 0);
-                    //boolstatus = swModel.Extension.SelectByID2("Top Plane@clamp1-1@TempAssembly", "PLANE", 0, 0, 0, true, 0, null, 0);
-                    //DistanceMateFeatureData distanceMateFeatureData = assemblyDoc.CreateMateData(5);
-                    //object[] EntitiesToMate = new object[2];
+                    //距离配合 :
+                    boolstatus = swModel.Extension.SelectByID2("Plane2", "PLANE", 0, 0, 0, false, 0, null, 0);
+                    boolstatus = swModel.Extension.SelectByID2("Top Plane@clamp1-1@TempAssembly", "PLANE", 0, 0, 0, true, 0, null, 0);
 
-                    //EntitiesToMate[0] = swModel.SelectionManager.GetSelectedObject6(1, -1);
-                    //EntitiesToMate[1] = swModel.SelectionManager.GetSelectedObject6(2, -1);
-
-                    //var EntitiesToMateVar = EntitiesToMate;
-
-                    //distanceMateFeatureData.EntitiesToMate = EntitiesToMateVar;
-
-                    //distanceMateFeatureData.MateAlignment = 0;
-
-                    //distanceMateFeatureData.FlipDimension = true;
-
-                    //assemblyDoc.CreateMate(distanceMateFeatureData);
+                    assemblyDoc.AddMate5((int)swMateType_e.swMateDISTANCE, (int)swMateAlign_e.swMateAlignALIGNED, true, 0.01, 0.01, 0.01, 0.01, 0.01, 0, 0, 0, false, false, 0, out longstatus);
                 }
             }
         }
