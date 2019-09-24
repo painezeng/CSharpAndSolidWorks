@@ -141,7 +141,7 @@
             this.btnExport.Text = "9.导出x_t/Dwg";
             this.btnExport.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnExport.UseVisualStyleBackColor = true;
-            this.btnExport.Visible = false;
+            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
             // btnInsertLibF
             // 

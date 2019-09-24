@@ -330,5 +330,45 @@ namespace CSharpAndSolidWorks
                 }
             }
         }
+
+        private void btnExport_Click(object sender, EventArgs e)
+        {
+            ISldWorks swApp = Utility.ConnectToSolidWorks();
+
+            if (swApp != null)
+            {
+                ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
+
+                if (swModel.GetType() == (int)swDocumentTypes_e.swDocPART || swModel.GetType() == (int)swDocumentTypes_e.swDocASSEMBLY)
+                {
+                    ModelDocExtension swModExt = (ModelDocExtension)swModel.Extension;
+
+                    int error = 0;
+
+                    int warnings = 0;
+
+                    //设置导出版本
+                    swApp.SetUserPreferenceIntegerValue((int)swUserPreferenceIntegerValue_e.swParasolidOutputVersion, (int)swParasolidOutputVersion_e.swParasolidOutputVersion_161);
+
+                    swModExt.SaveAs(@"C:\export.x_t", (int)swSaveAsVersion_e.swSaveAsCurrentVersion, (int)swSaveAsOptions_e.swSaveAsOptions_Silent, null, ref error, ref warnings);
+                }
+                else if (swModel.GetType() == (int)swDocumentTypes_e.swDocDRAWING)
+                {
+                    ModelDocExtension swModExt = (ModelDocExtension)swModel.Extension;
+
+                    int error = 0;
+
+                    int warnings = 0;
+
+                    //设置dxf 导出版本 R14
+                    swApp.SetUserPreferenceIntegerValue((int)swUserPreferenceIntegerValue_e.swDxfVersion, 2);
+
+                    //是否显示 草图
+                    swModel.SetUserPreferenceToggle(196, false);
+
+                    swModExt.SaveAs(@"C:\export.dxf", (int)swSaveAsVersion_e.swSaveAsCurrentVersion, (int)swSaveAsOptions_e.swSaveAsOptions_Silent, null, ref error, ref warnings);
+                }
+            }
+        }
     }
 }
