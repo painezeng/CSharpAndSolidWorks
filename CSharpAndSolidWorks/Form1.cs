@@ -3,6 +3,7 @@ using SolidWorks.Interop.swconst;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using View = SolidWorks.Interop.sldworks.View;
 
@@ -369,6 +370,155 @@ namespace CSharpAndSolidWorks
                     swModExt.SaveAs(@"C:\export.dxf", (int)swSaveAsVersion_e.swSaveAsCurrentVersion, (int)swSaveAsOptions_e.swSaveAsOptions_Silent, null, ref error, ref warnings);
                 }
             }
+        }
+
+        public DispatchWrapper[] ObjectArrayToDispatchWrapperArray(object[] Objects)
+        {
+            int ArraySize = 0;
+            ArraySize = Objects.GetUpperBound(0);
+            DispatchWrapper[] d = new DispatchWrapper[ArraySize + 1];
+            int ArrayIndex = 0;
+            for (ArrayIndex = 0; ArrayIndex <= ArraySize; ArrayIndex++)
+            {
+                d[ArrayIndex] = new DispatchWrapper(Objects[ArrayIndex]);
+            }
+            return d;
+        }
+
+        public DispatchWrapper[] LibRefs;
+
+        private void btnInsertLibF_Click(object sender, EventArgs e)
+        {
+            ISldWorks swApp = Utility.ConnectToSolidWorks();
+
+            //可以参考API帮助中的:Create Library Feature Data Object and Library Feature With References Example (C#)
+
+            //Step1:新建一个零件.
+            Feature swFeature = default(Feature);
+            ModelDoc2 swModel = default(ModelDoc2);
+            ModelDocExtension swModelDocExt = default(ModelDocExtension);
+            SketchManager swSketchManager = default(SketchManager);
+            SelectionMgr swSelectionManager = default(SelectionMgr);
+            FeatureManager swFeatureManager = default(FeatureManager);
+            LibraryFeatureData swLibFeat = default(LibraryFeatureData);
+            bool status = false;
+            object[] sketchLines = null;
+            object Refs = null;
+            object RefTypes = null;
+            int RefCount = 0;
+            int k = 0;
+            int i = 0;
+            DispatchWrapper[] LibRefs = null;
+
+            string libPath = "C:\\ProgramData\\SOLIDWORKS\\SOLIDWORKS 2018\\design library\\features\\metric\\slots\\straight slot.sldlfp";
+
+            // Create part
+            swModel = (ModelDoc2)swApp.NewDocument("C:\\ProgramData\\SolidWorks\\SOLIDWORKS 2018\\templates\\Part.prtdot", 0, 0, 0);
+            swModelDocExt = (ModelDocExtension)swModel.Extension;
+            status = swModelDocExt.SelectByID2("Top Plane", "PLANE", 0, 0, 0, false, 0, null, 0);
+            swModel.ClearSelection2(true);
+            status = swModelDocExt.SetUserPreferenceToggle((int)swUserPreferenceToggle_e.swSketchAddConstToRectEntity, (int)swUserPreferenceOption_e.swDetailingNoOptionSpecified, false);
+            status = swModelDocExt.SetUserPreferenceToggle((int)swUserPreferenceToggle_e.swSketchAddConstLineDiagonalType, (int)swUserPreferenceOption_e.swDetailingNoOptionSpecified, true);
+            swSketchManager = (SketchManager)swModel.SketchManager;
+            sketchLines = (object[])swSketchManager.CreateCornerRectangle(0, 0, 0, 1, 0.5, 0);
+            swModel.ShowNamedView2("*Trimetric", 8);
+            swModel.ClearSelection2(true);
+            status = swModelDocExt.SelectByID2("Line2", "SKETCHSEGMENT", 0, 0, 0, false, 0, null, 0);
+            status = swModelDocExt.SelectByID2("Line1", "SKETCHSEGMENT", 0, 0, 0, true, 0, null, 0);
+            status = swModelDocExt.SelectByID2("Line4", "SKETCHSEGMENT", 0, 0, 0, true, 0, null, 0);
+            status = swModelDocExt.SelectByID2("Line3", "SKETCHSEGMENT", 0, 0, 0, true, 0, null, 0);
+            swFeatureManager = (FeatureManager)swModel.FeatureManager;
+            swFeature = (Feature)swFeatureManager.FeatureExtrusion2(true, false, false, 0, 0, 0.01, 0.01, false, false, false,
+            false, 0.0174532925199433, 0.0174532925199433, false, false, false, false, true, true, true,
+            0, 0, false);
+            swSelectionManager = (SelectionMgr)swModel.SelectionManager;
+            swSelectionManager.EnableContourSelection = false;
+
+            swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            string actName = swModel.GetPathName();
+
+            #region 第一种方法
+
+            //Step2:初始化库特征
+            swLibFeat = (LibraryFeatureData)swFeatureManager.CreateDefinition((int)swFeatureNameID_e.swFmLibraryFeature);
+            status = swLibFeat.Initialize(libPath);
+
+            //step3:获取库特征需要的参考对象
+            RefCount = swLibFeat.GetReferencesCount();
+            Refs = (object[])swLibFeat.GetReferences2((int)swLibFeatureData_e.swLibFeatureData_FeatureRespect, out RefTypes);
+
+            if ((RefTypes != null))
+            {
+                Debug.Print("Types of references required (edge = 1): ");
+                int[] RefType = (int[])RefTypes;
+                for (k = RefType.GetLowerBound(0); k <= RefType.GetUpperBound(0); k++)
+                {
+                    Debug.Print("    " + RefType[k].ToString());
+                }
+            }
+            //setp4:设定库特征默认的配置名称
+            swLibFeat.ConfigurationName = "Default";
+            //setp5:选择一个面,并插入库特征
+            status = swModelDocExt.SelectByID2("", "FACE", 0.522458766456054, 0.288038964184011, 0.00999999999987722, false, 0, null, 0);
+            swFeature = (Feature)swFeatureManager.CreateFeature(swLibFeat);
+            //step6:
+            swLibFeat = null;
+            swLibFeat = (LibraryFeatureData)swFeature.GetDefinition();
+            status = swLibFeat.AccessSelections(swModel, null);
+
+            //step7:选择真实的参考
+            status = swModelDocExt.SelectByID2("", "EDGE", 0.960865149149924, 0.497807163546383, 0.0131011390528215, true, 0, null, 0);
+            status = swModelDocExt.SelectByID2("", "EDGE", 0.99866860703213, 0.481385806014544, 0.0113313929676906, true, 0, null, 0);
+            int selCount = 0;
+            selCount = swSelectionManager.GetSelectedObjectCount2(-1);
+
+            object[] selectedObjects = new object[selCount];
+
+            for (i = 0; i < selCount; i++)
+            {
+                object selectedObject = null;
+                selectedObject = (object)swSelectionManager.GetSelectedObject6(i + 1, -1);
+                selectedObjects[i] = selectedObject;
+            }
+
+            // 转换对象
+            LibRefs = (DispatchWrapper[])ObjectArrayToDispatchWrapperArray((selectedObjects));
+
+            // 设定引用关系到刚生成的库特征
+            swLibFeat.SetReferences(LibRefs);
+
+            // 更新库功能
+            status = swFeature.ModifyDefinition(swLibFeat, swModel, null);
+
+            // 取消抑制库功能
+            status = swModelDocExt.SelectByID2("straight slot<1>", "BODYFEATURE", 0, 0, 0, false, 0, null, 0);
+            swModel.EditUnsuppress2();
+
+            swModel.ClearSelection2(true);
+
+            #endregion 第一种方法
+
+            #region 第二种方法(已过时)
+
+            ////先选中线,再插入库特征.
+
+            ////要先打开库特征,然后切换到当前零件,选中参考特征,最后插入特征库
+
+            //int errors = 0;
+            //int warnings = 0;
+
+            //swApp.OpenDoc6(libPath, 1, 0, "", errors, warnings);
+
+            //swModel = swApp.ActivateDoc2(actName, true, errors);
+
+            //status = swModelDocExt.SelectByID2("", "FACE", 0.522458766456054, 0.288038964184011, 9.99999999987722E-03, false, 0, null, 0);
+            //status = swModelDocExt.SelectByID2("", "EDGE", 0.960865149149924, 0.497807163546383, 0.0131011390528215, true, 1, null, 0);
+            //status = swModelDocExt.SelectByID2("", "EDGE", 0.99866860703213, 0.481385806014544, 0.0113313929676906, true, 2, null, 0);
+
+            //swModel.InsertLibraryFeature(libPath);
+
+            #endregion 第二种方法(已过时)
         }
     }
 }

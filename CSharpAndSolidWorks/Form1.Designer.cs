@@ -153,7 +153,7 @@
             this.btnInsertLibF.Text = "10.插入库特征";
             this.btnInsertLibF.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnInsertLibF.UseVisualStyleBackColor = true;
-            this.btnInsertLibF.Visible = false;
+            this.btnInsertLibF.Click += new System.EventHandler(this.btnInsertLibF_Click);
             // 
             // Form1
             // 
