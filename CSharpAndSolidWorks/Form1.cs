@@ -9,9 +9,9 @@ using View = SolidWorks.Interop.sldworks.View;
 
 namespace CSharpAndSolidWorks
 {
-    public partial class Form1 : Form
+    public partial class Btn_Filter : Form
     {
-        public Form1()
+        public Btn_Filter()
         {
             InitializeComponent();
         }
@@ -519,6 +519,23 @@ namespace CSharpAndSolidWorks
             //swModel.InsertLibraryFeature(libPath);
 
             #endregion 第二种方法(已过时)
+        }
+
+        private void btnFilter_Click(object sender, EventArgs e)
+        {
+            ISldWorks swApp = Utility.ConnectToSolidWorks();
+
+            ModelDoc2 modelDoc2 = swApp.ActiveDoc;
+            //SelectionMgr selectionMgr = modelDoc2.SelectionManager;
+
+            //设置可选择类型的数组
+            swSelectType_e[] filters = new swSelectType_e[1];
+
+            //让用户只能选择实体
+
+            filters[0] = swSelectType_e.swSelSOLIDBODIES;
+
+            swApp.SetSelectionFilters(filters, true);
         }
     }
 }
