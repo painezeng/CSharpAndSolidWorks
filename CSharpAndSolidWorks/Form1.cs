@@ -537,5 +537,53 @@ namespace CSharpAndSolidWorks
 
             swApp.SetSelectionFilters(filters, true);
         }
+
+        private void btn_DeleteConstraints_Click(object sender, EventArgs e)
+        {
+            //请先打开clamp1这个零件
+
+            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            ModelDoc2 swModel = swApp.ActiveDoc;
+            SelectionMgr swSelMgr = swModel.SelectionManager;
+
+            //选择草图
+            swModel.Extension.SelectByID2("Sketch2", "SKETCH", 0, 0, 0, false, 4, null, 0);
+
+            //进入编辑草图
+            swModel.EditSketch();
+
+            //获取当前草图对象
+            Sketch swSketch = swModel.GetActiveSketch2();
+
+            //获取该草图中的所有线
+            object[] vSketchSeg = swSketch.GetSketchSegments();
+
+            //定义选择
+            SelectData swSelData = swSelMgr.CreateSelectData();
+
+            SketchSegment swSketchSeg;
+            //遍历线
+            for (int i = 0; i < vSketchSeg.Length; i++)
+            {
+                swSketchSeg = (SketchSegment)vSketchSeg[i];
+                swSketchSeg.Select4(false, swSelData);
+                //删除关系
+                swModel.SketchConstraintsDelAll();
+            }
+
+            object[] vSketchPt = (SketchPoint[])swSketch.GetSketchPoints2();
+            SketchPoint swSketchPt;
+            //遍历点
+            for (int i = 0; i < vSketchPt.Length; i++)
+            {
+                swSketchPt = (SketchPoint)vSketchPt[i];
+                swSketchPt.Select4(false, swSelData);
+                swModel.SketchConstraintsDelAll();
+            }
+            //退出编辑草图
+            swModel.InsertSketch2(true);
+
+            swModel.ClearSelection2(true);
+        }
     }
 }

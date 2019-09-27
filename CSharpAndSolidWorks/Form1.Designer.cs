@@ -39,6 +39,7 @@
             this.btnExport = new System.Windows.Forms.Button();
             this.btnInsertLibF = new System.Windows.Forms.Button();
             this.btnFilter = new System.Windows.Forms.Button();
+            this.btn_DeleteConstraints = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnConnect
@@ -167,11 +168,23 @@
             this.btnFilter.UseVisualStyleBackColor = true;
             this.btnFilter.Click += new System.EventHandler(this.btnFilter_Click);
             // 
+            // btn_DeleteConstraints
+            // 
+            this.btn_DeleteConstraints.Location = new System.Drawing.Point(268, 54);
+            this.btn_DeleteConstraints.Name = "btn_DeleteConstraints";
+            this.btn_DeleteConstraints.Size = new System.Drawing.Size(119, 28);
+            this.btn_DeleteConstraints.TabIndex = 8;
+            this.btn_DeleteConstraints.Text = "12.删除草图的关系";
+            this.btn_DeleteConstraints.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btn_DeleteConstraints.UseVisualStyleBackColor = true;
+            this.btn_DeleteConstraints.Click += new System.EventHandler(this.btn_DeleteConstraints_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(430, 220);
+            this.Controls.Add(this.btn_DeleteConstraints);
             this.Controls.Add(this.btnFilter);
             this.Controls.Add(this.btnInsertLibF);
             this.Controls.Add(this.btnExport);
@@ -203,6 +216,7 @@
         private System.Windows.Forms.Button btnExport;
         private System.Windows.Forms.Button btnInsertLibF;
         private System.Windows.Forms.Button btnFilter;
+        private System.Windows.Forms.Button btn_DeleteConstraints;
     }
 }
 
