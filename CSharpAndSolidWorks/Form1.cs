@@ -586,11 +586,25 @@ namespace CSharpAndSolidWorks
             swModel.ClearSelection2(true);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnSelectNamedFace_Click(object sender, EventArgs e)
         {
             ISldWorks swApp = Utility.ConnectToSolidWorks();
             ModelDoc2 swModel = swApp.ActiveDoc;
             SelectionMgr swSelMgr = swModel.SelectionManager;
+
+            #region 零件中选择
+
+            PartDoc part1 = (PartDoc)swModel;
+            //在零件中选择
+            Face2 face1 = part1.GetEntityByName("SFace1", (int)swSelectType_e.swSelFACES);
+            Entity entity1 = (Entity)face1;
+            entity1.Select(false);
+
+            #endregion 零件中选择
+
+            #region 装配中选择
+
+            //这里我们默认该零件已经是选中装配,否则我们需要遍历一次零件,仅做示例
 
             Component2 component = swSelMgr.GetSelectedObjectsComponent4(1, -1);
 
@@ -598,15 +612,19 @@ namespace CSharpAndSolidWorks
 
             ModelDoc2 modelDoc = component.GetModelDoc2();
 
+            //转换为PartDoc
             PartDoc part = (PartDoc)modelDoc;
 
             Face2 face = part.GetEntityByName("SFace1", (int)swSelectType_e.swSelFACES);
 
             Entity entity = (Entity)face;
 
+            //在装配中再转换成装配中的实体
             Entity entityInComp = (Entity)component.GetCorrespondingEntity(entity);
 
             entityInComp.Select(false);
+
+            #endregion 装配中选择
         }
     }
 }
