@@ -41,6 +41,7 @@
             this.btnFilter = new System.Windows.Forms.Button();
             this.btn_DeleteConstraints = new System.Windows.Forms.Button();
             this.btnSelectNamedFace = new System.Windows.Forms.Button();
+            this.Btn_T_sketchsegment = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnConnect
@@ -160,7 +161,7 @@
             // 
             // btnFilter
             // 
-            this.btnFilter.Location = new System.Drawing.Point(268, 12);
+            this.btnFilter.Location = new System.Drawing.Point(259, 13);
             this.btnFilter.Name = "btnFilter";
             this.btnFilter.Size = new System.Drawing.Size(118, 30);
             this.btnFilter.TabIndex = 7;
@@ -171,7 +172,7 @@
             // 
             // btn_DeleteConstraints
             // 
-            this.btn_DeleteConstraints.Location = new System.Drawing.Point(268, 59);
+            this.btn_DeleteConstraints.Location = new System.Drawing.Point(259, 60);
             this.btn_DeleteConstraints.Name = "btn_DeleteConstraints";
             this.btn_DeleteConstraints.Size = new System.Drawing.Size(118, 30);
             this.btn_DeleteConstraints.TabIndex = 8;
@@ -182,7 +183,7 @@
             // 
             // btnSelectNamedFace
             // 
-            this.btnSelectNamedFace.Location = new System.Drawing.Point(268, 103);
+            this.btnSelectNamedFace.Location = new System.Drawing.Point(259, 104);
             this.btnSelectNamedFace.Name = "btnSelectNamedFace";
             this.btnSelectNamedFace.Size = new System.Drawing.Size(118, 30);
             this.btnSelectNamedFace.TabIndex = 9;
@@ -191,11 +192,23 @@
             this.btnSelectNamedFace.UseVisualStyleBackColor = true;
             this.btnSelectNamedFace.Click += new System.EventHandler(this.btnSelectNamedFace_Click);
             // 
+            // Btn_T_sketchsegment
+            // 
+            this.Btn_T_sketchsegment.Location = new System.Drawing.Point(260, 154);
+            this.Btn_T_sketchsegment.Name = "Btn_T_sketchsegment";
+            this.Btn_T_sketchsegment.Size = new System.Drawing.Size(116, 30);
+            this.Btn_T_sketchsegment.TabIndex = 10;
+            this.Btn_T_sketchsegment.Text = "14.遍历草绘对象";
+            this.Btn_T_sketchsegment.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Btn_T_sketchsegment.UseVisualStyleBackColor = true;
+            this.Btn_T_sketchsegment.Click += new System.EventHandler(this.Btn_T_sketchsegment_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(430, 243);
+            this.Controls.Add(this.Btn_T_sketchsegment);
             this.Controls.Add(this.btnSelectNamedFace);
             this.Controls.Add(this.btn_DeleteConstraints);
             this.Controls.Add(this.btnFilter);
@@ -231,6 +244,7 @@
         private System.Windows.Forms.Button btnFilter;
         private System.Windows.Forms.Button btn_DeleteConstraints;
         private System.Windows.Forms.Button btnSelectNamedFace;
+        private System.Windows.Forms.Button Btn_T_sketchsegment;
     }
 }
 

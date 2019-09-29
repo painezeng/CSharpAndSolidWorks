@@ -626,5 +626,54 @@ namespace CSharpAndSolidWorks
 
             #endregion 装配中选择
         }
+
+        private void Btn_T_sketchsegment_Click(object sender, EventArgs e)
+        {
+            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            ModelDoc2 swModel = default(ModelDoc2);
+            ModelDocExtension swModelDocExt = default(ModelDocExtension);
+            SelectionMgr swSelMgr = default(SelectionMgr);
+            Annotation swAnnotation = default(Annotation);
+            double[] annotationPosition = null;
+            Feature swFeature = default(Feature);
+            DisplayDimension swDispDim = default(DisplayDimension);
+            string fileName = null;
+            int errors = 0;
+            int warnings = 0;
+            bool status = false;
+
+            //Open part document
+            fileName = "C:\\Users\\Public\\Documents\\SOLIDWORKS\\SOLIDWORKS 2018\\samples\\tutorial\\tolanalyst\\offset\\top_plate.sldprt";
+            swModel = (ModelDoc2)swApp.OpenDoc6(fileName, (int)swDocumentTypes_e.swDocPART, (int)swOpenDocOptions_e.swOpenDocOptions_Silent, "", ref errors, ref warnings);
+
+            //Get and edit sketch with dimensions
+            swModelDocExt = (ModelDocExtension)swModel.Extension;
+            status = swModelDocExt.SelectByID2("Sketch1", "SKETCH", 0, 0, 0, false, 0, null, 0);
+            swSelMgr = (SelectionMgr)swModel.SelectionManager;
+            swFeature = (Feature)swSelMgr.GetSelectedObject6(1, -1);
+            swModel.EditSketch();
+
+            //Get the first display dimension
+            swDispDim = (DisplayDimension)swFeature.GetFirstDisplayDimension();
+
+            //Iterate through all of the display dimension
+            //annotations in the sketch
+            while ((swDispDim != null))
+            {
+                Debug.Print("Display dimension annotation name:");
+                //Get the display dimension annotation
+                swAnnotation = (Annotation)swDispDim.GetAnnotation();
+                Debug.Print("  " + swAnnotation.GetName());
+                //Get the position of the display dimension annotation
+                annotationPosition = (double[])swAnnotation.GetPosition();
+                if ((annotationPosition != null))
+                {
+                    //Move the display dimension annotation 100mm to the right
+                    swAnnotation.SetPosition2(annotationPosition[0] + 0.1, annotationPosition[1], annotationPosition[2]);
+                }
+                //Get the next display dimension
+                swDispDim = (DisplayDimension)swFeature.GetNextDisplayDimension(swDispDim);
+            }
+        }
     }
 }
