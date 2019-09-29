@@ -40,13 +40,14 @@
             this.btnInsertLibF = new System.Windows.Forms.Button();
             this.btnFilter = new System.Windows.Forms.Button();
             this.btn_DeleteConstraints = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnConnect
             // 
-            this.btnConnect.Location = new System.Drawing.Point(12, 11);
+            this.btnConnect.Location = new System.Drawing.Point(12, 12);
             this.btnConnect.Name = "btnConnect";
-            this.btnConnect.Size = new System.Drawing.Size(112, 29);
+            this.btnConnect.Size = new System.Drawing.Size(112, 31);
             this.btnConnect.TabIndex = 0;
             this.btnConnect.Text = "1.连接SolidWorks";
             this.btnConnect.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -55,9 +56,9 @@
             // 
             // btnOpenAndNew
             // 
-            this.btnOpenAndNew.Location = new System.Drawing.Point(12, 54);
+            this.btnOpenAndNew.Location = new System.Drawing.Point(12, 59);
             this.btnOpenAndNew.Name = "btnOpenAndNew";
-            this.btnOpenAndNew.Size = new System.Drawing.Size(112, 28);
+            this.btnOpenAndNew.Size = new System.Drawing.Size(112, 30);
             this.btnOpenAndNew.TabIndex = 1;
             this.btnOpenAndNew.Text = "2.打开和创建";
             this.btnOpenAndNew.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -66,9 +67,9 @@
             // 
             // BtnGetPartData
             // 
-            this.BtnGetPartData.Location = new System.Drawing.Point(12, 95);
+            this.BtnGetPartData.Location = new System.Drawing.Point(12, 103);
             this.BtnGetPartData.Name = "BtnGetPartData";
-            this.BtnGetPartData.Size = new System.Drawing.Size(112, 29);
+            this.BtnGetPartData.Size = new System.Drawing.Size(112, 31);
             this.BtnGetPartData.TabIndex = 2;
             this.BtnGetPartData.Text = "3.读取零件属性";
             this.BtnGetPartData.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -78,9 +79,9 @@
             // Btn_ChangeDim
             // 
             this.Btn_ChangeDim.BackColor = System.Drawing.SystemColors.Control;
-            this.Btn_ChangeDim.Location = new System.Drawing.Point(12, 141);
+            this.Btn_ChangeDim.Location = new System.Drawing.Point(12, 153);
             this.Btn_ChangeDim.Name = "Btn_ChangeDim";
-            this.Btn_ChangeDim.Size = new System.Drawing.Size(112, 27);
+            this.Btn_ChangeDim.Size = new System.Drawing.Size(112, 29);
             this.Btn_ChangeDim.TabIndex = 3;
             this.Btn_ChangeDim.Text = "4.修改零件";
             this.Btn_ChangeDim.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -89,9 +90,9 @@
             // 
             // Btn_Traverse_Feature
             // 
-            this.Btn_Traverse_Feature.Location = new System.Drawing.Point(12, 184);
+            this.Btn_Traverse_Feature.Location = new System.Drawing.Point(12, 199);
             this.Btn_Traverse_Feature.Name = "Btn_Traverse_Feature";
-            this.Btn_Traverse_Feature.Size = new System.Drawing.Size(112, 27);
+            this.Btn_Traverse_Feature.Size = new System.Drawing.Size(112, 29);
             this.Btn_Traverse_Feature.TabIndex = 4;
             this.Btn_Traverse_Feature.Text = "5.遍历零件特征";
             this.Btn_Traverse_Feature.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -100,9 +101,9 @@
             // 
             // Btn_Traverse_Comp
             // 
-            this.Btn_Traverse_Comp.Location = new System.Drawing.Point(135, 11);
+            this.Btn_Traverse_Comp.Location = new System.Drawing.Point(135, 12);
             this.Btn_Traverse_Comp.Name = "Btn_Traverse_Comp";
-            this.Btn_Traverse_Comp.Size = new System.Drawing.Size(122, 29);
+            this.Btn_Traverse_Comp.Size = new System.Drawing.Size(122, 31);
             this.Btn_Traverse_Comp.TabIndex = 5;
             this.Btn_Traverse_Comp.Text = "6.遍历装配体";
             this.Btn_Traverse_Comp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -112,9 +113,9 @@
             // btn_Traverse_Drawing
             // 
             this.btn_Traverse_Drawing.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Traverse_Drawing.Location = new System.Drawing.Point(136, 54);
+            this.btn_Traverse_Drawing.Location = new System.Drawing.Point(136, 59);
             this.btn_Traverse_Drawing.Name = "btn_Traverse_Drawing";
-            this.btn_Traverse_Drawing.Size = new System.Drawing.Size(121, 28);
+            this.btn_Traverse_Drawing.Size = new System.Drawing.Size(121, 30);
             this.btn_Traverse_Drawing.TabIndex = 6;
             this.btn_Traverse_Drawing.Text = "7.遍历视图与球标";
             this.btn_Traverse_Drawing.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -124,9 +125,9 @@
             // btn_InsertPart
             // 
             this.btn_InsertPart.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_InsertPart.Location = new System.Drawing.Point(135, 95);
+            this.btn_InsertPart.Location = new System.Drawing.Point(135, 103);
             this.btn_InsertPart.Name = "btn_InsertPart";
-            this.btn_InsertPart.Size = new System.Drawing.Size(121, 28);
+            this.btn_InsertPart.Size = new System.Drawing.Size(121, 30);
             this.btn_InsertPart.TabIndex = 6;
             this.btn_InsertPart.Text = "8.装配零件";
             this.btn_InsertPart.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -136,9 +137,9 @@
             // btnExport
             // 
             this.btnExport.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnExport.Location = new System.Drawing.Point(136, 141);
+            this.btnExport.Location = new System.Drawing.Point(136, 153);
             this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(121, 28);
+            this.btnExport.Size = new System.Drawing.Size(121, 30);
             this.btnExport.TabIndex = 6;
             this.btnExport.Text = "9.导出x_t/Dwg";
             this.btnExport.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -148,9 +149,9 @@
             // btnInsertLibF
             // 
             this.btnInsertLibF.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnInsertLibF.Location = new System.Drawing.Point(135, 183);
+            this.btnInsertLibF.Location = new System.Drawing.Point(135, 198);
             this.btnInsertLibF.Name = "btnInsertLibF";
-            this.btnInsertLibF.Size = new System.Drawing.Size(121, 28);
+            this.btnInsertLibF.Size = new System.Drawing.Size(121, 30);
             this.btnInsertLibF.TabIndex = 6;
             this.btnInsertLibF.Text = "10.插入库特征";
             this.btnInsertLibF.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -159,9 +160,9 @@
             // 
             // btnFilter
             // 
-            this.btnFilter.Location = new System.Drawing.Point(268, 11);
+            this.btnFilter.Location = new System.Drawing.Point(268, 12);
             this.btnFilter.Name = "btnFilter";
-            this.btnFilter.Size = new System.Drawing.Size(119, 28);
+            this.btnFilter.Size = new System.Drawing.Size(119, 30);
             this.btnFilter.TabIndex = 7;
             this.btnFilter.Text = "11. 选择过滤";
             this.btnFilter.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -170,20 +171,32 @@
             // 
             // btn_DeleteConstraints
             // 
-            this.btn_DeleteConstraints.Location = new System.Drawing.Point(268, 54);
+            this.btn_DeleteConstraints.Location = new System.Drawing.Point(268, 59);
             this.btn_DeleteConstraints.Name = "btn_DeleteConstraints";
-            this.btn_DeleteConstraints.Size = new System.Drawing.Size(119, 28);
+            this.btn_DeleteConstraints.Size = new System.Drawing.Size(119, 30);
             this.btn_DeleteConstraints.TabIndex = 8;
             this.btn_DeleteConstraints.Text = "12.删除草图的关系";
             this.btn_DeleteConstraints.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btn_DeleteConstraints.UseVisualStyleBackColor = true;
             this.btn_DeleteConstraints.Click += new System.EventHandler(this.btn_DeleteConstraints_Click);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(268, 103);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(118, 30);
+            this.button1.TabIndex = 9;
+            this.button1.Text = "13.选择已命名的面";
+            this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Btn_Filter
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(430, 220);
+            this.ClientSize = new System.Drawing.Size(430, 238);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.btn_DeleteConstraints);
             this.Controls.Add(this.btnFilter);
             this.Controls.Add(this.btnInsertLibF);
@@ -217,6 +230,7 @@
         private System.Windows.Forms.Button btnInsertLibF;
         private System.Windows.Forms.Button btnFilter;
         private System.Windows.Forms.Button btn_DeleteConstraints;
+        private System.Windows.Forms.Button button1;
     }
 }
 

@@ -585,5 +585,28 @@ namespace CSharpAndSolidWorks
 
             swModel.ClearSelection2(true);
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            ModelDoc2 swModel = swApp.ActiveDoc;
+            SelectionMgr swSelMgr = swModel.SelectionManager;
+
+            Component2 component = swSelMgr.GetSelectedObjectsComponent4(1, -1);
+
+            swModel.ClearSelection();
+
+            ModelDoc2 modelDoc = component.GetModelDoc2();
+
+            PartDoc part = (PartDoc)modelDoc;
+
+            Face2 face = part.GetEntityByName("SFace1", (int)swSelectType_e.swSelFACES);
+
+            Entity entity = (Entity)face;
+
+            Entity entityInComp = (Entity)component.GetCorrespondingEntity(entity);
+
+            entityInComp.Select(false);
+        }
     }
 }
