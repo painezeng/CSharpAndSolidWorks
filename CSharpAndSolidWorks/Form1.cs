@@ -630,50 +630,48 @@ namespace CSharpAndSolidWorks
         private void Btn_T_sketchsegment_Click(object sender, EventArgs e)
         {
             ISldWorks swApp = Utility.ConnectToSolidWorks();
+
             ModelDoc2 swModel = default(ModelDoc2);
             ModelDocExtension swModelDocExt = default(ModelDocExtension);
             SelectionMgr swSelMgr = default(SelectionMgr);
-            Annotation swAnnotation = default(Annotation);
-            double[] annotationPosition = null;
             Feature swFeature = default(Feature);
-            DisplayDimension swDispDim = default(DisplayDimension);
             string fileName = null;
+            bool status = false;
             int errors = 0;
             int warnings = 0;
-            bool status = false;
 
-            //Open part document
+            //打开文件
             fileName = "C:\\Users\\Public\\Documents\\SOLIDWORKS\\SOLIDWORKS 2018\\samples\\tutorial\\tolanalyst\\offset\\top_plate.sldprt";
             swModel = (ModelDoc2)swApp.OpenDoc6(fileName, (int)swDocumentTypes_e.swDocPART, (int)swOpenDocOptions_e.swOpenDocOptions_Silent, "", ref errors, ref warnings);
 
-            //Get and edit sketch with dimensions
             swModelDocExt = (ModelDocExtension)swModel.Extension;
+
+            //选中草图
             status = swModelDocExt.SelectByID2("Sketch1", "SKETCH", 0, 0, 0, false, 0, null, 0);
+
             swSelMgr = (SelectionMgr)swModel.SelectionManager;
+            //转换
             swFeature = (Feature)swSelMgr.GetSelectedObject6(1, -1);
+            //进入编辑草图
             swModel.EditSketch();
+            //获取草图中的所有线
+            object[] vSketchSeg = (object[])swFeature.GetSpecificFeature2().GetSketchSegments();
 
-            //Get the first display dimension
-            swDispDim = (DisplayDimension)swFeature.GetFirstDisplayDimension();
-
-            //Iterate through all of the display dimension
-            //annotations in the sketch
-            while ((swDispDim != null))
+            SketchSegment swSketchSeg;
+            double totalLenth = 0;
+            foreach (var tempSeg in vSketchSeg)
             {
-                Debug.Print("Display dimension annotation name:");
-                //Get the display dimension annotation
-                swAnnotation = (Annotation)swDispDim.GetAnnotation();
-                Debug.Print("  " + swAnnotation.GetName());
-                //Get the position of the display dimension annotation
-                annotationPosition = (double[])swAnnotation.GetPosition();
-                if ((annotationPosition != null))
+                swSketchSeg = (SketchSegment)tempSeg;
+                //这里判断 不是文本,并且不是中心线 则加入长度
+                if (swSketchSeg.GetType() != (int)swSketchSegments_e.swSketchTEXT && swSketchSeg.ConstructionGeometry == false)
                 {
-                    //Move the display dimension annotation 100mm to the right
-                    swAnnotation.SetPosition2(annotationPosition[0] + 0.1, annotationPosition[1], annotationPosition[2]);
+                    totalLenth = totalLenth + swSketchSeg.GetLength();
                 }
-                //Get the next display dimension
-                swDispDim = (DisplayDimension)swFeature.GetNextDisplayDimension(swDispDim);
             }
+
+            swModel.EditSketch();
+            //显示总长
+            swApp.SendMsgToUser("Total Length:" + totalLenth * 1000);
         }
     }
 }
