@@ -677,7 +677,7 @@ namespace CSharpAndSolidWorks
             swApp.SendMsgToUser("Total Length:" + totalLenth * 1000);
         }
 
-        private ModelDoc2 m_RefDoc;
+        private ModelDoc2 m_RefDoc; //增加第三方数据流 共用模型.
 
         private void btn_ThridData_Click(object sender, EventArgs e)
         {
@@ -701,63 +701,6 @@ namespace CSharpAndSolidWorks
             }
 
             swModel.SetSaveFlag();
-
-            //IStream iStr = (IStream)swModel.IGet3rdPartyStorage("Tool.Name", true);
-
-            //using (ComStream comStr = new ComStream(iStr))
-            //{
-            //    byte[] data = Encoding.Unicode.GetBytes("Paine's Tool");
-            //    comStr.Write(data, 0, data.Length);
-            //}
-
-            //swModel.IRelease3rdPartyStorage("Tool.Name");
-
-            //
-
-            //swModelDocExt = (ModelDocExtension)swModel.Extension;
-
-            //IStream stream = (IStream)swModel.IGet3rdPartyStorage("Tool.Name", true);
-
-            //string toolName = @"Paine's Tool";
-            //byte[] bytes = Encoding.ASCII.GetBytes(toolName);
-
-            //IntPtr pcbWritten = Marshal.AllocHGlobal(sizeof(int)); //Create a pointer in C#
-
-            //stream.Write(bytes, bytes.Length, pcbWritten);
-
-            //int bytesWritten = Marshal.ReadInt32(pcbWritten); //Get the value pointed to by the pointer
-
-            //Marshal.FreeHGlobal(pcbWritten); //Release the memory allocated by the pointer
-
-            //swModel.IRelease3rdPartyStorage("Tool.Name");
-
-            #region Get
-
-            ////Get Third Data
-            //IStream streamLoad = swModel.IGet3rdPartyStorage("Tool.Name", false);
-            //int bufLength = 8192;
-            //byte[] buffer = new byte[bufLength];
-            //StringBuilder sb = new StringBuilder();
-            //IntPtr pcbRead = Marshal.AllocHGlobal(sizeof(int));
-            //bool finished = false;
-            //while (!finished)
-            //{
-            //    streamLoad.Read(buffer, bufLength, pcbRead);
-            //    int bytesReturned = Marshal.ReadInt32(pcbRead);
-            //    for (int i = 0; i < bytesReturned; i++)
-            //    {
-            //        sb.Append(Convert.ToChar(buffer[i]));
-            //    }
-            //    if (bytesReturned == 0)
-            //    {
-            //        finished = true;
-            //    }
-            //}
-            //swApp.SendMsgToUser2(sb.ToString(), (int)swMessageBoxIcon_e.swMbInformation, (int)swMessageBoxBtn_e.swMbOk);  //this example just displays the XML in a MessageBox
-            //Marshal.FreeHGlobal(pcbRead);
-            //swModel.IRelease3rdPartyStorage("Tool.Name");
-
-            #endregion Get
         }
 
         private int OnSaveToStorage()
