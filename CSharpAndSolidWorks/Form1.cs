@@ -681,6 +681,7 @@ namespace CSharpAndSolidWorks
 
         private void btn_ThridData_Click(object sender, EventArgs e)
         {
+            //https://www.codestack.net/solidworks-api/data-storage/third-party/embed-file/
             ISldWorks swApp = Utility.ConnectToSolidWorks();
 
             ModelDoc2 swModel = default(ModelDoc2);
@@ -701,6 +702,7 @@ namespace CSharpAndSolidWorks
             }
 
             swModel.SetSaveFlag();
+            swApp.SendMsgToUser("请手动保存文件!这样会把数据流写入文件中.");
         }
 
         private int OnSaveToStorage()
