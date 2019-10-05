@@ -3,7 +3,10 @@ using SolidWorks.Interop.swconst;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
+using System.Text;
 using System.Windows.Forms;
 using View = SolidWorks.Interop.sldworks.View;
 
@@ -672,6 +675,131 @@ namespace CSharpAndSolidWorks
             swModel.EditSketch();
             //显示总长
             swApp.SendMsgToUser("Total Length:" + totalLenth * 1000);
+        }
+
+        private ModelDoc2 m_RefDoc;
+
+        private void btn_ThridData_Click(object sender, EventArgs e)
+        {
+            ISldWorks swApp = Utility.ConnectToSolidWorks();
+
+            ModelDoc2 swModel = default(ModelDoc2);
+            ModelDocExtension swModelDocExt = default(ModelDocExtension);
+
+            swModel = swApp.ActiveDoc;
+            m_RefDoc = swModel;
+
+            switch (swModel.GetType())
+            {
+                case (int)swDocumentTypes_e.swDocPART:
+                    (swModel as PartDoc).SaveToStorageNotify += new DPartDocEvents_SaveToStorageNotifyEventHandler(OnSaveToStorage);
+                    break;
+
+                case (int)swDocumentTypes_e.swDocASSEMBLY:
+                    (swModel as AssemblyDoc).SaveToStorageNotify += new DAssemblyDocEvents_SaveToStorageNotifyEventHandler(OnSaveToStorage);
+                    break;
+            }
+
+            swModel.SetSaveFlag();
+
+            //IStream iStr = (IStream)swModel.IGet3rdPartyStorage("Tool.Name", true);
+
+            //using (ComStream comStr = new ComStream(iStr))
+            //{
+            //    byte[] data = Encoding.Unicode.GetBytes("Paine's Tool");
+            //    comStr.Write(data, 0, data.Length);
+            //}
+
+            //swModel.IRelease3rdPartyStorage("Tool.Name");
+
+            //
+
+            //swModelDocExt = (ModelDocExtension)swModel.Extension;
+
+            //IStream stream = (IStream)swModel.IGet3rdPartyStorage("Tool.Name", true);
+
+            //string toolName = @"Paine's Tool";
+            //byte[] bytes = Encoding.ASCII.GetBytes(toolName);
+
+            //IntPtr pcbWritten = Marshal.AllocHGlobal(sizeof(int)); //Create a pointer in C#
+
+            //stream.Write(bytes, bytes.Length, pcbWritten);
+
+            //int bytesWritten = Marshal.ReadInt32(pcbWritten); //Get the value pointed to by the pointer
+
+            //Marshal.FreeHGlobal(pcbWritten); //Release the memory allocated by the pointer
+
+            //swModel.IRelease3rdPartyStorage("Tool.Name");
+
+            #region Get
+
+            ////Get Third Data
+            //IStream streamLoad = swModel.IGet3rdPartyStorage("Tool.Name", false);
+            //int bufLength = 8192;
+            //byte[] buffer = new byte[bufLength];
+            //StringBuilder sb = new StringBuilder();
+            //IntPtr pcbRead = Marshal.AllocHGlobal(sizeof(int));
+            //bool finished = false;
+            //while (!finished)
+            //{
+            //    streamLoad.Read(buffer, bufLength, pcbRead);
+            //    int bytesReturned = Marshal.ReadInt32(pcbRead);
+            //    for (int i = 0; i < bytesReturned; i++)
+            //    {
+            //        sb.Append(Convert.ToChar(buffer[i]));
+            //    }
+            //    if (bytesReturned == 0)
+            //    {
+            //        finished = true;
+            //    }
+            //}
+            //swApp.SendMsgToUser2(sb.ToString(), (int)swMessageBoxIcon_e.swMbInformation, (int)swMessageBoxBtn_e.swMbOk);  //this example just displays the XML in a MessageBox
+            //Marshal.FreeHGlobal(pcbRead);
+            //swModel.IRelease3rdPartyStorage("Tool.Name");
+
+            #endregion Get
+        }
+
+        private int OnSaveToStorage()
+        {
+            IStream iStr = (IStream)m_RefDoc.IGet3rdPartyStorage("Tool.Name", true);
+
+            using (ComStream comStr = new ComStream(iStr))
+            {
+                byte[] data = Encoding.Unicode.GetBytes("Paine's Tool");
+                comStr.Write(data, 0, data.Length);
+            }
+
+            m_RefDoc.IRelease3rdPartyStorage("Tool.Name");
+
+            return 0;
+        }
+
+        private void btn_LoadThrid_Click(object sender, EventArgs e)
+        {
+            ISldWorks swApp = Utility.ConnectToSolidWorks();
+
+            // ModelDoc2 swModel = default(ModelDoc2);
+
+            IModelDoc2 doc = swApp.IActiveDoc2;
+            ISelectionMgr selMgr = doc.ISelectionManager;
+            //  IComponent2 comp = selMgr.GetSelectedObjectsComponent3(1, -1);
+
+            IStream iStr = (IStream)doc.IGet3rdPartyStorage("Tool.Name", false);
+
+            if (iStr != null)
+            {
+                using (ComStream comStr = new ComStream(iStr))
+                {
+                    byte[] data = new byte[comStr.Length];
+                    comStr.Read(data, 0, (int)comStr.Length);
+
+                    string strData = Encoding.Unicode.GetString(data);
+                    MessageBox.Show(strData);
+                }
+
+                doc.IRelease3rdPartyStorage("Tool.Name");
+            }
         }
     }
 }
