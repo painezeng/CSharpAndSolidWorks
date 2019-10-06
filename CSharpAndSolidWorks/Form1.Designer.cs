@@ -44,6 +44,7 @@
             this.Btn_T_sketchsegment = new System.Windows.Forms.Button();
             this.btn_ThridData = new System.Windows.Forms.Button();
             this.btn_LoadThrid = new System.Windows.Forms.Button();
+            this.btn_Tips = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnConnect
@@ -226,11 +227,23 @@
             this.btn_LoadThrid.UseVisualStyleBackColor = true;
             this.btn_LoadThrid.Click += new System.EventHandler(this.btn_LoadThrid_Click);
             // 
+            // btn_Tips
+            // 
+            this.btn_Tips.Location = new System.Drawing.Point(383, 54);
+            this.btn_Tips.Name = "btn_Tips";
+            this.btn_Tips.Size = new System.Drawing.Size(132, 29);
+            this.btn_Tips.TabIndex = 13;
+            this.btn_Tips.Text = "16.提示信息与进度条";
+            this.btn_Tips.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btn_Tips.UseVisualStyleBackColor = true;
+            this.btn_Tips.Click += new System.EventHandler(this.btn_Tips_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(527, 224);
+            this.Controls.Add(this.btn_Tips);
             this.Controls.Add(this.btn_LoadThrid);
             this.Controls.Add(this.btn_ThridData);
             this.Controls.Add(this.Btn_T_sketchsegment);
@@ -272,6 +285,7 @@
         private System.Windows.Forms.Button Btn_T_sketchsegment;
         private System.Windows.Forms.Button btn_ThridData;
         private System.Windows.Forms.Button btn_LoadThrid;
+        private System.Windows.Forms.Button btn_Tips;
     }
 }
 

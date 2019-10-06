@@ -746,5 +746,45 @@ namespace CSharpAndSolidWorks
                 doc.IRelease3rdPartyStorage("Tool.Name");
             }
         }
+
+        private void btn_Tips_Click(object sender, EventArgs e)
+        {
+            ISldWorks swApp = Utility.ConnectToSolidWorks();
+
+            ModelDoc2 swModel = default(ModelDoc2);
+            ModelDocExtension swModelDocExt = default(ModelDocExtension);
+
+            Frame swFrame = swApp.Frame();
+
+            swFrame.SetStatusBarText("这里是提示信息-->");
+
+            swApp.SendMsgToUser("下面提示显示进度条:");
+
+            UserProgressBar userProgressBar;
+
+            swApp.GetUserProgressBar(out userProgressBar);
+
+            userProgressBar.Start(0, 100, "Status");
+
+            int Position = 0;
+
+            for (int i = 0; i <= 100; i++)
+            {
+                Position = i * 10;
+
+                if (Position == 100)
+                {
+                    Position = 0;
+                    break;
+                }
+
+                var lRet = userProgressBar.UpdateProgress(Position);
+                userProgressBar.UpdateTitle("当前进度--->" + Position);
+
+                swApp.SendMsgToUser("当前进度--->" + Position);
+            }
+
+            userProgressBar.End();
+        }
     }
 }
