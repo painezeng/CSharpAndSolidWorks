@@ -786,5 +786,189 @@ namespace CSharpAndSolidWorks
 
             userProgressBar.End();
         }
+
+        #region 高级选择
+
+        private void btn_Adv_Select_Click(object sender, EventArgs e)
+        {
+            //请先打开C:\Users\Public\Documents\SOLIDWORKS\SOLIDWORKS 2018\samples\tutorial\api\landing_gear.sldasm
+
+            //参考资料为API 帮助中的 Use Advanced Component Selection Example (C#)
+
+            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            ModelDoc2 swModel = default(ModelDoc2);
+
+            swModel = swApp.ActiveDoc;
+
+            int DocType = 0;
+            DocType = swModel.GetType();
+
+            if (DocType != (int)swDocumentTypes_e.swDocASSEMBLY)
+            {
+                swApp.SendMsgToUser("当前不是装配体!");
+                return;
+            }
+
+            AdvancedSelectionCriteria advancedSelectionCriteria = default(AdvancedSelectionCriteria);
+
+            AssemblyDoc assemblyDoc = (AssemblyDoc)swModel;
+
+            advancedSelectionCriteria = assemblyDoc.GetAdvancedSelection();
+
+            int count = advancedSelectionCriteria.GetItemCount();
+
+            //清空选择条件
+            for (int i = 0; i < advancedSelectionCriteria.GetItemCount(); i++)
+            {
+                advancedSelectionCriteria.DeleteItem(i);
+            }
+
+            //增加选择条件 : 文件名包含lnk   具体的其它组合条件请看API帮助
+            advancedSelectionCriteria.AddItem("Document name -- SW Special", 16, "lnk", false);
+            //增加选择条件(或者) : 文件名包含hub
+            advancedSelectionCriteria.AddItem("Document name -- SW Special", 16, "hub", false);
+
+            //解释当前的选择条件
+            ReportAllValues(advancedSelectionCriteria);
+
+            //选择
+            var SelectSuccess = advancedSelectionCriteria.Select();
+
+            if (SelectSuccess == true)//选择成功
+            {
+                SelectionMgr selectionMgr = swModel.SelectionManager;
+                Component2 swComp;
+                //遍历已经选择的零件
+                for (int j = 0; j < selectionMgr.GetSelectedObjectCount(); j++)
+                {
+                    swComp = selectionMgr.GetSelectedObject6(j + 1, 0);
+
+                    swModel = swComp.GetModelDoc2();
+
+                    //显示文件名
+                    Debug.Print(swModel.GetPathName());
+                }
+            }
+        }
+
+        public string GetStringFromEnum(int EnumVal)
+        {
+            string functionReturnValue = null;
+            //From enum swAdvSelecType_e
+            if (EnumVal == 1)
+            {
+                functionReturnValue = "And";
+            }
+            else if (EnumVal == 2)
+            {
+                functionReturnValue = "Or";
+            }
+            else if (EnumVal == 16384)
+            {
+                functionReturnValue = "is yes";
+            }
+            else if (EnumVal == 32768)
+            {
+                functionReturnValue = "is no";
+            }
+            else if (EnumVal == 8)
+            {
+                functionReturnValue = "is not";
+            }
+            else if (EnumVal == 16)
+            {
+                functionReturnValue = "contains";
+            }
+            else if (EnumVal == 32)
+            {
+                functionReturnValue = "Is_Contained_By";
+            }
+            else if (EnumVal == 64)
+            {
+                functionReturnValue = "Interferes_With";
+            }
+            else if (EnumVal == 128)
+            {
+                functionReturnValue = "Does_Not_Interferes_With";
+            }
+            else if (EnumVal == 4)
+            {
+                functionReturnValue = "is (exactly)";
+            }
+            else if (EnumVal == 8192)
+            {
+                functionReturnValue = "not =";
+            }
+            else if (EnumVal == 512)
+            {
+                functionReturnValue = "<";
+            }
+            else if (EnumVal == 2048)
+            {
+                functionReturnValue = "<=";
+            }
+            else if (EnumVal == 4096)
+            {
+                functionReturnValue = "=";
+            }
+            else if (EnumVal == 1024)
+            {
+                functionReturnValue = ">=";
+            }
+            else if (EnumVal == 256)
+            {
+                functionReturnValue = ">";
+            }
+            else
+            {
+                functionReturnValue = "Condition NOT found";
+            }
+            return functionReturnValue;
+        }
+
+        public void ReportAllValues(AdvancedSelectionCriteria AdvancedSelectionCriteria)
+        {
+            Debug.Print("");
+
+            int Count = 0;
+            Count = AdvancedSelectionCriteria.GetItemCount();
+            Debug.Print("GetItemCount returned " + Count);
+
+            int i = 0;
+            string aProperty = "";
+            int Condition = 0;
+            string Value = "";
+            bool IsAnd = false;
+            int Rindex = 0;
+            string ConditionString = null;
+            string PrintString = null;
+
+            string IndexFmt = null;
+            string RindexFmt = null;
+            string AndOrFmt = null;
+            string PropertyFmt = null;
+            string ConditionFmt = null;
+            string ValueFmt = null;
+            IndexFmt = "!@@@@@@@@";
+            RindexFmt = "!@@@@@@@@@";
+            AndOrFmt = "!@@@@@@@@@";
+            PropertyFmt = "!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@";
+            ConditionFmt = "!@@@@@@@@@@@@@@@";
+            ValueFmt = "#.00";
+
+            //Debug.Print
+            PrintString = string.Format("Index", IndexFmt) + "     " + string.Format("Rindex", RindexFmt) + "  " + string.Format("And/Or", AndOrFmt) + "  " + string.Format("Property", PropertyFmt) + "                     " + string.Format("Condition", ConditionFmt) + "     " + string.Format("Value", ValueFmt);
+            Debug.Print(PrintString);
+            for (i = 0; i <= Count - 1; i++)
+            {
+                Rindex = AdvancedSelectionCriteria.GetItem(i, out aProperty, out Condition, out Value, out IsAnd);
+                ConditionString = GetStringFromEnum(Condition);
+                PrintString = string.Format(i.ToString(), IndexFmt) + "         " + string.Format(Rindex.ToString(), RindexFmt) + "       " + string.Format((IsAnd == false ? "OR" : "AND"), AndOrFmt) + "      " + string.Format(aProperty, PropertyFmt) + "  " + string.Format(ConditionString, ConditionFmt) + "  " + string.Format(Value, ValueFmt);
+                Debug.Print(PrintString);
+            }
+            Debug.Print("");
+        }
+
+        #endregion 高级选择
     }
 }
