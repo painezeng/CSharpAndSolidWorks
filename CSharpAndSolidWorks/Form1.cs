@@ -970,5 +970,43 @@ namespace CSharpAndSolidWorks
         }
 
         #endregion 高级选择
+
+        private void btnBounding_Click(object sender, EventArgs e)
+        {
+            //首先请打开一个零件.
+
+            ISldWorks swApp = Utility.ConnectToSolidWorks();
+
+            ModelDoc2 swModel = swApp.ActiveDoc;
+
+            FeatureManager featureManager = swModel.FeatureManager;
+
+            PartDoc partDoc = (PartDoc)swModel;
+            //通过特征名字获取特征
+            Feature feature = partDoc.FeatureByName("Bounding Box");
+            int longstatus;
+            if (feature == null)//特征为null时将创建Bounding Box
+
+            {
+                feature = featureManager.InsertGlobalBoundingBox((int)swGlobalBoundingBoxFitOptions_e.swBoundingBoxType_BestFit, true, false, out longstatus);
+            }
+
+            // 显示 Bounding Box sketch
+            var b = swModel.SetUserPreferenceToggle((int)swUserPreferenceToggle_e.swViewDispGlobalBBox, true);
+
+            //获取自动生成的属性值
+            string str;
+            string str2;
+            string str3;
+            string str4;
+            IConfiguration configuration = swModel.GetActiveConfiguration();
+            CustomPropertyManager manager2 = swModel.Extension.get_CustomPropertyManager(configuration.Name);
+
+            manager2.Get3("Total Bounding Box Length", true, out str, out str2);
+            manager2.Get3("Total Bounding Box Width", true, out str, out str3);
+            manager2.Get3("Total Bounding Box Thickness", true, out str, out str4);
+
+            swApp.SendMsgToUser($"size={str2}x{str3}x{str4}");
+        }
     }
 }

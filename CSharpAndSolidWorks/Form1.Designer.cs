@@ -46,6 +46,7 @@
             this.btn_LoadThrid = new System.Windows.Forms.Button();
             this.btn_Tips = new System.Windows.Forms.Button();
             this.btn_Adv_Select = new System.Windows.Forms.Button();
+            this.btnBounding = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnConnect
@@ -250,11 +251,23 @@
             this.btn_Adv_Select.UseVisualStyleBackColor = true;
             this.btn_Adv_Select.Click += new System.EventHandler(this.btn_Adv_Select_Click);
             // 
+            // btnBounding
+            // 
+            this.btnBounding.Location = new System.Drawing.Point(384, 154);
+            this.btnBounding.Name = "btnBounding";
+            this.btnBounding.Size = new System.Drawing.Size(131, 30);
+            this.btnBounding.TabIndex = 15;
+            this.btnBounding.Text = "18.包围盒";
+            this.btnBounding.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnBounding.UseVisualStyleBackColor = true;
+            this.btnBounding.Click += new System.EventHandler(this.btnBounding_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(527, 243);
+            this.Controls.Add(this.btnBounding);
             this.Controls.Add(this.btn_Adv_Select);
             this.Controls.Add(this.btn_Tips);
             this.Controls.Add(this.btn_LoadThrid);
@@ -300,6 +313,7 @@
         private System.Windows.Forms.Button btn_LoadThrid;
         private System.Windows.Forms.Button btn_Tips;
         private System.Windows.Forms.Button btn_Adv_Select;
+        private System.Windows.Forms.Button btnBounding;
     }
 }
 
