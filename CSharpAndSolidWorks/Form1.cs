@@ -1011,44 +1011,29 @@ namespace CSharpAndSolidWorks
 
         private void btn_Measure_Click(object sender, EventArgs e)
         {
-            #region
+            //请先打开../TemplateModel/Measure.SLDPRT  并选中保存的选择--SelMeasure
+            //
+            //返回指定草图中所有线的总长 请参考之前的遍历草图对象
 
-            //vb.net revison
-            //            Dim swModel As ModelDoc2
+            //下面的代码是获取零件的体积.
+            //可以参考API帮助 的实例 Measure Selected Entities Example (C#)
 
-            //        swApp = GetSW()
+            ISldWorks swApp = Utility.ConnectToSolidWorks();
 
-            //        swModel = swApp.ActiveDoc
+            ModelDoc2 swModel = swApp.ActiveDoc;
 
-            //        Dim theSketch As Sketch
-            //        theSketch = swModel.GetActiveSketch2
-            //        Dim vSketchSeg As Object
-            //        vSketchSeg = theSketch.GetSketchSegments
+            ModelDocExtension swModelDocExt = (ModelDocExtension)swModel.Extension;
 
-            //        Dim swSketchSeg As SketchSegment
+            Measure swMeasure = (Measure)swModelDocExt.CreateMeasure();
 
-            //again:
-            //            Dim swSelmgr As SelectionMgr
-            //        swSelmgr = swModel.SelectionManager
-            //        swModel.ClearSelection()
-            //        If Not IsNothing(vSketchSeg) Then
+            swMeasure.ArcOption = 0;
 
-            //            For k = 0 To UBound(vSketchSeg)
+            bool status = swMeasure.Calculate(null);
 
-            //                swSketchSeg = vSketchSeg(k)
-
-            //                If swSketchSeg.ConstructionGeometry = False Then swSketchSeg.SelectByMark(True, 0)
-
-            //            Next k
-            //        End If
-
-            //        Dim Measure As Measure = swModel.Extension.CreateMeasure
-
-            //        Measure.Calculate(Nothing)
-
-            //        GetActionHeaterLength = Measure.TotalLength * 1000
-
-            #endregion
+            if (status)
+            {
+                swApp.SendMsgToUser((swMeasure.Distance * 1000).ToString());
+            }
         }
     }
 }
