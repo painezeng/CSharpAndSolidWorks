@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Btn_Filter));
             this.btnConnect = new System.Windows.Forms.Button();
             this.btnOpenAndNew = new System.Windows.Forms.Button();
             this.BtnGetPartData = new System.Windows.Forms.Button();
@@ -47,6 +48,7 @@
             this.btn_Tips = new System.Windows.Forms.Button();
             this.btn_Adv_Select = new System.Windows.Forms.Button();
             this.btnBounding = new System.Windows.Forms.Button();
+            this.btn_Measure = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnConnect
@@ -262,11 +264,23 @@
             this.btnBounding.UseVisualStyleBackColor = true;
             this.btnBounding.Click += new System.EventHandler(this.btnBounding_Click);
             // 
+            // btn_Measure
+            // 
+            this.btn_Measure.Location = new System.Drawing.Point(383, 198);
+            this.btn_Measure.Name = "btn_Measure";
+            this.btn_Measure.Size = new System.Drawing.Size(132, 31);
+            this.btn_Measure.TabIndex = 16;
+            this.btn_Measure.Text = "19.通过测量获取数据";
+            this.btn_Measure.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btn_Measure.UseVisualStyleBackColor = true;
+            this.btn_Measure.Click += new System.EventHandler(this.btn_Measure_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(527, 243);
+            this.Controls.Add(this.btn_Measure);
             this.Controls.Add(this.btnBounding);
             this.Controls.Add(this.btn_Adv_Select);
             this.Controls.Add(this.btn_Tips);
@@ -286,6 +300,7 @@
             this.Controls.Add(this.BtnGetPartData);
             this.Controls.Add(this.btnOpenAndNew);
             this.Controls.Add(this.btnConnect);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Btn_Filter";
             this.Text = "Solidworks二次开发 API";
             this.TopMost = true;
@@ -314,6 +329,7 @@
         private System.Windows.Forms.Button btn_Tips;
         private System.Windows.Forms.Button btn_Adv_Select;
         private System.Windows.Forms.Button btnBounding;
+        private System.Windows.Forms.Button btn_Measure;
     }
 }
 

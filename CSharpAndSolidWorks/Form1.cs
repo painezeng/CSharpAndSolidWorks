@@ -1008,5 +1008,47 @@ namespace CSharpAndSolidWorks
 
             swApp.SendMsgToUser($"size={str2}x{str3}x{str4}");
         }
+
+        private void btn_Measure_Click(object sender, EventArgs e)
+        {
+            #region
+
+            //vb.net revison
+            //            Dim swModel As ModelDoc2
+
+            //        swApp = GetSW()
+
+            //        swModel = swApp.ActiveDoc
+
+            //        Dim theSketch As Sketch
+            //        theSketch = swModel.GetActiveSketch2
+            //        Dim vSketchSeg As Object
+            //        vSketchSeg = theSketch.GetSketchSegments
+
+            //        Dim swSketchSeg As SketchSegment
+
+            //again:
+            //            Dim swSelmgr As SelectionMgr
+            //        swSelmgr = swModel.SelectionManager
+            //        swModel.ClearSelection()
+            //        If Not IsNothing(vSketchSeg) Then
+
+            //            For k = 0 To UBound(vSketchSeg)
+
+            //                swSketchSeg = vSketchSeg(k)
+
+            //                If swSketchSeg.ConstructionGeometry = False Then swSketchSeg.SelectByMark(True, 0)
+
+            //            Next k
+            //        End If
+
+            //        Dim Measure As Measure = swModel.Extension.CreateMeasure
+
+            //        Measure.Calculate(Nothing)
+
+            //        GetActionHeaterLength = Measure.TotalLength * 1000
+
+            #endregion
+        }
     }
 }
