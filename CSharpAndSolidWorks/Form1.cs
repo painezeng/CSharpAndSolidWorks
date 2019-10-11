@@ -1035,5 +1035,37 @@ namespace CSharpAndSolidWorks
                 swApp.SendMsgToUser((swMeasure.Distance * 1000).ToString());
             }
         }
+
+        private void btn_GetMass_Click(object sender, EventArgs e)
+        {
+            // 获取质量属性可参考 Get Mass Properties of Visible and Hidden Components Example (C#)
+
+            ISldWorks swApp = Utility.ConnectToSolidWorks();
+
+            ModelDoc2 swModel = swApp.ActiveDoc;
+
+            ModelDocExtension swModelDocExt = (ModelDocExtension)swModel.Extension;
+
+            swModelDocExt.IncludeMassPropertiesOfHiddenBodies = false;
+            int massStatus = 0;
+
+            double[] massProperties = (double[])swModelDocExt.GetMassProperties(1, ref massStatus);
+            if ((massProperties != null))
+            {
+                Debug.Print(" CenterOfMassX = " + massProperties[0]);
+                Debug.Print(" CenterOfMassY = " + massProperties[1]);
+                Debug.Print(" CenterOfMassZ = " + massProperties[2]);
+                Debug.Print(" Volume = " + massProperties[3]);
+                Debug.Print(" Area = " + massProperties[4]);
+                Debug.Print(" Mass = " + massProperties[5]);
+                Debug.Print(" MomXX = " + massProperties[6]);
+                Debug.Print(" MomYY = " + massProperties[7]);
+                Debug.Print(" MomZZ = " + massProperties[8]);
+                Debug.Print(" MomXY = " + massProperties[9]);
+                Debug.Print(" MomZX = " + massProperties[10]);
+                Debug.Print(" MomYZ = " + massProperties[11]);
+            }
+            Debug.Print("-------------------------------");
+        }
     }
 }

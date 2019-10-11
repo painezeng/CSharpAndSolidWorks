@@ -285,6 +285,7 @@
             this.btn_GetMass.Text = "20.获取质量属性";
             this.btn_GetMass.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btn_GetMass.UseVisualStyleBackColor = true;
+            this.btn_GetMass.Click += new System.EventHandler(this.btn_GetMass_Click);
             // 
             // Btn_Filter
             // 
