@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpAndSolidWorks", "CSharpAndSolidWorks\CSharpAndSolidWorks.csproj", "{646B6723-C58E-40B1-BCA9-3817F73E5F88}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaineTool", "PaineTool\PaineTool.csproj", "{7ACEDAA9-2DE8-4485-837A-E7D58812A6DC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{646B6723-C58E-40B1-BCA9-3817F73E5F88}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{646B6723-C58E-40B1-BCA9-3817F73E5F88}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{646B6723-C58E-40B1-BCA9-3817F73E5F88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7ACEDAA9-2DE8-4485-837A-E7D58812A6DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7ACEDAA9-2DE8-4485-837A-E7D58812A6DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7ACEDAA9-2DE8-4485-837A-E7D58812A6DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7ACEDAA9-2DE8-4485-837A-E7D58812A6DC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
