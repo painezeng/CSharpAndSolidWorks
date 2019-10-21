@@ -1067,5 +1067,9 @@ namespace CSharpAndSolidWorks
             }
             Debug.Print("-------------------------------");
         }
+
+        private void btn_Pane_Click(object sender, EventArgs e)
+        {
+        }
     }
 }
