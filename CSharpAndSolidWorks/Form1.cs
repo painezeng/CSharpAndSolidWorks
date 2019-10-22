@@ -1,4 +1,5 @@
-﻿using SolidWorks.Interop.sldworks;
+﻿using CSharpAndSolidWorks.Properties;
+using SolidWorks.Interop.sldworks;
 using SolidWorks.Interop.swconst;
 using System;
 using System.Collections.Generic;
@@ -1068,8 +1069,54 @@ namespace CSharpAndSolidWorks
             Debug.Print("-------------------------------");
         }
 
+        private TaskpaneView taskpaneView;
+
         private void btn_Pane_Click(object sender, EventArgs e)
         {
+            //注意: 这里只是显示自己的窗体到solidworks中,目前还是走的exe的方式 .
+            //真正开发的时候应该在DLL中加入,这样速度会快很多.  exe读bom需要40s dll 只需要3秒左右.
+            //获取当前程序所在路径
+            string Dllpath = Path.GetDirectoryName(typeof(MyPane).Assembly.CodeBase).Replace(@"file:\", string.Empty);
+
+            var imagePath = Path.Combine(Dllpath, "bomlist.bmp");
+
+            ISldWorks swApp = Utility.ConnectToSolidWorks();
+
+            string toolTip;
+
+            toolTip = "BOM List";
+
+            //创建页面
+            if (taskpaneView != null)
+            {
+                taskpaneView.DeleteView();
+                Marshal.FinalReleaseComObject(taskpaneView);
+                taskpaneView = null;
+            }
+
+            taskpaneView = swApp.CreateTaskpaneView2(imagePath, toolTip);
+
+            MyPane myPane = new MyPane(swApp);
+
+            myPane.Dock = DockStyle.Fill;
+            // myPane.Show();
+
+            //在页面中显示窗体(嵌入)
+
+            taskpaneView.DisplayWindowFromHandlex64(myPane.Handle.ToInt64());
+        }
+
+        private void Btn_Filter_Load(object sender, EventArgs e)
+        {
+        }
+
+        private void Btn_Filter_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //删除新加的控件
+            // taskpaneView = null;
+            taskpaneView.DeleteView();
+            Marshal.FinalReleaseComObject(taskpaneView);
+            taskpaneView = null;
         }
     }
 }

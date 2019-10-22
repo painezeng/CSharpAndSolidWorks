@@ -294,7 +294,7 @@
             this.btn_Pane.Name = "btn_Pane";
             this.btn_Pane.Size = new System.Drawing.Size(141, 31);
             this.btn_Pane.TabIndex = 18;
-            this.btn_Pane.Text = "21. Pane创建页面";
+            this.btn_Pane.Text = "21. Pane页预览BOM";
             this.btn_Pane.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btn_Pane.UseVisualStyleBackColor = true;
             this.btn_Pane.Click += new System.EventHandler(this.btn_Pane_Click);
@@ -330,6 +330,8 @@
             this.Name = "Btn_Filter";
             this.Text = "Solidworks二次开发 API";
             this.TopMost = true;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Btn_Filter_FormClosing);
+            this.Load += new System.EventHandler(this.Btn_Filter_Load);
             this.ResumeLayout(false);
 
         }
