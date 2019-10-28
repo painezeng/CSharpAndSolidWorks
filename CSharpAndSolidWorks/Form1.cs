@@ -1112,11 +1112,43 @@ namespace CSharpAndSolidWorks
 
         private void Btn_Filter_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //删除新加的控件
-            // taskpaneView = null;
-            taskpaneView.DeleteView();
-            Marshal.FinalReleaseComObject(taskpaneView);
-            taskpaneView = null;
+            try
+            {
+                //删除新加的控件
+                // taskpaneView = null;
+                taskpaneView.DeleteView();
+                Marshal.FinalReleaseComObject(taskpaneView);
+                taskpaneView = null;
+            }
+            catch (Exception exception)
+            {
+            }
+        }
+
+        private void btn_SetMaterial_Click(object sender, EventArgs e)
+        {
+            ISldWorks swApp = Utility.ConnectToSolidWorks();
+
+            ModelDoc2 swModel = swApp.ActiveDoc;
+            ModelDocExtension swModelDocExt = (ModelDocExtension)swModel.Extension;
+            string swMateDB = "";
+            string tempMaterial = "";
+            //获取现有材质
+            tempMaterial = ((PartDoc)swModel).GetMaterialPropertyName2("", out swMateDB);
+
+            MessageBox.Show($"当前零件材质为 {swMateDB} 中的 {tempMaterial} ");
+
+            string configName = null;
+            string databaseName = null;
+            string newPropName = null;
+            configName = "默认";
+            databaseName = "SOLIDWORKS Materials";
+            newPropName = "Beech";
+            ((PartDoc)swModel).SetMaterialPropertyName2(configName, databaseName, newPropName);
+
+            tempMaterial = ((PartDoc)swModel).GetMaterialPropertyName2("", out swMateDB);
+
+            MessageBox.Show($"修改之后  当前零件材质为 {swMateDB} 中的 {tempMaterial} ");
         }
     }
 }
