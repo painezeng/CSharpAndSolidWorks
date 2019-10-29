@@ -1150,5 +1150,46 @@ namespace CSharpAndSolidWorks
 
             MessageBox.Show($"修改之后  当前零件材质为 {swMateDB} 中的 {tempMaterial} ");
         }
+
+        private void btnSetColor_Click(object sender, EventArgs e)
+        {
+            //首先选择一个面.  点击按钮,将修改为红色.
+
+            ISldWorks swApp = Utility.ConnectToSolidWorks();
+
+            ModelDoc2 swModel = swApp.ActiveDoc;
+
+            SelectionMgr selectionMgr = swModel.SelectionManager;
+            try
+            {
+                for (int i = 1; i <= selectionMgr.GetSelectedObjectCount(); i++)
+                {
+                    Face2 face2 = (Face2)selectionMgr.GetSelectedObject6(i, -1);
+                    var vFaceProp = swModel.MaterialPropertyValues;
+
+                    var vProps = face2.GetMaterialPropertyValues2(1, null);
+                    vProps[0] = 1;
+                    vProps[1] = 0;
+                    vProps[2] = 0;
+                    vProps[3] = vFaceProp[3];
+                    vProps[4] = vFaceProp[4];
+                    vProps[5] = vFaceProp[5];
+                    vProps[6] = vFaceProp[6];
+                    vProps[7] = vFaceProp[7];
+                    vProps[8] = vFaceProp[8];
+
+                    face2.SetMaterialPropertyValues2(vProps, 1, null);
+                    vProps = null;
+
+                    vFaceProp = null;
+                }
+
+                swModel.ClearSelection2(true);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("请选择面,其它类型无效!");
+            }
+        }
     }
 }
