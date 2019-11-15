@@ -1191,5 +1191,36 @@ namespace CSharpAndSolidWorks
                 MessageBox.Show("请选择面,其它类型无效!");
             }
         }
+
+        private void Btn_ReplacePart_Click(object sender, EventArgs e)
+        {
+            //首先打开 TempAssembly.sldasm
+            //运行后,程序会把装配体中的Clamp1零件替换成Clamp2
+
+            ISldWorks swApp = Utility.ConnectToSolidWorks();
+
+            ModelDoc2 swModel = swApp.ActiveDoc;
+
+            ModelDocExtension swModelDocExt = (ModelDocExtension)swModel.Extension;
+
+            SelectionMgr selectionMgr = swModel.SelectionManager;
+
+            AssemblyDoc assemblyDoc = (AssemblyDoc)swModel;
+
+            //替换为同目录下的clamp2
+            string ReplacePartPath = Path.GetDirectoryName(swModel.GetPathName()) + @"\clamp2.sldprt";
+
+            bool boolstatus;
+
+            //选择当前的clamp1
+            boolstatus = swModelDocExt.SelectByID2("clamp1-1@TempAssembly", "COMPONENT", 0, 0, 0, false, 0, null, 0);
+
+            boolstatus = assemblyDoc.ReplaceComponents2(ReplacePartPath, "", false, 0, true);
+
+            if (boolstatus == true)
+            {
+                MessageBox.Show("替换完成!");
+            }
+        }
     }
 }

@@ -53,6 +53,7 @@
             this.btn_Pane = new System.Windows.Forms.Button();
             this.btn_SetMaterial = new System.Windows.Forms.Button();
             this.btnSetColor = new System.Windows.Forms.Button();
+            this.Btn_ReplacePart = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnConnect
@@ -323,11 +324,23 @@
             this.btnSetColor.UseVisualStyleBackColor = true;
             this.btnSetColor.Click += new System.EventHandler(this.btnSetColor_Click);
             // 
+            // Btn_ReplacePart
+            // 
+            this.Btn_ReplacePart.Location = new System.Drawing.Point(521, 195);
+            this.Btn_ReplacePart.Name = "Btn_ReplacePart";
+            this.Btn_ReplacePart.Size = new System.Drawing.Size(142, 29);
+            this.Btn_ReplacePart.TabIndex = 21;
+            this.Btn_ReplacePart.Text = "25.替换零件";
+            this.Btn_ReplacePart.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Btn_ReplacePart.UseVisualStyleBackColor = true;
+            this.Btn_ReplacePart.Click += new System.EventHandler(this.Btn_ReplacePart_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(675, 243);
+            this.Controls.Add(this.Btn_ReplacePart);
             this.Controls.Add(this.btnSetColor);
             this.Controls.Add(this.btn_SetMaterial);
             this.Controls.Add(this.btn_Pane);
@@ -389,6 +402,7 @@
         private System.Windows.Forms.Button btn_Pane;
         private System.Windows.Forms.Button btn_SetMaterial;
         private System.Windows.Forms.Button btnSetColor;
+        private System.Windows.Forms.Button Btn_ReplacePart;
     }
 }
 
