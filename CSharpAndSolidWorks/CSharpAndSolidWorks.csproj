@@ -86,6 +86,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddCenterPointForSketch.cs" />
     <Compile Include="ComStream.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

@@ -54,6 +54,9 @@
             this.btn_SetMaterial = new System.Windows.Forms.Button();
             this.btnSetColor = new System.Windows.Forms.Button();
             this.Btn_ReplacePart = new System.Windows.Forms.Button();
+            this.GroupExample = new System.Windows.Forms.GroupBox();
+            this.btn_Add_CenterPoint = new System.Windows.Forms.Button();
+            this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnConnect
@@ -335,11 +338,32 @@
             this.Btn_ReplacePart.UseVisualStyleBackColor = true;
             this.Btn_ReplacePart.Click += new System.EventHandler(this.Btn_ReplacePart_Click);
             // 
+            // GroupExample
+            // 
+            this.GroupExample.Controls.Add(this.btn_Add_CenterPoint);
+            this.GroupExample.Location = new System.Drawing.Point(12, 232);
+            this.GroupExample.Name = "GroupExample";
+            this.GroupExample.Size = new System.Drawing.Size(649, 153);
+            this.GroupExample.TabIndex = 22;
+            this.GroupExample.TabStop = false;
+            this.GroupExample.Text = "开发实例";
+            // 
+            // btn_Add_CenterPoint
+            // 
+            this.btn_Add_CenterPoint.Location = new System.Drawing.Point(6, 19);
+            this.btn_Add_CenterPoint.Name = "btn_Add_CenterPoint";
+            this.btn_Add_CenterPoint.Size = new System.Drawing.Size(235, 32);
+            this.btn_Add_CenterPoint.TabIndex = 0;
+            this.btn_Add_CenterPoint.Text = "创建草图的中心点";
+            this.btn_Add_CenterPoint.UseVisualStyleBackColor = true;
+            this.btn_Add_CenterPoint.Click += new System.EventHandler(this.btn_Add_CenterPoint_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(675, 243);
+            this.ClientSize = new System.Drawing.Size(807, 397);
+            this.Controls.Add(this.GroupExample);
             this.Controls.Add(this.Btn_ReplacePart);
             this.Controls.Add(this.btnSetColor);
             this.Controls.Add(this.btn_SetMaterial);
@@ -372,6 +396,7 @@
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Btn_Filter_FormClosing);
             this.Load += new System.EventHandler(this.Btn_Filter_Load);
+            this.GroupExample.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -403,6 +428,8 @@
         private System.Windows.Forms.Button btn_SetMaterial;
         private System.Windows.Forms.Button btnSetColor;
         private System.Windows.Forms.Button Btn_ReplacePart;
+        private System.Windows.Forms.GroupBox GroupExample;
+        private System.Windows.Forms.Button btn_Add_CenterPoint;
     }
 }
 

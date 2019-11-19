@@ -1222,5 +1222,11 @@ namespace CSharpAndSolidWorks
                 MessageBox.Show("替换完成!");
             }
         }
+
+        private void btn_Add_CenterPoint_Click(object sender, EventArgs e)
+        {
+            AddCenterPointForSketch addCenterPointForSketch = new AddCenterPointForSketch();
+            addCenterPointForSketch.CreateHeaterCL();
+        }
     }
 }
