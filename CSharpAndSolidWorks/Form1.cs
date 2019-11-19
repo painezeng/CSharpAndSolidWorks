@@ -1225,8 +1225,11 @@ namespace CSharpAndSolidWorks
 
         private void btn_Add_CenterPoint_Click(object sender, EventArgs e)
         {
+            //Open CenterPoint.SLDPRT
+
             AddCenterPointForSketch addCenterPointForSketch = new AddCenterPointForSketch();
-            addCenterPointForSketch.CreateHeaterCL();
+
+            addCenterPointForSketch.CreateHeaterCenter("Heater path");
         }
     }
 }

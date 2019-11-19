@@ -354,7 +354,7 @@
             this.btn_Add_CenterPoint.Name = "btn_Add_CenterPoint";
             this.btn_Add_CenterPoint.Size = new System.Drawing.Size(235, 32);
             this.btn_Add_CenterPoint.TabIndex = 0;
-            this.btn_Add_CenterPoint.Text = "创建草图的中心点";
+            this.btn_Add_CenterPoint.Text = "创建草图中心点位置";
             this.btn_Add_CenterPoint.UseVisualStyleBackColor = true;
             this.btn_Add_CenterPoint.Click += new System.EventHandler(this.btn_Add_CenterPoint_Click);
             // 
