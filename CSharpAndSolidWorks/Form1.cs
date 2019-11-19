@@ -1230,6 +1230,8 @@ namespace CSharpAndSolidWorks
             AddCenterPointForSketch addCenterPointForSketch = new AddCenterPointForSketch();
 
             addCenterPointForSketch.CreateHeaterCenter("CenterLine");
+
+            MessageBox.Show("中心点创建完成!");
         }
     }
 }
