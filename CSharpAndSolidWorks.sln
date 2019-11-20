@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpAndSolidWorks", "CSha
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaineTool", "PaineTool\PaineTool.csproj", "{7ACEDAA9-2DE8-4485-837A-E7D58812A6DC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InsertDrawingNote", "CSharpAndSolidWorks\InsertDrawingNote\InsertDrawingNote.csproj", "{1645944C-40E0-4A01-ACA3-D62A35E01A97}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{7ACEDAA9-2DE8-4485-837A-E7D58812A6DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7ACEDAA9-2DE8-4485-837A-E7D58812A6DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7ACEDAA9-2DE8-4485-837A-E7D58812A6DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1645944C-40E0-4A01-ACA3-D62A35E01A97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1645944C-40E0-4A01-ACA3-D62A35E01A97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1645944C-40E0-4A01-ACA3-D62A35E01A97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1645944C-40E0-4A01-ACA3-D62A35E01A97}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

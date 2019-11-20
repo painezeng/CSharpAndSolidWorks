@@ -1233,5 +1233,12 @@ namespace CSharpAndSolidWorks
 
             MessageBox.Show("中心点创建完成!");
         }
+
+        private void btnInsertNote_Click(object sender, EventArgs e)
+        {
+            FrmNote frmNote = new FrmNote();
+
+            frmNote.Show();
+        }
     }
 }

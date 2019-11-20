@@ -56,6 +56,7 @@
             this.Btn_ReplacePart = new System.Windows.Forms.Button();
             this.GroupExample = new System.Windows.Forms.GroupBox();
             this.btn_Add_CenterPoint = new System.Windows.Forms.Button();
+            this.btnInsertNote = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -340,6 +341,7 @@
             // 
             // GroupExample
             // 
+            this.GroupExample.Controls.Add(this.btnInsertNote);
             this.GroupExample.Controls.Add(this.btn_Add_CenterPoint);
             this.GroupExample.Location = new System.Drawing.Point(12, 232);
             this.GroupExample.Name = "GroupExample";
@@ -357,6 +359,16 @@
             this.btn_Add_CenterPoint.Text = "创建草图中心点位置";
             this.btn_Add_CenterPoint.UseVisualStyleBackColor = true;
             this.btn_Add_CenterPoint.Click += new System.EventHandler(this.btn_Add_CenterPoint_Click);
+            // 
+            // btnInsertNote
+            // 
+            this.btnInsertNote.Location = new System.Drawing.Point(7, 57);
+            this.btnInsertNote.Name = "btnInsertNote";
+            this.btnInsertNote.Size = new System.Drawing.Size(235, 32);
+            this.btnInsertNote.TabIndex = 0;
+            this.btnInsertNote.Text = "自增标注插入";
+            this.btnInsertNote.UseVisualStyleBackColor = true;
+            this.btnInsertNote.Click += new System.EventHandler(this.btnInsertNote_Click);
             // 
             // Btn_Filter
             // 
@@ -430,6 +442,7 @@
         private System.Windows.Forms.Button Btn_ReplacePart;
         private System.Windows.Forms.GroupBox GroupExample;
         private System.Windows.Forms.Button btn_Add_CenterPoint;
+        private System.Windows.Forms.Button btnInsertNote;
     }
 }
 
