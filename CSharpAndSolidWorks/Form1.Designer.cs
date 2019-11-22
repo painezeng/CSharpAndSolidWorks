@@ -55,8 +55,9 @@
             this.btnSetColor = new System.Windows.Forms.Button();
             this.Btn_ReplacePart = new System.Windows.Forms.Button();
             this.GroupExample = new System.Windows.Forms.GroupBox();
-            this.btn_Add_CenterPoint = new System.Windows.Forms.Button();
             this.btnInsertNote = new System.Windows.Forms.Button();
+            this.btn_Add_CenterPoint = new System.Windows.Forms.Button();
+            this.btnPackFile = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -341,6 +342,7 @@
             // 
             // GroupExample
             // 
+            this.GroupExample.Controls.Add(this.btnPackFile);
             this.GroupExample.Controls.Add(this.btnInsertNote);
             this.GroupExample.Controls.Add(this.btn_Add_CenterPoint);
             this.GroupExample.Location = new System.Drawing.Point(12, 232);
@@ -349,6 +351,16 @@
             this.GroupExample.TabIndex = 22;
             this.GroupExample.TabStop = false;
             this.GroupExample.Text = "开发实例";
+            // 
+            // btnInsertNote
+            // 
+            this.btnInsertNote.Location = new System.Drawing.Point(7, 57);
+            this.btnInsertNote.Name = "btnInsertNote";
+            this.btnInsertNote.Size = new System.Drawing.Size(235, 32);
+            this.btnInsertNote.TabIndex = 0;
+            this.btnInsertNote.Text = "自增标注插入";
+            this.btnInsertNote.UseVisualStyleBackColor = true;
+            this.btnInsertNote.Click += new System.EventHandler(this.btnInsertNote_Click);
             // 
             // btn_Add_CenterPoint
             // 
@@ -360,15 +372,15 @@
             this.btn_Add_CenterPoint.UseVisualStyleBackColor = true;
             this.btn_Add_CenterPoint.Click += new System.EventHandler(this.btn_Add_CenterPoint_Click);
             // 
-            // btnInsertNote
+            // btnPackFile
             // 
-            this.btnInsertNote.Location = new System.Drawing.Point(7, 57);
-            this.btnInsertNote.Name = "btnInsertNote";
-            this.btnInsertNote.Size = new System.Drawing.Size(235, 32);
-            this.btnInsertNote.TabIndex = 0;
-            this.btnInsertNote.Text = "自增标注插入";
-            this.btnInsertNote.UseVisualStyleBackColor = true;
-            this.btnInsertNote.Click += new System.EventHandler(this.btnInsertNote_Click);
+            this.btnPackFile.Location = new System.Drawing.Point(8, 95);
+            this.btnPackFile.Name = "btnPackFile";
+            this.btnPackFile.Size = new System.Drawing.Size(234, 31);
+            this.btnPackFile.TabIndex = 1;
+            this.btnPackFile.Text = "打包文件";
+            this.btnPackFile.UseVisualStyleBackColor = true;
+            this.btnPackFile.Click += new System.EventHandler(this.btnPackFile_Click);
             // 
             // Btn_Filter
             // 
@@ -443,6 +455,7 @@
         private System.Windows.Forms.GroupBox GroupExample;
         private System.Windows.Forms.Button btn_Add_CenterPoint;
         private System.Windows.Forms.Button btnInsertNote;
+        private System.Windows.Forms.Button btnPackFile;
     }
 }
 

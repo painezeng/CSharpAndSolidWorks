@@ -1240,5 +1240,12 @@ namespace CSharpAndSolidWorks
 
             frmNote.Show();
         }
+
+        private void btnPackFile_Click(object sender, EventArgs e)
+        {
+            FrmCopy frmCopy = new FrmCopy(@"C:\TempAssembly.sldasm", @"D:\CopyTest.sldasm");
+
+            frmCopy.Show();
+        }
     }
 }
