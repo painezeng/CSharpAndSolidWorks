@@ -1247,5 +1247,39 @@ namespace CSharpAndSolidWorks
 
             frmCopy.Show();
         }
+
+        private void btn_SelectByRay_Click(object sender, EventArgs e)
+        {
+            //连接到Solidworks
+            ISldWorks swApp = Utility.ConnectToSolidWorks();
+
+            ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            Face2 swSelFace = default(Face2);
+            SelectionMgr swSelMgr = (SelectionMgr)swModel.SelectionManager;
+
+            //获取选择数据
+            SelectData swSelData = default(SelectData);
+
+            swSelData = swSelMgr.CreateSelectData();
+
+            swSelFace = (Face2)swSelMgr.GetSelectedObject6(1, 0);
+
+            var t = (double[])swSelFace.Normal;
+
+            //获取屏幕鼠标选择的那个点
+            var mousePoint = (double[])swSelMgr.GetSelectionPoint2(1, 0);
+
+            swModel.ClearSelection2(true);
+
+            //创建Ray选择
+
+            var boolstatus = swModel.Extension.SelectByRay(mousePoint[0], mousePoint[1], mousePoint[2], t[0], t[1], t[2], 0.1, 2, false, 0, 0);
+
+            if (boolstatus == true)
+            {
+                MessageBox.Show("选择完成!");
+            }
+        }
     }
 }

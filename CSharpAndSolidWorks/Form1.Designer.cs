@@ -55,9 +55,10 @@
             this.btnSetColor = new System.Windows.Forms.Button();
             this.Btn_ReplacePart = new System.Windows.Forms.Button();
             this.GroupExample = new System.Windows.Forms.GroupBox();
+            this.btnPackFile = new System.Windows.Forms.Button();
             this.btnInsertNote = new System.Windows.Forms.Button();
             this.btn_Add_CenterPoint = new System.Windows.Forms.Button();
-            this.btnPackFile = new System.Windows.Forms.Button();
+            this.btn_SelectByRay = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -352,6 +353,16 @@
             this.GroupExample.TabStop = false;
             this.GroupExample.Text = "开发实例";
             // 
+            // btnPackFile
+            // 
+            this.btnPackFile.Location = new System.Drawing.Point(8, 95);
+            this.btnPackFile.Name = "btnPackFile";
+            this.btnPackFile.Size = new System.Drawing.Size(234, 31);
+            this.btnPackFile.TabIndex = 1;
+            this.btnPackFile.Text = "打包文件";
+            this.btnPackFile.UseVisualStyleBackColor = true;
+            this.btnPackFile.Click += new System.EventHandler(this.btnPackFile_Click);
+            // 
             // btnInsertNote
             // 
             this.btnInsertNote.Location = new System.Drawing.Point(7, 57);
@@ -372,21 +383,23 @@
             this.btn_Add_CenterPoint.UseVisualStyleBackColor = true;
             this.btn_Add_CenterPoint.Click += new System.EventHandler(this.btn_Add_CenterPoint_Click);
             // 
-            // btnPackFile
+            // btn_SelectByRay
             // 
-            this.btnPackFile.Location = new System.Drawing.Point(8, 95);
-            this.btnPackFile.Name = "btnPackFile";
-            this.btnPackFile.Size = new System.Drawing.Size(234, 31);
-            this.btnPackFile.TabIndex = 1;
-            this.btnPackFile.Text = "打包文件";
-            this.btnPackFile.UseVisualStyleBackColor = true;
-            this.btnPackFile.Click += new System.EventHandler(this.btnPackFile_Click);
+            this.btn_SelectByRay.Location = new System.Drawing.Point(668, 13);
+            this.btn_SelectByRay.Name = "btn_SelectByRay";
+            this.btn_SelectByRay.Size = new System.Drawing.Size(140, 29);
+            this.btn_SelectByRay.TabIndex = 23;
+            this.btn_SelectByRay.Text = "26.选择相对的面";
+            this.btn_SelectByRay.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btn_SelectByRay.UseVisualStyleBackColor = true;
+            this.btn_SelectByRay.Click += new System.EventHandler(this.btn_SelectByRay_Click);
             // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(807, 397);
+            this.ClientSize = new System.Drawing.Size(829, 397);
+            this.Controls.Add(this.btn_SelectByRay);
             this.Controls.Add(this.GroupExample);
             this.Controls.Add(this.Btn_ReplacePart);
             this.Controls.Add(this.btnSetColor);
@@ -456,6 +469,7 @@
         private System.Windows.Forms.Button btn_Add_CenterPoint;
         private System.Windows.Forms.Button btnInsertNote;
         private System.Windows.Forms.Button btnPackFile;
+        private System.Windows.Forms.Button btn_SelectByRay;
     }
 }
 
