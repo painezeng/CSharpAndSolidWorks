@@ -59,6 +59,7 @@
             this.btnInsertNote = new System.Windows.Forms.Button();
             this.btn_Add_CenterPoint = new System.Windows.Forms.Button();
             this.btn_SelectByRay = new System.Windows.Forms.Button();
+            this.GetDrawingModel = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -394,11 +395,23 @@
             this.btn_SelectByRay.UseVisualStyleBackColor = true;
             this.btn_SelectByRay.Click += new System.EventHandler(this.btn_SelectByRay_Click);
             // 
+            // GetDrawingModel
+            // 
+            this.GetDrawingModel.Location = new System.Drawing.Point(668, 59);
+            this.GetDrawingModel.Name = "GetDrawingModel";
+            this.GetDrawingModel.Size = new System.Drawing.Size(140, 30);
+            this.GetDrawingModel.TabIndex = 24;
+            this.GetDrawingModel.Text = "27.获取工程图模型";
+            this.GetDrawingModel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.GetDrawingModel.UseVisualStyleBackColor = true;
+            this.GetDrawingModel.Click += new System.EventHandler(this.GetDrawingModel_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(829, 397);
+            this.Controls.Add(this.GetDrawingModel);
             this.Controls.Add(this.btn_SelectByRay);
             this.Controls.Add(this.GroupExample);
             this.Controls.Add(this.Btn_ReplacePart);
@@ -470,6 +483,7 @@
         private System.Windows.Forms.Button btnInsertNote;
         private System.Windows.Forms.Button btnPackFile;
         private System.Windows.Forms.Button btn_SelectByRay;
+        private System.Windows.Forms.Button GetDrawingModel;
     }
 }
 

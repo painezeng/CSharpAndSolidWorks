@@ -1281,5 +1281,27 @@ namespace CSharpAndSolidWorks
                 MessageBox.Show("选择完成!");
             }
         }
+
+        private void GetDrawingModel_Click(object sender, EventArgs e)
+        {
+            //连接到Solidworks
+            ISldWorks swApp = Utility.ConnectToSolidWorks();
+
+            ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            // DrawingDoc dc = (DrawingDoc)swModel;
+
+            SelectionMgr selectionMgr = (SelectionMgr)swModel.SelectionManager;
+
+            //获取选择的视图对象
+            View view = (View)selectionMgr.GetSelectedObject5(1);
+
+            //获取视图中的引用模型
+            var viewModel = view.ReferencedDocument;
+
+            //其它读取属性请参考博文 读取零件属性 ->BtnGetPartData_Click
+
+            MessageBox.Show(viewModel.GetPathName());
+        }
     }
 }
