@@ -1303,5 +1303,14 @@ namespace CSharpAndSolidWorks
 
             MessageBox.Show(viewModel.GetPathName());
         }
+
+        private void btn_Part_Export_Click(object sender, EventArgs e)
+        {
+            ISldWorks swApp = Utility.ConnectToSolidWorks();
+
+            ExportForm exportForm = new ExportForm(swApp);
+
+            exportForm.Show();
+        }
     }
 }

@@ -158,4 +158,37 @@ namespace CSharpAndSolidWorks
             }
         }
     }
+
+    public class BodyModel
+    {
+        //static int totalQty;
+        public string name;
+
+        public string material;
+        public string refBodyname;
+        public int qty;
+        public FeatureType featureT;
+        public string comment = default(string);
+        public string boxSize = "";
+
+        public BodyModel(string n, string m, string refBody, FeatureType f, string b)
+        {
+            this.name = n;
+            this.material = m;
+            this.refBodyname = refBody;
+            this.featureT = f;
+            this.comment = "";
+            this.boxSize = b;
+        }
+
+        //override void Remove(){
+        //}
+    }
+
+    public struct BoxSize
+    {
+        public double Length;
+        public double Weigth;
+        public double Height;
+    }
 }

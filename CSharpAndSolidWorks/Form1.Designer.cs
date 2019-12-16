@@ -60,6 +60,7 @@
             this.btn_Add_CenterPoint = new System.Windows.Forms.Button();
             this.btn_SelectByRay = new System.Windows.Forms.Button();
             this.GetDrawingModel = new System.Windows.Forms.Button();
+            this.btn_Part_Export = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -344,6 +345,7 @@
             // 
             // GroupExample
             // 
+            this.GroupExample.Controls.Add(this.btn_Part_Export);
             this.GroupExample.Controls.Add(this.btnPackFile);
             this.GroupExample.Controls.Add(this.btnInsertNote);
             this.GroupExample.Controls.Add(this.btn_Add_CenterPoint);
@@ -405,6 +407,16 @@
             this.GetDrawingModel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.GetDrawingModel.UseVisualStyleBackColor = true;
             this.GetDrawingModel.Click += new System.EventHandler(this.GetDrawingModel_Click);
+            // 
+            // btn_Part_Export
+            // 
+            this.btn_Part_Export.Location = new System.Drawing.Point(255, 19);
+            this.btn_Part_Export.Name = "btn_Part_Export";
+            this.btn_Part_Export.Size = new System.Drawing.Size(198, 31);
+            this.btn_Part_Export.TabIndex = 2;
+            this.btn_Part_Export.Text = "多实体零件导出";
+            this.btn_Part_Export.UseVisualStyleBackColor = true;
+            this.btn_Part_Export.Click += new System.EventHandler(this.btn_Part_Export_Click);
             // 
             // Btn_Filter
             // 
@@ -484,6 +496,7 @@
         private System.Windows.Forms.Button btnPackFile;
         private System.Windows.Forms.Button btn_SelectByRay;
         private System.Windows.Forms.Button GetDrawingModel;
+        private System.Windows.Forms.Button btn_Part_Export;
     }
 }
 
