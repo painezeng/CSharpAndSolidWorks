@@ -1312,5 +1312,12 @@ namespace CSharpAndSolidWorks
 
             exportForm.Show();
         }
+
+        private void btn_Scale_Click(object sender, EventArgs e)
+        {
+            FrmScreen frmScreen = new FrmScreen();
+
+            frmScreen.Show();
+        }
     }
 }

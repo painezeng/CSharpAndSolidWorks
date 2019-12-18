@@ -55,12 +55,13 @@
             this.btnSetColor = new System.Windows.Forms.Button();
             this.Btn_ReplacePart = new System.Windows.Forms.Button();
             this.GroupExample = new System.Windows.Forms.GroupBox();
+            this.btn_Scale = new System.Windows.Forms.Button();
+            this.btn_Part_Export = new System.Windows.Forms.Button();
             this.btnPackFile = new System.Windows.Forms.Button();
             this.btnInsertNote = new System.Windows.Forms.Button();
             this.btn_Add_CenterPoint = new System.Windows.Forms.Button();
             this.btn_SelectByRay = new System.Windows.Forms.Button();
             this.GetDrawingModel = new System.Windows.Forms.Button();
-            this.btn_Part_Export = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -345,6 +346,7 @@
             // 
             // GroupExample
             // 
+            this.GroupExample.Controls.Add(this.btn_Scale);
             this.GroupExample.Controls.Add(this.btn_Part_Export);
             this.GroupExample.Controls.Add(this.btnPackFile);
             this.GroupExample.Controls.Add(this.btnInsertNote);
@@ -355,6 +357,26 @@
             this.GroupExample.TabIndex = 22;
             this.GroupExample.TabStop = false;
             this.GroupExample.Text = "开发实例";
+            // 
+            // btn_Scale
+            // 
+            this.btn_Scale.Location = new System.Drawing.Point(255, 56);
+            this.btn_Scale.Name = "btn_Scale";
+            this.btn_Scale.Size = new System.Drawing.Size(198, 33);
+            this.btn_Scale.TabIndex = 3;
+            this.btn_Scale.Text = "屏幕1:1显示模型";
+            this.btn_Scale.UseVisualStyleBackColor = true;
+            this.btn_Scale.Click += new System.EventHandler(this.btn_Scale_Click);
+            // 
+            // btn_Part_Export
+            // 
+            this.btn_Part_Export.Location = new System.Drawing.Point(255, 19);
+            this.btn_Part_Export.Name = "btn_Part_Export";
+            this.btn_Part_Export.Size = new System.Drawing.Size(198, 31);
+            this.btn_Part_Export.TabIndex = 2;
+            this.btn_Part_Export.Text = "多实体零件导出";
+            this.btn_Part_Export.UseVisualStyleBackColor = true;
+            this.btn_Part_Export.Click += new System.EventHandler(this.btn_Part_Export_Click);
             // 
             // btnPackFile
             // 
@@ -407,16 +429,6 @@
             this.GetDrawingModel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.GetDrawingModel.UseVisualStyleBackColor = true;
             this.GetDrawingModel.Click += new System.EventHandler(this.GetDrawingModel_Click);
-            // 
-            // btn_Part_Export
-            // 
-            this.btn_Part_Export.Location = new System.Drawing.Point(255, 19);
-            this.btn_Part_Export.Name = "btn_Part_Export";
-            this.btn_Part_Export.Size = new System.Drawing.Size(198, 31);
-            this.btn_Part_Export.TabIndex = 2;
-            this.btn_Part_Export.Text = "多实体零件导出";
-            this.btn_Part_Export.UseVisualStyleBackColor = true;
-            this.btn_Part_Export.Click += new System.EventHandler(this.btn_Part_Export_Click);
             // 
             // Btn_Filter
             // 
@@ -497,6 +509,7 @@
         private System.Windows.Forms.Button btn_SelectByRay;
         private System.Windows.Forms.Button GetDrawingModel;
         private System.Windows.Forms.Button btn_Part_Export;
+        private System.Windows.Forms.Button btn_Scale;
     }
 }
 
