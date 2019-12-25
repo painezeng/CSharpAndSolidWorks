@@ -62,6 +62,7 @@
             this.btn_Add_CenterPoint = new System.Windows.Forms.Button();
             this.btn_SelectByRay = new System.Windows.Forms.Button();
             this.GetDrawingModel = new System.Windows.Forms.Button();
+            this.btn_Transform_PartToAsm = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -430,11 +431,23 @@
             this.GetDrawingModel.UseVisualStyleBackColor = true;
             this.GetDrawingModel.Click += new System.EventHandler(this.GetDrawingModel_Click);
             // 
+            // btn_Transform_PartToAsm
+            // 
+            this.btn_Transform_PartToAsm.Location = new System.Drawing.Point(668, 102);
+            this.btn_Transform_PartToAsm.Name = "btn_Transform_PartToAsm";
+            this.btn_Transform_PartToAsm.Size = new System.Drawing.Size(140, 31);
+            this.btn_Transform_PartToAsm.TabIndex = 25;
+            this.btn_Transform_PartToAsm.Text = "28.零件的坐标转换\r\n";
+            this.btn_Transform_PartToAsm.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btn_Transform_PartToAsm.UseVisualStyleBackColor = true;
+            this.btn_Transform_PartToAsm.Click += new System.EventHandler(this.btn_Transform_PartToAsm_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(829, 397);
+            this.Controls.Add(this.btn_Transform_PartToAsm);
             this.Controls.Add(this.GetDrawingModel);
             this.Controls.Add(this.btn_SelectByRay);
             this.Controls.Add(this.GroupExample);
@@ -510,6 +523,7 @@
         private System.Windows.Forms.Button GetDrawingModel;
         private System.Windows.Forms.Button btn_Part_Export;
         private System.Windows.Forms.Button btn_Scale;
+        private System.Windows.Forms.Button btn_Transform_PartToAsm;
     }
 }
 
