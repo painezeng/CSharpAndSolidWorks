@@ -1383,9 +1383,9 @@ namespace CSharpAndSolidWorks
             var v2 = y2 - y;
             var v3 = z2 - z;
 
-            if (Math.Round(v3, 4) == 0)
+            if (Math.Round(v3, 4) != 0 && Math.Round(v1, 4) == 0 && Math.Round(v2, 4) == 0)
             {
-                MessageBox.Show("此轴在非Z方向上");
+                MessageBox.Show("此轴在Z方向上");
             }
 
             //  MathVector mathVector = new MathVector();
