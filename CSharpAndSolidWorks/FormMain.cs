@@ -1390,5 +1390,191 @@ namespace CSharpAndSolidWorks
 
             //  MathVector mathVector = new MathVector();
         }
+
+        private void btn_Insert_Block_Click(object sender, EventArgs e)
+        {
+            //连接到Solidworks
+            ISldWorks swApp = Utility.ConnectToSolidWorks();
+
+            ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            DrawingDoc dc = (DrawingDoc)swModel;
+
+            // SelectionMgr selectionMgr = (SelectionMgr)swModel.SelectionManager;
+
+            double[] nPt = new double[3];
+
+            nPt[0] = 0;
+            nPt[1] = 0;
+            nPt[2] = 0;
+
+            MathUtility swMathUtil = swApp.GetMathUtility();
+
+            MathPoint swMathPoint = swMathUtil.CreatePoint(nPt);
+
+            double blockScale = 1;
+
+            string blockPath = @"D:\09_Study\CSharpAndSolidWorks\CSharpAndSolidWorks\TemplateModel\TestBlock.SLDBLK";
+
+            //插入图块
+            var swBlockInst = InsertBlockReturnInst(swApp, swModel, swMathPoint, blockPath, blockScale);
+
+            //  swModel.SketchManager.MakeSketchBlockFromFile(mathPoint, blockPath, false, blockScale, 0);
+
+            //修改块的属性(如果只是普通的图块，则无需要这一步。直接使用上面的一行插入图块即可)
+            swBlockInst.SetAttributeValue("Title1", "Paine");
+        }
+
+        /// <summary>
+        /// 插入并返回最后一个图块实例
+        /// </summary>
+        /// <param name="sldWorks"></param>
+        /// <param name="modelDoc2"></param>
+        /// <param name="mathPoint"></param>
+        /// <param name="blockPath"></param>
+        /// <param name="blockScale"></param>
+        /// <returns></returns>
+        private SketchBlockInstance InsertBlockReturnInst(ISldWorks sldWorks, ModelDoc2 modelDoc2, MathPoint mathPoint, String blockPath, double blockScale)
+        {
+            SketchBlockInstance swBlockInst;
+            List<String> NowBlockName = new List<String>();
+            var swModel = modelDoc2;
+            Boolean boolstatus = swModel.Extension.SelectByID2(System.IO.Path.GetFileNameWithoutExtension(blockPath), "SUBSKETCHDEF", 0, 0, 0, false, 0, null, 0);
+
+            if (boolstatus == true)
+            {
+                Feature swFeat = swModel.SelectionManager.GetSelectedObject6(1, 0);
+                var swSketchBlockDef = swFeat.GetSpecificFeature2();
+
+                var nbrBlockInst = swSketchBlockDef.GetInstanceCount;
+
+                if (nbrBlockInst > 0)
+                {
+                    var vBlockInst = swSketchBlockDef.GetInstances();
+
+                    for (int i = 0; i < nbrBlockInst; i++)
+                    {
+                        swBlockInst = vBlockInst[i];
+
+                        NowBlockName.Add(swBlockInst.Name.ToString());
+                    }
+
+                    swModel.SketchManager.MakeSketchBlockFromFile(mathPoint, blockPath, false, blockScale, 0);
+
+                    swModel.ClearSelection2(true);
+
+                    boolstatus = swModel.Extension.SelectByID2(System.IO.Path.GetFileNameWithoutExtension(blockPath), "SUBSKETCHDEF", 0, 0, 0, false, 0, null, 0);
+
+                    swFeat = swModel.SelectionManager.GetSelectedObject6(1, 0);
+                    swSketchBlockDef = swFeat.GetSpecificFeature2();
+
+                    nbrBlockInst = swSketchBlockDef.GetInstanceCount;
+
+                    if (nbrBlockInst > 0)
+                    {
+                        vBlockInst = swSketchBlockDef.GetInstances();
+
+                        for (int j = 0; j < nbrBlockInst; j++)
+                        {
+                            swBlockInst = vBlockInst[j];
+                            if (!NowBlockName.Contains(swBlockInst.Name.ToString()))
+                            {
+                                swModel.Extension.SelectByID2(swBlockInst.Name, "SUBSKETCHINST", 0, 0, 0, false, 0, null, 0);
+                                swBlockInst = GetSketchBlockInstanceFromSelection();
+                                return swBlockInst;
+                            }
+                        }
+                    }
+                    return null;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                var swSketchBlockDef = swModel.SketchManager.MakeSketchBlockFromFile(mathPoint, blockPath, false, blockScale, 0);
+                swBlockInst = swSketchBlockDef.GetInstances()[0];
+
+                return swBlockInst;
+            }
+        }
+
+        private SketchBlockInstance GetSketchBlockInstanceFromSelection()
+        {
+            ISldWorks swApp = Utility.ConnectToSolidWorks();
+
+            ModelDoc2 swModel;
+            ModelDocExtension swModelDocExt;
+            SketchBlockInstance SketchBlockInstance;
+
+            DateTime time = DateTime.Now;
+
+            try
+            {
+                swModel = swApp.ActiveDoc;
+                swModelDocExt = swModel.Extension;
+
+                SelectionMgr swSelectionMgr;
+                swSelectionMgr = swModel.SelectionManager;
+
+                string SelectByString = "";
+                string ObjectType = "";
+                int type;
+                double x;
+                double y;
+                double z;
+
+                if (swSelectionMgr.GetSelectedObjectCount2(-1) > 1)
+                {
+                    // Return only a SketchblockInstance when only one is selected...
+                    // modify if you want return more than one (or only the first) selected Sketchblockinstance
+                    return null;
+                }
+
+                swSelectionMgr.GetSelectionSpecification(1, out SelectByString, out ObjectType, out type, out x, out y, out z);
+                Debug.WriteLine(SelectByString + " " + ObjectType + " " + type);
+
+                if (type == (int)swSelectType_e.swSelSUBSKETCHINST)
+                {
+                    SketchBlockInstance = swSelectionMgr.GetSelectedObject6(1, -1);
+                    Debug.WriteLine("Found:" + SketchBlockInstance.Name);
+                    return SketchBlockInstance;
+                }
+                else if (type == (int)swSelectType_e.swSelSKETCHSEGS | type == (int)swSelectType_e.swSelSKETCHPOINTS)
+                {
+                    // Show if a sketchblockinstance has the same name
+                    SketchManager SwSketchMgr;
+                    SwSketchMgr = swModel.SketchManager;
+
+                    object[] blockDefinitions = (object[])SwSketchMgr.GetSketchBlockDefinitions();
+                    foreach (SketchBlockDefinition blockDef in blockDefinitions)
+                    {
+                        foreach (SketchBlockInstance blockInstance in blockDef.GetInstances())
+                        {
+                            if (SelectByString.EndsWith(blockInstance.Name))
+                            {
+                                Debug.WriteLine("Found:" + blockInstance.Name);
+                                return blockInstance;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+            finally
+            {
+                Debug.WriteLine(DateTime.Now.Subtract(time).Milliseconds);
+            }
+
+            return null;
+        }
     }
 }

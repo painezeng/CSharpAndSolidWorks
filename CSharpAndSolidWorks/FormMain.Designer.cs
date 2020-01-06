@@ -63,6 +63,7 @@
             this.btn_SelectByRay = new System.Windows.Forms.Button();
             this.GetDrawingModel = new System.Windows.Forms.Button();
             this.btn_Transform_PartToAsm = new System.Windows.Forms.Button();
+            this.btn_Insert_Block = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -442,11 +443,23 @@
             this.btn_Transform_PartToAsm.UseVisualStyleBackColor = true;
             this.btn_Transform_PartToAsm.Click += new System.EventHandler(this.btn_Transform_PartToAsm_Click);
             // 
+            // btn_Insert_Block
+            // 
+            this.btn_Insert_Block.Location = new System.Drawing.Point(668, 150);
+            this.btn_Insert_Block.Name = "btn_Insert_Block";
+            this.btn_Insert_Block.Size = new System.Drawing.Size(140, 29);
+            this.btn_Insert_Block.TabIndex = 26;
+            this.btn_Insert_Block.Text = "29.插入块与属性块";
+            this.btn_Insert_Block.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btn_Insert_Block.UseVisualStyleBackColor = true;
+            this.btn_Insert_Block.Click += new System.EventHandler(this.btn_Insert_Block_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(829, 397);
+            this.Controls.Add(this.btn_Insert_Block);
             this.Controls.Add(this.btn_Transform_PartToAsm);
             this.Controls.Add(this.GetDrawingModel);
             this.Controls.Add(this.btn_SelectByRay);
@@ -524,6 +537,7 @@
         private System.Windows.Forms.Button btn_Part_Export;
         private System.Windows.Forms.Button btn_Scale;
         private System.Windows.Forms.Button btn_Transform_PartToAsm;
+        private System.Windows.Forms.Button btn_Insert_Block;
     }
 }
 
