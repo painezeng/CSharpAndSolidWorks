@@ -97,7 +97,7 @@ namespace CSharpAndSolidWorks
         /// </summary>
         /// <param name="swComp"></param>
         /// <param name="nLevel"></param>
-        public static void TraverseCompXform(Component2 swComp, long nLevel)
+        public static void TraverseCompXform(Component2 swComp, long nLevel, bool setcolor = false)
         {
             object[] vChild;
             Component2 swChildComp;
@@ -142,6 +142,19 @@ namespace CSharpAndSolidWorks
                     string tempName = swModel.GetPathName();
                     string tempConfigName = swComp.ReferencedConfiguration;
                     string tempComponentRef = swComp.ComponentReference;
+
+                    //如果要设定颜色
+                    if (setcolor == true)
+                    {
+                        double[] matPropVals = swModel.MaterialPropertyValues;
+                        var tempC = GetRadomColor(System.IO.Path.GetFileNameWithoutExtension(swModel.GetPathName()));
+                        matPropVals[0] = Convert.ToDouble(tempC.R) / 255;
+                        matPropVals[1] = Convert.ToDouble(tempC.G) / 255;
+                        matPropVals[2] = Convert.ToDouble(tempC.B) / 255;
+                        swModel.MaterialPropertyValues = matPropVals;
+
+                        swModel.WindowRedraw();
+                    }
                 }
             }
             else
@@ -154,8 +167,24 @@ namespace CSharpAndSolidWorks
             for (i = 0; i <= (vChild.Length - 1); i++)
             {
                 swChildComp = (Component2)vChild[i];
-                TraverseCompXform(swChildComp, nLevel + 1);
+                TraverseCompXform(swChildComp, nLevel + 1, setcolor);
             }
+        }
+
+        public static System.Drawing.Color GetRadomColor(string name)
+        {
+            Random rnd = new Random();
+
+            //这里可以根据需要指定颜色。
+            if (name.Contains("m1"))
+            {
+                return System.Drawing.Color.Red;
+            }
+
+            return System.Drawing.Color.FromArgb(
+                 rnd.Next(0, 255), /*红色*/
+                 rnd.Next(0, 255), /*绿色*/
+                 rnd.Next(0, 255)  /*蓝色*/ );
         }
     }
 

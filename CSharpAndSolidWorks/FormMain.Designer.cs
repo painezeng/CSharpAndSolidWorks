@@ -64,6 +64,7 @@
             this.GetDrawingModel = new System.Windows.Forms.Button();
             this.btn_Transform_PartToAsm = new System.Windows.Forms.Button();
             this.btn_Insert_Block = new System.Windows.Forms.Button();
+            this.btn_setcolor = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -348,6 +349,7 @@
             // 
             // GroupExample
             // 
+            this.GroupExample.Controls.Add(this.btn_setcolor);
             this.GroupExample.Controls.Add(this.btn_Scale);
             this.GroupExample.Controls.Add(this.btn_Part_Export);
             this.GroupExample.Controls.Add(this.btnPackFile);
@@ -454,6 +456,16 @@
             this.btn_Insert_Block.UseVisualStyleBackColor = true;
             this.btn_Insert_Block.Click += new System.EventHandler(this.btn_Insert_Block_Click);
             // 
+            // btn_setcolor
+            // 
+            this.btn_setcolor.Location = new System.Drawing.Point(255, 95);
+            this.btn_setcolor.Name = "btn_setcolor";
+            this.btn_setcolor.Size = new System.Drawing.Size(198, 31);
+            this.btn_setcolor.TabIndex = 4;
+            this.btn_setcolor.Text = "随机上色";
+            this.btn_setcolor.UseVisualStyleBackColor = true;
+            this.btn_setcolor.Click += new System.EventHandler(this.btn_setcolor_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -538,6 +550,7 @@
         private System.Windows.Forms.Button btn_Scale;
         private System.Windows.Forms.Button btn_Transform_PartToAsm;
         private System.Windows.Forms.Button btn_Insert_Block;
+        private System.Windows.Forms.Button btn_setcolor;
     }
 }
 
