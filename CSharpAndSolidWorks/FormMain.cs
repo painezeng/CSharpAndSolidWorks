@@ -1,5 +1,4 @@
-﻿using CSharpAndSolidWorks.Properties;
-using SolidWorks.Interop.sldworks;
+﻿using SolidWorks.Interop.sldworks;
 using SolidWorks.Interop.swconst;
 using System;
 using System.Collections.Generic;
@@ -1598,5 +1597,85 @@ namespace CSharpAndSolidWorks
                 swModel.EditRebuild3();
             }
         }
+
+        private void butGlobalVariables_Click(object sender, EventArgs e)
+        {
+            //连接solidworks
+            ISldWorks swApp = Utility.ConnectToSolidWorks();
+
+            if (swApp != null)
+            {
+                //获取当前模型
+                ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
+                //定义方程式管理器
+                EquationMgr swEqnMgr = default(EquationMgr);
+
+                int i = 0;
+                int nCount = 0;
+
+                if (swModel != null)
+                {
+                    swEqnMgr = (EquationMgr)swModel.GetEquationMgr();
+                    // nCount = swEqnMgr.GetCount();
+                    //for (i = 0; i < nCount; i++)
+                    //{
+                    //    Debug.Print("  Equation(" + i + ")  = " + swEqnMgr.get_Equation(i));
+                    //    Debug.Print("    Value = " + swEqnMgr.get_Value(i));
+                    //    Debug.Print("    Index = " + swEqnMgr.Status);
+                    //    Debug.Print("    Global variable? " + swEqnMgr.get_GlobalVariable(i));
+                    //}
+
+                    //修改高度为60
+
+                    if (SetEquationValue(swEqnMgr, "h", 60))
+                    {
+                        swModel.ForceRebuild3(true);
+                    }
+                    else
+                    {
+                        MessageBox.Show("没有找到这个值!");
+                    }
+                }
+            }
+        }
+
+        #region 修改全局变量所用到的方法
+
+        public bool SetEquationValue(EquationMgr eqMgr, string name, double newValue)
+        {
+            int index = GetEquationIndexByName(eqMgr, name);
+
+            if (index != -1)
+            {
+                eqMgr.Equation[index] = "\"" + name + "\"=" + newValue;
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        //通过名字找方程式的位置
+        private int GetEquationIndexByName(EquationMgr eqMgr, string name)
+        {
+            int i;
+            for (i = 0; i <= eqMgr.GetCount() - 1; i++)
+            {
+                var eqName = eqMgr.Equation[i].Split('=')[0].Replace("=", "");
+
+                eqName = eqName.Substring(1, eqName.Length - 2); // removing the "" symbols from the name
+
+                if (eqName.ToUpper() == name.ToUpper())
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
+        #endregion 修改全局变量所用到的方法
     }
 }
