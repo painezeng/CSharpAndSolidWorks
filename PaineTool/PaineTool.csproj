@@ -97,15 +97,15 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="SolidWorks.Interop.sldworks">
       <HintPath>D:\Program Files\SOLIDWORKS Corp\SOLIDWORKS\\SolidWorks.Interop.sldworks.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="SolidWorks.Interop.swconst">
       <HintPath>D:\Program Files\SOLIDWORKS Corp\SOLIDWORKS\\SolidWorks.Interop.swconst.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="SolidWorks.Interop.swpublished">
       <HintPath>D:\Program Files\SOLIDWORKS Corp\SOLIDWORKS\\SolidWorks.Interop.swpublished.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="SolidWorksTools">
       <HintPath>D:\Program Files\SOLIDWORKS Corp\SOLIDWORKS\\SolidWorksTools.dll</HintPath>
@@ -129,6 +129,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="EventHandling.cs" />
+    <Compile Include="NewFeature\FaceEdgeInfos.cs" />
+    <Compile Include="NewFeature\Geometry.cs" />
+    <Compile Include="NewFeature\NewFeatureBase.cs" />
+    <Compile Include="NewFeature\NewFeatureHandler.cs" />
+    <Compile Include="NewFeature\NewFeaturePMPage.cs" />
     <Compile Include="PMPHandler.cs" />
     <Compile Include="SwAddin.cs">
       <SubType>Code</SubType>
@@ -154,6 +159,11 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FeatureIcon.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

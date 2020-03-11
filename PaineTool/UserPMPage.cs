@@ -9,36 +9,41 @@ namespace PaineTool
     {
         //Local Objects
         public IPropertyManagerPage2 swPropertyPage = null;
-        PMPHandler handler = null;
-        ISldWorks iSwApp = null;
-        SwAddin userAddin = null;
-        IPropertyManagerPageTab ppagetab1 = null;
-        IPropertyManagerPageTab ppagetab2 = null;
+
+        private PMPHandler handler = null;
+        private ISldWorks iSwApp = null;
+        private SwAddin userAddin = null;
+        private IPropertyManagerPageTab ppagetab1 = null;
+        private IPropertyManagerPageTab ppagetab2 = null;
 
         #region Property Manager Page Controls
+
         //Groups
-        IPropertyManagerPageGroup group1;
-        IPropertyManagerPageGroup group2;
+        private IPropertyManagerPageGroup group1;
+
+        private IPropertyManagerPageGroup group2;
 
         //Controls
-        IPropertyManagerPageTextbox textbox1;
-        IPropertyManagerPageCheckbox checkbox1;
-        IPropertyManagerPageOption option1;
-        IPropertyManagerPageOption option2;
-        IPropertyManagerPageOption option3;
-        IPropertyManagerPageListbox list1;
+        private IPropertyManagerPageTextbox textbox1;
 
-        IPropertyManagerPageSelectionbox selection1;
-        IPropertyManagerPageNumberbox num1;
-        IPropertyManagerPageCombobox combo1;
+        private IPropertyManagerPageCheckbox checkbox1;
+        private IPropertyManagerPageOption option1;
+        private IPropertyManagerPageOption option2;
+        private IPropertyManagerPageOption option3;
+        private IPropertyManagerPageListbox list1;
 
-        IPropertyManagerPageButton button1;
-        IPropertyManagerPageButton button2;
+        private IPropertyManagerPageSelectionbox selection1;
+        private IPropertyManagerPageNumberbox num1;
+        private IPropertyManagerPageCombobox combo1;
+
+        private IPropertyManagerPageButton button1;
+        private IPropertyManagerPageButton button2;
         public IPropertyManagerPageTextbox textbox2;
         public IPropertyManagerPageTextbox textbox3;
 
         //Control IDs
         public const int group1ID = 0;
+
         public const int group2ID = 1;
 
         public const int textbox1ID = 2;
@@ -57,7 +62,8 @@ namespace PaineTool
         public const int buttonID2 = 14;
         public const int textbox2ID = 15;
         public const int textbox3ID = 16;
-        #endregion
+
+        #endregion Property Manager Page Controls
 
         public UserPMPage(SwAddin addin)
         {
@@ -65,7 +71,7 @@ namespace PaineTool
             if (userAddin != null)
             {
                 iSwApp = (ISldWorks)userAddin.SwApp;
-                CreatePropertyManagerPage();
+                CreateUserPMP();
             }
             else
             {
@@ -73,8 +79,7 @@ namespace PaineTool
             }
         }
 
-
-        protected void CreatePropertyManagerPage()
+        private void CreateUserPMP()
         {
             int errors = -1;
             int options = (int)swPropertyManagerPageOptions_e.swPropertyManagerOptions_OkayButton |
@@ -95,8 +100,7 @@ namespace PaineTool
             }
         }
 
-
-        //Controls are displayed on the page top to bottom in the order 
+        //Controls are displayed on the page top to bottom in the order
         //in which they are added to the object.
         protected void AddControls()
         {
@@ -222,7 +226,6 @@ namespace PaineTool
                 string[] items = { "One Fish", "Two Fish", "Red Fish", "Blue Fish" };
                 combo1.AddItems(items);
                 combo1.Height = 50;
-
             }
 
             // Button

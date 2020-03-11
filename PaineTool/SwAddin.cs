@@ -10,7 +10,7 @@ using SolidWorksTools;
 using SolidWorksTools.File;
 using System.Collections.Generic;
 using System.Diagnostics;
-
+using PaineTool.NewFeature;
 
 namespace PaineTool
 {
@@ -26,36 +26,43 @@ namespace PaineTool
     public class SwAddin : ISwAddin
     {
         #region Local Variables
-        ISldWorks iSwApp = null;
-        ICommandManager iCmdMgr = null;
-        int addinID = 0;
-        BitmapHandler iBmp;
-        int registerID;
+
+        private ISldWorks iSwApp = null;
+        private ICommandManager iCmdMgr = null;
+        private int addinID = 0;
+        private BitmapHandler iBmp;
+        private int registerID;
 
         public const int mainCmdGroupID = 5;
         public const int mainItemID1 = 0;
         public const int mainItemID2 = 1;
-        public const int mainItemID3 = 2;
+        public const int mainItemID3 = 4;
         public const int flyoutGroupID = 91;
 
-        string[] mainIcons = new string[6];
-        string[] icons = new string[6];
+        private string[] mainIcons = new string[6];
+        private string[] icons = new string[6];
 
         #region Event Handler Variables
-        Hashtable openDocs = new Hashtable();
-        SolidWorks.Interop.sldworks.SldWorks SwEventPtr = null;
-        #endregion
+
+        private Hashtable openDocs = new Hashtable();
+        private SolidWorks.Interop.sldworks.SldWorks SwEventPtr = null;
+
+        #endregion Event Handler Variables
 
         #region Property Manager Variables
-        public UserPMPage ppage = null;
-        #endregion
 
+        public UserPMPage ppage = null;
+
+        public NewFeaturePMPage newFeaturePmPage = null;
+
+        #endregion Property Manager Variables
 
         // Public Properties
         public ISldWorks SwApp
         {
             get { return iSwApp; }
         }
+
         public ICommandManager CmdMgr
         {
             get { return iCmdMgr; }
@@ -66,13 +73,15 @@ namespace PaineTool
             get { return openDocs; }
         }
 
-        #endregion
+        #endregion Local Variables
 
         #region SolidWorks Registration
+
         [ComRegisterFunctionAttribute]
         public static void RegisterFunction(Type t)
         {
             #region Get Custom Attribute: SwAddinAttribute
+
             SwAddinAttribute SWattr = null;
             Type type = typeof(SwAddin);
 
@@ -85,7 +94,7 @@ namespace PaineTool
                 }
             }
 
-            #endregion
+            #endregion Get Custom Attribute: SwAddinAttribute
 
             try
             {
@@ -108,7 +117,6 @@ namespace PaineTool
                 Console.WriteLine("There was a problem registering this dll: SWattr is null. \n\"" + nl.Message + "\"");
                 System.Windows.Forms.MessageBox.Show("There was a problem registering this dll: SWattr is null.\n\"" + nl.Message + "\"");
             }
-
             catch (System.Exception e)
             {
                 Console.WriteLine(e.Message);
@@ -143,9 +151,10 @@ namespace PaineTool
             }
         }
 
-        #endregion
+        #endregion SolidWorks Registration
 
         #region ISwAddin Implementation
+
         public SwAddin()
         {
         }
@@ -159,19 +168,26 @@ namespace PaineTool
             iSwApp.SetAddinCallbackInfo(0, this, addinID);
 
             #region Setup the Command Manager
+
             iCmdMgr = iSwApp.GetCommandManager(cookie);
             AddCommandMgr();
-            #endregion
+
+            #endregion Setup the Command Manager
 
             #region Setup the Event Handlers
+
             SwEventPtr = (SolidWorks.Interop.sldworks.SldWorks)iSwApp;
             openDocs = new Hashtable();
             AttachEventHandlers();
-            #endregion
+
+            #endregion Setup the Event Handlers
 
             #region Setup Sample Property Manager
+
             AddPMP();
-            #endregion
+            AddNewFeaturePMP();
+
+            #endregion Setup Sample Property Manager
 
             return true;
         }
@@ -186,7 +202,7 @@ namespace PaineTool
             iCmdMgr = null;
             System.Runtime.InteropServices.Marshal.ReleaseComObject(iSwApp);
             iSwApp = null;
-            //The addin _must_ call GC.Collect() here in order to retrieve all managed code pointers 
+            //The addin _must_ call GC.Collect() here in order to retrieve all managed code pointers
             GC.Collect();
             GC.WaitForPendingFinalizers();
 
@@ -195,25 +211,25 @@ namespace PaineTool
 
             return true;
         }
-        #endregion
+
+        #endregion ISwAddin Implementation
 
         #region UI Methods
+
         public void AddCommandMgr()
         {
             ICommandGroup cmdGroup;
             if (iBmp == null)
                 iBmp = new BitmapHandler();
             Assembly thisAssembly;
-            int cmdIndex0, cmdIndex1;
-            string Title = "C# Addin", ToolTip = "C# Addin";
-
+            int cmdIndex0, cmdIndex1, cmdPaineIndex;
+            string Title = "Paine Addin(C#)", ToolTip = "Paine Addin(C#)";
 
             int[] docTypes = new int[]{(int)swDocumentTypes_e.swDocASSEMBLY,
                                        (int)swDocumentTypes_e.swDocDRAWING,
                                        (int)swDocumentTypes_e.swDocPART};
 
             thisAssembly = System.Reflection.Assembly.GetAssembly(this.GetType());
-
 
             int cmdGroupErr = 0;
             bool ignorePrevious = false;
@@ -254,7 +270,8 @@ namespace PaineTool
 
             int menuToolbarOption = (int)(swCommandItemType_e.swMenuItem | swCommandItemType_e.swToolbarItem);
             cmdIndex0 = cmdGroup.AddCommandItem2("CreateCube", -1, "Create a cube", "Create cube", 0, "CreateCube", "", mainItemID1, menuToolbarOption);
-            cmdIndex1 = cmdGroup.AddCommandItem2("Show PMP", -1, "Display sample property manager", "Show PMP", 2, "ShowPMP", "EnablePMP", mainItemID2, menuToolbarOption);
+            cmdIndex1 = cmdGroup.AddCommandItem2("Show PMP", -1, "Display sample property manager", "Show PMP", 1, "ShowPMP", "EnablePMP", mainItemID2, menuToolbarOption);
+            cmdPaineIndex = cmdGroup.AddCommandItem2("NewFeature", -1, "创建一个宏特征", "NewFeature", 2, "CreateNewFeature", "EnablePMP", mainItemID3, menuToolbarOption);
 
             cmdGroup.HasToolbar = true;
             cmdGroup.HasMenu = true;
@@ -262,16 +279,12 @@ namespace PaineTool
 
             bool bResult;
 
-
-
             FlyoutGroup flyGroup = iCmdMgr.CreateFlyoutGroup2(flyoutGroupID, "Dynamic Flyout", "Flyout Tooltip", "Flyout Hint",
               cmdGroup.MainIconList, cmdGroup.IconList, "FlyoutCallback", "FlyoutEnable");
-
 
             flyGroup.AddCommandItem("FlyoutCommand 1", "test", 0, "FlyoutCommandItem1", "FlyoutEnableCommandItem1");
 
             flyGroup.FlyoutType = (int)swCommandFlyoutStyle_e.swCommandFlyoutStyle_Simple;
-
 
             foreach (int type in docTypes)
             {
@@ -292,8 +305,8 @@ namespace PaineTool
 
                     CommandTabBox cmdBox = cmdTab.AddCommandTabBox();
 
-                    int[] cmdIDs = new int[3];
-                    int[] TextType = new int[3];
+                    int[] cmdIDs = new int[4];
+                    int[] TextType = new int[4];
 
                     cmdIDs[0] = cmdGroup.get_CommandID(cmdIndex0);
 
@@ -303,13 +316,15 @@ namespace PaineTool
 
                     TextType[1] = (int)swCommandTabButtonTextDisplay_e.swCommandTabButton_TextHorizontal;
 
-                    cmdIDs[2] = cmdGroup.ToolbarId;
+                    cmdIDs[2] = cmdGroup.get_CommandID(cmdPaineIndex);
 
-                    TextType[2] = (int)swCommandTabButtonTextDisplay_e.swCommandTabButton_TextHorizontal | (int)swCommandTabButtonFlyoutStyle_e.swCommandTabButton_ActionFlyout;
+                    TextType[2] = (int)swCommandTabButtonTextDisplay_e.swCommandTabButton_TextHorizontal;
+
+                    cmdIDs[3] = cmdGroup.ToolbarId;
+
+                    TextType[3] = (int)swCommandTabButtonTextDisplay_e.swCommandTabButton_TextHorizontal | (int)swCommandTabButtonFlyoutStyle_e.swCommandTabButton_ActionFlyout;
 
                     bResult = cmdBox.AddCommands(cmdIDs, TextType);
-
-
 
                     CommandTabBox cmdBox1 = cmdTab.AddCommandTabBox();
                     cmdIDs = new int[1];
@@ -321,16 +336,14 @@ namespace PaineTool
                     bResult = cmdBox1.AddCommands(cmdIDs, TextType);
 
                     cmdTab.AddSeparator(cmdBox1, cmdIDs[0]);
-
                 }
-
             }
 
             // Create a third-party icon in the context-sensitive menus of faces in parts
             // To see this menu, right click on any face in the part
             Frame swFrame;
 
-            swFrame = iSwApp.Frame();
+            swFrame = (Frame)iSwApp.Frame();
             bResult = swFrame.AddMenuPopupIcon3((int)swDocumentTypes_e.swDocPART, (int)swSelectType_e.swSelFACES, "third-party context-sensitive CSharp", addinID,
                                                 "PopupCallbackFunction", "PopupEnable", "", cmdGroup.MainIconList);
 
@@ -354,7 +367,6 @@ namespace PaineTool
             bResult = iSwApp.AddItemToThirdPartyPopupMenu2(registerID, (int)swDocumentTypes_e.swDocPART, "", addinID, "TestCallback", "EnableTest", "", "NoOp", mainIcons[0], (int)swMenuItemType_e.swMenuItemType_Default);
 
             thisAssembly = null;
-
         }
 
         public void RemoveCommandMgr()
@@ -379,7 +391,6 @@ namespace PaineTool
             }
             else
             {
-
                 for (int i = 0; i < addinList.Count; i++)
                 {
                     if (addinList[i] != storedList[i])
@@ -394,6 +405,13 @@ namespace PaineTool
         public Boolean AddPMP()
         {
             ppage = new UserPMPage(this);
+
+            return true;
+        }
+
+        public Boolean AddNewFeaturePMP()
+        {
+            newFeaturePmPage = new NewFeaturePMPage(this);
             return true;
         }
 
@@ -403,9 +421,10 @@ namespace PaineTool
             return true;
         }
 
-        #endregion
+        #endregion UI Methods
 
         #region UI Callbacks
+
         public void CreateCube()
         {
             //make sure we have a part open
@@ -470,6 +489,17 @@ namespace PaineTool
                 ppage.Show();
         }
 
+        public void CreateNewFeature()
+        {
+            if (newFeaturePmPage != null)
+                newFeaturePmPage.Show();
+            else
+            {
+                newFeaturePmPage = new NewFeaturePMPage(this);
+                newFeaturePmPage.Show();
+            }
+        }
+
         public int EnablePMP()
         {
             if (iSwApp.ActiveDoc != null)
@@ -484,8 +514,8 @@ namespace PaineTool
             flyGroup.RemoveAllCommandItems();
 
             flyGroup.AddCommandItem(System.DateTime.Now.ToLongTimeString(), "test", 0, "FlyoutCommandItem1", "FlyoutEnableCommandItem1");
-
         }
+
         public int FlyoutEnable()
         {
             return 1;
@@ -500,9 +530,11 @@ namespace PaineTool
         {
             return 1;
         }
-        #endregion
+
+        #endregion UI Callbacks
 
         #region Event Methods
+
         public bool AttachEventHandlers()
         {
             AttachSwEvents();
@@ -529,8 +561,6 @@ namespace PaineTool
             }
         }
 
-
-
         private bool DetachSwEvents()
         {
             try
@@ -547,7 +577,6 @@ namespace PaineTool
                 Console.WriteLine(e.Message);
                 return false;
             }
-
         }
 
         public void AttachEventsToAllDocuments()
@@ -639,9 +668,11 @@ namespace PaineTool
             }
             return true;
         }
-        #endregion
+
+        #endregion Event Methods
 
         #region Event Handlers
+
         //Events
         public int OnDocChange()
         {
@@ -653,7 +684,7 @@ namespace PaineTool
             return 0;
         }
 
-        int FileOpenPostNotify(string FileName)
+        private int FileOpenPostNotify(string FileName)
         {
             AttachEventsToAllDocuments();
             return 0;
@@ -670,7 +701,6 @@ namespace PaineTool
             return 0;
         }
 
-        #endregion
+        #endregion Event Handlers
     }
-
 }
