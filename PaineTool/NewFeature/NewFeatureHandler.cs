@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 using SolidWorks.Interop.sldworks;
 using SolidWorks.Interop.swconst;
 using SolidWorks.Interop.swpublished;
@@ -15,7 +16,7 @@ namespace PaineTool.NewFeature
 
         public static NewFeaturePMPage newFeaturePmPage;
 
-        public bool isModify = false;
+        public static bool isModify = false;
 
         private static MacroFeatureData featureData = null;
 
@@ -36,6 +37,14 @@ namespace PaineTool.NewFeature
             newFeaturePmPage = npage;
         }
 
+        public NewFeatureHandler(SwAddin addin, NewFeaturePMPage npage, bool isthisModify)
+        {
+            userAddin = addin;
+            iSwApp = (ISldWorks)userAddin.SwApp;
+            newFeaturePmPage = npage;
+            isModify = isthisModify;
+        }
+
         public void AfterActivation()
         {
             //throw new NotImplementedException();
@@ -45,16 +54,21 @@ namespace PaineTool.NewFeature
         {
             //throw new NotImplementedException();
 
-            if (isModify == true && featureData != null)
+            if ((Reason == 2 && featureData != null) || (isModify == true && featureData != null))
             {
+                //newFeaturePmPage.numberSize.Value
+
                 featureData.ReleaseSelectionAccess();
+            }
+            else if (isModify == false)
+            {
+                AddMacroFeature();
             }
         }
 
         public void AfterClose()
         {
             //throw new NotImplementedException();
-            AddMacroFeature();
         }
 
         public bool OnHelp()
@@ -589,9 +603,11 @@ namespace PaineTool.NewFeature
 
         public object Edit(object app, object modelDoc, object feature)
         {
+            MessageBox.Show("Edit Called");
             var f = (Feature)feature;
             //MacroFeatureData featData = (MacroFeatureData)f.GetDefinition();
             featureData = (MacroFeatureData)f.GetDefinition();
+            isModify = true;
             newFeaturePmPage.Show(featureData, modelDoc);
 
             return true;
@@ -599,12 +615,15 @@ namespace PaineTool.NewFeature
 
         public object Regenerate(object app, object modelDoc, object feature)
         {
+            MessageBox.Show("Regenerate Called");
             return true;
         }
 
         public object Security(object app, object modelDoc, object feature)
         {
-            return true;
+            //  MessageBox.Show("Security Called");
+
+            return swMacroFeatureSecurityOptions_e.swMacroFeatureSecurityByDefault;
         }
 
         #endregion AddNewFeature

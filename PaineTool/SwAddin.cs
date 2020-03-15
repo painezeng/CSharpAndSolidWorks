@@ -411,7 +411,8 @@ namespace PaineTool
 
         public Boolean AddNewFeaturePMP()
         {
-            newFeaturePmPage = new NewFeaturePMPage(this);
+            //新建并显示特征PMP页面
+            newFeaturePmPage = new NewFeaturePMPage(this, false);
             return true;
         }
 
@@ -495,7 +496,7 @@ namespace PaineTool
                 newFeaturePmPage.Show();
             else
             {
-                newFeaturePmPage = new NewFeaturePMPage(this);
+                newFeaturePmPage = new NewFeaturePMPage(this, false);
                 newFeaturePmPage.Show();
             }
         }

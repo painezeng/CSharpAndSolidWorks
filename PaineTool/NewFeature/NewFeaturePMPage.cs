@@ -44,14 +44,14 @@ namespace PaineTool.NewFeature
 
         #endregion Property Manager Page Controls
 
-        public NewFeaturePMPage(SwAddin addin)
+        public NewFeaturePMPage(SwAddin addin, bool isModify)
         {
             userAddin = addin;
 
             if (userAddin != null)
             {
                 iSwApp = (ISldWorks)userAddin.SwApp;
-                CreatePropertyManagerPage();
+                CreatePropertyManagerPage(isModify);
             }
             else
             {
@@ -59,13 +59,13 @@ namespace PaineTool.NewFeature
             }
         }
 
-        protected void CreatePropertyManagerPage()
+        protected void CreatePropertyManagerPage(bool isthisModify)
         {
             int errors = -1;
             int options = (int)swPropertyManagerPageOptions_e.swPropertyManagerOptions_OkayButton |
                 (int)swPropertyManagerPageOptions_e.swPropertyManagerOptions_CancelButton;
 
-            handler = new NewFeatureHandler(userAddin, this);
+            handler = new NewFeatureHandler(userAddin, this, isthisModify);
 
             swPropertyPage = (IPropertyManagerPage2)iSwApp.CreatePropertyManagerPage("MyNewFeature", options, handler, ref errors);
             if (swPropertyPage != null && errors == (int)swPropertyManagerPageStatus_e.swPropertyManagerPage_Okay)
