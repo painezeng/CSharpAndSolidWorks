@@ -268,12 +268,13 @@ namespace PaineTool
             cmdGroup.MainIconList = mainIcons;
             cmdGroup.IconList = icons;
 
+            // int menuToolbarOption = (int)(swCommandItemType_e.swMenuItem);
             int menuToolbarOption = (int)(swCommandItemType_e.swMenuItem | swCommandItemType_e.swToolbarItem);
             cmdIndex0 = cmdGroup.AddCommandItem2("CreateCube", -1, "Create a cube", "Create cube", 0, "CreateCube", "", mainItemID1, menuToolbarOption);
             cmdIndex1 = cmdGroup.AddCommandItem2("Show PMP", -1, "Display sample property manager", "Show PMP", 1, "ShowPMP", "EnablePMP", mainItemID2, menuToolbarOption);
             cmdPaineIndex = cmdGroup.AddCommandItem2("NewFeature", -1, "创建一个宏特征", "NewFeature", 2, "CreateNewFeature", "EnablePMP", mainItemID3, menuToolbarOption);
 
-            cmdGroup.HasToolbar = true;
+            //cmdGroup.HasToolbar = true;
             cmdGroup.HasMenu = true;
             cmdGroup.Activate();
 
@@ -335,7 +336,7 @@ namespace PaineTool
 
                     bResult = cmdBox1.AddCommands(cmdIDs, TextType);
 
-                    cmdTab.AddSeparator(cmdBox1, cmdIDs[0]);
+                    // cmdTab.AddSeparator(cmdBox1, cmdIDs[0]);
                 }
             }
 

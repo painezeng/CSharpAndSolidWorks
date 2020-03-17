@@ -13,7 +13,7 @@ namespace PaineTool.NewFeature
         //Local Objects
         private IPropertyManagerPage2 swPropertyPage = null;
 
-        private NewFeatureHandler handler = null;
+        public NewFeatureHandler handler = null;
         private ISldWorks iSwApp = null;
         private SwAddin userAddin = null;
 
@@ -65,9 +65,10 @@ namespace PaineTool.NewFeature
             int options = (int)swPropertyManagerPageOptions_e.swPropertyManagerOptions_OkayButton |
                 (int)swPropertyManagerPageOptions_e.swPropertyManagerOptions_CancelButton;
 
-            handler = new NewFeatureHandler(userAddin, this, isthisModify);
+            handler = new NewFeatureHandler(userAddin, this, isthisModify, null);
 
             swPropertyPage = (IPropertyManagerPage2)iSwApp.CreatePropertyManagerPage("MyNewFeature", options, handler, ref errors);
+
             if (swPropertyPage != null && errors == (int)swPropertyManagerPageStatus_e.swPropertyManagerPage_Okay)
             {
                 try
@@ -145,7 +146,7 @@ namespace PaineTool.NewFeature
             }
         }
 
-        public void Show(MacroFeatureData featData, Object modelDoc)
+        public void Show(MacroFeatureData featData, Object modelDoc, Feature fea)
         {
             object retParamNames = null;
             object retParamValues = null;
