@@ -23,15 +23,16 @@ namespace PaineTool.NewFeature
 
         public Feature feature = null;
 
-        public NewFeatureHandler(SwAddin addin)
-        {
-            userAddin = addin;
-            iSwApp = (ISldWorks)userAddin.SwApp;
-        }
+        //public NewFeatureHandler(SwAddin addin)
+        //{
+        //    userAddin = addin;
+        //    iSwApp = (ISldWorks)userAddin.SwApp;
+        //}
 
-        public NewFeatureHandler()
-        {
-        }
+        //public NewFeatureHandler()
+        //{
+        //    MessageBox.Show("create New feature handler.");
+        //}
 
         //public NewFeatureHandler(SwAddin addin, NewFeaturePMPage npage)
         //{
@@ -54,6 +55,7 @@ namespace PaineTool.NewFeature
             iSwApp = (ISldWorks)userAddin.SwApp;
             newFeaturePmPage = npage;
             isModify = isthisModify;
+
             if (isModify = true)
             {
                 feature = thisFeature;
@@ -94,7 +96,7 @@ namespace PaineTool.NewFeature
 
                 featureData.GetParameters(out retParamNames, out paramTypes, out retParamValues);
 
-                featureData.SetDoubleByName("Size", newFeaturePmPage.numberSize.Value);
+                featureData.SetDoubleByName("Size", newFeaturePmPage.Numbersizevalue);
 
                 // featureData.GetParameters(out retParamNames, out paramTypes, out retParamValues);
 
@@ -240,7 +242,7 @@ namespace PaineTool.NewFeature
             //throw new NotImplementedException();
             if (Id == 9)
             {
-                newFeaturePmPage.numberSize.Value = double.Parse(Text);
+                //newFeaturePmPage.numberSize.Value = double.Parse(Text);
             }
         }
 
@@ -250,7 +252,7 @@ namespace PaineTool.NewFeature
 
             if (Id == 9 && newFeaturePmPage != null)
             {
-                //newFeaturePmPage.numberSize.Value = Value;
+                newFeaturePmPage.Numbersizevalue = Value;
             }
         }
 
@@ -331,7 +333,6 @@ namespace PaineTool.NewFeature
 
         public void OnLostFocus(int Id)
         {
-            //throw new NotImplementedException();
         }
 
         public int OnWindowFromHandleControlCreated(int Id, bool Status)
@@ -353,105 +354,106 @@ namespace PaineTool.NewFeature
 
         private Boolean AddMacroFeature()
         {
-            IModelDoc2 moddoc;
-            IFeatureManager FeatMgr;
-            IFeature MacroFeature;
-            Object paramNames;
-            Object paramTypes;
-            Object paramValues;
-            string[] TparamNames = new string[3];
-            int[] TparamTypes = new int[3]; //Use int for 64 bit compatibility
-            string[] TparamValues = new string[3];
-            IBody2 editBody;
-            int opts;
-
-            moddoc = (IModelDoc2)iSwApp.ActiveDoc;
-            FeatMgr = (IFeatureManager)moddoc.FeatureManager;
-            ISelectionMgr swSelMgr = (ISelectionMgr)moddoc.SelectionManager;
-
-            if (swSelMgr.GetSelectedObjectCount() != 1)
+            try
             {
-                iSwApp.SendMsgToUser("Please select one face or plane");
+                IModelDoc2 moddoc;
+                IFeatureManager FeatMgr;
+                IFeature MacroFeature;
+                Object paramNames;
+                Object paramTypes;
+                Object paramValues;
+                string[] TparamNames = new string[1];
+                int[] TparamTypes = new int[1]; //Use int for 64 bit compatibility
+                double[] TparamValues = new double[1];
+                IBody2 editBody;
+                int opts;
 
-                return false;
+                moddoc = (IModelDoc2)iSwApp.ActiveDoc;
+                FeatMgr = (IFeatureManager)moddoc.FeatureManager;
+                ISelectionMgr swSelMgr = (ISelectionMgr)moddoc.SelectionManager;
+
+                if (swSelMgr.GetSelectedObjectCount() != 1)
+                {
+                    iSwApp.SendMsgToUser("Please select one face or plane");
+
+                    return false;
+                }
+
+                var selFace = swSelMgr.GetSelectedObject6(1, 1);
+
+                Feature[] swFeature = AddTMPBasePlaneFromSelectFace();
+
+                //Include only data that won't be available from geometry
+                TparamNames[0] = "Size";
+
+                TparamTypes[0] = (int)swMacroFeatureParamType_e.swMacroFeatureParamTypeDouble;
+
+                TparamValues[0] = newFeaturePmPage.Numbersizevalue;
+
+                paramNames = TparamNames;
+                paramTypes = TparamTypes;
+                paramValues = TparamValues;
+
+                string[] icos = new string[9];
+                icos[0] = @"FeatureIcon.bmp";
+                icos[1] = @"FeatureIcon.bmp";
+                icos[2] = @"FeatureIcon.bmp";
+                icos[3] = @"FeatureIcon.bmp";
+                icos[4] = @"FeatureIcon.bmp";
+                icos[5] = @"FeatureIcon.bmp";
+                icos[6] = @"FeatureIcon.bmp";
+                icos[7] = @"FeatureIcon.bmp";
+                icos[8] = @"FeatureIcon.bmp";
+
+                editBody = null;
+
+                opts = 0;
+
+                MacroFeature = FeatMgr.InsertMacroFeature3("New-Feature", "PaineTool.NewFeature.NewFeatureHandler", null, (paramNames), (paramTypes), (paramValues), null, null, editBody, icos, opts);
+                // MacroFeature = FeatMgr.InsertMacroFeature2("New-Feature", "PaineTool.NewFeature.NewFeatureHandler", null, (paramNames), (paramTypes), (paramValues), null, null, null, icos, opts);
+
+                //var featureDif = (MacroFeatureData)MacroFeature.GetDefinition();
+
+                // featureDif.GetSelectedObjects(Filter);
+
+                //var selObj = new DispatchWrapper[] { selFace }; ;
+                //var selObjMark = new int[] { 0 };
+                //var views = new IView[] { null };
+
+                //featureDif.SetSelections2(selObj, selObjMark, views);
+
+                //featureDif.SetSelections(selFace, 1);
+                if (MacroFeature == null)
+                {
+                    TparamNames = null;
+                    TparamTypes = null;
+                    TparamValues = null;
+                    return false;
+                }
+                foreach (var item in swFeature)
+                {
+                    // MessageBox.Show(item.Name);
+
+                    MacroFeature.MakeSubFeature(item);
+                }
+
+                // featureDif.ReleaseSelectionAccess();
+
+                TparamNames = null;
+                TparamTypes = null;
+                TparamValues = null;
+
+                return true;
             }
-
-            var selFace = swSelMgr.GetSelectedObject6(1, 1);
-
-            Feature[] swFeature = AddTMPBasePlaneFromSelectFace();
-
-            //Include only data that won't be available from geometry
-            TparamNames[0] = "Size";
-
-            TparamTypes[0] = (int)swMacroFeatureParamType_e.swMacroFeatureParamTypeDouble;
-
-            TparamValues[0] = newFeaturePmPage.numberSize.Value.ToString();
-            //TparamNames[0] = "Width";
-            //TparamNames[1] = "Offset";
-            //TparamNames[2] = "Depth";
-
-            //TparamTypes[0] = (int)swMacroFeatureParamType_e.swMacroFeatureParamTypeDouble;
-            //TparamTypes[1] = (int)swMacroFeatureParamType_e.swMacroFeatureParamTypeDouble;
-            //TparamTypes[2] = (int)swMacroFeatureParamType_e.swMacroFeatureParamTypeDouble;
-
-            ////Hard code the parameters for test,
-            ////but in practice get this from Property Manager Page
-            //TparamValues[0] = "0.01"; //Width
-            //TparamValues[1] = "0.005"; //Offset
-            //TparamValues[2] = "0.006"; //Depth
-
-            paramNames = TparamNames;
-            paramTypes = TparamTypes;
-            paramValues = TparamValues;
-
-            string[] icos = new string[9];
-            icos[0] = @"FeatureIcon.bmp";
-            icos[1] = @"FeatureIcon.bmp";
-            icos[2] = @"FeatureIcon.bmp";
-            icos[3] = @"FeatureIcon.bmp";
-            icos[4] = @"FeatureIcon.bmp";
-            icos[5] = @"FeatureIcon.bmp";
-            icos[6] = @"FeatureIcon.bmp";
-            icos[7] = @"FeatureIcon.bmp";
-            icos[8] = @"FeatureIcon.bmp";
-
-            editBody = null;
-
-            opts = 0;
-
-            MacroFeature = FeatMgr.InsertMacroFeature3("New-Feature", "PaineTool.NewFeature.NewFeatureHandler", null, (paramNames), (paramTypes), (paramValues), null, null, editBody, icos, opts);
-
-            //var featureDif = (MacroFeatureData)MacroFeature.GetDefinition();
-
-            // featureDif.GetSelectedObjects(Filter);
-
-            //var selObj = new DispatchWrapper[] { selFace }; ;
-            //var selObjMark = new int[] { 0 };
-            //var views = new IView[] { null };
-
-            //featureDif.SetSelections2(selObj, selObjMark, views);
-
-            //featureDif.SetSelections(selFace, 1);
-
-            foreach (var item in swFeature)
+            catch (Exception)
             {
-                // MessageBox.Show(item.Name);
-
-                MacroFeature.MakeSubFeature(item);
+                throw;
             }
-
-            // featureDif.ReleaseSelectionAccess();
-
-            TparamNames = null;
-            TparamTypes = null;
-            TparamValues = null;
-
-            return true;
         }
 
         public Feature[] AddTMPBasePlaneFromSelectFace()
         {
-            Feature[] tempFeatures = new Feature[2];
+            Feature[] tempFeatures = new Feature[1];
             //连接到Solidworks
 
             ModelDoc2 swModel = (ModelDoc2)iSwApp.ActiveDoc;

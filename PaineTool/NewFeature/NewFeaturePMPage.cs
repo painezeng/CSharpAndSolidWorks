@@ -29,8 +29,20 @@ namespace PaineTool.NewFeature
         private IPropertyManagerPageListbox list1;
 
         private IPropertyManagerPageSelectionbox selection1;
-        public IPropertyManagerPageNumberbox numberSize;
+        private IPropertyManagerPageNumberbox numberSize;
         public IPropertyManagerPageCombobox combo1;
+
+        /// <summary>
+        /// 尺寸
+        /// </summary>
+        private double numbersizevalue;
+
+        public double Numbersizevalue
+        {
+            get { return numbersizevalue; }
+
+            set { numbersizevalue = value; }
+        }
 
         //Control IDs
         // public const int group1ID = 0;
