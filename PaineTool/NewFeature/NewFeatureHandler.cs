@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using SolidWorks.Interop.sldworks;
@@ -43,18 +44,21 @@ namespace PaineTool.NewFeature
 
         public void OnClose(int Reason)
         {
-            //throw new NotImplementedException();
-
-            if (isModify == true && featureData != null)
-            {
-                featureData.ReleaseSelectionAccess();
-            }
         }
 
         public void AfterClose()
         {
             //throw new NotImplementedException();
-            AddMacroFeature();
+            if ((featureData != null) || (isModify == true && featureData != null))
+            {
+                //newFeaturePmPage.numberSize.Value
+
+                featureData.ReleaseSelectionAccess();
+            }
+            else if (isModify == false)
+            {
+                AddMacroFeature();
+            }
         }
 
         public bool OnHelp()
