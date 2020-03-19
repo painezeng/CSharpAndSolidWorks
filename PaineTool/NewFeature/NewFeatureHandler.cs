@@ -54,6 +54,8 @@ namespace PaineTool.NewFeature
                 //newFeaturePmPage.numberSize.Value
 
                 featureData.ReleaseSelectionAccess();
+
+                featureData = null;
             }
             else if (isModify == false)
             {
