@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
 using SolidWorks.Interop.sldworks;
 using SolidWorks.Interop.swconst;
 using SolidWorks.Interop.swpublished;
@@ -15,13 +14,11 @@ namespace PaineTool.NewFeature
         public static ISldWorks iSwApp;
         public static SwAddin userAddin;
 
-        public NewFeaturePMPage newFeaturePmPage;
+        public static NewFeaturePMPage newFeaturePmPage;
 
         public bool isModify = false;
 
-        public MacroFeatureData featureData = null;
-
-        public Feature feature = null;
+        private static MacroFeatureData featureData = null;
 
         public NewFeatureHandler(SwAddin addin)
         {
@@ -33,31 +30,11 @@ namespace PaineTool.NewFeature
         {
         }
 
-        //public NewFeatureHandler(SwAddin addin, NewFeaturePMPage npage)
-        //{
-        //    userAddin = addin;
-        //    iSwApp = (ISldWorks)userAddin.SwApp;
-        //    newFeaturePmPage = npage;
-        //}
-
-        //public NewFeatureHandler(SwAddin addin, NewFeaturePMPage npage, bool isthisModify)
-        //{
-        //    userAddin = addin;
-        //    iSwApp = (ISldWorks)userAddin.SwApp;
-        //    newFeaturePmPage = npage;
-        //    isModify = isthisModify;
-        //}
-
-        public NewFeatureHandler(SwAddin addin, NewFeaturePMPage npage, bool isthisModify, Feature thisFeature)
+        public NewFeatureHandler(SwAddin addin, NewFeaturePMPage npage)
         {
             userAddin = addin;
             iSwApp = (ISldWorks)userAddin.SwApp;
             newFeaturePmPage = npage;
-            isModify = isthisModify;
-            if (isModify = true)
-            {
-                feature = thisFeature;
-            }
         }
 
         public void AfterActivation()
@@ -67,107 +44,23 @@ namespace PaineTool.NewFeature
 
         public void OnClose(int Reason)
         {
-            if (Reason == 2)
-            {
-                featureData.ReleaseSelectionAccess();
-                return;
-            }
-
-            if (feature == null) //新建
-            {
-                AddMacroFeature();
-            }
-            else if (isModify == false) //取消
-            {
-                featureData.ReleaseSelectionAccess();
-            }
-            else if (isModify == true) //编辑确定
-            {
-                double size = 0;
-                //newFeaturePmPage.numberSize.Value
-
-                // featureData.GetDoubleByName("Size",out size);
-
-                object retParamNames = null;
-                object retParamValues = null;
-                object paramTypes = null;
-
-                featureData.GetParameters(out retParamNames, out paramTypes, out retParamValues);
-
-                featureData.SetDoubleByName("Size", newFeaturePmPage.numberSize.Value);
-
-                // featureData.GetParameters(out retParamNames, out paramTypes, out retParamValues);
-
-                // featureData.SetParameters(retParamNames, paramTypes, retParamValues);
-                if (feature != null)
-                {
-                    feature.ModifyDefinition(featureData, iSwApp.ActiveDoc, null);
-                }
-
-                featureData.ReleaseSelectionAccess();
-            }
-
-            //throw new NotImplementedException();
-
-            //if ((Reason == 2 && featureData != null) )
-            //{
-            //    double size = 0;
-            //    //newFeaturePmPage.numberSize.Value
-
-            //    // featureData.GetDoubleByName("Size",out size);
-
-            //    object retParamNames = null;
-            //    object retParamValues = null;
-            //    object paramTypes = null;
-
-            //    featureData.GetParameters(out retParamNames, out paramTypes, out retParamValues);
-
-            //    featureData.SetDoubleByName("Size", newFeaturePmPage.numberSize.Value);
-
-            //    // featureData.GetParameters(out retParamNames, out paramTypes, out retParamValues);
-
-            //    // featureData.SetParameters(retParamNames, paramTypes, retParamValues);
-            //    if (feature != null)
-            //    {
-            //        feature.ModifyDefinition(featureData, iSwApp.ActiveDoc, null);
-            //    }
-
-            //    featureData.ReleaseSelectionAccess();
-            //}
-            //else if (isModify == false)
-            //{
-            //    AddMacroFeature();
-            //}
-            //else if (isModify == true)
-            //{
-            //    double size = 0;
-            //    //newFeaturePmPage.numberSize.Value
-
-            //    // featureData.GetDoubleByName("Size",out size);
-
-            //    object retParamNames = null;
-            //    object retParamValues = null;
-            //    object paramTypes = null;
-
-            //    featureData.GetParameters(out retParamNames, out paramTypes, out retParamValues);
-
-            //    featureData.SetDoubleByName("Size", newFeaturePmPage.numberSize.Value);
-
-            //    // featureData.GetParameters(out retParamNames, out paramTypes, out retParamValues);
-
-            //    // featureData.SetParameters(retParamNames, paramTypes, retParamValues);
-            //    if (feature != null)
-            //    {
-            //        feature.ModifyDefinition(featureData, iSwApp.ActiveDoc, null);
-            //    }
-
-            //    featureData.ReleaseSelectionAccess();
-            //}
         }
 
         public void AfterClose()
         {
             //throw new NotImplementedException();
+            if ((featureData != null) || (isModify == true && featureData != null))
+            {
+                //newFeaturePmPage.numberSize.Value
+
+                featureData.ReleaseSelectionAccess();
+
+                featureData = null;
+            }
+            else if (isModify == false)
+            {
+                AddMacroFeature();
+            }
         }
 
         public bool OnHelp()
@@ -238,10 +131,6 @@ namespace PaineTool.NewFeature
         public void OnTextboxChanged(int Id, string Text)
         {
             //throw new NotImplementedException();
-            if (Id == 9)
-            {
-                newFeaturePmPage.numberSize.Value = double.Parse(Text);
-            }
         }
 
         public void OnNumberboxChanged(int Id, double Value)
@@ -250,7 +139,7 @@ namespace PaineTool.NewFeature
 
             if (Id == 9 && newFeaturePmPage != null)
             {
-                //newFeaturePmPage.numberSize.Value = Value;
+                newFeaturePmPage.numberSize.Value = Value;
             }
         }
 
@@ -704,41 +593,24 @@ namespace PaineTool.NewFeature
             return NewPt;
         }
 
-        public object Edit(object app, object modelDoc, object thisFeature)
+        public object Edit(object app, object modelDoc, object feature)
         {
-            // MessageBox.Show("Edit Called");
-            Debug.Print("Edit Called");
-            feature = (Feature)thisFeature;
+            var f = (Feature)feature;
             //MacroFeatureData featData = (MacroFeatureData)f.GetDefinition();
-            featureData = (MacroFeatureData)feature.GetDefinition();
-            isModify = true;
-            if (newFeaturePmPage == null)
-            {
-                newFeaturePmPage = new NewFeaturePMPage(userAddin, true);
-            }
-
-            newFeaturePmPage.handler.isModify = true;
-            newFeaturePmPage.handler.feature = feature;
-            newFeaturePmPage.handler.featureData = featureData;
-
-            newFeaturePmPage.Show(featureData, modelDoc, feature);
+            featureData = (MacroFeatureData)f.GetDefinition();
+            newFeaturePmPage.Show(featureData, modelDoc);
 
             return true;
         }
 
         public object Regenerate(object app, object modelDoc, object feature)
         {
-            // MessageBox.Show("Regenerate Called");
-            Debug.Print("Regenerate Called");
-
             return true;
         }
 
         public object Security(object app, object modelDoc, object feature)
         {
-            //  MessageBox.Show("Security Called");
-
-            return swMacroFeatureSecurityOptions_e.swMacroFeatureSecurityByDefault;
+            return true;
         }
 
         #endregion AddNewFeature
