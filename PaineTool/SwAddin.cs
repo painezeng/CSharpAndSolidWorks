@@ -272,6 +272,8 @@ namespace PaineTool
             int menuToolbarOption = (int)(swCommandItemType_e.swMenuItem | swCommandItemType_e.swToolbarItem);
             cmdIndex0 = cmdGroup.AddCommandItem2("CreateCube", -1, "Create a cube", "Create cube", 0, "CreateCube", "", mainItemID1, menuToolbarOption);
             cmdIndex1 = cmdGroup.AddCommandItem2("Show PMP", -1, "Display sample property manager", "Show PMP", 1, "ShowPMP", "EnablePMP", mainItemID2, menuToolbarOption);
+
+            //新的COMFeature特征按钮
             cmdPaineIndex = cmdGroup.AddCommandItem2("NewFeature", -1, "创建一个宏特征", "NewFeature", 2, "CreateNewFeature", "EnablePMP", mainItemID3, menuToolbarOption);
 
             //cmdGroup.HasToolbar = true;
@@ -491,8 +493,10 @@ namespace PaineTool
                 ppage.Show();
         }
 
+        //插入新的特征
         public void CreateNewFeature()
         {
+            //如果页面存在,则直接显示,否则新建一个并显示.
             if (newFeaturePmPage != null)
                 newFeaturePmPage.Show();
             else

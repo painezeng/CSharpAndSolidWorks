@@ -129,6 +129,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="EventHandling.cs" />
+    <Compile Include="NewFeature\EnumItem.cs" />
     <Compile Include="NewFeature\FaceEdgeInfos.cs" />
     <Compile Include="NewFeature\Geometry.cs" />
     <Compile Include="NewFeature\NewFeatureHandler.cs" />

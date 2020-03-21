@@ -32,6 +32,17 @@ namespace PaineTool.NewFeature
         public IPropertyManagerPageNumberbox numberSize;
         public IPropertyManagerPageCombobox combo1;
 
+        private string sizeValue;
+
+        public string SizeValue
+        {
+            get { return sizeValue; }
+            set
+            {
+                sizeValue = value;
+            }
+        }
+
         //Control IDs
         // public const int group1ID = 0;
 
@@ -44,6 +55,11 @@ namespace PaineTool.NewFeature
 
         #endregion Property Manager Page Controls
 
+        /// <summary>
+        /// 此页面的构造函数
+        /// </summary>
+        /// <param name="addin"></param>
+        /// <param name="isModify"></param>
         public NewFeaturePMPage(SwAddin addin, bool isModify)
         {
             userAddin = addin;
@@ -59,13 +75,17 @@ namespace PaineTool.NewFeature
             }
         }
 
+        /// <summary>
+        /// 创建页面 主函数
+        /// </summary>
+        /// <param name="isthisModify"></param>
         protected void CreatePropertyManagerPage(bool isthisModify)
         {
             int errors = -1;
             int options = (int)swPropertyManagerPageOptions_e.swPropertyManagerOptions_OkayButton |
                 (int)swPropertyManagerPageOptions_e.swPropertyManagerOptions_CancelButton;
 
-            handler = new NewFeatureHandler(userAddin, this, isthisModify, null);
+            handler = new NewFeatureHandler(userAddin, this);
 
             swPropertyPage = (IPropertyManagerPage2)iSwApp.CreatePropertyManagerPage("MyNewFeature", options, handler, ref errors);
 
@@ -84,6 +104,9 @@ namespace PaineTool.NewFeature
 
         //Controls are displayed on the page top to bottom in the order
         //in which they are added to the object.
+        /// <summary>
+        /// 增加所有控件到页面中
+        /// </summary>
         protected void AddControls()
         {
             short controlType = -1;
@@ -119,25 +142,29 @@ namespace PaineTool.NewFeature
             numberSize = (IPropertyManagerPageNumberbox)group1.AddControl(num1ID, controlType, "Sample Numberbox", align, options, "Allows for numerical input");
             if (numberSize != null)
             {
-                numberSize.Value = 50.0;
-                numberSize.SetRange((int)swNumberboxUnitType_e.swNumberBox_UnitlessDouble, 0.0, 100.0, 0.01, true);
+                numberSize.Value = 60;
+                //输入框 定义 最小值 最大值 ,以及增量
+                numberSize.SetRange((int)swNumberboxUnitType_e.swNumberBox_UnitlessDouble, 30, 100, 10, true);
             }
 
-            //combo1
-            controlType = (int)swPropertyManagerPageControlType_e.swControlType_Combobox;
-            align = (int)swPropertyManagerPageControlLeftAlign_e.swControlAlign_LeftEdge;
-            options = (int)swAddControlOptions_e.swControlOptions_Enabled |
-                      (int)swAddControlOptions_e.swControlOptions_Visible;
+            ////combo1
+            //controlType = (int)swPropertyManagerPageControlType_e.swControlType_Combobox;
+            //align = (int)swPropertyManagerPageControlLeftAlign_e.swControlAlign_LeftEdge;
+            //options = (int)swAddControlOptions_e.swControlOptions_Enabled |
+            //          (int)swAddControlOptions_e.swControlOptions_Visible;
 
-            combo1 = (IPropertyManagerPageCombobox)group1.AddControl(combo1ID, controlType, "Sample Combobox", align, options, "Combo list");
-            if (combo1 != null)
-            {
-                string[] items = { "40x40", "60x60", "80x80" };
-                combo1.AddItems(items);
-                combo1.Height = 50;
-            }
+            //combo1 = (IPropertyManagerPageCombobox)group1.AddControl(combo1ID, controlType, "Sample Combobox", align, options, "Combo list");
+            //if (combo1 != null)
+            //{
+            //    string[] items = { "40x40", "60x60", "80x80" };
+            //    combo1.AddItems(items);
+            //    combo1.Height = 50;
+            //}
         }
 
+        /// <summary>
+        /// 显示页面
+        /// </summary>
         public void Show()
         {
             if (swPropertyPage != null)
@@ -146,6 +173,12 @@ namespace PaineTool.NewFeature
             }
         }
 
+        /// <summary>
+        /// 这里是修改时,带特征数据来填充页面,然后显示PMP
+        /// </summary>
+        /// <param name="featData"></param>
+        /// <param name="modelDoc"></param>
+        /// <param name="fea"></param>
         public void Show(MacroFeatureData featData, Object modelDoc, Feature fea)
         {
             object retParamNames = null;
@@ -212,6 +245,11 @@ namespace PaineTool.NewFeature
             }
         }
 
+        /// <summary>
+        /// 这个是转换对象的
+        /// </summary>
+        /// <param name="objects"></param>
+        /// <returns></returns>
         public static DispatchWrapper[] ObjectArrayToDispatchWrapper(IEnumerable<object> objects)
 
         {

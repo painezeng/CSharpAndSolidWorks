@@ -17,8 +17,10 @@ namespace PaineTool.NewFeature
         public static NewFeaturePMPage newFeaturePmPage;
 
         public bool isModify = false;
+        public PMPResultStatus PmpResultStatus = PMPResultStatus.CreateFeautre_Cancel;
 
-        private static MacroFeatureData featureData = null;
+        public MacroFeatureData featureData = null;
+        public Feature feature = null;
 
         public NewFeatureHandler(SwAddin addin)
         {
@@ -42,24 +44,86 @@ namespace PaineTool.NewFeature
             //throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// 注意这个函数不能为空函数,最终的模型操作不要写在此函数中,solidworks易死掉.
+        /// </summary>
+        /// <param name="Reason"></param>
         public void OnClose(int Reason)
         {
+            try
+            {
+                featureData = newFeaturePmPage.handler.featureData;
+                feature = newFeaturePmPage.handler.feature;
+                if (featureData == null && Reason == 1)
+                {
+                    PmpResultStatus = PMPResultStatus.CreateFeautre_Ok;
+                }
+                else if (featureData == null && Reason == 2)
+                {
+                    PmpResultStatus = PMPResultStatus.CreateFeautre_Cancel;
+                }
+
+                if (featureData != null && Reason == 1)
+                {
+                    PmpResultStatus = PMPResultStatus.EditFeautre_OK;
+                }
+                else if (featureData != null && Reason == 2)
+                {
+                    PmpResultStatus = PMPResultStatus.EditFeautre_Cancel;
+                }
+            }
+            catch (Exception e)
+            {
+            }
         }
 
+        /// <summary>
+        /// 注意这个函数不能为空函数,最终的模型操作
+        /// </summary>
         public void AfterClose()
         {
-            //throw new NotImplementedException();
-            if ((featureData != null) || (isModify == true && featureData != null))
+            switch (PmpResultStatus)
             {
-                //newFeaturePmPage.numberSize.Value
+                case PMPResultStatus.CreateFeautre_Ok:
+                    AddMacroFeature();
+                    break;
 
-                featureData.ReleaseSelectionAccess();
+                case PMPResultStatus.CreateFeautre_Cancel:
 
-                featureData = null;
-            }
-            else if (isModify == false)
-            {
-                AddMacroFeature();
+                    break;
+
+                case PMPResultStatus.EditFeautre_Cancel:
+
+                    featureData.ReleaseSelectionAccess();
+
+                    featureData = null;
+
+                    break;
+
+                case PMPResultStatus.EditFeautre_OK:
+
+                    object retParamNames = null;
+                    object retParamValues = null;
+                    object paramTypes = null;
+
+                    featureData.GetParameters(out retParamNames, out paramTypes, out retParamValues);
+
+                    featureData.SetStringByName("Size", newFeaturePmPage.SizeValue);
+
+                    // featureData.GetParameters(out retParamNames, out paramTypes, out retParamValues);
+
+                    // featureData.SetParameters(retParamNames, paramTypes, retParamValues);
+
+                    if (feature != null)
+                    {
+                        feature.ModifyDefinition(featureData, iSwApp.ActiveDoc, null);
+                    }
+
+                    featureData.ReleaseSelectionAccess();
+
+                    newFeaturePmPage.handler.featureData = null;
+                    newFeaturePmPage.handler.feature = null;
+                    break;
             }
         }
 
@@ -139,7 +203,7 @@ namespace PaineTool.NewFeature
 
             if (Id == 9 && newFeaturePmPage != null)
             {
-                newFeaturePmPage.numberSize.Value = Value;
+                newFeaturePmPage.SizeValue = Value.ToString();
             }
         }
 
@@ -274,7 +338,7 @@ namespace PaineTool.NewFeature
 
             TparamTypes[0] = (int)swMacroFeatureParamType_e.swMacroFeatureParamTypeDouble;
 
-            TparamValues[0] = newFeaturePmPage.numberSize.Value.ToString();
+            TparamValues[0] = newFeaturePmPage.SizeValue;
             //TparamNames[0] = "Width";
             //TparamNames[1] = "Offset";
             //TparamNames[2] = "Depth";
@@ -522,45 +586,45 @@ namespace PaineTool.NewFeature
             return skFeature;
         }
 
-        ////画第二个草图,中点重合即可.
+        //画第二个草图,中点重合即可.
 
-        //private Feature DrawnSketchOnFace(ModelDoc2 swModel, double[] mousePoint, string SketchName, Entity swSelFaceEntity)
-        //{
-        //    swModel.SketchManager.InsertSketch(true);
+        private Feature DrawnSketchOnFace(ModelDoc2 swModel, double[] mousePoint, string SketchName, Entity swSelFaceEntity)
+        {
+            swModel.SketchManager.InsertSketch(true);
 
-        //    //通过两条相邻边来标注 创建点的位置
+            //通过两条相邻边来标注 创建点的位置
 
-        //    //1。 计算鼠标选中点到面的各边的距离。
+            //1。 计算鼠标选中点到面的各边的距离。
 
-        //    //Dictionary<Edge, double> pointToEdgeDim = new Dictionary<Edge, double>();
+            //Dictionary<Edge, double> pointToEdgeDim = new Dictionary<Edge, double>();
 
-        //    var selMousePt = (double[])TransformPoint(swModel.IGetActiveSketch2(), mousePoint[0], mousePoint[1], mousePoint[2]);
+            var selMousePt = (double[])TransformPoint(swModel.IGetActiveSketch2(), mousePoint[0], mousePoint[1], mousePoint[2]);
 
-        //    swModel.SketchManager.CreateCenterRectangle(selMousePt[0], selMousePt[1], selMousePt[2], selMousePt[0] + 0.03, selMousePt[1] + 0.03, selMousePt[2]);
+            swModel.SketchManager.CreateCenterRectangle(selMousePt[0], selMousePt[1], selMousePt[2], selMousePt[0] + 0.03, selMousePt[1] + 0.03, selMousePt[2]);
 
-        //    swModel.ClearSelection2(true);
+            swModel.ClearSelection2(true);
 
-        //    swModel.Extension.SelectByID2("Point1", "SKETCHPOINT", 0, 0, 0, false, 0, null, 0);
+            swModel.Extension.SelectByID2("Point1", "SKETCHPOINT", 0, 0, 0, false, 0, null, 0);
 
-        //    swModel.Extension.SelectByID2("Point1@" + SketchName, "EXTSKETCHPOINT", 0, 0, 0, true, 0, null, 0);
+            swModel.Extension.SelectByID2("Point1@" + SketchName, "EXTSKETCHPOINT", 0, 0, 0, true, 0, null, 0);
 
-        //    swModel.SketchAddConstraints("sgCOINCIDENT");//增加重合
+            swModel.SketchAddConstraints("sgCOINCIDENT");//增加重合
 
-        //    var skFeature = (Feature)swModel.IGetActiveSketch2();
+            var skFeature = (Feature)swModel.IGetActiveSketch2();
 
-        //    swModel.SketchManager.InsertSketch(true);
+            swModel.SketchManager.InsertSketch(true);
 
-        //    var boolstatus = swModel.InsertPlanarRefSurface();
+            var boolstatus = swModel.InsertPlanarRefSurface();
 
-        //    ISelectionMgr swSelMgr = (ISelectionMgr)swModel.SelectionManager;
+            ISelectionMgr swSelMgr = (ISelectionMgr)swModel.SelectionManager;
 
-        //    skFeature = (Feature)swSelMgr.GetSelectedObject6(1, 0);// swModel.FeatureByPositionReverse(0);
+            skFeature = (Feature)swSelMgr.GetSelectedObject6(1, 0);// swModel.FeatureByPositionReverse(0);
 
-        //    return skFeature;
-        //    //skFeature = swModel.FeatureByPositionReverse(0);
+            return skFeature;
+            //skFeature = swModel.FeatureByPositionReverse(0);
 
-        //    //return skFeature;
-        //}
+            //return skFeature;
+        }
 
         //把模型中的点转换到草图中的坐标。
         public object TransformPoint(Sketch Sketch1, double X, double Y, double Z)
@@ -593,21 +657,46 @@ namespace PaineTool.NewFeature
             return NewPt;
         }
 
-        public object Edit(object app, object modelDoc, object feature)
+        /// <summary>
+        /// 主动编辑时调用
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="modelDoc"></param>
+        /// <param name="feature"></param>
+        /// <returns></returns>
+        public object Edit(object app, object modelDoc, object feat)
         {
-            var f = (Feature)feature;
+            feature = (Feature)feat;
             //MacroFeatureData featData = (MacroFeatureData)f.GetDefinition();
-            featureData = (MacroFeatureData)f.GetDefinition();
-            newFeaturePmPage.Show(featureData, modelDoc);
+            featureData = (MacroFeatureData)feature.GetDefinition();
+            newFeaturePmPage.handler = this;
+
+            newFeaturePmPage.Show(featureData, modelDoc, feature);
 
             return true;
         }
 
+        /// <summary>
+        /// 更新时调用,当有关联的特征更新时也会调用.
+        /// 注意使用Try 和GC回收
+        ///
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="modelDoc"></param>
+        /// <param name="feature"></param>
+        /// <returns></returns>
         public object Regenerate(object app, object modelDoc, object feature)
         {
             return true;
         }
 
+        /// <summary>
+        /// 安全性功能,经常会调用.可以控制是否能够删除.压缩.
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="modelDoc"></param>
+        /// <param name="feature"></param>
+        /// <returns></returns>
         public object Security(object app, object modelDoc, object feature)
         {
             return true;
