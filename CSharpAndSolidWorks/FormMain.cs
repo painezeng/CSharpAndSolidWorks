@@ -64,7 +64,8 @@ namespace CSharpAndSolidWorks
                     //关闭草图
                     swModel.SketchManager.InsertSketch(true);
 
-                    string myNewPartPath = @"C:\study\myNewPart.SLDPRT";
+                    //设定保存文件的完整路径
+                    string myNewPartPath = @"C:\myNewPart.SLDPRT";
 
                     //保存零件.
                     int longstatus = swModel.SaveAs3(myNewPartPath, 0, 1);
@@ -569,6 +570,7 @@ namespace CSharpAndSolidWorks
             for (int i = 0; i < vSketchSeg.Length; i++)
             {
                 swSketchSeg = (SketchSegment)vSketchSeg[i];
+
                 swSketchSeg.Select4(false, swSelData);
                 //删除关系
                 swModel.SketchConstraintsDelAll();
@@ -1677,5 +1679,74 @@ namespace CSharpAndSolidWorks
         }
 
         #endregion 修改全局变量所用到的方法
+
+        private void btnCreateSketch_Click(object sender, EventArgs e)
+        {
+            //如果没有打开文件，请执行打开和创建的操作：
+            //BtnOpenAndNew_Click(null, null);
+
+            //连接到Solidworks
+            ISldWorks swApp = Utility.ConnectToSolidWorks();
+
+            ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            //定义草图管理器
+            SketchManager sketchManager = swModel.SketchManager;
+
+            //按名字选择草图
+            bool boolstatus = swModel.Extension.SelectByID2("Sketch1", "SKETCH", 0, 0, 0, false, 0, null, 0);
+
+            if (boolstatus == true)
+            {
+                //编辑草图
+                sketchManager.InsertSketch(false);
+                //获取当前草图，当获取草图中的Segment对象
+                Sketch sketch = swModel.GetActiveSketch2();
+                object[] sketchSegments = sketch.GetSketchSegments();
+
+                if (sketchSegments != null)
+                {
+                    //遍历
+                    foreach (var skSeg in sketchSegments)
+                    {
+                        SketchSegment sketchSegment = (SketchSegment)skSeg;
+
+                        //判断是直线时执行
+                        if (sketchSegment.GetType() == (int)swSketchSegments_e.swSketchLINE)
+                        {
+                            SketchLine sketchLine = (SketchLine)sketchSegment;
+                            SketchPoint sketchPointStart = sketchLine.GetStartPoint2();
+                            SketchPoint sketchPointEnd = sketchLine.GetEndPoint2();
+
+                            //这里显示弹出坐标，单位默认是米
+                            MessageBox.Show(sketchPointStart.X.ToString() + "," + sketchPointStart.Y.ToString());
+                            MessageBox.Show(sketchPointEnd.X.ToString() + "," + sketchPointEnd.Y.ToString());
+
+                            SelectionMgr swSelMgr = swModel.SelectionManager;
+
+                            //定义选择数据
+                            SelectData swSelData = swSelMgr.CreateSelectData();
+
+                            //选择此直线
+
+                            sketchSegment.Select4(false, swSelData);
+
+                            //删除当前的约束关系
+                            swModel.SketchConstraintsDelAll();
+
+                            //下在我们来修改坐标
+                            sketchPointStart.X = 0.05;
+                            sketchPointStart.Y = 0.04;
+
+                            sketchPointEnd.X = 0.2;
+                            sketchPointEnd.Y = 0.2;
+                        }
+                    }
+                }
+
+                //退出草图
+                sketchManager.InsertSketch(true);
+            }
+        }
     }
 }
