@@ -1766,6 +1766,9 @@ namespace CSharpAndSolidWorks
             //钣金 变成平板模式的特征
             List<Feature> flatPatternFeatures = new List<Feature>();
 
+            //Bounding Box草图
+            List<string> boundingSketchesName = new List<string>();
+
             //获取当前钣金状态
 
             //swSMBendStateFlattened  2 = 弯曲变平；该模型回滚到FlattenBends功能之后，但恰好在相应的ProcessBends功能之前
@@ -1797,17 +1800,48 @@ namespace CSharpAndSolidWorks
                 {
                     var feat = (Feature)featArray[i];
                     Debug.Print("    " + feat.Name);
+
                     flatPatternFeatures.Add(feat);
-
                     feat.SetSuppression2((int)swFeatureSuppressionAction_e.swUnSuppressFeature, (int)swInConfigurationOpts_e.swThisConfiguration, null);
-                }
 
-                //if (flatPatternFolder !=null)
-                //{
-                //    for (int i = 0; i < flatPatternFolder.GetFlatPatternCount(); i++)
-                //    {
-                //    }
-                //}
+                    //解压子特征
+                    var swSubFeat = (Feature)feat.GetFirstSubFeature();
+
+                    while ((swSubFeat != null))
+                    {
+                        Debug.Print(swSubFeat.Name.ToString());
+                        switch (swSubFeat.GetTypeName())
+                        {
+                            //如果是草图
+                            case "ProfileFeature":
+
+                                var sketchSpc = (Sketch)swSubFeat.GetSpecificFeature2();
+                                object[] vSketchSeg = sketchSpc.GetSketchSegments();
+
+                                for (int j = 0; j < vSketchSeg.Length; j++)
+                                {
+                                    SketchSegment swSketchSeg = (SketchSegment)vSketchSeg[j];
+
+                                    //如果直线不是折弯线，说明是边界框
+                                    if (swSketchSeg.IsBendLine() == false)
+                                    {
+                                        boundingSketchesName.Add(swSubFeat.Name);
+                                    }
+                                    else if (swSketchSeg.IsBendLine() == true)
+                                    {
+                                        Debug.Print("钣金宽度为:" + swSketchSeg.GetLength() * 1000);
+                                    }
+                                }
+
+                                break;
+
+                            default:
+                                break;
+                        }
+
+                        swSubFeat = (Feature)swSubFeat.GetNextSubFeature();
+                    }
+                }
 
                 swModel.EditRebuild3();
             }
@@ -1844,11 +1878,14 @@ namespace CSharpAndSolidWorks
                         break;
 
                     case "SMBaseFlange":
+                        //var swBaseFlange = (BaseFlangeFeatureData)swFeat.GetDefinition();
+
+                        //Debug.Print("钣金宽度为:" + swBaseFlange.D1OffsetDistance * 1000);
 
                         break;
 
                     case "SheetMetal":
-                        //这里可以获取默认的厚度
+                        //这里可以获取默认的厚度                        Debug.Print(swFeat.Name.ToString());
                         SheetMetalFeatureData sheetMetalFeatureData = (SheetMetalFeatureData)swFeat.GetDefinition();
                         Debug.Print("钣金默认厚度为:" + sheetMetalFeatureData.Thickness * 1000);
 
@@ -1898,87 +1935,14 @@ namespace CSharpAndSolidWorks
                 item.SetSuppression2((int)swFeatureSuppressionAction_e.swSuppressFeature, (int)swInConfigurationOpts_e.swThisConfiguration, null);
             }
 
+            //判断总长。
+            //边界框 line1 and line2 是长度  line3 lin4 是宽度
+
             return;
 
             //设定当前钣金状态 正常
             swModel.SetBendState((int)swSMBendState_e.swSMBendStateFolded);
             swModel.EditRebuild3();
-
-            #region delete code
-
-            //swModel.PropertySheet();
-
-            //MathUtility swMathUtil = default(MathUtility);
-
-            //SelectionMgr swSelMgr = default(SelectionMgr);
-            //Feature swFeat = default(Feature);
-            //OneBendFeatureData swOneBend = default(OneBendFeatureData);
-            //Object[] vSketchSegs = null;
-            //SketchSegment swSketchSeg = default(SketchSegment);
-            //Sketch swSketch = default(Sketch);
-            //Feature swSketchFeat = default(Feature);
-            //SketchLine swSketchLine = default(SketchLine);
-            //SketchPoint swSkStartPt = default(SketchPoint);
-            //SketchPoint swSkEndPt = default(SketchPoint);
-            //SelectData swSelData = default(SelectData);
-            //double[] nPt = new double[3];
-            //MathPoint swStartPt = default(MathPoint);
-            //MathPoint swEndPt = default(MathPoint);
-            //MathTransform swSkXform = default(MathTransform);
-            //int[] vID = null;
-            //int i = 0;
-
-            //swMathUtil = (MathUtility)swApp.GetMathUtility();
-            //swModel = (ModelDoc2)swApp.ActiveDoc;
-            //swSelMgr = (SelectionMgr)swModel.SelectionManager;
-            //swFeat = (Feature)swSelMgr.GetSelectedObject6(1, -1);
-            //swSelData = swSelMgr.CreateSelectData();
-            //swOneBend = (OneBendFeatureData)swFeat.GetDefinition();
-            //Debug.Print("Type of bend (swBendType_e): " + swOneBend.GetType());
-            //Debug.Print("Number of sketch segments: " + swOneBend.GetFlatPatternSketchSegmentCount2());
-            //vSketchSegs = (Object[])swOneBend.FlatPatternSketchSegments2;
-
-            //for (i = 0; i <= vSketchSegs.GetUpperBound(0); i++)
-            //{
-            //    swSketchSeg = (SketchSegment)vSketchSegs[i];
-            //    swSketch = swSketchSeg.GetSketch();
-            //    swSketchLine = (SketchLine)swSketchSeg;
-            //    swSkStartPt = (SketchPoint)swSketchLine.GetStartPoint2();
-            //    swSkEndPt = (SketchPoint)swSketchLine.GetEndPoint2();
-            //    vID = (int[])swSketchSeg.GetID();
-
-            //    // Get sketch feature
-            //    swSketchFeat = (Feature)swSketch;
-            //    swSkXform = swSketch.ModelToSketchTransform;
-            //    swSkXform = (MathTransform)swSkXform.Inverse();
-
-            //    nPt[0] = swSkStartPt.X;
-            //    nPt[1] = swSkStartPt.Y;
-            //    nPt[2] = swSkStartPt.Z;
-            //    swStartPt = (MathPoint)swMathUtil.CreatePoint(nPt);
-            //    swStartPt = (MathPoint)swStartPt.MultiplyTransform(swSkXform);
-            //    double[] swStartPtArrayData;
-            //    swStartPtArrayData = (double[])swStartPt.ArrayData;
-
-            //    nPt[0] = swSkEndPt.X;
-            //    nPt[1] = swSkEndPt.Y;
-            //    nPt[2] = swSkEndPt.Z;
-            //    swEndPt = (MathPoint)swMathUtil.CreatePoint(nPt);
-            //    swEndPt = (MathPoint)swEndPt.MultiplyTransform(swSkXform);
-            //    double[] swEndPtArrayData;
-            //    swEndPtArrayData = (double[])swEndPt.ArrayData;
-
-            //    Debug.Print("File = " + swModel.GetPathName());
-            //    Debug.Print("  Feature = " + swFeat.Name + " [" + swFeat.GetTypeName2() + "]");
-            //    Debug.Print("    Sketch             = " + swSketchFeat.Name);
-            //    Debug.Print("    SegID              = [" + vID[0] + ", " + vID[1] + "]");
-            //    Debug.Print("    Start with respect to sketch   = (" + swSkStartPt.X * 1000.0 + ", " + swSkStartPt.Y * 1000.0 + ", " + swSkStartPt.Z * 1000.0 + ") mm");
-            //    Debug.Print("    End with respect to sketch   = (" + swSkEndPt.X * 1000.0 + ", " + swSkEndPt.Y * 1000.0 + ", " + swSkEndPt.Z * 1000.0 + ") mm");
-            //    Debug.Print("    Start with respect to model    = (" + swStartPtArrayData[0] * 1000.0 + ", " + swStartPtArrayData[1] * 1000.0 + ", " + swStartPtArrayData[2] * 1000.0 + ") mm");
-            //    Debug.Print("    End with respect to model    = (" + swEndPtArrayData[0] * 1000.0 + ", " + swEndPtArrayData[1] * 1000.0 + ", " + swEndPtArrayData[2] * 1000.0 + ") mm");
-            //}
-
-            #endregion delete code
         }
 
         private void GetHisBendInformation(ISldWorks swApp, ModelDoc2 swModel, Feature swFeat)
@@ -2028,6 +1992,15 @@ namespace CSharpAndSolidWorks
             Debug.Print("折弯序号: " + swOneBend.BendOrder);
             Debug.Print("折弯角度: " + swOneBend.BendAngle * 57.3 + " deg");
             Debug.Print("折弯圆角: " + swOneBend.BendRadius);
+
+            if (swOneBend.BendDown == true)
+            {
+                Debug.Print("向下折弯: " + "Yes");
+            }
+            else
+            {
+                Debug.Print("向下折弯: " + " No");
+            }
 
             vSketchSegs = (Object[])swOneBend.FlatPatternSketchSegments2;
 
