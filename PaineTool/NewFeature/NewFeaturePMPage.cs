@@ -1,4 +1,5 @@
-﻿using SolidWorks.Interop.sldworks;
+﻿using Microsoft.VisualBasic.CompilerServices;
+using SolidWorks.Interop.sldworks;
 using SolidWorks.Interop.swconst;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,8 @@ namespace PaineTool.NewFeature
         //Groups
         private IPropertyManagerPageGroup group1;
 
+        private IPropertyManagerPageGroup group2;
+
         private IPropertyManagerPageCheckbox checkbox1;
         private IPropertyManagerPageOption option1;
         private IPropertyManagerPageOption option2;
@@ -31,6 +34,8 @@ namespace PaineTool.NewFeature
         private IPropertyManagerPageSelectionbox selection1;
         public IPropertyManagerPageNumberbox numberSize;
         public IPropertyManagerPageCombobox combo1;
+
+        public PropertyManagerPageWindowFromHandle pm_MyPMPControl;
 
         private string sizeValue;
 
@@ -46,7 +51,8 @@ namespace PaineTool.NewFeature
         //Control IDs
         // public const int group1ID = 0;
 
-        public const int group2ID = 0;
+        public const int group1ID = 0;
+        public const int group2ID = 1;
 
         public const int selection1ID = 0;
 
@@ -116,7 +122,8 @@ namespace PaineTool.NewFeature
             options = (int)swAddGroupBoxOptions_e.swGroupBoxOptions_Expanded |
                       (int)swAddGroupBoxOptions_e.swGroupBoxOptions_Visible;
 
-            group1 = (IPropertyManagerPageGroup)swPropertyPage.AddGroupBox(group2ID, "Please select a face", options);
+            group1 = (IPropertyManagerPageGroup)swPropertyPage.AddGroupBox(group1ID, "Please select a face", options);
+            group2 = (IPropertyManagerPageGroup)swPropertyPage.AddGroupBox(group2ID, "", options);
 
             //Add controls to group2
             //selection1
@@ -147,6 +154,20 @@ namespace PaineTool.NewFeature
                 numberSize.SetRange((int)swNumberboxUnitType_e.swNumberBox_UnitlessDouble, 30, 100, 10, true);
             }
 
+            controlType = (int)swPropertyManagerPageControlType_e.swControlType_WindowFromHandle;
+            align = (int)swPropertyManagerPageControlLeftAlign_e.swControlAlign_LeftEdge;
+            options = (int)swAddControlOptions_e.swControlOptions_Enabled |
+                      (int)swAddControlOptions_e.swControlOptions_Visible;
+
+            pm_MyPMPControl = (PropertyManagerPageWindowFromHandle)group2.AddControl(90, controlType, "1122", align, options, "333444");
+            pm_MyPMPControl.Height = 90;
+            //pm_MyPMPControl.Height = 90;
+
+            //if (b == false)
+            //{
+            //    MessageBox.Show("Failed to add User control!");
+            //}
+
             ////combo1
             //controlType = (int)swPropertyManagerPageControlType_e.swControlType_Combobox;
             //align = (int)swPropertyManagerPageControlLeftAlign_e.swControlAlign_LeftEdge;
@@ -167,6 +188,12 @@ namespace PaineTool.NewFeature
         /// </summary>
         public void Show()
         {
+            MyPMPControl myPMPControl = new MyPMPControl(this);
+            // myPMPControl.Visible = true;
+            //myPMPControl.Show();
+
+            var b = pm_MyPMPControl.SetWindowHandlex64(myPMPControl.Handle.ToInt64());
+
             if (swPropertyPage != null)
             {
                 swPropertyPage.Show();
@@ -254,6 +281,14 @@ namespace PaineTool.NewFeature
 
         {
             return objects.Select(o => new DispatchWrapper(o)).ToArray();
+        }
+
+        public void showMyControl()
+        {
+            //NewLateBinding.LateSetComplex(this.pm_MyPMPControl, null, "visible", new object[]
+            //    {
+            //        true
+            //    }, null, null, false, true);
         }
     }
 }

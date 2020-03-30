@@ -41,6 +41,8 @@ namespace PaineTool.NewFeature
 
         public void AfterActivation()
         {
+            newFeaturePmPage.showMyControl();
+
             //throw new NotImplementedException();
         }
 

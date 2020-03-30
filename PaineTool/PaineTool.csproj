@@ -95,6 +95,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="SolidWorks.Interop.sldworks">
       <HintPath>..\dll\SolidWorks.Interop.sldworks.dll</HintPath>
       <EmbedInteropTypes>False</EmbedInteropTypes>
@@ -129,6 +130,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="EventHandling.cs" />
+    <Compile Include="MyPMPControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MyPMPControl.Designer.cs">
+      <DependentUpon>MyPMPControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="NewFeature\EnumItem.cs" />
     <Compile Include="NewFeature\FaceEdgeInfos.cs" />
     <Compile Include="NewFeature\Geometry.cs" />
@@ -145,6 +152,9 @@
     <EmbeddedResource Include="mainicon_64.png" />
     <EmbeddedResource Include="mainicon_96.png" />
     <EmbeddedResource Include="mainicon_128.png" />
+    <EmbeddedResource Include="MyPMPControl.resx">
+      <DependentUpon>MyPMPControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="toolbar20x.png" />
     <EmbeddedResource Include="toolbar32x.png" />
     <EmbeddedResource Include="toolbar40x.png" />
