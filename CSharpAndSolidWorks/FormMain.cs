@@ -1760,21 +1760,18 @@ namespace CSharpAndSolidWorks
             swApp.CommandInProgress = true;
             ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
 
-            //需要压缩的特征
-            List<Feature> needSuppressFeatures = new List<Feature>();
-
             //钣金 变成平板模式的特征
             List<Feature> flatPatternFeatures = new List<Feature>();
 
             //Bounding Box草图
             List<string> boundingSketchesName = new List<string>();
 
-            //获取当前钣金状态
+            //获取当前钣金状态--这个已经过时
 
             //swSMBendStateFlattened  2 = 弯曲变平；该模型回滚到FlattenBends功能之后，但恰好在相应的ProcessBends功能之前
-            //   swSMBendStateFolded 3 = 折弯处已折叠；模型回滚到FlattenBends ProcessBends功能对之后
+            //swSMBendStateFolded 3 = 折弯处已折叠；模型回滚到FlattenBends ProcessBends功能对之后
             //swSMBendStateNone   0 = 不是钣金零件；没有SheetMetal功能
-            //  swSMBendStateSharps 1 = 弯曲处处于锐利状态；零件回滚到第一个FlattenBends功能之前
+            //swSMBendStateSharps 1 = 弯曲处处于锐利状态；零件回滚到第一个FlattenBends功能之前
 
             var bendState = swModel.GetBendState();
 
@@ -1846,7 +1843,7 @@ namespace CSharpAndSolidWorks
                 swModel.EditRebuild3();
             }
 
-            //遍历所有特征，压缩掉圆角，以及拉伸 切除特征少于0.5的特征
+            //遍历所有特征
 
             var swSelMgr = (SelectionMgr)swModel.SelectionManager;
             var swFeat = (Feature)swModel.FirstFeature();
@@ -1857,26 +1854,6 @@ namespace CSharpAndSolidWorks
                 // Process top-level sheet metal features
                 switch (swFeat.GetTypeName())
                 {
-                    case "Fillet":
-
-                        needSuppressFeatures.Add(swFeat);
-
-                        break;
-
-                    case "Extrusion":
-
-                        needSuppressFeatures.Add(swFeat);
-                        break;
-
-                    case "Cut":
-                        var cutData = (IExtrudeFeatureData2)swFeat.GetDefinition();
-                        if (cutData.GetDepth(true) < 0.0005)
-                        {
-                            needSuppressFeatures.Add(swFeat);
-                        }
-
-                        break;
-
                     case "SMBaseFlange":
                         //var swBaseFlange = (BaseFlangeFeatureData)swFeat.GetDefinition();
 
@@ -1929,20 +1906,7 @@ namespace CSharpAndSolidWorks
                 swFeat = (Feature)swFeat.GetNextFeature();
             }
 
-            //压缩掉特征
-            foreach (var item in needSuppressFeatures)
-            {
-                item.SetSuppression2((int)swFeatureSuppressionAction_e.swSuppressFeature, (int)swInConfigurationOpts_e.swThisConfiguration, null);
-            }
-
-            //判断总长。
-            //边界框 line1 and line2 是长度  line3 lin4 是宽度
-
             return;
-
-            //设定当前钣金状态 正常
-            swModel.SetBendState((int)swSMBendState_e.swSMBendStateFolded);
-            swModel.EditRebuild3();
         }
 
         private void GetHisBendInformation(ISldWorks swApp, ModelDoc2 swModel, Feature swFeat)
