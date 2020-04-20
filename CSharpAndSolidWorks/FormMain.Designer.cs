@@ -68,6 +68,7 @@
             this.butGlobalVariables = new System.Windows.Forms.Button();
             this.btnCreateSketch = new System.Windows.Forms.Button();
             this.btnSheetmetal = new System.Windows.Forms.Button();
+            this.btnGetDimensionInfo = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -502,11 +503,23 @@
             this.btnSheetmetal.UseVisualStyleBackColor = true;
             this.btnSheetmetal.Click += new System.EventHandler(this.btnSheetmetal_Click);
             // 
+            // btnGetDimensionInfo
+            // 
+            this.btnGetDimensionInfo.Location = new System.Drawing.Point(814, 102);
+            this.btnGetDimensionInfo.Name = "btnGetDimensionInfo";
+            this.btnGetDimensionInfo.Size = new System.Drawing.Size(143, 31);
+            this.btnGetDimensionInfo.TabIndex = 30;
+            this.btnGetDimensionInfo.Text = "33. 读取尺寸信息";
+            this.btnGetDimensionInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnGetDimensionInfo.UseVisualStyleBackColor = true;
+            this.btnGetDimensionInfo.Click += new System.EventHandler(this.btnGetDimensionInfo_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1051, 397);
+            this.Controls.Add(this.btnGetDimensionInfo);
             this.Controls.Add(this.btnSheetmetal);
             this.Controls.Add(this.btnCreateSketch);
             this.Controls.Add(this.butGlobalVariables);
@@ -593,6 +606,7 @@
         private System.Windows.Forms.Button butGlobalVariables;
         private System.Windows.Forms.Button btnCreateSketch;
         private System.Windows.Forms.Button btnSheetmetal;
+        private System.Windows.Forms.Button btnGetDimensionInfo;
     }
 }
 

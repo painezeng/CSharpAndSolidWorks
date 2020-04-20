@@ -2008,5 +2008,63 @@ namespace CSharpAndSolidWorks
                 Debug.Print("    End with respect to model    = (" + swEndPtArrayData[0] * 1000.0 + ", " + swEndPtArrayData[1] * 1000.0 + ", " + swEndPtArrayData[2] * 1000.0 + ") mm");
             }
         }
+
+        private void btnGetDimensionInfo_Click(object sender, EventArgs e)
+        {
+            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            swApp.CommandInProgress = true;
+
+            ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            SelectionMgr selectionMgr = (SelectionMgr)swModel.SelectionManager;
+
+            //转换成尺寸显示对象
+            var swDisplayDimension = (DisplayDimension)selectionMgr.GetSelectedObject6(1, 0);
+
+            DisplayData displayData = (DisplayData)swDisplayDimension.GetDisplayData();
+
+            //获取尺寸上的文字
+            var anno = (Annotation)swDisplayDimension.GetAnnotation();
+
+            //获取所在视图  ---如果是图纸，这里会报错。需要用OwnerType来判断
+            var thisView = (View)anno.Owner;//
+
+            var textwidth = displayData.GetTextInBoxWidthAtIndex(0);
+
+            var textHeight = displayData.GetTextHeightAtIndex(0);
+
+            // dat.GetLineCount 几条线
+            var lineCount = displayData.GetLineCount();
+            var lineAngle = displayData.GetTextAngleAtIndex(0);
+            var linePoints = (double[])displayData.GetLineAtIndex(0);
+            var linePoints2 = (double[])displayData.GetLineAtIndex(1);
+            var textPoint = (double[])displayData.GetTextPositionAtIndex(0);
+
+            var thisDimAng = lineAngle * 180 / Math.PI;
+
+            //尺寸对象
+            var swDimension = (Dimension)swDisplayDimension.GetDimension();
+
+            //获取尺寸的公差
+            var cruToleranceType = swDimension.GetToleranceType();
+            var cruTolerance = swDimension.Tolerance;
+
+            if (cruToleranceType == (int)swTolType_e.swTolBILAT)
+            {
+                cruTolerance.GetMaxValue2(out double ToleranceValueMax); //上公差
+
+                cruTolerance.GetMinValue2(out double ToleranceValueMin);//下公差
+            }
+
+            var TextAll = swDisplayDimension.GetText((int)swDimensionTextParts_e.swDimensionTextAll);
+            var TextPrefix = swDisplayDimension.GetText((int)swDimensionTextParts_e.swDimensionTextPrefix);
+            var TextSuffix = swDisplayDimension.GetText((int)swDimensionTextParts_e.swDimensionTextSuffix);
+            var CalloutAbove = swDisplayDimension.GetText((int)swDimensionTextParts_e.swDimensionTextCalloutAbove);
+            var CalloutBelow = swDisplayDimension.GetText((int)swDimensionTextParts_e.swDimensionTextCalloutBelow);
+
+            var relValue = Math.Round(swDimension.GetSystemValue2("") * 1000, 3).ToString();
+
+            MessageBox.Show(relValue);
+        }
     }
 }
