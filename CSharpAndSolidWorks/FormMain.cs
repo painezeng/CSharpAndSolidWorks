@@ -3,6 +3,7 @@ using SolidWorks.Interop.swconst;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
@@ -2065,6 +2066,72 @@ namespace CSharpAndSolidWorks
             var relValue = Math.Round(swDimension.GetSystemValue2("") * 1000, 3).ToString();
 
             MessageBox.Show(relValue);
+        }
+
+        private void btnLayoutMgr_Click(object sender, EventArgs e)
+        {
+            ISldWorks swApp = Utility.ConnectToSolidWorks();
+
+            var swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            var swLayerMgr = (LayerMgr)swModel.GetLayerManager();
+
+            //获取当前图层数量
+            var layCount = swLayerMgr.GetCount();
+
+            var layerList = (String[])swLayerMgr.GetLayerList();
+
+            foreach (var lay in layerList)
+            {
+                var currentLayer = swLayerMgr.GetLayer(lay);
+                if (currentLayer != null)
+                {
+                    var currentName = currentLayer.Name;
+                    //颜色的Ref值
+                    var currentColor = currentLayer.Color;
+                    var currentDesc = currentLayer.Description;
+
+                    //swLineStyles_e 对应的值
+                    var currentStype = Enum.GetName(typeof(swLineStyles_e), currentLayer.Style);
+
+                    var currentWidth = currentLayer.Width;
+
+                    int refcolor = currentColor;
+                    int blue = refcolor >> 16 & 255;
+                    int green = refcolor >> 8 & 255;
+                    int red = refcolor & 255;
+                    int colorARGB = 255 << 24 | (int)red << 16 | (int)green << 8 | (int)blue;
+
+                    //得到对应的RGB值
+                    Color ARGB = Color.FromArgb(colorARGB);  //得到结果
+
+                    Debug.Print($"图层名称：{currentName}");
+                    Debug.Print($"图层颜色：R {ARGB.R},G {ARGB.G} ,B {ARGB.B}");
+                    Debug.Print($"图层描述：{currentDesc}");
+                    Debug.Print($"图层线型：{currentStype}");
+                    Debug.Print($"-------------------------------------");
+                }
+            }
+
+            //下面来建图层。
+
+            var swDrawing = (DrawingDoc)swModel;
+
+            // var colorString = "Purple";
+            Color color = Color.Purple; //System.Drawing.ColorTranslator.FromHtml(colorString); 如果是字符串可以通过这转
+            //给定的
+            int colorInt = color.ToArgb();
+            int red2 = colorInt >> 16 & 255;
+            int green2 = colorInt >> 8 & 255;
+            int blue2 = colorInt & 255;
+            int refcolor2 = (int)blue2 << 16 | (int)green2 << 8 | (int)red2;
+
+            var bRes = swDrawing.CreateLayer2("NewPurple", "New Purple Layout ", (int)refcolor2, (int)swLineStyles_e.swLineCONTINUOUS, (int)swLineWeights_e.swLW_NORMAL, true, true);
+
+            if (bRes == true)
+            {
+                Debug.Print($"图层已经创建");
+            }
         }
     }
 }
