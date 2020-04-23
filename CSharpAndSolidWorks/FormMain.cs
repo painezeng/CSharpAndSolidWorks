@@ -1308,6 +1308,23 @@ namespace CSharpAndSolidWorks
             //其它读取属性请参考博文 读取零件属性 ->BtnGetPartData_Click
 
             MessageBox.Show(viewModel.GetPathName());
+
+            //下面是导出，如果不需要请注释掉以下代码。
+            int error = 0;
+            int warnings = 0;
+
+            var stepName = System.IO.Path.GetFileNameWithoutExtension(viewModel.GetPathName());
+
+            var bRes = viewModel.Extension.SaveAs($@"D:\{stepName}.step", (int)swSaveAsVersion_e.swSaveAsCurrentVersion, (int)swSaveAsOptions_e.swSaveAsOptions_Silent, null, ref error, ref warnings);
+
+            if (bRes == true)
+            {
+                MessageBox.Show("Export step Done!");
+            }
+            else
+            {
+                MessageBox.Show("Export Error!");
+            }
         }
 
         private void btn_Part_Export_Click(object sender, EventArgs e)
