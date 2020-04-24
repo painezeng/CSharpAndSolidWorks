@@ -9,24 +9,48 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaineTool", "PaineTool\Pain
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InsertDrawingNote", "CSharpAndSolidWorks\InsertDrawingNote\InsertDrawingNote.csproj", "{1645944C-40E0-4A01-ACA3-D62A35E01A97}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MyeDrawing", "CSharpAndSolidWorks\eDrawingDLL\MyeDrawing.vbproj", "{3595E4AE-C36F-4690-A423-3F2192C94BC0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
 		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{646B6723-C58E-40B1-BCA9-3817F73E5F88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{646B6723-C58E-40B1-BCA9-3817F73E5F88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{646B6723-C58E-40B1-BCA9-3817F73E5F88}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{646B6723-C58E-40B1-BCA9-3817F73E5F88}.Debug|x64.Build.0 = Debug|Any CPU
 		{646B6723-C58E-40B1-BCA9-3817F73E5F88}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{646B6723-C58E-40B1-BCA9-3817F73E5F88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{646B6723-C58E-40B1-BCA9-3817F73E5F88}.Release|x64.ActiveCfg = Release|Any CPU
+		{646B6723-C58E-40B1-BCA9-3817F73E5F88}.Release|x64.Build.0 = Release|Any CPU
 		{7ACEDAA9-2DE8-4485-837A-E7D58812A6DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7ACEDAA9-2DE8-4485-837A-E7D58812A6DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7ACEDAA9-2DE8-4485-837A-E7D58812A6DC}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7ACEDAA9-2DE8-4485-837A-E7D58812A6DC}.Debug|x64.Build.0 = Debug|Any CPU
 		{7ACEDAA9-2DE8-4485-837A-E7D58812A6DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7ACEDAA9-2DE8-4485-837A-E7D58812A6DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7ACEDAA9-2DE8-4485-837A-E7D58812A6DC}.Release|x64.ActiveCfg = Release|Any CPU
+		{7ACEDAA9-2DE8-4485-837A-E7D58812A6DC}.Release|x64.Build.0 = Release|Any CPU
 		{1645944C-40E0-4A01-ACA3-D62A35E01A97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1645944C-40E0-4A01-ACA3-D62A35E01A97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1645944C-40E0-4A01-ACA3-D62A35E01A97}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1645944C-40E0-4A01-ACA3-D62A35E01A97}.Debug|x64.Build.0 = Debug|Any CPU
 		{1645944C-40E0-4A01-ACA3-D62A35E01A97}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1645944C-40E0-4A01-ACA3-D62A35E01A97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1645944C-40E0-4A01-ACA3-D62A35E01A97}.Release|x64.ActiveCfg = Release|Any CPU
+		{1645944C-40E0-4A01-ACA3-D62A35E01A97}.Release|x64.Build.0 = Release|Any CPU
+		{3595E4AE-C36F-4690-A423-3F2192C94BC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3595E4AE-C36F-4690-A423-3F2192C94BC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3595E4AE-C36F-4690-A423-3F2192C94BC0}.Debug|x64.ActiveCfg = Debug|x64
+		{3595E4AE-C36F-4690-A423-3F2192C94BC0}.Debug|x64.Build.0 = Debug|x64
+		{3595E4AE-C36F-4690-A423-3F2192C94BC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3595E4AE-C36F-4690-A423-3F2192C94BC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3595E4AE-C36F-4690-A423-3F2192C94BC0}.Release|x64.ActiveCfg = Release|x64
+		{3595E4AE-C36F-4690-A423-3F2192C94BC0}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

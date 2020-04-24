@@ -169,6 +169,10 @@
     <None Include="Resources\bomlist.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="eDrawingDLL\MyeDrawing.vbproj">
+      <Project>{3595e4ae-c36f-4690-a423-3f2192c94bc0}</Project>
+      <Name>MyeDrawing</Name>
+    </ProjectReference>
     <ProjectReference Include="InsertDrawingNote\InsertDrawingNote.csproj">
       <Project>{1645944c-40e0-4a01-aca3-d62a35e01a97}</Project>
       <Name>InsertDrawingNote</Name>
