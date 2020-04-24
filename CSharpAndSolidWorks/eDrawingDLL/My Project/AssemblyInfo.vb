@@ -8,11 +8,11 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("Synvenitve")> 
+<Assembly: AssemblyTitle("")> 
 <Assembly: AssemblyDescription("")>
-<Assembly: AssemblyCompany("DASSAULT SYSTEMES")>
-<Assembly: AssemblyProduct("WindowsApplication1")>
-<Assembly: AssemblyCopyright("Copyright © DASSAULT SYSTEMES 2017")>
+<Assembly: AssemblyCompany("")>
+<Assembly: AssemblyProduct("")>
+<Assembly: AssemblyCopyright("")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(true)>
