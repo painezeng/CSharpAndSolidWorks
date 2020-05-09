@@ -70,6 +70,7 @@
             this.btnSheetmetal = new System.Windows.Forms.Button();
             this.btnGetDimensionInfo = new System.Windows.Forms.Button();
             this.btnLayoutMgr = new System.Windows.Forms.Button();
+            this.btnGetPreview = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -526,11 +527,23 @@
             this.btnLayoutMgr.UseVisualStyleBackColor = true;
             this.btnLayoutMgr.Click += new System.EventHandler(this.btnLayoutMgr_Click);
             // 
+            // btnGetPreview
+            // 
+            this.btnGetPreview.Location = new System.Drawing.Point(814, 194);
+            this.btnGetPreview.Name = "btnGetPreview";
+            this.btnGetPreview.Size = new System.Drawing.Size(143, 29);
+            this.btnGetPreview.TabIndex = 32;
+            this.btnGetPreview.Text = "35.获取预览图";
+            this.btnGetPreview.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnGetPreview.UseVisualStyleBackColor = true;
+            this.btnGetPreview.Click += new System.EventHandler(this.btnGetPreview_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1051, 397);
+            this.ClientSize = new System.Drawing.Size(1215, 397);
+            this.Controls.Add(this.btnGetPreview);
             this.Controls.Add(this.btnLayoutMgr);
             this.Controls.Add(this.btnGetDimensionInfo);
             this.Controls.Add(this.btnSheetmetal);
@@ -621,6 +634,7 @@
         private System.Windows.Forms.Button btnSheetmetal;
         private System.Windows.Forms.Button btnGetDimensionInfo;
         private System.Windows.Forms.Button btnLayoutMgr;
+        private System.Windows.Forms.Button btnGetPreview;
     }
 }
 

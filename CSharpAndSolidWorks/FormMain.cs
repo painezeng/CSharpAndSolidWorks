@@ -11,6 +11,7 @@ using System.Text;
 using System.Windows.Forms;
 using SolidWorks.Interop.swcommands;
 using View = SolidWorks.Interop.sldworks.View;
+using SolidWorks.Interop.swdocumentmgr;
 
 namespace CSharpAndSolidWorks
 {
@@ -2149,6 +2150,117 @@ namespace CSharpAndSolidWorks
             {
                 Debug.Print($"图层已经创建");
             }
+        }
+
+        private void btnGetPreview_Click(object sender, EventArgs e)
+        {
+            // ISldWorks swApp = Utility.ConnectToSolidWorks();
+
+            string fileName = @"D:\09_Study\CSharpAndSolidWorks\CSharpAndSolidWorks\TemplateModel\bodies.sldasm";
+            string bitmapPathName = @"D:\09_Study\CSharpAndSolidWorks\CSharpAndSolidWorks\TemplateModel\bodies.bmp";
+
+            #region 第一种 solidworks的GetPreviewBitmapFile
+
+            //此处路径请自己确保存在。
+
+            //string configName = "Default";
+
+            //
+
+            //var status = swApp.GetPreviewBitmapFile(fileName, configName, bitmapPathName);
+
+            //if (System.IO.File.Exists(bitmapPathName))
+            //{
+            //    swApp.SendMsgToUser("预览图获取完成。");
+            //}
+
+            #endregion 第一种 solidworks的GetPreviewBitmapFile
+
+            #region 第二种 系统获取
+
+            //string path = ThumbnailHelper.GetInstance().GetJPGThumbnail(fileName);
+
+            ////这里自己再调用窗口预览就可以了
+            //Debug.Print(path);
+
+            #endregion 第二种 系统获取
+
+            #region 第三种 DocumentMgr
+
+            const string sLicenseKey = "your_license_key";//如果正版用户，请联系代理商申请。
+
+            string sDocFileName = fileName;
+
+            SwDMClassFactory swClassFact = default(SwDMClassFactory);
+            SwDMApplication swDocMgr = default(SwDMApplication);
+            SwDMDocument swDoc = default(SwDMDocument);
+            SwDMDocument10 swDoc10 = default(SwDMDocument10);
+            SwDmDocumentType nDocType = 0;
+            SwDmDocumentOpenError nRetVal = 0;
+            SwDmPreviewError nError = 0;
+
+            // Determine type of SOLIDWORKS file based on file extension
+            if (sDocFileName.EndsWith("sldprt"))
+            {
+                nDocType = SwDmDocumentType.swDmDocumentPart;
+            }
+            else if (sDocFileName.EndsWith("sldasm"))
+            {
+                nDocType = SwDmDocumentType.swDmDocumentAssembly;
+            }
+            else if (sDocFileName.EndsWith("slddrw"))
+            {
+                nDocType = SwDmDocumentType.swDmDocumentDrawing;
+            }
+            else
+            {
+                // Probably not a SOLIDWORKS file,
+                // so cannot open
+                nDocType = SwDmDocumentType.swDmDocumentUnknown;
+                return;
+            }
+
+            swClassFact = new SwDMClassFactory();
+            swDocMgr = (SwDMApplication)swClassFact.GetApplication(sLicenseKey);
+            swDoc = (SwDMDocument)swDocMgr.GetDocument(sDocFileName, nDocType, true, out nRetVal);
+            Debug.Print("File = " + swDoc.FullName);
+            Debug.Print("  Version          = " + swDoc.GetVersion());
+            Debug.Print("  Author           = " + swDoc.Author);
+            Debug.Print("  Comments         = " + swDoc.Comments);
+            Debug.Print("  CreationDate     = " + swDoc.CreationDate);
+            Debug.Print("  Keywords         = " + swDoc.Keywords);
+            Debug.Print("  LastSavedBy      = " + swDoc.LastSavedBy);
+            Debug.Print("  LastSavedDate    = " + swDoc.LastSavedDate);
+            Debug.Print("  Subject          = " + swDoc.Subject);
+            Debug.Print("  Title            = " + swDoc.Title);
+
+            swDoc10 = (SwDMDocument10)swDoc;
+            // SwDMDocument10::GetPreviewBitmap throws an unmanaged COM exception
+            // for out-of-process C# console applications
+            // Use the following code in SOLIDWORKS C# macros and add-ins
+            object objBitMap = swDoc10.GetPreviewBitmap(out nError);
+            System.Drawing.Image imgPreview = PictureDispConverter.Convert(objBitMap);
+            imgPreview.Save(bitmapPathName, System.Drawing.Imaging.ImageFormat.Bmp);
+            imgPreview.Dispose();
+
+            Debug.Print("    Preview stream   = " + swDoc10.PreviewStreamName);
+
+            #endregion 第三种 DocumentMgr
+        }
+    }
+
+    public class PictureDispConverter : System.Windows.Forms.AxHost
+    {
+        public PictureDispConverter()
+            : base("56174C86-1546-4778-8EE6-B6AC606875E7")
+        {
+        }
+
+        public static System.Drawing.Image Convert(object objIDispImage)
+        {
+            System.Drawing.Image objPicture = default(System.Drawing.Image);
+            objPicture = (System.Drawing.Image)System.Windows.Forms.AxHost.GetPictureFromIPicture(objIDispImage);
+            return objPicture;
         }
     }
 }
