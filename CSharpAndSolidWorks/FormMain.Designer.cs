@@ -71,6 +71,7 @@
             this.btnGetDimensionInfo = new System.Windows.Forms.Button();
             this.btnLayoutMgr = new System.Windows.Forms.Button();
             this.btnGetPreview = new System.Windows.Forms.Button();
+            this.btnDeleteFeature = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -538,11 +539,22 @@
             this.btnGetPreview.UseVisualStyleBackColor = true;
             this.btnGetPreview.Click += new System.EventHandler(this.btnGetPreview_Click);
             // 
+            // btnDeleteFeature
+            // 
+            this.btnDeleteFeature.Location = new System.Drawing.Point(963, 12);
+            this.btnDeleteFeature.Name = "btnDeleteFeature";
+            this.btnDeleteFeature.Size = new System.Drawing.Size(137, 29);
+            this.btnDeleteFeature.TabIndex = 33;
+            this.btnDeleteFeature.Text = "36.删除特征保留实体";
+            this.btnDeleteFeature.UseVisualStyleBackColor = true;
+            this.btnDeleteFeature.Click += new System.EventHandler(this.btnDeleteFeature_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1215, 397);
+            this.Controls.Add(this.btnDeleteFeature);
             this.Controls.Add(this.btnGetPreview);
             this.Controls.Add(this.btnLayoutMgr);
             this.Controls.Add(this.btnGetDimensionInfo);
@@ -635,6 +647,7 @@
         private System.Windows.Forms.Button btnGetDimensionInfo;
         private System.Windows.Forms.Button btnLayoutMgr;
         private System.Windows.Forms.Button btnGetPreview;
+        private System.Windows.Forms.Button btnDeleteFeature;
     }
 }
 

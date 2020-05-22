@@ -2249,6 +2249,101 @@ namespace CSharpAndSolidWorks
 
             #endregion 第三种 DocumentMgr
         }
+
+        /// <summary>
+        /// 删除零件特征,但保留实体,类似于导出
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnDeleteFeature_Click(object sender, EventArgs e)
+        {
+            ISldWorks swApp = Utility.ConnectToSolidWorks();
+
+            var swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            if (swModel != null)
+            {
+                PartDoc part = (PartDoc)swModel;
+                var vBodies = GetBodyCopies(part);
+
+                DeleteAllUserFeature(swModel);
+
+                CreateFeatureForBodies(part, vBodies);
+            }
+        }
+
+        /// <summary>
+        /// 获取零件实体的备份
+        /// </summary>
+        /// <param name="partDoc"></param>
+        /// <returns></returns>
+        private Body2[] GetBodyCopies(PartDoc partDoc)
+        {
+            var vBodies = partDoc.GetBodies2((int)swBodyType_e.swAllBodies, true);
+
+            Body2[] newBodies = new Body2[vBodies.Length];
+
+            for (int i = 0; i < vBodies.Length; i++)
+            {
+                var swBody2 = (Body2)vBodies[i];
+                newBodies[i] = swBody2.Copy();
+            }
+
+            return newBodies;
+        }
+
+        /// <summary>
+        /// 把备份的实体 生成特征
+        /// </summary>
+        /// <param name="partDoc"></param>
+        /// <param name="bodies"></param>
+        private void CreateFeatureForBodies(PartDoc partDoc, Body2[] bodies)
+        {
+            for (int i = 0; i < bodies.Length; i++)
+            {
+                partDoc.CreateFeatureFromBody3(bodies[i], false, (int)swCreateFeatureBodyOpts_e.swCreateFeatureBodySimplify);
+            }
+        }
+
+        /// <summary>
+        /// 删除当前所有的特征
+        /// </summary>
+        /// <param name="modelDoc2"></param>
+        private void DeleteAllUserFeature(ModelDoc2 modelDoc2)
+        {
+            SelectAllUserFeature(modelDoc2);
+            modelDoc2.Extension.DeleteSelection2((int)swDeleteSelectionOptions_e.swDelete_Children + (int)swDeleteSelectionOptions_e.swDelete_Absorbed);
+        }
+
+        /// <summary>
+        /// 选择所有的特征
+        /// </summary>
+        /// <param name="modelDoc2"></param>
+        private void SelectAllUserFeature(ModelDoc2 modelDoc2)
+        {
+            modelDoc2.ClearSelection2(true);
+
+            var swFeature = (Feature)modelDoc2.FirstFeature();
+
+            // var selectFeat = false;
+
+            while (swFeature != null)
+            {
+                if (swFeature != null)
+                {
+                    swFeature.Select2(true, 1);
+                }
+                else
+                {
+                    if (swFeature.GetTypeName2() == "OriginProfileFeature")
+                    {
+                        //  selectFeat = true;
+                    }
+                }
+
+                swFeature = swFeature.GetNextFeature();
+            }
+        }
     }
 
     public class PictureDispConverter : System.Windows.Forms.AxHost
