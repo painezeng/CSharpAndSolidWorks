@@ -358,6 +358,10 @@ namespace CSharpAndSolidWorks
 
                     int warnings = 0;
 
+                    //设定导出坐标系
+
+                    var setRes = swModel.Extension.SetUserPreferenceString(16, 0, "CustomerCS");
+
                     //设置导出版本
                     swApp.SetUserPreferenceIntegerValue((int)swUserPreferenceIntegerValue_e.swParasolidOutputVersion, (int)swParasolidOutputVersion_e.swParasolidOutputVersion_161);
 
@@ -2344,6 +2348,8 @@ namespace CSharpAndSolidWorks
                 swFeature = swFeature.GetNextFeature();
             }
         }
+
+     
     }
 
     public class PictureDispConverter : System.Windows.Forms.AxHost
