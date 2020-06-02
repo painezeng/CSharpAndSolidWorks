@@ -72,6 +72,8 @@
             this.btnLayoutMgr = new System.Windows.Forms.Button();
             this.btnGetPreview = new System.Windows.Forms.Button();
             this.btnDeleteFeature = new System.Windows.Forms.Button();
+            this.btnSetPartTitle = new System.Windows.Forms.Button();
+            this.btnReload = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -546,14 +548,39 @@
             this.btnDeleteFeature.Size = new System.Drawing.Size(137, 29);
             this.btnDeleteFeature.TabIndex = 33;
             this.btnDeleteFeature.Text = "36.删除特征保留实体";
+            this.btnDeleteFeature.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnDeleteFeature.UseVisualStyleBackColor = true;
             this.btnDeleteFeature.Click += new System.EventHandler(this.btnDeleteFeature_Click);
+            // 
+            // btnSetPartTitle
+            // 
+            this.btnSetPartTitle.Location = new System.Drawing.Point(964, 58);
+            this.btnSetPartTitle.Name = "btnSetPartTitle";
+            this.btnSetPartTitle.Size = new System.Drawing.Size(136, 30);
+            this.btnSetPartTitle.TabIndex = 34;
+            this.btnSetPartTitle.Text = "37. 设定零件名称";
+            this.btnSetPartTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSetPartTitle.UseVisualStyleBackColor = true;
+            this.btnSetPartTitle.Click += new System.EventHandler(this.btnSetPartTitle_Click);
+            // 
+            // btnReload
+            // 
+            this.btnReload.Location = new System.Drawing.Point(963, 102);
+            this.btnReload.Name = "btnReload";
+            this.btnReload.Size = new System.Drawing.Size(137, 31);
+            this.btnReload.TabIndex = 35;
+            this.btnReload.Text = "38. 放弃零件的修改";
+            this.btnReload.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnReload.UseVisualStyleBackColor = true;
+            this.btnReload.Click += new System.EventHandler(this.btnReload_Click);
             // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1215, 397);
+            this.Controls.Add(this.btnReload);
+            this.Controls.Add(this.btnSetPartTitle);
             this.Controls.Add(this.btnDeleteFeature);
             this.Controls.Add(this.btnGetPreview);
             this.Controls.Add(this.btnLayoutMgr);
@@ -648,6 +675,8 @@
         private System.Windows.Forms.Button btnLayoutMgr;
         private System.Windows.Forms.Button btnGetPreview;
         private System.Windows.Forms.Button btnDeleteFeature;
+        private System.Windows.Forms.Button btnSetPartTitle;
+        private System.Windows.Forms.Button btnReload;
     }
 }
 
