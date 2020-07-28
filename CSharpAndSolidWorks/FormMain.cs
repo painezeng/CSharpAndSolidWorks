@@ -153,7 +153,8 @@ namespace CSharpAndSolidWorks
                 swModel.EditSuppress();
 
                 //4.修改尺寸
-                swModel.Parameter("D1@Fillet8").SystemValue = 0.000254; //0.001英寸
+                Dimension dimension = (Dimension)swModel.Parameter("D1@Fillet8");
+                dimension.SystemValue = 0.000254; //0.001英寸
 
                 swModel.EditRebuild3();
 
@@ -191,9 +192,9 @@ namespace CSharpAndSolidWorks
             {
                 ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
 
-                Configuration swConf = swModel.GetActiveConfiguration();
+                Configuration swConf = (Configuration)swModel.GetActiveConfiguration();
 
-                Component2 swRootComp = swConf.GetRootComponent();
+                Component2 swRootComp = (Component2)swConf.GetRootComponent();
 
                 //遍历
                 Utility.TraverseCompXform(swRootComp, 0);
@@ -211,7 +212,7 @@ namespace CSharpAndSolidWorks
                 DrawingDoc drawingDoc = (DrawingDoc)swModel;
 
                 //获取当前工程图中的所有图纸名称
-                var sheetNames = drawingDoc.GetSheetNames();
+                var sheetNames = (object[])drawingDoc.GetSheetNames();
 
                 //遍历并找出包含k3 的工程图名称
                 string k3Name = "";
@@ -312,7 +313,7 @@ namespace CSharpAndSolidWorks
 
                     //step3:切换到装配体中,利用面配合来装配零件.
 
-                    AssemblyDoc assemblyDoc = swApp.ActivateDoc3("TempAssembly.sldasm", true, 0, errors);
+                    AssemblyDoc assemblyDoc = (AssemblyDoc)swApp.ActivateDoc3("TempAssembly.sldasm", true, 0, errors);
                     swApp.ActivateDoc("TempAssembly.sldasm");
 
                     Component2 InsertedComponent = assemblyDoc.AddComponent5(myNewPartPath, 0, "", false, "", 0, 0, 0);
@@ -539,7 +540,7 @@ namespace CSharpAndSolidWorks
         {
             ISldWorks swApp = Utility.ConnectToSolidWorks();
 
-            ModelDoc2 modelDoc2 = swApp.ActiveDoc;
+            ModelDoc2 modelDoc2 = (ModelDoc2)swApp.ActiveDoc;
             //SelectionMgr selectionMgr = modelDoc2.SelectionManager;
 
             //设置可选择类型的数组
@@ -558,7 +559,7 @@ namespace CSharpAndSolidWorks
 
             ISldWorks swApp = Utility.ConnectToSolidWorks();
             ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
-            SelectionMgr swSelMgr = swModel.SelectionManager;
+            SelectionMgr swSelMgr = (SelectionMgr)swModel.SelectionManager;
 
             //选择草图
             swModel.Extension.SelectByID2("草图2", "SKETCH", 0, 0, 0, false, 4, null, 0);
@@ -567,10 +568,10 @@ namespace CSharpAndSolidWorks
             swModel.EditSketch();
 
             //获取当前草图对象
-            Sketch swSketch = swModel.GetActiveSketch2();
+            Sketch swSketch = (Sketch)swModel.GetActiveSketch2();
 
             //获取该草图中的所有线
-            object[] vSketchSeg = swSketch.GetSketchSegments();
+            object[] vSketchSeg = (object[])swSketch.GetSketchSegments();
 
             //定义选择
             SelectData swSelData = swSelMgr.CreateSelectData();
@@ -605,13 +606,13 @@ namespace CSharpAndSolidWorks
         {
             ISldWorks swApp = Utility.ConnectToSolidWorks();
             ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
-            SelectionMgr swSelMgr = swModel.SelectionManager;
+            SelectionMgr swSelMgr = (SelectionMgr)swModel.SelectionManager;
 
             #region 零件中选择
 
             PartDoc part1 = (PartDoc)swModel;
             //在零件中选择
-            Face2 face1 = part1.GetEntityByName("SFace1", (int)swSelectType_e.swSelFACES);
+            Face2 face1 = (Face2)part1.GetEntityByName("SFace1", (int)swSelectType_e.swSelFACES);
             Entity entity1 = (Entity)face1;
             entity1.Select(false);
 
@@ -621,16 +622,16 @@ namespace CSharpAndSolidWorks
 
             //这里我们默认该零件已经是选中装配,否则我们需要遍历一次零件,仅做示例
 
-            Component2 component = swSelMgr.GetSelectedObjectsComponent4(1, -1);
+            Component2 component = (Component2)swSelMgr.GetSelectedObjectsComponent4(1, -1);
 
             swModel.ClearSelection();
 
-            ModelDoc2 modelDoc = component.GetModelDoc2();
+            ModelDoc2 modelDoc = (ModelDoc2)component.GetModelDoc2();
 
             //转换为PartDoc
             PartDoc part = (PartDoc)modelDoc;
 
-            Face2 face = part.GetEntityByName("SFace1", (int)swSelectType_e.swSelFACES);
+            Face2 face = (Face2)part.GetEntityByName("SFace1", (int)swSelectType_e.swSelFACES);
 
             Entity entity = (Entity)face;
 
@@ -644,7 +645,7 @@ namespace CSharpAndSolidWorks
 
         private void Btn_T_sketchsegment_Click(object sender, EventArgs e)
         {
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
 
             ModelDoc2 swModel = default(ModelDoc2);
             ModelDocExtension swModelDocExt = default(ModelDocExtension);
@@ -670,7 +671,8 @@ namespace CSharpAndSolidWorks
             //进入编辑草图
             swModel.EditSketch();
             //获取草图中的所有线
-            object[] vSketchSeg = (object[])swFeature.GetSpecificFeature2().GetSketchSegments();
+            var sk = (Sketch)swFeature.GetSpecificFeature2();
+            object[] vSketchSeg = (object[])sk.GetSketchSegments();
 
             SketchSegment swSketchSeg;
             double totalLenth = 0;
@@ -699,7 +701,7 @@ namespace CSharpAndSolidWorks
             ModelDoc2 swModel = default(ModelDoc2);
             ModelDocExtension swModelDocExt = default(ModelDocExtension);
 
-            swModel = swApp.ActiveDoc;
+            swModel = (ModelDoc2)swApp.ActiveDoc;
             m_RefDoc = swModel;
 
             switch (swModel.GetType())
@@ -766,7 +768,7 @@ namespace CSharpAndSolidWorks
             ModelDoc2 swModel = default(ModelDoc2);
             ModelDocExtension swModelDocExt = default(ModelDocExtension);
 
-            Frame swFrame = swApp.Frame();
+            Frame swFrame = (Frame)swApp.Frame();
 
             swFrame.SetStatusBarText("这里是提示信息-->");
 
@@ -810,7 +812,7 @@ namespace CSharpAndSolidWorks
             ISldWorks swApp = Utility.ConnectToSolidWorks();
             ModelDoc2 swModel = default(ModelDoc2);
 
-            swModel = swApp.ActiveDoc;
+            swModel = (ModelDoc2)swApp.ActiveDoc;
 
             int DocType = 0;
             DocType = swModel.GetType();
@@ -848,14 +850,14 @@ namespace CSharpAndSolidWorks
 
             if (SelectSuccess == true)//选择成功
             {
-                SelectionMgr selectionMgr = swModel.SelectionManager;
+                SelectionMgr selectionMgr = (SelectionMgr)swModel.SelectionManager;
                 Component2 swComp;
                 //遍历已经选择的零件
                 for (int j = 0; j < selectionMgr.GetSelectedObjectCount(); j++)
                 {
-                    swComp = selectionMgr.GetSelectedObject6(j + 1, 0);
+                    swComp = (Component2)selectionMgr.GetSelectedObject6(j + 1, 0);
 
-                    swModel = swComp.GetModelDoc2();
+                    swModel = (ModelDoc2)swComp.GetModelDoc2();
 
                     //显示文件名
                     Debug.Print(swModel.GetPathName());
@@ -1000,7 +1002,7 @@ namespace CSharpAndSolidWorks
             if (feature == null)//特征为null时将创建Bounding Box
 
             {
-                feature = featureManager.InsertGlobalBoundingBox((int)swGlobalBoundingBoxFitOptions_e.swBoundingBoxType_BestFit, true, false, out longstatus);
+                feature = (Feature)featureManager.InsertGlobalBoundingBox((int)swGlobalBoundingBoxFitOptions_e.swBoundingBoxType_BestFit, true, false, out longstatus);
             }
 
             // 显示 Bounding Box sketch
@@ -1011,7 +1013,7 @@ namespace CSharpAndSolidWorks
             string str2;
             string str3;
             string str4;
-            IConfiguration configuration = swModel.GetActiveConfiguration();
+            IConfiguration configuration = (Configuration)swModel.GetActiveConfiguration();
             CustomPropertyManager manager2 = swModel.Extension.get_CustomPropertyManager(configuration.Name);
 
             manager2.Get3("Total Bounding Box Length", true, out str, out str2);
@@ -1170,15 +1172,15 @@ namespace CSharpAndSolidWorks
 
             ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
 
-            SelectionMgr selectionMgr = swModel.SelectionManager;
+            SelectionMgr selectionMgr = (SelectionMgr)swModel.SelectionManager;
             try
             {
                 for (int i = 1; i <= selectionMgr.GetSelectedObjectCount(); i++)
                 {
                     Face2 face2 = (Face2)selectionMgr.GetSelectedObject6(i, -1);
-                    var vFaceProp = swModel.MaterialPropertyValues;
+                    var vFaceProp = (object[])swModel.MaterialPropertyValues;
 
-                    var vProps = face2.GetMaterialPropertyValues2(1, null);
+                    var vProps = (object[])face2.GetMaterialPropertyValues2(1, null);
                     vProps[0] = 1;
                     vProps[1] = 0;
                     vProps[2] = 0;
@@ -1214,7 +1216,7 @@ namespace CSharpAndSolidWorks
 
             ModelDocExtension swModelDocExt = (ModelDocExtension)swModel.Extension;
 
-            SelectionMgr selectionMgr = swModel.SelectionManager;
+            SelectionMgr selectionMgr = (SelectionMgr)swModel.SelectionManager;
 
             AssemblyDoc assemblyDoc = (AssemblyDoc)swModel;
 
@@ -1400,12 +1402,15 @@ namespace CSharpAndSolidWorks
 
             swMathPt2 = (MathPoint)swMathPt2.MultiplyTransform(swXform);
 
-            var x = swMathPt.ArrayData[0];
-            var y = swMathPt.ArrayData[1];
-            var z = swMathPt.ArrayData[2];
-            var x2 = swMathPt2.ArrayData[0];
-            var y2 = swMathPt2.ArrayData[1];
-            var z2 = swMathPt2.ArrayData[2];
+            var swStartPtArrayData = (double[])swMathPt.ArrayData;
+            var swEndPtArrayData = (double[])swMathPt2.ArrayData;
+
+            var x = swStartPtArrayData[0];
+            var y = swStartPtArrayData[1];
+            var z = swStartPtArrayData[2];
+            var x2 = swEndPtArrayData[0];
+            var y2 = swEndPtArrayData[1];
+            var z2 = swEndPtArrayData[2];
 
             var v1 = x2 - x;
             var v2 = y2 - y;
@@ -1436,9 +1441,9 @@ namespace CSharpAndSolidWorks
             nPt[1] = 0;
             nPt[2] = 0;
 
-            MathUtility swMathUtil = swApp.GetMathUtility();
+            MathUtility swMathUtil = (MathUtility)swApp.GetMathUtility();
 
-            MathPoint swMathPoint = swMathUtil.CreatePoint(nPt);
+            MathPoint swMathPoint = (MathPoint)swMathUtil.CreatePoint(nPt);
 
             double blockScale = 1;
 
@@ -1471,18 +1476,19 @@ namespace CSharpAndSolidWorks
 
             if (boolstatus == true)
             {
-                Feature swFeat = swModel.SelectionManager.GetSelectedObject6(1, 0);
-                var swSketchBlockDef = swFeat.GetSpecificFeature2();
+                var selMgr = (SelectionMgr)swModel.SelectionManager;
+                Feature swFeat = (Feature)selMgr.GetSelectedObject6(1, 0);
+                var swSketchBlockDef = (SketchBlockDefinition)swFeat.GetSpecificFeature2();
 
-                var nbrBlockInst = swSketchBlockDef.GetInstanceCount;
+                var nbrBlockInst = swSketchBlockDef.GetInstanceCount();
 
                 if (nbrBlockInst > 0)
                 {
-                    var vBlockInst = swSketchBlockDef.GetInstances();
+                    var vBlockInst = (object[])swSketchBlockDef.GetInstances();
 
                     for (int i = 0; i < nbrBlockInst; i++)
                     {
-                        swBlockInst = vBlockInst[i];
+                        swBlockInst = (SketchBlockInstance)vBlockInst[i];
 
                         NowBlockName.Add(swBlockInst.Name.ToString());
                     }
@@ -1493,18 +1499,19 @@ namespace CSharpAndSolidWorks
 
                     boolstatus = swModel.Extension.SelectByID2(System.IO.Path.GetFileNameWithoutExtension(blockPath), "SUBSKETCHDEF", 0, 0, 0, false, 0, null, 0);
 
-                    swFeat = swModel.SelectionManager.GetSelectedObject6(1, 0);
-                    swSketchBlockDef = swFeat.GetSpecificFeature2();
+                    swFeat = (Feature)selMgr.GetSelectedObject6(1, 0);
 
-                    nbrBlockInst = swSketchBlockDef.GetInstanceCount;
+                    swSketchBlockDef = (SketchBlockDefinition)swFeat.GetSpecificFeature2();
+
+                    nbrBlockInst = swSketchBlockDef.GetInstanceCount();
 
                     if (nbrBlockInst > 0)
                     {
-                        vBlockInst = swSketchBlockDef.GetInstances();
+                        vBlockInst = (object[])swSketchBlockDef.GetInstances();
 
                         for (int j = 0; j < nbrBlockInst; j++)
                         {
-                            swBlockInst = vBlockInst[j];
+                            swBlockInst = (SketchBlockInstance)vBlockInst[j];
                             if (!NowBlockName.Contains(swBlockInst.Name.ToString()))
                             {
                                 swModel.Extension.SelectByID2(swBlockInst.Name, "SUBSKETCHINST", 0, 0, 0, false, 0, null, 0);
@@ -1523,7 +1530,10 @@ namespace CSharpAndSolidWorks
             else
             {
                 var swSketchBlockDef = swModel.SketchManager.MakeSketchBlockFromFile(mathPoint, blockPath, false, blockScale, 0);
-                swBlockInst = swSketchBlockDef.GetInstances()[0];
+
+                var vBlockInst = (object[])swSketchBlockDef.GetInstances();
+
+                swBlockInst = (SketchBlockInstance)vBlockInst[0];
 
                 return swBlockInst;
             }
@@ -1541,11 +1551,11 @@ namespace CSharpAndSolidWorks
 
             try
             {
-                swModel = swApp.ActiveDoc;
+                swModel = (ModelDoc2)swApp.ActiveDoc;
                 swModelDocExt = swModel.Extension;
 
                 SelectionMgr swSelectionMgr;
-                swSelectionMgr = swModel.SelectionManager;
+                swSelectionMgr = (SelectionMgr)swModel.SelectionManager;
 
                 string SelectByString = "";
                 string ObjectType = "";
@@ -1566,7 +1576,7 @@ namespace CSharpAndSolidWorks
 
                 if (type == (int)swSelectType_e.swSelSUBSKETCHINST)
                 {
-                    SketchBlockInstance = swSelectionMgr.GetSelectedObject6(1, -1);
+                    SketchBlockInstance = (SketchBlockInstance)swSelectionMgr.GetSelectedObject6(1, -1);
                     Debug.WriteLine("Found:" + SketchBlockInstance.Name);
                     return SketchBlockInstance;
                 }
@@ -1579,7 +1589,7 @@ namespace CSharpAndSolidWorks
                     object[] blockDefinitions = (object[])SwSketchMgr.GetSketchBlockDefinitions();
                     foreach (SketchBlockDefinition blockDef in blockDefinitions)
                     {
-                        foreach (SketchBlockInstance blockInstance in blockDef.GetInstances())
+                        foreach (SketchBlockInstance blockInstance in (SketchBlockInstance[])blockDef.GetInstances())
                         {
                             if (SelectByString.EndsWith(blockInstance.Name))
                             {
@@ -1613,9 +1623,9 @@ namespace CSharpAndSolidWorks
             {
                 ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
 
-                Configuration swConf = swModel.GetActiveConfiguration();
+                Configuration swConf = (Configuration)swModel.GetActiveConfiguration();
 
-                Component2 swRootComp = swConf.GetRootComponent();
+                Component2 swRootComp = (Component2)swConf.GetRootComponent();
 
                 //遍历
 
@@ -1738,8 +1748,8 @@ namespace CSharpAndSolidWorks
                 //编辑草图
                 sketchManager.InsertSketch(false);
                 //获取当前草图，当获取草图中的Segment对象
-                Sketch sketch = swModel.GetActiveSketch2();
-                object[] sketchSegments = sketch.GetSketchSegments();
+                Sketch sketch = (Sketch)swModel.GetActiveSketch2();
+                object[] sketchSegments = (object[])sketch.GetSketchSegments();
 
                 if (sketchSegments != null)
                 {
@@ -1752,14 +1762,14 @@ namespace CSharpAndSolidWorks
                         if (sketchSegment.GetType() == (int)swSketchSegments_e.swSketchLINE)
                         {
                             SketchLine sketchLine = (SketchLine)sketchSegment;
-                            SketchPoint sketchPointStart = sketchLine.GetStartPoint2();
-                            SketchPoint sketchPointEnd = sketchLine.GetEndPoint2();
+                            SketchPoint sketchPointStart = (SketchPoint)sketchLine.GetStartPoint2();
+                            SketchPoint sketchPointEnd = (SketchPoint)sketchLine.GetEndPoint2();
 
                             //这里显示弹出坐标，单位默认是米
                             MessageBox.Show(sketchPointStart.X.ToString() + "," + sketchPointStart.Y.ToString());
                             MessageBox.Show(sketchPointEnd.X.ToString() + "," + sketchPointEnd.Y.ToString());
 
-                            SelectionMgr swSelMgr = swModel.SelectionManager;
+                            SelectionMgr swSelMgr = (SelectionMgr)swModel.SelectionManager;
 
                             //定义选择数据
                             SelectData swSelData = swSelMgr.CreateSelectData();
@@ -1846,7 +1856,7 @@ namespace CSharpAndSolidWorks
                             case "ProfileFeature":
 
                                 var sketchSpc = (Sketch)swSubFeat.GetSpecificFeature2();
-                                object[] vSketchSeg = sketchSpc.GetSketchSegments();
+                                object[] vSketchSeg = (object[])sketchSpc.GetSketchSegments();
 
                                 for (int j = 0; j < vSketchSeg.Length; j++)
                                 {
@@ -2115,7 +2125,7 @@ namespace CSharpAndSolidWorks
 
             foreach (var lay in layerList)
             {
-                var currentLayer = swLayerMgr.GetLayer(lay);
+                var currentLayer = (Layer)swLayerMgr.GetLayer(lay);
                 if (currentLayer != null)
                 {
                     var currentName = currentLayer.Name;
@@ -2293,14 +2303,15 @@ namespace CSharpAndSolidWorks
         /// <returns></returns>
         private Body2[] GetBodyCopies(PartDoc partDoc)
         {
-            var vBodies = partDoc.GetBodies2((int)swBodyType_e.swAllBodies, true);
+            var vBodies = (Object[])partDoc.GetBodies2((int)swBodyType_e.swAllBodies, true);
 
             Body2[] newBodies = new Body2[vBodies.Length];
 
             for (int i = 0; i < vBodies.Length; i++)
             {
                 var swBody2 = (Body2)vBodies[i];
-                newBodies[i] = swBody2.Copy();
+
+                newBodies[i] = (Body2)swBody2.Copy();
             }
 
             return newBodies;
@@ -2355,7 +2366,7 @@ namespace CSharpAndSolidWorks
                     }
                 }
 
-                swFeature = swFeature.GetNextFeature();
+                swFeature = (Feature)swFeature.GetNextFeature();
             }
         }
 
@@ -2379,7 +2390,7 @@ namespace CSharpAndSolidWorks
             ISldWorks swApp = Utility.ConnectToSolidWorks();
             var swModel = (ModelDoc2)swApp.ActiveDoc;
 
-            swModel = swApp.ActiveDoc;
+            swModel = (ModelDoc2)swApp.ActiveDoc;
 
             //这个就是重新打开,最后一个参数是放不要放弃修改(我们不修改,所以为true)
             swModel.ReloadOrReplace(false, swModel.GetPathName(), true);

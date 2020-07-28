@@ -10,41 +10,47 @@ namespace CSharpAndSolidWorks
     {
         public static ISldWorks SwApp { get; private set; }
 
-        public static ISldWorks ConnectToSolidWorks()
+        public static SldWorks ConnectToSolidWorks()
         {
-            if (SwApp != null)
-            {
-                return SwApp;
-            }
-            else
-            {
-                Debug.Print("connect to solidworks on " + DateTime.Now);
-                try
-                {
-                    SwApp = (SldWorks)Marshal.GetActiveObject("SldWorks.Application");
-                }
-                catch (COMException)
-                {
-                    try
-                    {
-                        SwApp = (SldWorks)Marshal.GetActiveObject("SldWorks.Application.23");//2015
-                    }
-                    catch (COMException)
-                    {
-                        try
-                        {
-                            SwApp = (SldWorks)Marshal.GetActiveObject("SldWorks.Application.26");//2018
-                        }
-                        catch (COMException)
-                        {
-                            MessageBox.Show("Could not connect to SolidWorks.", "SolidWorks", MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                            SwApp = null;
-                        }
-                    }
-                }
+            #region OldWay
 
-                return SwApp;
-            }
+            //if (SwApp != null)
+            //{
+            //    return SwApp;
+            //}
+            //else
+            //{
+            //    Debug.Print("connect to solidworks on " + DateTime.Now);
+            //    try
+            //    {
+            //        SwApp = (SldWorks)Marshal.GetActiveObject("SldWorks.Application");
+            //    }
+            //    catch (COMException)
+            //    {
+            //        try
+            //        {
+            //            SwApp = (SldWorks)Marshal.GetActiveObject("SldWorks.Application.23");//2015
+            //        }
+            //        catch (COMException)
+            //        {
+            //            try
+            //            {
+            //                SwApp = (SldWorks)Marshal.GetActiveObject("SldWorks.Application.26");//2018
+            //            }
+            //            catch (COMException)
+            //            {
+            //                MessageBox.Show("Could not connect to SolidWorks.", "SolidWorks", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+            //                SwApp = null;
+            //            }
+            //        }
+            //    }
+
+            //    return SwApp;
+            //}
+
+            #endregion OldWay
+
+            return PSWStandalon.PStandAlone.GetSolidWorks();
         }
 
         /// <summary>
@@ -146,7 +152,7 @@ namespace CSharpAndSolidWorks
                     //如果要设定颜色
                     if (setcolor == true)
                     {
-                        double[] matPropVals = swModel.MaterialPropertyValues;
+                        double[] matPropVals = (double[])swModel.MaterialPropertyValues;
                         var tempC = GetRadomColor(System.IO.Path.GetFileNameWithoutExtension(swModel.GetPathName()));
                         matPropVals[0] = Convert.ToDouble(tempC.R) / 255;
                         matPropVals[1] = Convert.ToDouble(tempC.G) / 255;
