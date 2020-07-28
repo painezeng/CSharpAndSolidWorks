@@ -25,7 +25,7 @@ namespace CSharpAndSolidWorks
         {
             ISldWorks swApp = Utility.ConnectToSolidWorks();
 
-            ModelDoc2 swModel = swApp.ActiveDoc;
+            ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
 
             //CopySolidworksFile(txtFrom.Text, txtTo.Text, "", "");
             progressBarCopy.Value = 5;

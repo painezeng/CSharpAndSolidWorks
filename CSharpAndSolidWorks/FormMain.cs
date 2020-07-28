@@ -144,7 +144,7 @@ namespace CSharpAndSolidWorks
                 //2.增加特征(选择一条边，加圆角)
                 boolstatus = swModel.Extension.SelectByID2("", "EDGE", 3.75842546947069E-03, 3.66350829162911E-02, 1.23295158888936E-03, false, 1, null, 0);
 
-                Feature feature = swModel.FeatureManager.FeatureFillet3(195, 0.000508, 0.01, 0, 0, 0, 0, null, null, null, null, null, null, null);
+                Feature feature = (Feature)swModel.FeatureManager.FeatureFillet3(195, 0.000508, 0.01, 0, 0, 0, 0, null, null, null, null, null, null, null);
 
                 //3.压缩特征
 
@@ -553,11 +553,11 @@ namespace CSharpAndSolidWorks
             //请先打开clamp1这个零件
 
             ISldWorks swApp = Utility.ConnectToSolidWorks();
-            ModelDoc2 swModel = swApp.ActiveDoc;
+            ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
             SelectionMgr swSelMgr = swModel.SelectionManager;
 
             //选择草图
-            swModel.Extension.SelectByID2("Sketch2", "SKETCH", 0, 0, 0, false, 4, null, 0);
+            swModel.Extension.SelectByID2("草图2", "SKETCH", 0, 0, 0, false, 4, null, 0);
 
             //进入编辑草图
             swModel.EditSketch();
@@ -600,7 +600,7 @@ namespace CSharpAndSolidWorks
         private void btnSelectNamedFace_Click(object sender, EventArgs e)
         {
             ISldWorks swApp = Utility.ConnectToSolidWorks();
-            ModelDoc2 swModel = swApp.ActiveDoc;
+            ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
             SelectionMgr swSelMgr = swModel.SelectionManager;
 
             #region 零件中选择
@@ -985,13 +985,13 @@ namespace CSharpAndSolidWorks
 
             ISldWorks swApp = Utility.ConnectToSolidWorks();
 
-            ModelDoc2 swModel = swApp.ActiveDoc;
+            ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
 
             FeatureManager featureManager = swModel.FeatureManager;
 
             PartDoc partDoc = (PartDoc)swModel;
             //通过特征名字获取特征
-            Feature feature = partDoc.FeatureByName("Bounding Box");
+            Feature feature = (Feature)partDoc.FeatureByName("Bounding Box");
             int longstatus;
             if (feature == null)//特征为null时将创建Bounding Box
 
@@ -1028,7 +1028,7 @@ namespace CSharpAndSolidWorks
 
             ISldWorks swApp = Utility.ConnectToSolidWorks();
 
-            ModelDoc2 swModel = swApp.ActiveDoc;
+            ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
 
             ModelDocExtension swModelDocExt = (ModelDocExtension)swModel.Extension;
 
@@ -1050,7 +1050,7 @@ namespace CSharpAndSolidWorks
 
             ISldWorks swApp = Utility.ConnectToSolidWorks();
 
-            ModelDoc2 swModel = swApp.ActiveDoc;
+            ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
 
             ModelDocExtension swModelDocExt = (ModelDocExtension)swModel.Extension;
 
@@ -1136,7 +1136,7 @@ namespace CSharpAndSolidWorks
         {
             ISldWorks swApp = Utility.ConnectToSolidWorks();
 
-            ModelDoc2 swModel = swApp.ActiveDoc;
+            ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
             ModelDocExtension swModelDocExt = (ModelDocExtension)swModel.Extension;
             string swMateDB = "";
             string tempMaterial = "";
@@ -1164,7 +1164,7 @@ namespace CSharpAndSolidWorks
 
             ISldWorks swApp = Utility.ConnectToSolidWorks();
 
-            ModelDoc2 swModel = swApp.ActiveDoc;
+            ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
 
             SelectionMgr selectionMgr = swModel.SelectionManager;
             try
@@ -1206,7 +1206,7 @@ namespace CSharpAndSolidWorks
 
             ISldWorks swApp = Utility.ConnectToSolidWorks();
 
-            ModelDoc2 swModel = swApp.ActiveDoc;
+            ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
 
             ModelDocExtension swModelDocExt = (ModelDocExtension)swModel.Extension;
 
@@ -1362,20 +1362,20 @@ namespace CSharpAndSolidWorks
 
             String sAxisName = swFeat.Name;
 
-            RefAxis RefAxis = swFeat.GetSpecificFeature2();
+            RefAxis RefAxis = (RefAxis)swFeat.GetSpecificFeature2();
 
-            var vParam = RefAxis.GetRefAxisParams();
+            var vParam = (object[])RefAxis.GetRefAxisParams();
 
-            Component2 inletPart = swSelMgr.GetSelectedObjectsComponent4(1, 0);
+            Component2 inletPart = (Component2)swSelMgr.GetSelectedObjectsComponent4(1, 0);
 
             double[] nPt = new double[3];
             double[] nPt2 = new double[3];
 
-            object vPt;
-            object vPt2;
+            double[] vPt = new double[3];
+            double[] vPt2 = new double[3];
 
-            nPt[0] = vParam[0]; nPt[1] = vParam[1]; nPt[2] = vParam[2];
-            nPt2[0] = vParam[3]; nPt2[1] = vParam[4]; nPt2[2] = vParam[5];
+            nPt[0] = (double)vParam[0]; nPt[1] = (double)vParam[1]; nPt[2] = (double)vParam[2];
+            nPt2[0] = (double)vParam[3]; nPt2[1] = (double)vParam[4]; nPt2[2] = (double)vParam[5];
 
             vPt = nPt;
             vPt2 = nPt2;
@@ -1626,8 +1626,12 @@ namespace CSharpAndSolidWorks
         private void butGlobalVariables_Click(object sender, EventArgs e)
         {
             //连接solidworks
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
 
+            int errors = 0;
+            int warnings = 0;
+
+            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            //swApp.OpenDoc6(@"E:\01_Work\22_Gitee\CSharpAndSolidWorks\CSharpAndSolidWorks\TemplateModel\globalvariable.SLDPRT", 1, 0, "", errors, warnings);
             if (swApp != null)
             {
                 //获取当前模型
@@ -1651,6 +1655,12 @@ namespace CSharpAndSolidWorks
                     //}
 
                     //修改高度为60
+
+                    //var eq = @"""D1@Boass-Extrude1"" = ""h""";
+                    //Todo: 无法增加方程式。
+                    var eq = @"""aaaa""=18";
+
+                    var addb = swEqnMgr.Add2(-1, eq, true);
 
                     if (SetEquationValue(swEqnMgr, "h", 60))
                     {
