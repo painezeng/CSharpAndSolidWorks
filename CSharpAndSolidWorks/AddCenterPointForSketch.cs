@@ -18,9 +18,9 @@ namespace CSharpAndSolidWorks
         {
             _swApp = Utility.ConnectToSolidWorks();
 
-            _swPartModel = _swApp.ActiveDoc;
+            _swPartModel = (ModelDoc2)_swApp.ActiveDoc;
 
-            _swModel = _swApp.ActiveDoc;
+            _swModel = (ModelDoc2)_swApp.ActiveDoc;
         }
 
         public void CreateHeaterCenter(string heaterPathName)
@@ -42,13 +42,13 @@ namespace CSharpAndSolidWorks
             _swPartModel.ViewZoomToSelection();
             ISelectionMgr iSelectionManager = _swPartModel.ISelectionManager;
 
-            IFeature feature = iSelectionManager.GetSelectedObject6(1, 0);
+            IFeature feature = (IFeature)iSelectionManager.GetSelectedObject6(1, 0);
 
-            ISketch sketch = feature.GetSpecificFeature2();
+            ISketch sketch = (ISketch)feature.GetSpecificFeature2();
 
-            Array array = sketch.GetSketchSegments();
+            Array array = (Array)sketch.GetSketchSegments();
 
-            Array array2 = sketch.GetSketchPoints2();
+            Array array2 = (Array)sketch.GetSketchPoints2();
             foreach (ISketchSegment segment in array)
             {
                 ISketchSegment segment2 = segment;
@@ -325,7 +325,7 @@ namespace CSharpAndSolidWorks
                 bool flag29 = true;
                 if (_swPartModel.Extension.SelectByID2("", "SKETCHPOINT", num32, num33, 0.0, false, 0, null, 0))
                 {
-                    ISketchPoint point5 = iSelectionManager.GetSelectedObject6(0, 1);
+                    ISketchPoint point5 = (ISketchPoint)iSelectionManager.GetSelectedObject6(0, 1);
 
                     if ((point5 != null) && ((Math.Round(point5.X, 6) == Math.Round(num32, 6)) && (Math.Round(point5.Y, 6) == Math.Round(num33, 6))))
                     {

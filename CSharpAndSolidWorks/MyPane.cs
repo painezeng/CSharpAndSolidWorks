@@ -51,7 +51,7 @@ namespace CSharpAndSolidWorks
 
         private void InsertBOMTable()
         {
-            ModelDoc2 modelDoc2 = iswApp.ActiveDoc;
+            ModelDoc2 modelDoc2 = (ModelDoc2)iswApp.ActiveDoc;
 
             ModelDocExtension modelDocExtension = modelDoc2.Extension;
 
@@ -176,7 +176,7 @@ namespace CSharpAndSolidWorks
         /// </summary>
         private void GetBOMList()
         {
-            ModelDoc2 swModel = iswApp.ActiveDoc;
+            ModelDoc2 swModel = (ModelDoc2)iswApp.ActiveDoc;
             if (swModel.GetType() == 2)
             {
                 Configuration swConf = (Configuration)swModel.GetActiveConfiguration();

@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using SolidWorks.Interop.swcommands;
 using View = SolidWorks.Interop.sldworks.View;
 using SolidWorks.Interop.swdocumentmgr;
+using PSWStandalon;
 
 namespace CSharpAndSolidWorks
 {
@@ -2394,6 +2395,73 @@ namespace CSharpAndSolidWorks
 
             //这个就是重新打开,最后一个参数是放不要放弃修改(我们不修改,所以为true)
             swModel.ReloadOrReplace(false, swModel.GetPathName(), true);
+        }
+
+        private void btnGetMateInfor_Click(object sender, EventArgs e)
+        {
+            //请先打开TemplateModel文件夹下的装配TempAssembly.sldasm  D:\09_Study\CSharpAndSolidWorks\CSharpAndSolidWorks\TemplateModel
+
+            var swApp = PStandAlone.GetSolidWorks();
+
+            var swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            var swFeat = (Feature)swModel.FirstFeature();
+
+            Feature swMateFeat = null;
+            Feature swSubFeat = default(Feature);
+            Mate2 swMate = default;
+            Component2 swComp = default(Component2);
+            MateEntity2[] swMateEnt = new MateEntity2[3];
+            //string fileName = null;
+            //int errors = 0;
+            //int warnings = 0;
+            int i = 0;
+            double[] entityParameters = new double[8];
+
+            //从特征树中查找配合文件夹 Iterate over features in FeatureManager design tree
+
+            while ((swFeat != null))
+            {
+                if ("MateGroup" == swFeat.GetTypeName())
+                {
+                    swMateFeat = (Feature)swFeat;
+                    break;
+                }
+                swFeat = (Feature)swFeat.GetNextFeature();
+            }
+            Debug.Print("  " + swMateFeat.Name);
+            Debug.Print("");
+
+            //获取第一个子配合特征 Get first mate, which is a subfeature
+            swSubFeat = (Feature)swMateFeat.GetFirstSubFeature();
+            while ((swSubFeat != null))
+            {
+                swMate = (Mate2)swSubFeat.GetSpecificFeature2();
+                if ((swMate != null))
+                {
+                    for (i = 0; i <= 1; i++)
+                    {
+                        swMateEnt[i] = swMate.MateEntity(i);
+                        Debug.Print("    " + swSubFeat.Name);
+                        Debug.Print("      Type              = " + swMate.Type);
+                        Debug.Print("      Alignment         = " + swMate.Alignment);
+                        Debug.Print("      Can be flipped    = " + swMate.CanBeFlipped);
+                        Debug.Print("");
+                        swComp = (Component2)swMateEnt[i].ReferenceComponent;
+                        Debug.Print("      Component         = " + swComp.Name2);
+                        Debug.Print("      Mate enity type   = " + swMateEnt[i].ReferenceType);
+                        entityParameters = (double[])swMateEnt[i].EntityParams;
+                        Debug.Print("      (x,y,z)           = (" + (double)entityParameters[0] + ", " + (double)entityParameters[1] + ", " + (double)entityParameters[2] + ")");
+                        Debug.Print("      (i,j,k)           = (" + (double)entityParameters[3] + ", " + (double)entityParameters[4] + ", " + (double)entityParameters[5] + ")");
+                        Debug.Print("      Radius 1          = " + (double)entityParameters[6]);
+                        Debug.Print("      Radius 2          = " + (double)entityParameters[7]);
+                        Debug.Print("");
+                    }
+                    Debug.Print(" ");
+                }
+                // 从配合组中遍历 下一个配合 Get the next mate in MateGroup
+                swSubFeat = (Feature)swSubFeat.GetNextSubFeature();
+            }
         }
     }
 

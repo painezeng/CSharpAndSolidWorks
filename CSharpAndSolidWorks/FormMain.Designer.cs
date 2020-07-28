@@ -74,6 +74,7 @@
             this.btnDeleteFeature = new System.Windows.Forms.Button();
             this.btnSetPartTitle = new System.Windows.Forms.Button();
             this.btnReload = new System.Windows.Forms.Button();
+            this.btnGetMateInfor = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -574,11 +575,23 @@
             this.btnReload.UseVisualStyleBackColor = true;
             this.btnReload.Click += new System.EventHandler(this.btnReload_Click);
             // 
+            // btnGetMateInfor
+            // 
+            this.btnGetMateInfor.Location = new System.Drawing.Point(966, 151);
+            this.btnGetMateInfor.Name = "btnGetMateInfor";
+            this.btnGetMateInfor.Size = new System.Drawing.Size(133, 29);
+            this.btnGetMateInfor.TabIndex = 36;
+            this.btnGetMateInfor.Text = "39.获取配合信息";
+            this.btnGetMateInfor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnGetMateInfor.UseVisualStyleBackColor = true;
+            this.btnGetMateInfor.Click += new System.EventHandler(this.btnGetMateInfor_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1215, 397);
+            this.Controls.Add(this.btnGetMateInfor);
             this.Controls.Add(this.btnReload);
             this.Controls.Add(this.btnSetPartTitle);
             this.Controls.Add(this.btnDeleteFeature);
@@ -677,6 +690,7 @@
         private System.Windows.Forms.Button btnDeleteFeature;
         private System.Windows.Forms.Button btnSetPartTitle;
         private System.Windows.Forms.Button btnReload;
+        private System.Windows.Forms.Button btnGetMateInfor;
     }
 }
 

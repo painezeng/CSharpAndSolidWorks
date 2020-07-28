@@ -21,8 +21,8 @@ namespace CSharpAndSolidWorks
         private void button1_Click(object sender, EventArgs e)
         {
             ISldWorks sldWorks = Utility.ConnectToSolidWorks();
-            ModelDoc2 modelDoc = sldWorks.ActiveDoc;
-            ModelView modelView = modelDoc.ActiveView;
+            ModelDoc2 modelDoc = (ModelDoc2)sldWorks.ActiveDoc;
+            ModelView modelView = (ModelView)modelDoc.ActiveView;
             // modelDoc.ViewZoomtofit2();
             modelView.Scale2 = double.Parse(txtSC.Text);
 
@@ -234,8 +234,8 @@ namespace CSharpAndSolidWorks
         {
             ISldWorks sldWorks = Utility.ConnectToSolidWorks();
 
-            ModelDoc2 modelDoc = sldWorks.ActiveDoc;
-            ModelView modelView = modelDoc.ActiveView;
+            ModelDoc2 modelDoc = (ModelDoc2)sldWorks.ActiveDoc;
+            ModelView modelView = (ModelView)modelDoc.ActiveView;
 
             sldWorks.FrameState = 1;
             modelDoc.ViewZoomtofit2();

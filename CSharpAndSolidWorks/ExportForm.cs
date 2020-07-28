@@ -75,7 +75,7 @@ namespace CSharpAndSolidWorks
 
                             FeatureType Ftype = 0;
 
-                            var childFeature = swBody.GetFeatures();
+                            var childFeature = (object[])swBody.GetFeatures();
 
                             foreach (var item in childFeature)
                             {
@@ -315,7 +315,7 @@ namespace CSharpAndSolidWorks
                 swModExt.SaveAs(assemblyName,
                     (int)swSaveAsVersion_e.swSaveAsCurrentVersion, (int)swSaveAsOptions_e.swSaveAsOptions_Silent, null, errors, warnings);
 
-                modelDoc2 = iswApp.ActiveDoc;
+                modelDoc2 = (ModelDoc2)iswApp.ActiveDoc;
 
                 int i = 0;
                 int tempV = ProgressBar.Value;
@@ -333,7 +333,7 @@ namespace CSharpAndSolidWorks
 
                     swInsertedComponent = assemblyDoc.AddComponent5(partN, 0, "", false, "", 0, 0, 0);
 
-                    modelDoc2 = iswApp.ActiveDoc;
+                    modelDoc2 = (ModelDoc2)iswApp.ActiveDoc;
                     modelDoc2.ClearSelection2(true);
 
                     modelDoc2.Extension.SelectByID2(swInsertedComponent.GetSelectByIDString(), "COMPONENT", 0, 0, 0, false, 0, null, 0);
@@ -358,7 +358,7 @@ namespace CSharpAndSolidWorks
                 }
 
                 iswApp.ActivateDoc3(System.IO.Path.GetFileNameWithoutExtension(assemblyName) + ".sldasm", true, 0, errors);
-                modelDoc2 = iswApp.ActiveDoc;
+                modelDoc2 = (ModelDoc2)iswApp.ActiveDoc;
                 modelDoc2.ShowNamedView2("*等轴测", 7);
                 modelDoc2.ViewZoomtofit2();
                 modelDoc2.Save();
@@ -580,7 +580,9 @@ namespace CSharpAndSolidWorks
 
                 if (boolstatus == true)
                 {
-                    var b = swModel.SelectionManager.GetSelectedObject6(1, -1);
+                    var swSelectionManager = (SelectionMgr)swModel.SelectionManager;
+
+                    var b = (Feature)swSelectionManager.GetSelectedObject6(1, -1);
 
                     int maxQ = bodyModels.FindAll(x => x.name.Contains(needRenameBodies[i].refBodyname) == true).Count;
 
