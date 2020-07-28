@@ -358,6 +358,10 @@ namespace CSharpAndSolidWorks
 
                     int warnings = 0;
 
+                    //设定导出坐标系
+
+                    var setRes = swModel.Extension.SetUserPreferenceString(16, 0, "CustomerCS");
+
                     //设置导出版本
                     swApp.SetUserPreferenceIntegerValue((int)swUserPreferenceIntegerValue_e.swParasolidOutputVersion, (int)swParasolidOutputVersion_e.swParasolidOutputVersion_161);
 
@@ -2353,6 +2357,32 @@ namespace CSharpAndSolidWorks
 
                 swFeature = swFeature.GetNextFeature();
             }
+        }
+
+        private void btnSetPartTitle_Click(object sender, EventArgs e)
+        {
+            //此功能只针对未保存的过的,只在当前内存中存在的零件.
+            ISldWorks swApp = Utility.ConnectToSolidWorks();
+
+            var swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            var resSetTitle = swModel.SetTitle2("TitleNewPart");
+
+            if (resSetTitle == false)
+            {
+                swApp.SendMsgToUser("失败了!");
+            }
+        }
+
+        private void btnReload_Click(object sender, EventArgs e)
+        {
+            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            var swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            swModel = swApp.ActiveDoc;
+
+            //这个就是重新打开,最后一个参数是放不要放弃修改(我们不修改,所以为true)
+            swModel.ReloadOrReplace(false, swModel.GetPathName(), true);
         }
     }
 
