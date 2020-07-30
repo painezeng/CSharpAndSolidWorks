@@ -58,7 +58,7 @@ namespace CSharpAndSolidWorks
         /// </summary>
         /// <param name="thisFeat"></param>
         /// <param name="isTopLevel"></param>
-        public static void TraverseFeatures(Feature thisFeat, bool isTopLevel)
+        public static void TraverseFeatures(Feature thisFeat, bool isTopLevel, bool isShowDimension = false)
         {
             Feature curFeat = default(Feature);
             curFeat = thisFeat;
@@ -67,12 +67,14 @@ namespace CSharpAndSolidWorks
             {
                 //输出特征名称
                 Debug.Print(curFeat.Name);
+                if (isShowDimension == true) ShowDimensionForFeature(curFeat);
 
                 Feature subfeat = default(Feature);
                 subfeat = (Feature)curFeat.GetFirstSubFeature();
 
                 while ((subfeat != null))
                 {
+                    //if (isShowDimension == true) ShowDimensionForFeature(subfeat);
                     TraverseFeatures(subfeat, false);
                     Feature nextSubFeat = default(Feature);
                     nextSubFeat = (Feature)subfeat.GetNextSubFeature();
@@ -95,6 +97,24 @@ namespace CSharpAndSolidWorks
 
                 curFeat = nextFeat;
                 nextFeat = null;
+            }
+        }
+
+        /// <summary>
+        /// 遍历零件中的所有特征
+        /// </summary>
+        /// <param name="feature"></param>
+        public static void ShowDimensionForFeature(Feature feature)
+        {
+            var thisDisplayDim = (DisplayDimension)feature.GetFirstDisplayDimension();
+
+            while (thisDisplayDim != null)
+            {
+                var dimen = (Dimension)thisDisplayDim.GetDimension();
+
+                Debug.Print($"---特征 {feature.Name} 尺寸-->" + dimen.GetNameForSelection() + "-->" + dimen.Value);
+
+                thisDisplayDim = (DisplayDimension)feature.GetNextDisplayDimension(thisDisplayDim);
             }
         }
 

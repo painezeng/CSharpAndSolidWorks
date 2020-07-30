@@ -2463,6 +2463,25 @@ namespace CSharpAndSolidWorks
                 swSubFeat = (Feature)swSubFeat.GetNextSubFeature();
             }
         }
+
+        private void btnGetAllDim_Click(object sender, EventArgs e)
+        {
+            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            //加速读取
+            swApp.CommandInProgress = true;
+
+            if (swApp != null)
+            {
+                ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
+
+                //第一个特征
+                Feature swFeat = (Feature)swModel.FirstFeature();
+
+                //遍历
+                Utility.TraverseFeatures(swFeat, true, true);
+            }
+            swApp.CommandInProgress = false;
+        }
     }
 
     public class PictureDispConverter : System.Windows.Forms.AxHost

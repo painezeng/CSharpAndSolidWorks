@@ -75,6 +75,7 @@
             this.btnSetPartTitle = new System.Windows.Forms.Button();
             this.btnReload = new System.Windows.Forms.Button();
             this.btnGetMateInfor = new System.Windows.Forms.Button();
+            this.btnGetAllDim = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -577,20 +578,32 @@
             // 
             // btnGetMateInfor
             // 
-            this.btnGetMateInfor.Location = new System.Drawing.Point(966, 151);
+            this.btnGetMateInfor.Location = new System.Drawing.Point(964, 150);
             this.btnGetMateInfor.Name = "btnGetMateInfor";
-            this.btnGetMateInfor.Size = new System.Drawing.Size(133, 29);
+            this.btnGetMateInfor.Size = new System.Drawing.Size(136, 29);
             this.btnGetMateInfor.TabIndex = 36;
             this.btnGetMateInfor.Text = "39.获取配合信息";
             this.btnGetMateInfor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnGetMateInfor.UseVisualStyleBackColor = true;
             this.btnGetMateInfor.Click += new System.EventHandler(this.btnGetMateInfor_Click);
             // 
+            // btnGetAllDim
+            // 
+            this.btnGetAllDim.Location = new System.Drawing.Point(963, 194);
+            this.btnGetAllDim.Name = "btnGetAllDim";
+            this.btnGetAllDim.Size = new System.Drawing.Size(137, 29);
+            this.btnGetAllDim.TabIndex = 37;
+            this.btnGetAllDim.Text = "40.遍历零件尺寸";
+            this.btnGetAllDim.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnGetAllDim.UseVisualStyleBackColor = true;
+            this.btnGetAllDim.Click += new System.EventHandler(this.btnGetAllDim_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1215, 397);
+            this.Controls.Add(this.btnGetAllDim);
             this.Controls.Add(this.btnGetMateInfor);
             this.Controls.Add(this.btnReload);
             this.Controls.Add(this.btnSetPartTitle);
@@ -691,6 +704,7 @@
         private System.Windows.Forms.Button btnSetPartTitle;
         private System.Windows.Forms.Button btnReload;
         private System.Windows.Forms.Button btnGetMateInfor;
+        private System.Windows.Forms.Button btnGetAllDim;
     }
 }
 
