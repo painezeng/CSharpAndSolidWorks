@@ -25,7 +25,7 @@ namespace CSharpAndSolidWorks
 
         private void BtnConnect_Click(object sender, EventArgs e)
         {
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
 
             if (swApp != null)
             {
@@ -37,7 +37,7 @@ namespace CSharpAndSolidWorks
 
         private void BtnOpenAndNew_Click(object sender, EventArgs e)
         {
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
 
             if (swApp != null)
             {
@@ -89,7 +89,7 @@ namespace CSharpAndSolidWorks
         {
             //请先打开零件: ..\TemplateModel\clamp1.sldprt
 
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
 
             if (swApp != null)
             {
@@ -131,7 +131,7 @@ namespace CSharpAndSolidWorks
         private void Btn_ChangeDim_Click(object sender, EventArgs e)
         {
             //请先打开零件: ..\TemplateModel\clamp1.sldprt
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
 
             if (swApp != null)
             {
@@ -168,7 +168,7 @@ namespace CSharpAndSolidWorks
 
         private void Btn_Traverse_Feature_Click(object sender, EventArgs e)
         {
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
             //加速读取
             swApp.CommandInProgress = true;
 
@@ -187,7 +187,7 @@ namespace CSharpAndSolidWorks
 
         private void Btn_Traverse_Comp_Click(object sender, EventArgs e)
         {
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
 
             if (swApp != null)
             {
@@ -204,7 +204,7 @@ namespace CSharpAndSolidWorks
 
         private void btn_Traverse_Drawing_Click(object sender, EventArgs e)
         {
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
 
             if (swApp != null)
             {
@@ -289,7 +289,7 @@ namespace CSharpAndSolidWorks
         private void btn_InsertPart_Click(object sender, EventArgs e)
         {
             //step1:生成一个新装配并保存.
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
             int errors = 0;
             int warinings = 0;
             if (swApp != null)
@@ -346,7 +346,7 @@ namespace CSharpAndSolidWorks
 
         private void btnExport_Click(object sender, EventArgs e)
         {
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
 
             if (swApp != null)
             {
@@ -405,7 +405,7 @@ namespace CSharpAndSolidWorks
 
         private void btnInsertLibF_Click(object sender, EventArgs e)
         {
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
 
             //可以参考API帮助中的:Create Library Feature Data Object and Library Feature With References Example (C#)
 
@@ -539,7 +539,7 @@ namespace CSharpAndSolidWorks
 
         private void btnFilter_Click(object sender, EventArgs e)
         {
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
 
             ModelDoc2 modelDoc2 = (ModelDoc2)swApp.ActiveDoc;
             //SelectionMgr selectionMgr = modelDoc2.SelectionManager;
@@ -558,7 +558,7 @@ namespace CSharpAndSolidWorks
         {
             //请先打开clamp1这个零件
 
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
             ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
             SelectionMgr swSelMgr = (SelectionMgr)swModel.SelectionManager;
 
@@ -605,7 +605,7 @@ namespace CSharpAndSolidWorks
 
         private void btnSelectNamedFace_Click(object sender, EventArgs e)
         {
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
             ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
             SelectionMgr swSelMgr = (SelectionMgr)swModel.SelectionManager;
 
@@ -697,7 +697,7 @@ namespace CSharpAndSolidWorks
         private void btn_ThridData_Click(object sender, EventArgs e)
         {
             //https://www.codestack.net/solidworks-api/data-storage/third-party/embed-file/
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
 
             ModelDoc2 swModel = default(ModelDoc2);
             ModelDocExtension swModelDocExt = default(ModelDocExtension);
@@ -737,7 +737,7 @@ namespace CSharpAndSolidWorks
 
         private void btn_LoadThrid_Click(object sender, EventArgs e)
         {
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
 
             // ModelDoc2 swModel = default(ModelDoc2);
 
@@ -764,7 +764,7 @@ namespace CSharpAndSolidWorks
 
         private void btn_Tips_Click(object sender, EventArgs e)
         {
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
 
             ModelDoc2 swModel = default(ModelDoc2);
             ModelDocExtension swModelDocExt = default(ModelDocExtension);
@@ -810,7 +810,7 @@ namespace CSharpAndSolidWorks
 
             //参考资料为API 帮助中的 Use Advanced Component Selection Example (C#)
 
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
             ModelDoc2 swModel = default(ModelDoc2);
 
             swModel = (ModelDoc2)swApp.ActiveDoc;
@@ -990,7 +990,7 @@ namespace CSharpAndSolidWorks
         {
             //首先请打开一个零件.
 
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
 
             ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
 
@@ -1033,7 +1033,7 @@ namespace CSharpAndSolidWorks
             //下面的代码是获取零件的体积.
             //可以参考API帮助 的实例 Measure Selected Entities Example (C#)
 
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
 
             ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
 
@@ -1055,7 +1055,7 @@ namespace CSharpAndSolidWorks
         {
             // 获取质量属性可参考 Get Mass Properties of Visible and Hidden Components Example (C#)
 
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
 
             ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
 
@@ -1094,7 +1094,7 @@ namespace CSharpAndSolidWorks
 
             var imagePath = Path.Combine(Dllpath, "bomlist.bmp");
 
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
 
             string toolTip;
 
@@ -1141,7 +1141,7 @@ namespace CSharpAndSolidWorks
 
         private void btn_SetMaterial_Click(object sender, EventArgs e)
         {
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
 
             ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
             ModelDocExtension swModelDocExt = (ModelDocExtension)swModel.Extension;
@@ -1169,7 +1169,7 @@ namespace CSharpAndSolidWorks
         {
             //首先选择一个面.  点击按钮,将修改为红色.
 
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
 
             ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
 
@@ -1211,7 +1211,7 @@ namespace CSharpAndSolidWorks
             //首先打开 TempAssembly.sldasm
             //运行后,程序会把装配体中的Clamp1零件替换成Clamp2
 
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
 
             ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
 
@@ -1265,7 +1265,7 @@ namespace CSharpAndSolidWorks
         private void btn_SelectByRay_Click(object sender, EventArgs e)
         {
             //连接到Solidworks
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
 
             ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
 
@@ -1299,7 +1299,7 @@ namespace CSharpAndSolidWorks
         private void GetDrawingModel_Click(object sender, EventArgs e)
         {
             //连接到Solidworks
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
 
             ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
 
@@ -1337,7 +1337,7 @@ namespace CSharpAndSolidWorks
 
         private void btn_Part_Export_Click(object sender, EventArgs e)
         {
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
 
             ExportForm exportForm = new ExportForm(swApp);
 
@@ -1359,7 +1359,7 @@ namespace CSharpAndSolidWorks
 
             //请打开装配体，并在某个零件下选择一下基准轴
 
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
 
             ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
 
@@ -1428,7 +1428,7 @@ namespace CSharpAndSolidWorks
         private void btn_Insert_Block_Click(object sender, EventArgs e)
         {
             //连接到Solidworks
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
 
             ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
 
@@ -1542,7 +1542,7 @@ namespace CSharpAndSolidWorks
 
         private SketchBlockInstance GetSketchBlockInstanceFromSelection()
         {
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
 
             ModelDoc2 swModel;
             ModelDocExtension swModelDocExt;
@@ -1618,7 +1618,7 @@ namespace CSharpAndSolidWorks
 
         private void btn_setcolor_Click(object sender, EventArgs e)
         {
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
 
             if (swApp != null)
             {
@@ -1645,7 +1645,7 @@ namespace CSharpAndSolidWorks
             int errors = 0;
             int warnings = 0;
 
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
             //swApp.OpenDoc6(@"E:\01_Work\22_Gitee\CSharpAndSolidWorks\CSharpAndSolidWorks\TemplateModel\globalvariable.SLDPRT", 1, 0, "", errors, warnings);
             if (swApp != null)
             {
@@ -1734,7 +1734,7 @@ namespace CSharpAndSolidWorks
             //BtnOpenAndNew_Click(null, null);
 
             //连接到Solidworks
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
 
             ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
 
@@ -1800,7 +1800,7 @@ namespace CSharpAndSolidWorks
         private void btnSheetmetal_Click(object sender, EventArgs e)
         {
             //连接到Solidworks
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
             swApp.CommandInProgress = true;
             ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
 
@@ -2055,7 +2055,7 @@ namespace CSharpAndSolidWorks
 
         private void btnGetDimensionInfo_Click(object sender, EventArgs e)
         {
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
             swApp.CommandInProgress = true;
 
             ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
@@ -2113,7 +2113,7 @@ namespace CSharpAndSolidWorks
 
         private void btnLayoutMgr_Click(object sender, EventArgs e)
         {
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
 
             var swModel = (ModelDoc2)swApp.ActiveDoc;
 
@@ -2179,7 +2179,7 @@ namespace CSharpAndSolidWorks
 
         private void btnGetPreview_Click(object sender, EventArgs e)
         {
-            // ISldWorks swApp = Utility.ConnectToSolidWorks();
+            // SldWorks swApp = Utility.ConnectToSolidWorks();
 
             string fileName = @"D:\09_Study\CSharpAndSolidWorks\CSharpAndSolidWorks\TemplateModel\bodies.sldasm";
             string bitmapPathName = @"D:\09_Study\CSharpAndSolidWorks\CSharpAndSolidWorks\TemplateModel\bodies.bmp";
@@ -2282,7 +2282,7 @@ namespace CSharpAndSolidWorks
         /// <param name="e"></param>
         private void btnDeleteFeature_Click(object sender, EventArgs e)
         {
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
 
             var swModel = (ModelDoc2)swApp.ActiveDoc;
 
@@ -2374,7 +2374,7 @@ namespace CSharpAndSolidWorks
         private void btnSetPartTitle_Click(object sender, EventArgs e)
         {
             //此功能只针对未保存的过的,只在当前内存中存在的零件.
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
 
             var swModel = (ModelDoc2)swApp.ActiveDoc;
 
@@ -2388,7 +2388,7 @@ namespace CSharpAndSolidWorks
 
         private void btnReload_Click(object sender, EventArgs e)
         {
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
             var swModel = (ModelDoc2)swApp.ActiveDoc;
 
             swModel = (ModelDoc2)swApp.ActiveDoc;
@@ -2466,7 +2466,7 @@ namespace CSharpAndSolidWorks
 
         private void btnGetAllDim_Click(object sender, EventArgs e)
         {
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
             //加速读取
             swApp.CommandInProgress = true;
 
@@ -2481,6 +2481,57 @@ namespace CSharpAndSolidWorks
                 Utility.TraverseFeatures(swFeat, true, true);
             }
             swApp.CommandInProgress = false;
+        }
+
+        //用于事件对象共享。
+        private PartDoc partDoc = null;
+
+        private void btnUserSelectFirst_Click(object sender, EventArgs e)
+        {
+            SldWorks swApp = Utility.ConnectToSolidWorks();
+
+            if (swApp != null)
+            {
+                ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
+
+                partDoc = swModel as PartDoc;
+                //为当前文件增加选择对象之后 通知事件
+                partDoc.UserSelectionPostNotify += PartDoc_UserSelectionPostNotify;
+            }
+        }
+
+        /// <summary>
+        /// 选择之后 处理事件内容
+        /// </summary>
+        /// <returns></returns>
+        private int PartDoc_UserSelectionPostNotify()
+        {
+            SldWorks swApp = Utility.ConnectToSolidWorks();
+
+            ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            var swSelMgr = (SelectionMgr)swModel.SelectionManager;
+
+            var selectType = swSelMgr.GetSelectedObjectType3(1, -1);
+
+            SendMessageToUser("You Select :" + Enum.GetName(typeof(swSelectType_e), selectType));
+
+            return 1;
+        }
+
+        /// <summary>
+        /// 做完通知之后 ，去掉事件绑定
+        /// </summary>
+        /// <param name="s"></param>
+        private void SendMessageToUser(string s)
+        {
+            SldWorks swApp = Utility.ConnectToSolidWorks();
+
+            ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            swApp.SendMsgToUser(s);
+
+            partDoc.UserSelectionPostNotify -= PartDoc_UserSelectionPostNotify;
         }
     }
 

@@ -23,7 +23,7 @@ namespace CSharpAndSolidWorks
 
         private void btnPack_Click(object sender, EventArgs e)
         {
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
 
             ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
 
@@ -37,7 +37,7 @@ namespace CSharpAndSolidWorks
 
         private void CopySolidworksFile(string file_from, string file_to, string replease_from, string replact_to)
         {
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
             string source = System.IO.Path.GetDirectoryName(file_from);
             string target = System.IO.Path.GetDirectoryName(file_to);
             string sourcefile = file_from; ;
@@ -106,7 +106,7 @@ namespace CSharpAndSolidWorks
         /// <param name="likeFile2">模糊匹配?</param>
         public void CopySolidworksFile(string sourcefile, string target, string ReplaceFrom = "", string ReplaceTo = "", bool likeFile = true, string ReplaceFrom2 = "", string ReplaceTo2 = "", bool likeFile2 = false)
         {
-            ISldWorks swApp = Utility.ConnectToSolidWorks();
+            SldWorks swApp = Utility.ConnectToSolidWorks();
 
             target = System.IO.Path.GetDirectoryName(target) + @"\";
 

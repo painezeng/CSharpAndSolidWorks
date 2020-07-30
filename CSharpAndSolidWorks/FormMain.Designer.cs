@@ -76,6 +76,7 @@
             this.btnReload = new System.Windows.Forms.Button();
             this.btnGetMateInfor = new System.Windows.Forms.Button();
             this.btnGetAllDim = new System.Windows.Forms.Button();
+            this.btnUserSelectFirst = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -598,11 +599,23 @@
             this.btnGetAllDim.UseVisualStyleBackColor = true;
             this.btnGetAllDim.Click += new System.EventHandler(this.btnGetAllDim_Click);
             // 
+            // btnUserSelectFirst
+            // 
+            this.btnUserSelectFirst.Location = new System.Drawing.Point(1106, 12);
+            this.btnUserSelectFirst.Name = "btnUserSelectFirst";
+            this.btnUserSelectFirst.Size = new System.Drawing.Size(129, 28);
+            this.btnUserSelectFirst.TabIndex = 38;
+            this.btnUserSelectFirst.Text = "41.让用户选择对象";
+            this.btnUserSelectFirst.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnUserSelectFirst.UseVisualStyleBackColor = true;
+            this.btnUserSelectFirst.Click += new System.EventHandler(this.btnUserSelectFirst_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1215, 397);
+            this.ClientSize = new System.Drawing.Size(1280, 397);
+            this.Controls.Add(this.btnUserSelectFirst);
             this.Controls.Add(this.btnGetAllDim);
             this.Controls.Add(this.btnGetMateInfor);
             this.Controls.Add(this.btnReload);
@@ -705,6 +718,7 @@
         private System.Windows.Forms.Button btnReload;
         private System.Windows.Forms.Button btnGetMateInfor;
         private System.Windows.Forms.Button btnGetAllDim;
+        private System.Windows.Forms.Button btnUserSelectFirst;
     }
 }
 
