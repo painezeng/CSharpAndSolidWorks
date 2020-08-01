@@ -152,7 +152,6 @@ namespace CSharpAndSolidWorks
 
                 default:
                     return;
-                    break;
             }
 
             Debug.Print(bodyModels.Count.ToString());

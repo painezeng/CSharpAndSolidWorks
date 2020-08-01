@@ -42,17 +42,17 @@ namespace CSharpAndSolidWorks
             // this.Visible = false;
             swApp = Comm.ConnectToSolidWorks();
 
-            swModel = swApp.ActiveDoc;
+            swModel = (ModelDoc2)swApp.ActiveDoc;
 
             swModelDocExt = swModel.Extension;
 
-            swModelView = swModel.GetFirstModelView();
+            swModelView = (ModelView)swModel.GetFirstModelView();
 
             TheMouse = swModelView.GetMouse();
 
             mouseClass mouseClass = new mouseClass(this);
 
-            Frame swFrame = swApp.Frame();
+            Frame swFrame = (Frame)swApp.Frame();
 
             swFrame.SetStatusBarText("Next Click  to insert " + activeNote);
 

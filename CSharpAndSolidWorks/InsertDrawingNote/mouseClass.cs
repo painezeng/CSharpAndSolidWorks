@@ -33,17 +33,17 @@ namespace CSharpAndSolidWorks
                 long longstatus;
 
                 ModelDoc2 swModel;
-                swModel = swApp.ActiveDoc;
+                swModel = (ModelDoc2)swApp.ActiveDoc;
 
                 Note myNote;
                 Annotation myAnnotation;
 
-                myNote = swModel.InsertNote(_frmNote.activeNote);
+                myNote = (Note)swModel.InsertNote(_frmNote.activeNote);
                 if (myNote != null)
                 {
                     myNote.Angle = 0;
                     boolstatus = myNote.SetBalloon(0, 0);
-                    myAnnotation = myNote.GetAnnotation();
+                    myAnnotation = (Annotation)myNote.GetAnnotation();
                     if (myAnnotation != null)
                     {
                         longstatus = myAnnotation.SetLeader3((int)swLeaderStyle_e.swSTRAIGHT, 0, true, false, false, false);
@@ -52,7 +52,7 @@ namespace CSharpAndSolidWorks
 
                         TextFormat txtFormat = default(TextFormat);
 
-                        txtFormat = myAnnotation.GetTextFormat(0);
+                        txtFormat = (TextFormat)myAnnotation.GetTextFormat(0);
 
                         txtFormat.Bold = true;
                         txtFormat.CharHeight = 0.01;
@@ -72,7 +72,7 @@ namespace CSharpAndSolidWorks
                 }
                 else
                 {
-                    Frame swFrame = swApp.Frame();
+                    Frame swFrame = (Frame)swApp.Frame();
 
                     swFrame.SetStatusBarText("Next Click  to insert " + _frmNote.activeNote);
                 }

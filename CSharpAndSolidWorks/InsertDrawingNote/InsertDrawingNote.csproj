@@ -36,41 +36,20 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SolidWorks.Interop.sldworks, Version=26.0.1.1, Culture=neutral, PublicKeyToken=7c4797c3e4eeac03, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\SolidWorks2018.Interop.1.0.0\lib\SolidWorks.Interop.sldworks.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+    <Reference Include="SolidWorks.Interop.sldworks">
+      <HintPath>..\..\dll\SolidWorks.Interop.sldworks.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
-    <Reference Include="SolidWorks.Interop.sw3dprinter, Version=26.0.1.1, Culture=neutral, PublicKeyToken=752e44715eff0bce, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\SolidWorks2018.Interop.1.0.0\lib\SolidWorks.Interop.sw3dprinter.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+    <Reference Include="SolidWorks.Interop.swcommands">
+      <HintPath>..\..\dll\SolidWorks.Interop.swcommands.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
-    <Reference Include="SolidWorks.Interop.swcommands, Version=26.0.1.1, Culture=neutral, PublicKeyToken=0fda92720ba7919f, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\SolidWorks2018.Interop.1.0.0\lib\SolidWorks.Interop.swcommands.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+    <Reference Include="SolidWorks.Interop.swconst">
+      <HintPath>..\..\dll\SolidWorks.Interop.swconst.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
-    <Reference Include="SolidWorks.Interop.swconst, Version=26.0.1.1, Culture=neutral, PublicKeyToken=19f43e188e4269d8, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\SolidWorks2018.Interop.1.0.0\lib\SolidWorks.Interop.swconst.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="SolidWorks.Interop.swdimxpert, Version=26.0.1.1, Culture=neutral, PublicKeyToken=5e9cf5ab4ebec26a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\SolidWorks2018.Interop.1.0.0\lib\SolidWorks.Interop.swdimxpert.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="SolidWorks.Interop.swdocumentmgr, Version=26.0.1.1, Culture=neutral, PublicKeyToken=e52dfa2d3a1e978a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\SolidWorks2018.Interop.1.0.0\lib\SolidWorks.Interop.swdocumentmgr.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="SolidWorks.Interop.swmotionstudy, Version=26.0.1.1, Culture=neutral, PublicKeyToken=034d56e16c5ef330, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\SolidWorks2018.Interop.1.0.0\lib\SolidWorks.Interop.swmotionstudy.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="SolidWorks.Interop.swpublished, Version=26.0.1.1, Culture=neutral, PublicKeyToken=89a97bdc5284e6d8, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\SolidWorks2018.Interop.1.0.0\lib\SolidWorks.Interop.swpublished.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="SolidWorks.Interop.SWRoutingLib, Version=26.0.1.1, Culture=neutral, PublicKeyToken=1439c4c051169f7b, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\SolidWorks2018.Interop.1.0.0\lib\SolidWorks.Interop.SWRoutingLib.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+    <Reference Include="SolidWorksTools">
+      <HintPath>..\..\dll\SolidWorksTools.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
