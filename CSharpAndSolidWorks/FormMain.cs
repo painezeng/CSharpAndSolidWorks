@@ -2409,7 +2409,7 @@ namespace CSharpAndSolidWorks
 
             Feature swMateFeat = null;
             Feature swSubFeat = default(Feature);
-            Mate2 swMate = default;
+            Mate2 swMate = default(Mate2);
             Component2 swComp = default(Component2);
             MateEntity2[] swMateEnt = new MateEntity2[3];
             //string fileName = null;
