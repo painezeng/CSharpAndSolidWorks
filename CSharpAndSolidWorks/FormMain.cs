@@ -2533,6 +2533,56 @@ namespace CSharpAndSolidWorks
 
             partDoc.UserSelectionPostNotify -= PartDoc_UserSelectionPostNotify;
         }
+
+        private void btnRoundPointLoc_Click(object sender, EventArgs e)
+        {
+            SldWorks swApp = PStandAlone.GetSolidWorks();
+
+            ModelDoc2 swModel = default(ModelDoc2);
+            ModelDocExtension swModelDocExt = default(ModelDocExtension);
+            SelectionMgr swSelMgr = default(SelectionMgr);
+            Feature swFeature = default(Feature);
+
+            //连接文件
+
+            swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            swModelDocExt = (ModelDocExtension)swModel.Extension;
+
+            //选中草图
+            var status = swModelDocExt.SelectByID2("Sketch1", "SKETCH", 0, 0, 0, false, 0, null, 0);
+
+            swSelMgr = (SelectionMgr)swModel.SelectionManager;
+            //转换
+            swFeature = (Feature)swSelMgr.GetSelectedObject6(1, -1);
+            //进入编辑草图
+            swModel.EditSketch();
+
+            //获取草图中的所有草图点来修改坐标
+
+            var swSketch = (Sketch)swFeature.GetSpecificFeature2();
+
+            var points = (object[])swSketch.GetSketchPoints2();
+
+            for (int i = 0; i < points.Length; i++)
+            {
+                var p = (SketchPoint)points[i];
+
+                var x = p.X * 1000;
+                var y = p.Y * 1000;
+
+                p.X = Math.Round(x, 0) / 1000;
+                p.Y = Math.Round(y, 0) / 1000;
+
+                //Debug.Print(p.X.ToString() + "     " + p.Y.ToString());
+            }
+
+            swModel.EditRebuild3();
+
+            swModel.EditSketch();
+
+            MessageBox.Show("完成了！");
+        }
     }
 
     public class PictureDispConverter : System.Windows.Forms.AxHost

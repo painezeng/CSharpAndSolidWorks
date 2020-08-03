@@ -77,6 +77,7 @@
             this.btnGetMateInfor = new System.Windows.Forms.Button();
             this.btnGetAllDim = new System.Windows.Forms.Button();
             this.btnUserSelectFirst = new System.Windows.Forms.Button();
+            this.btnRoundPointLoc = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -610,11 +611,23 @@
             this.btnUserSelectFirst.UseVisualStyleBackColor = true;
             this.btnUserSelectFirst.Click += new System.EventHandler(this.btnUserSelectFirst_Click);
             // 
+            // btnRoundPointLoc
+            // 
+            this.btnRoundPointLoc.Location = new System.Drawing.Point(1107, 58);
+            this.btnRoundPointLoc.Name = "btnRoundPointLoc";
+            this.btnRoundPointLoc.Size = new System.Drawing.Size(128, 30);
+            this.btnRoundPointLoc.TabIndex = 39;
+            this.btnRoundPointLoc.Text = "42.坐标值取整";
+            this.btnRoundPointLoc.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnRoundPointLoc.UseVisualStyleBackColor = true;
+            this.btnRoundPointLoc.Click += new System.EventHandler(this.btnRoundPointLoc_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1280, 397);
+            this.Controls.Add(this.btnRoundPointLoc);
             this.Controls.Add(this.btnUserSelectFirst);
             this.Controls.Add(this.btnGetAllDim);
             this.Controls.Add(this.btnGetMateInfor);
@@ -719,6 +732,7 @@
         private System.Windows.Forms.Button btnGetMateInfor;
         private System.Windows.Forms.Button btnGetAllDim;
         private System.Windows.Forms.Button btnUserSelectFirst;
+        private System.Windows.Forms.Button btnRoundPointLoc;
     }
 }
 
