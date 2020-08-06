@@ -78,6 +78,7 @@
             this.btnGetAllDim = new System.Windows.Forms.Button();
             this.btnUserSelectFirst = new System.Windows.Forms.Button();
             this.btnRoundPointLoc = new System.Windows.Forms.Button();
+            this.btnRunCommand = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -604,7 +605,7 @@
             // 
             this.btnUserSelectFirst.Location = new System.Drawing.Point(1106, 12);
             this.btnUserSelectFirst.Name = "btnUserSelectFirst";
-            this.btnUserSelectFirst.Size = new System.Drawing.Size(129, 28);
+            this.btnUserSelectFirst.Size = new System.Drawing.Size(138, 28);
             this.btnUserSelectFirst.TabIndex = 38;
             this.btnUserSelectFirst.Text = "41.让用户选择对象";
             this.btnUserSelectFirst.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -615,18 +616,30 @@
             // 
             this.btnRoundPointLoc.Location = new System.Drawing.Point(1107, 58);
             this.btnRoundPointLoc.Name = "btnRoundPointLoc";
-            this.btnRoundPointLoc.Size = new System.Drawing.Size(128, 30);
+            this.btnRoundPointLoc.Size = new System.Drawing.Size(137, 30);
             this.btnRoundPointLoc.TabIndex = 39;
             this.btnRoundPointLoc.Text = "42.坐标值取整";
             this.btnRoundPointLoc.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnRoundPointLoc.UseVisualStyleBackColor = true;
             this.btnRoundPointLoc.Click += new System.EventHandler(this.btnRoundPointLoc_Click);
             // 
+            // btnRunCommand
+            // 
+            this.btnRunCommand.Location = new System.Drawing.Point(1107, 102);
+            this.btnRunCommand.Name = "btnRunCommand";
+            this.btnRunCommand.Size = new System.Drawing.Size(137, 31);
+            this.btnRunCommand.TabIndex = 40;
+            this.btnRunCommand.Text = "43.调用Solidworks命令";
+            this.btnRunCommand.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnRunCommand.UseVisualStyleBackColor = true;
+            this.btnRunCommand.Click += new System.EventHandler(this.btnRunCommand_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1280, 397);
+            this.Controls.Add(this.btnRunCommand);
             this.Controls.Add(this.btnRoundPointLoc);
             this.Controls.Add(this.btnUserSelectFirst);
             this.Controls.Add(this.btnGetAllDim);
@@ -733,6 +746,7 @@
         private System.Windows.Forms.Button btnGetAllDim;
         private System.Windows.Forms.Button btnUserSelectFirst;
         private System.Windows.Forms.Button btnRoundPointLoc;
+        private System.Windows.Forms.Button btnRunCommand;
     }
 }
 

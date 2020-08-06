@@ -2583,6 +2583,50 @@ namespace CSharpAndSolidWorks
 
             MessageBox.Show("完成了！");
         }
+
+        private void btnRunCommand_Click(object sender, EventArgs e)
+        {
+            SldWorks swApp = PStandAlone.GetSolidWorks();
+
+            //执行命令监控
+            swApp.CommandOpenPreNotify += SwApp_CommandOpenPreNotify;
+
+            //请参考SolidWorks.Interop.swcommands
+
+            //swCommands_e 命令操作
+
+            //swMouse_e  鼠标操作
+
+            //打开选项对话框
+            //swApp.RunCommand((int)swCommands_e.swCommands_Options, "");
+
+            //开始3d草图
+            swApp.RunCommand((int)swCommands_e.swCommands_3DSketch, "");
+
+            //单击右键
+            //swApp.RunCommand((int)swMouse_e.swMouse_Click, "");
+        }
+
+        /// <summary>
+        /// 在执行命令前通知。
+        /// </summary>
+        /// <param name="Command"></param>
+        /// <param name="UserCommand"></param>
+        /// <returns></returns>
+        private int SwApp_CommandOpenPreNotify(int Command, int UserCommand)
+        {
+            Debug.Print($@"command is :{Enum.GetName(typeof(swCommands_e), Command)}");
+
+            Debug.Print($@"user command Id is :{UserCommand}");
+
+            if (Command == (int)swCommands_e.swCommands_FilterFaces)
+            {
+                MessageBox.Show("Fillet Faces Command is disable!");
+                return 1;
+            }
+
+            return 0;
+        }
     }
 
     public class PictureDispConverter : System.Windows.Forms.AxHost
