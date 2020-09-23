@@ -79,6 +79,7 @@
             this.btnUserSelectFirst = new System.Windows.Forms.Button();
             this.btnRoundPointLoc = new System.Windows.Forms.Button();
             this.btnRunCommand = new System.Windows.Forms.Button();
+            this.btnInsertHole = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -634,11 +635,23 @@
             this.btnRunCommand.UseVisualStyleBackColor = true;
             this.btnRunCommand.Click += new System.EventHandler(this.btnRunCommand_Click);
             // 
+            // btnInsertHole
+            // 
+            this.btnInsertHole.Location = new System.Drawing.Point(1106, 151);
+            this.btnInsertHole.Name = "btnInsertHole";
+            this.btnInsertHole.Size = new System.Drawing.Size(137, 28);
+            this.btnInsertHole.TabIndex = 41;
+            this.btnInsertHole.Text = "44. 插入异形孔";
+            this.btnInsertHole.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnInsertHole.UseVisualStyleBackColor = true;
+            this.btnInsertHole.Click += new System.EventHandler(this.btnInsertHole_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1280, 397);
+            this.Controls.Add(this.btnInsertHole);
             this.Controls.Add(this.btnRunCommand);
             this.Controls.Add(this.btnRoundPointLoc);
             this.Controls.Add(this.btnUserSelectFirst);
@@ -747,6 +760,7 @@
         private System.Windows.Forms.Button btnUserSelectFirst;
         private System.Windows.Forms.Button btnRoundPointLoc;
         private System.Windows.Forms.Button btnRunCommand;
+        private System.Windows.Forms.Button btnInsertHole;
     }
 }
 

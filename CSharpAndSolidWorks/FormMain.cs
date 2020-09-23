@@ -2627,6 +2627,130 @@ namespace CSharpAndSolidWorks
 
             return 0;
         }
+
+        /// <summary>
+        /// 插入异形孔特征
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnInsertHole_Click(object sender, EventArgs e)
+        {
+            SldWorks swApp = PStandAlone.GetSolidWorks();
+
+            AddHoleForThisPoint("holePoints", 10, "异型孔测试");
+        }
+
+        /// <summary>
+        /// 插入简单孔特征
+        /// </summary>
+        /// <param name="sketchName">草图名称</param>
+        /// <param name="DiaSize">孔径</param>
+        /// <param name="holeName">名称</param>
+        public void AddHoleForThisPoint(string sketchName, double DiaSize, string holeName)
+        {
+            SldWorks SwApp;
+
+            Feature swFeature;
+
+            string fileName;
+            long errors;
+            long warnings;
+            bool status;
+            int SlotType;
+            int HoleType;
+            int StandardIndex;
+            int FastenerTypeIndex;
+            string SSize;
+            short EndType;
+            double ConvFactorLength;
+            double ConvFactorAngle;
+            double Diameter;
+            double Depth;
+            double Length;
+            double ScrewFit;
+            double DrillAngle;
+            double NearCsinkDiameter;
+            double NearCsinkAngle;
+            double FarCsinkDiameter;
+            double FarCsinkAngle;
+            double Offset;
+            string ThreadClass;
+            double CounterBoreDiameter;
+            double CounterBoreDepth;
+            double HeadClearance;
+            double BotCsinkDiameter;
+            double BotCsinkAngle;
+            WizardHoleFeatureData2 swWizardHoleFeatData;
+
+            SldWorks swApp = PStandAlone.GetSolidWorks();
+
+            ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            var swFeatureMgr = swModel.FeatureManager;
+
+            var swModelDocExt = swModel.Extension;
+
+            status = swModel.Extension.SelectByID2("Front Plane", "PLANE", 0, 0, 0, false, 0, null, 0);
+
+            HoleType = (int)swWzdGeneralHoleTypes_e.swWzdLegacy;
+            StandardIndex = -1;
+            FastenerTypeIndex = -1;
+            SSize = "";
+            EndType = (int)swEndConditions_e.swEndCondThroughAll;
+            ConvFactorAngle = -1;
+
+            Diameter = DiaSize / 1000;
+
+            Depth = -1;
+            Length = -1;
+
+            CounterBoreDiameter = 0;    // Value1
+            CounterBoreDepth = 0;   // Value2
+            HeadClearance = -1;                              // Value3
+            ScrewFit = -1;                                   // Value4
+            DrillAngle = -1;                                 // Value5
+            NearCsinkDiameter = -1;                          // Value6
+            NearCsinkAngle = -1;                             // Value7
+            BotCsinkDiameter = -1;                           // Value8
+            BotCsinkAngle = -1;                              // Value9
+            FarCsinkDiameter = -1;                           // Value10
+            FarCsinkAngle = -1;                              // Value11
+            Offset = -1;                                     // Value12
+            ThreadClass = "";
+
+            swFeature = swFeatureMgr.HoleWizard5(HoleType, StandardIndex, FastenerTypeIndex, SSize, EndType, Diameter, Depth, Length, CounterBoreDiameter, CounterBoreDepth, HeadClearance, ScrewFit, DrillAngle, NearCsinkDiameter, NearCsinkAngle, BotCsinkDiameter, BotCsinkAngle, FarCsinkDiameter, FarCsinkAngle, Offset, ThreadClass, false, false, false, false, false, false);
+
+            Feature holeFeature = (Feature)swFeature.GetFirstSubFeature();
+
+            Feature sizeFeature = (Feature)holeFeature.GetNextSubFeature();
+
+            holeFeature.Select2(false, 0);
+            swModel.EditSketch();
+
+            swModel.ClearSelection2(true);
+            status = swModel.Extension.SelectByID2("Point1", "SKETCHPOINT", 0, 0, 0, false, 0, null, 0);
+
+            status = swModel.Extension.SelectByID2("Point1@" + sketchName, "EXTSKETCHPOINT", 0, 0, 0, true, 0, null, 0);
+
+            swModel.SketchAddConstraints("sgCOINCIDENT");
+            swModel.ClearSelection2(true);
+
+            swModel.ClearSelection2(true);
+            swModel.SketchManager.InsertSketch(true);
+
+            holeFeature.Name = holeName + "-点位";
+            sizeFeature.Name = holeName + "-尺寸";
+
+            swFeature.Name = holeName;
+
+            status = swModel.Extension.SelectByID2(holeName, "BODYFEATURE", 0, 0, 0, false, 4, null, 0);
+            status = swModel.Extension.SelectByID2(sketchName, "SKETCH", 0, 0, 0, true, 64, null, 0);
+
+            swFeature = swModel.FeatureManager.FeatureSketchDrivenPattern(true, false)
+            ;
+
+            swFeature.Name = "阵列-" + holeName;
+        }
     }
 
     public class PictureDispConverter : System.Windows.Forms.AxHost
