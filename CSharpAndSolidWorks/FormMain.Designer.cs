@@ -80,6 +80,7 @@
             this.btnRoundPointLoc = new System.Windows.Forms.Button();
             this.btnRunCommand = new System.Windows.Forms.Button();
             this.btnInsertHole = new System.Windows.Forms.Button();
+            this.butGetTextInSketch = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -646,11 +647,23 @@
             this.btnInsertHole.UseVisualStyleBackColor = true;
             this.btnInsertHole.Click += new System.EventHandler(this.btnInsertHole_Click);
             // 
+            // butGetTextInSketch
+            // 
+            this.butGetTextInSketch.Location = new System.Drawing.Point(1107, 194);
+            this.butGetTextInSketch.Name = "butGetTextInSketch";
+            this.butGetTextInSketch.Size = new System.Drawing.Size(136, 29);
+            this.butGetTextInSketch.TabIndex = 42;
+            this.butGetTextInSketch.Text = "45.读取草图中的文字";
+            this.butGetTextInSketch.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.butGetTextInSketch.UseVisualStyleBackColor = true;
+            this.butGetTextInSketch.Click += new System.EventHandler(this.butGetTextInSketch_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1280, 397);
+            this.Controls.Add(this.butGetTextInSketch);
             this.Controls.Add(this.btnInsertHole);
             this.Controls.Add(this.btnRunCommand);
             this.Controls.Add(this.btnRoundPointLoc);
@@ -761,6 +774,7 @@
         private System.Windows.Forms.Button btnRoundPointLoc;
         private System.Windows.Forms.Button btnRunCommand;
         private System.Windows.Forms.Button btnInsertHole;
+        private System.Windows.Forms.Button butGetTextInSketch;
     }
 }
 

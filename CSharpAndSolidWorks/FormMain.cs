@@ -2751,6 +2751,45 @@ namespace CSharpAndSolidWorks
 
             swFeature.Name = "阵列-" + holeName;
         }
+
+        /// <summary>
+        /// 读取草图中的文字
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void butGetTextInSketch_Click(object sender, EventArgs e)
+        {
+            SldWorks swApp = PStandAlone.GetSolidWorks();
+
+            ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
+            SelectionMgr swSelMgr = (SelectionMgr)swModel.SelectionManager;
+
+            //请先打开44_GetSketchText.SLDPRT
+
+            //选择草图
+            swModel.Extension.SelectByID2("SketchText", "SKETCH", 0, 0, 0, false, 4, null, 0);
+
+            var swFeat = (Feature)swSelMgr.GetSelectedObject6(1, -1);
+
+            var swSketch = (Sketch)swFeat.GetSpecificFeature2();
+
+            swModel.EditSketch();
+
+            var TextParams = (Object[])swSketch.GetSketchTextSegments();
+
+            //第一个文本
+            var SketchText = (SketchText)TextParams[0];
+
+            MessageBox.Show($"Old Text is :{SketchText.Text}");
+
+            SketchText.Text = "New text...";
+
+            MessageBox.Show($"New Text is :{SketchText.Text}");
+
+            swModel.InsertSketch2(true);
+
+            swModel.EditRebuild3();
+        }
     }
 
     public class PictureDispConverter : System.Windows.Forms.AxHost
