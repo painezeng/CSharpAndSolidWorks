@@ -1,4 +1,7 @@
 ###SolidWorks API
+
+![界面预览](https://img-blog.csdnimg.cn/20200928111544489.png)
+
 ```
 #API
 	连接Solidworks
