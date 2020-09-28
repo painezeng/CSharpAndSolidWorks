@@ -2790,6 +2790,89 @@ namespace CSharpAndSolidWorks
 
             swModel.EditRebuild3();
         }
+
+        /// <summary>
+        /// 组合零件后保留零件颜色
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnJoinKeepBodyColor_Click(object sender, EventArgs e)
+        {
+            //请先打开45_JoinTest.sldasm
+
+            JoinPart(@"clamp1-1@45_JoinTest", @"JoinPart2-1@45_JoinTest");
+        }
+
+        /// <summary>
+        /// 组合零件
+        /// </summary>
+        /// <param name="BasePartSelectID">基础零件</param>
+        /// <param name="JoinPartSelectId">要组合进来的零件</param>
+        /// <returns></returns>
+        private bool JoinPart(string BasePartSelectID, string JoinPartSelectId)
+        {
+            SldWorks swApp = PStandAlone.GetSolidWorks();
+            ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
+            AssemblyDoc assemblyDoc = (AssemblyDoc)swModel;
+
+            var boolstatus = swModel.Extension.SelectByID2(BasePartSelectID, "COMPONENT", 0, 0, 0, false, 0, null, 0);
+
+            assemblyDoc.EditPart();
+
+            var resSel = swModel.Extension.SelectByID2(JoinPartSelectId, "COMPONENT", 0, 0, 0, false, 0, null, 0);
+
+            if (resSel == true)
+            {
+                var resJoin = assemblyDoc.InsertJoin2(true, false);
+
+                if (resJoin == true)
+                {
+                    swModel.SelectedFeatureProperties(0, 0, 0, 0, 0, 0, 0, true, false, "JoinColor");
+
+                    assemblyDoc.EditAssembly();
+
+                    swModel.ClearSelection();
+
+                    boolstatus = swModel.Extension.SelectByID2(BasePartSelectID, "COMPONENT", 0, 0, 0, false, 0, null, 0);
+
+                    assemblyDoc.OpenCompFile();
+
+                    var swPart = (PartDoc)swApp.ActiveDoc;
+
+                    var thisFeatureClip = (Feature)swPart.FeatureByName("JoinColor");
+
+                    if (thisFeatureClip != null)
+                    {
+                        var vFaceProp = (double[])swPart.MaterialPropertyValues;
+
+                        var vProps = (double[])thisFeatureClip.GetMaterialPropertyValues2(1, null);
+                        //这里指定为红色，正常是要从被组合的零件中获取的。
+                        vProps[0] = 1;
+                        vProps[1] = 0;
+                        vProps[2] = 0;
+                        vProps[3] = vFaceProp[3];
+                        vProps[4] = vFaceProp[4];
+                        vProps[5] = vFaceProp[5];
+                        vProps[6] = vFaceProp[6];
+                        vProps[7] = vFaceProp[7];
+                        vProps[8] = vFaceProp[8];
+
+                        thisFeatureClip.SetMaterialPropertyValues2(vProps, 1, null);
+
+                        vProps = null;
+
+                        vFaceProp = null;
+                        swPart.EditRebuild();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Error to Insert Join!");
+                }
+            }
+
+            return true;
+        }
     }
 
     public class PictureDispConverter : System.Windows.Forms.AxHost

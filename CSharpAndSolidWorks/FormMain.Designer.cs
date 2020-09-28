@@ -81,6 +81,7 @@
             this.btnRunCommand = new System.Windows.Forms.Button();
             this.btnInsertHole = new System.Windows.Forms.Button();
             this.butGetTextInSketch = new System.Windows.Forms.Button();
+            this.btnJoinKeepBodyColor = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -658,11 +659,23 @@
             this.butGetTextInSketch.UseVisualStyleBackColor = true;
             this.butGetTextInSketch.Click += new System.EventHandler(this.butGetTextInSketch_Click);
             // 
+            // btnJoinKeepBodyColor
+            // 
+            this.btnJoinKeepBodyColor.Location = new System.Drawing.Point(521, 252);
+            this.btnJoinKeepBodyColor.Name = "btnJoinKeepBodyColor";
+            this.btnJoinKeepBodyColor.Size = new System.Drawing.Size(141, 31);
+            this.btnJoinKeepBodyColor.TabIndex = 43;
+            this.btnJoinKeepBodyColor.Text = "46.组合后保留颜色";
+            this.btnJoinKeepBodyColor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnJoinKeepBodyColor.UseVisualStyleBackColor = true;
+            this.btnJoinKeepBodyColor.Click += new System.EventHandler(this.btnJoinKeepBodyColor_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1280, 397);
+            this.Controls.Add(this.btnJoinKeepBodyColor);
             this.Controls.Add(this.butGetTextInSketch);
             this.Controls.Add(this.btnInsertHole);
             this.Controls.Add(this.btnRunCommand);
@@ -775,6 +788,7 @@
         private System.Windows.Forms.Button btnRunCommand;
         private System.Windows.Forms.Button btnInsertHole;
         private System.Windows.Forms.Button butGetTextInSketch;
+        private System.Windows.Forms.Button btnJoinKeepBodyColor;
     }
 }
 
