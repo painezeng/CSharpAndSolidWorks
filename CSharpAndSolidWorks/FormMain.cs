@@ -13,6 +13,7 @@ using SolidWorks.Interop.swcommands;
 using View = SolidWorks.Interop.sldworks.View;
 using SolidWorks.Interop.swdocumentmgr;
 using PSWStandalon;
+using Microsoft.VisualBasic;
 
 namespace CSharpAndSolidWorks
 {
@@ -1130,7 +1131,7 @@ namespace CSharpAndSolidWorks
             {
                 //删除新加的控件
                 // taskpaneView = null;
-                taskpaneView.DeleteView();
+                taskpaneView?.DeleteView();
                 Marshal.FinalReleaseComObject(taskpaneView);
                 taskpaneView = null;
             }
@@ -2872,6 +2873,81 @@ namespace CSharpAndSolidWorks
             }
 
             return true;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnShowTemplateBody_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void btnExportBodyToFile_Click(object sender, EventArgs e)
+        {
+            SldWorks swApp = PStandAlone.GetSolidWorks();
+
+            ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            // SelectionMgr swSelMgr = (SelectionMgr)swModel.SelectionManager;
+
+            BodyHelper.ExportBodyToFile(@"D:\testBody.dat");
+        }
+
+        private void btnShowTemplateBody_Click_1(object sender, EventArgs e)
+        {
+            SldWorks swApp = PStandAlone.GetSolidWorks();
+
+            ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            if (swModel != null)
+            {
+                IBody2 body = BodyHelper.LoadBodyFromFile(swApp, @"D:\testBody.dat");
+
+                if (body != null)
+                {
+                    Color color = Color.Yellow; //System.Drawing.ColorTranslator.FromHtml(colorString); 如果是字符串可以通过这转
+
+                    int colorInt = color.ToArgb();
+                    int red2 = colorInt >> 16 & 255;
+                    int green2 = colorInt >> 8 & 255;
+                    int blue2 = colorInt & 255;
+                    int refcolor2 = (int)blue2 << 16 | (int)green2 << 8 | (int)red2;
+                    object vXform = null;
+                    double[] Xform = new double[16];
+                    Xform[0] = 1.0;
+                    Xform[1] = 0.0;
+                    Xform[2] = 0.0;
+                    Xform[3] = 0.0;
+                    Xform[4] = 1.0;
+                    Xform[5] = 0.0;
+                    Xform[6] = 0.0;
+                    Xform[7] = 0.0;
+                    Xform[8] = 1.0;
+                    Xform[9] = 0.15;
+                    Xform[10] = 0.0;
+                    Xform[11] = 0.0;
+                    Xform[12] = 1.0;
+                    Xform[13] = 0.0;
+                    Xform[14] = 0.0;
+                    Xform[15] = 0.0;
+
+                    vXform = Xform;
+
+                    var MathUtility = (MathUtility)swApp.GetMathUtility();
+                    var MathXform = (MathTransform)MathUtility.CreateTransform(vXform);
+
+                    body.ApplyTransform(MathXform);
+
+                    body.Display3(swModel, refcolor2, (int)swTempBodySelectOptions_e.swTempBodySelectOptionNone);
+                    //vb.net 写法  body.Display3(swModel, Information.RGB(255, 255, 0), swTempBodySelectOptions_e.swTempBodySelectOptionNone);
+                }
+                else
+                    throw new Exception("Failed to restore the body");
+            }
+            else
+                throw new Exception("Please open the model");
         }
     }
 

@@ -82,6 +82,8 @@
             this.btnInsertHole = new System.Windows.Forms.Button();
             this.butGetTextInSketch = new System.Windows.Forms.Button();
             this.btnJoinKeepBodyColor = new System.Windows.Forms.Button();
+            this.btnShowTemplateBody = new System.Windows.Forms.Button();
+            this.btnExportBodyToFile = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -670,11 +672,35 @@
             this.btnJoinKeepBodyColor.UseVisualStyleBackColor = true;
             this.btnJoinKeepBodyColor.Click += new System.EventHandler(this.btnJoinKeepBodyColor_Click);
             // 
+            // btnShowTemplateBody
+            // 
+            this.btnShowTemplateBody.Location = new System.Drawing.Point(522, 327);
+            this.btnShowTemplateBody.Name = "btnShowTemplateBody";
+            this.btnShowTemplateBody.Size = new System.Drawing.Size(141, 31);
+            this.btnShowTemplateBody.TabIndex = 43;
+            this.btnShowTemplateBody.Text = "48.显示临时实体";
+            this.btnShowTemplateBody.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnShowTemplateBody.UseVisualStyleBackColor = true;
+            this.btnShowTemplateBody.Click += new System.EventHandler(this.btnShowTemplateBody_Click_1);
+            // 
+            // btnExportBodyToFile
+            // 
+            this.btnExportBodyToFile.Location = new System.Drawing.Point(522, 288);
+            this.btnExportBodyToFile.Name = "btnExportBodyToFile";
+            this.btnExportBodyToFile.Size = new System.Drawing.Size(141, 31);
+            this.btnExportBodyToFile.TabIndex = 43;
+            this.btnExportBodyToFile.Text = "47.导出实体到文件";
+            this.btnExportBodyToFile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnExportBodyToFile.UseVisualStyleBackColor = true;
+            this.btnExportBodyToFile.Click += new System.EventHandler(this.btnExportBodyToFile_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1280, 397);
+            this.Controls.Add(this.btnExportBodyToFile);
+            this.Controls.Add(this.btnShowTemplateBody);
             this.Controls.Add(this.btnJoinKeepBodyColor);
             this.Controls.Add(this.butGetTextInSketch);
             this.Controls.Add(this.btnInsertHole);
@@ -789,6 +815,8 @@
         private System.Windows.Forms.Button btnInsertHole;
         private System.Windows.Forms.Button butGetTextInSketch;
         private System.Windows.Forms.Button btnJoinKeepBodyColor;
+        private System.Windows.Forms.Button btnShowTemplateBody;
+        private System.Windows.Forms.Button btnExportBodyToFile;
     }
 }
 
