@@ -2891,8 +2891,8 @@ namespace CSharpAndSolidWorks
             ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
 
             // SelectionMgr swSelMgr = (SelectionMgr)swModel.SelectionManager;
-
-            BodyHelper.ExportBodyToFile(@"D:\testBody.dat");
+            //注意，选中实体才能导出。(可以使用过滤工具选择)
+            BodyHelper.ExportBodyToFile(@"D:\body_abcd.dat");
         }
 
         private void btnShowTemplateBody_Click_1(object sender, EventArgs e)
@@ -2901,9 +2901,15 @@ namespace CSharpAndSolidWorks
 
             ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
 
+            SelectionMgr swSelMgr = (SelectionMgr)swModel.SelectionManager;
+
+            var selectFace = (Face2)swSelMgr.GetSelectedObject6(1, -1);
+
+            var mousePoint = swSelMgr.GetSelectionPoint2(1, -1);
+
             if (swModel != null)
             {
-                IBody2 body = BodyHelper.LoadBodyFromFile(swApp, @"D:\testBody.dat");
+                IBody2 body = BodyHelper.LoadBodyFromFile(swApp, @"D:\body_abcd.dat");
 
                 if (body != null)
                 {
@@ -2916,22 +2922,26 @@ namespace CSharpAndSolidWorks
                     int refcolor2 = (int)blue2 << 16 | (int)green2 << 8 | (int)red2;
                     object vXform = null;
                     double[] Xform = new double[16];
-                    Xform[0] = 1.0;
+                    Xform[0] = 1.0; //旋转
                     Xform[1] = 0.0;
                     Xform[2] = 0.0;
-                    Xform[3] = 0.0;
-                    Xform[4] = 1.0;
+
+                    Xform[3] = 0.0; //旋转
+                    Xform[4] = -1.0;
                     Xform[5] = 0.0;
-                    Xform[6] = 0.0;
+
+                    Xform[6] = 0.0; //旋转
                     Xform[7] = 0.0;
                     Xform[8] = 1.0;
-                    Xform[9] = 0.15;
-                    Xform[10] = 0.0;
-                    Xform[11] = 0.0;
-                    Xform[12] = 1.0;
-                    Xform[13] = 0.0;
-                    Xform[14] = 0.0;
-                    Xform[15] = 0.0;
+
+                    Xform[9] = -0.146; //平移 x
+                    Xform[10] = -0.003; //平移 y
+                    Xform[11] = 0.175; //平移 z
+
+                    Xform[12] = 1.0; //比例因子
+                    Xform[13] = 0.0; //未使用
+                    Xform[14] = 0.0;//未使用
+                    Xform[15] = 0.0;//未使用
 
                     vXform = Xform;
 
