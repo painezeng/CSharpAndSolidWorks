@@ -2884,6 +2884,11 @@ namespace CSharpAndSolidWorks
         {
         }
 
+        /// <summary>
+        /// 导出选中的实体到文件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnExportBodyToFile_Click(object sender, EventArgs e)
         {
             SldWorks swApp = PStandAlone.GetSolidWorks();
@@ -2892,9 +2897,18 @@ namespace CSharpAndSolidWorks
 
             // SelectionMgr swSelMgr = (SelectionMgr)swModel.SelectionManager;
             //注意，选中实体才能导出。(可以使用过滤工具选择)
-            BodyHelper.ExportBodyToFile(@"D:\body_abcd.dat");
+
+            //指定导出记录
+            BodyHelper.ExportBodyToFile(@"D:\smallball.dat");
+
+            MessageBox.Show("导出小球成功！");
         }
 
+        /// <summary>
+        /// 从文件导出实体并显示 (在鼠标位置显示小球)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnShowTemplateBody_Click_1(object sender, EventArgs e)
         {
             SldWorks swApp = PStandAlone.GetSolidWorks();
@@ -2903,13 +2917,17 @@ namespace CSharpAndSolidWorks
 
             SelectionMgr swSelMgr = (SelectionMgr)swModel.SelectionManager;
 
-            var selectFace = (Face2)swSelMgr.GetSelectedObject6(1, -1);
+            //var selectFace = (Face2)swSelMgr.GetSelectedObject6(1, -1);
 
-            var mousePoint = swSelMgr.GetSelectionPoint2(1, -1);
+            var mousePoint = (double[])swSelMgr.GetSelectionPoint2(1, -1);
+
+            //var faceNormal = selectFace.Normal;
+
+            //var faceNormalDou = (double[])faceNormal;
 
             if (swModel != null)
             {
-                IBody2 body = BodyHelper.LoadBodyFromFile(swApp, @"D:\body_abcd.dat");
+                IBody2 body = BodyHelper.LoadBodyFromFile(swApp, @"D:\smallball.dat");
 
                 if (body != null)
                 {
@@ -2922,21 +2940,21 @@ namespace CSharpAndSolidWorks
                     int refcolor2 = (int)blue2 << 16 | (int)green2 << 8 | (int)red2;
                     object vXform = null;
                     double[] Xform = new double[16];
-                    Xform[0] = 1.0; //旋转
+                    Xform[0] = 1; //旋转
                     Xform[1] = 0.0;
                     Xform[2] = 0.0;
 
-                    Xform[3] = 0.0; //旋转
-                    Xform[4] = -1.0;
-                    Xform[5] = 0.0;
+                    Xform[3] = 0;  //旋转
+                    Xform[4] = 1;
+                    Xform[5] = 0;
 
-                    Xform[6] = 0.0; //旋转
-                    Xform[7] = 0.0;
-                    Xform[8] = 1.0;
+                    Xform[6] = 0; //旋转
+                    Xform[7] = 0;
+                    Xform[8] = 1;
 
-                    Xform[9] = -0.146; //平移 x
-                    Xform[10] = -0.003; //平移 y
-                    Xform[11] = 0.175; //平移 z
+                    Xform[9] = mousePoint[0]; //平移 x
+                    Xform[10] = mousePoint[1]; //平移 y
+                    Xform[11] = mousePoint[2]; //平移 z
 
                     Xform[12] = 1.0; //比例因子
                     Xform[13] = 0.0; //未使用
@@ -2946,18 +2964,35 @@ namespace CSharpAndSolidWorks
                     vXform = Xform;
 
                     var MathUtility = (MathUtility)swApp.GetMathUtility();
+
                     var MathXform = (MathTransform)MathUtility.CreateTransform(vXform);
+
+                    //var swOrigPt = MathUtility.CreatePoint(new double[] { 0.094, 0.142, 0.012 });
+
+                    //这里可以通过轴来创建变换，相当于坐标系的配合
+                    //var swAxisVerX = (MathVector)MathUtility.CreateVector(new double[] { 0, 0, -1 });
+                    //var swAxisVerY = (MathVector)MathUtility.CreateVector(new double[] { 0, 1, 0 });
+                    //var swAxisVerZ = (MathVector)MathUtility.CreateVector(faceNormalDou);
+                    //var swAxisVerM = (MathVector)MathUtility.CreateVector(new double[] { 0.094, 0.142, 0.012 });
+                    // var MathXform = (MathTransform)MathUtility.ComposeTransform(swAxisVerX, swAxisVerY, swAxisVerZ, swAxisVerM, 1);
+
+                    //这是通过轴 与角度 创建变换
+                    //var MathXform = (MathTransform)MathUtility.CreateTransformRotateAxis(swOrigPt, swAxisVerX, Math.PI*0.5);
 
                     body.ApplyTransform(MathXform);
 
-                    body.Display3(swModel, refcolor2, (int)swTempBodySelectOptions_e.swTempBodySelectOptionNone);
+                    //显示实体，并设置为可选中。
+                    body.Display3(swModel, refcolor2, (int)swTempBodySelectOptions_e.swTempBodySelectable);
+
+                    body.CreateBaseFeature(body); //把实体变成导入特征。
+
                     //vb.net 写法  body.Display3(swModel, Information.RGB(255, 255, 0), swTempBodySelectOptions_e.swTempBodySelectOptionNone);
                 }
                 else
-                    throw new Exception("Failed to restore the body");
+                    throw new Exception("失败了！");
             }
             else
-                throw new Exception("Please open the model");
+                throw new Exception("请打开一个文件");
         }
     }
 
