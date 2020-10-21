@@ -84,6 +84,7 @@
             this.btnJoinKeepBodyColor = new System.Windows.Forms.Button();
             this.btnShowTemplateBody = new System.Windows.Forms.Button();
             this.btnExportBodyToFile = new System.Windows.Forms.Button();
+            this.butGetSketchContour = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -663,7 +664,7 @@
             // 
             // btnJoinKeepBodyColor
             // 
-            this.btnJoinKeepBodyColor.Location = new System.Drawing.Point(521, 252);
+            this.btnJoinKeepBodyColor.Location = new System.Drawing.Point(522, 237);
             this.btnJoinKeepBodyColor.Name = "btnJoinKeepBodyColor";
             this.btnJoinKeepBodyColor.Size = new System.Drawing.Size(141, 31);
             this.btnJoinKeepBodyColor.TabIndex = 43;
@@ -674,7 +675,7 @@
             // 
             // btnShowTemplateBody
             // 
-            this.btnShowTemplateBody.Location = new System.Drawing.Point(522, 327);
+            this.btnShowTemplateBody.Location = new System.Drawing.Point(523, 312);
             this.btnShowTemplateBody.Name = "btnShowTemplateBody";
             this.btnShowTemplateBody.Size = new System.Drawing.Size(141, 31);
             this.btnShowTemplateBody.TabIndex = 43;
@@ -685,7 +686,7 @@
             // 
             // btnExportBodyToFile
             // 
-            this.btnExportBodyToFile.Location = new System.Drawing.Point(522, 288);
+            this.btnExportBodyToFile.Location = new System.Drawing.Point(523, 273);
             this.btnExportBodyToFile.Name = "btnExportBodyToFile";
             this.btnExportBodyToFile.Size = new System.Drawing.Size(141, 31);
             this.btnExportBodyToFile.TabIndex = 43;
@@ -694,11 +695,23 @@
             this.btnExportBodyToFile.UseVisualStyleBackColor = true;
             this.btnExportBodyToFile.Click += new System.EventHandler(this.btnExportBodyToFile_Click);
             // 
+            // butGetSketchContour
+            // 
+            this.butGetSketchContour.Location = new System.Drawing.Point(523, 350);
+            this.butGetSketchContour.Name = "butGetSketchContour";
+            this.butGetSketchContour.Size = new System.Drawing.Size(141, 31);
+            this.butGetSketchContour.TabIndex = 44;
+            this.butGetSketchContour.Text = "49.草图闭环遍历与选择";
+            this.butGetSketchContour.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.butGetSketchContour.UseVisualStyleBackColor = true;
+            this.butGetSketchContour.Click += new System.EventHandler(this.butGetSketchContour_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1280, 397);
+            this.Controls.Add(this.butGetSketchContour);
             this.Controls.Add(this.btnExportBodyToFile);
             this.Controls.Add(this.btnShowTemplateBody);
             this.Controls.Add(this.btnJoinKeepBodyColor);
@@ -817,6 +830,7 @@
         private System.Windows.Forms.Button btnJoinKeepBodyColor;
         private System.Windows.Forms.Button btnShowTemplateBody;
         private System.Windows.Forms.Button btnExportBodyToFile;
+        private System.Windows.Forms.Button butGetSketchContour;
     }
 }
 

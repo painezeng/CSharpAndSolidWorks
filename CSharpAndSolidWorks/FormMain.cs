@@ -2994,6 +2994,47 @@ namespace CSharpAndSolidWorks
             else
                 throw new Exception("请打开一个文件");
         }
+
+        /// <summary>
+        /// 遍历 草图中的闭环轮廓
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void butGetSketchContour_Click(object sender, EventArgs e)
+        {
+            SldWorks swApp = PStandAlone.GetSolidWorks();
+
+            ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            SelectionMgr swSelMgr = (SelectionMgr)swModel.SelectionManager;
+
+            //选择草图
+            swModel.Extension.SelectByID2("Sketch1", "SKETCH", 0, 0, 0, false, 4, null, 0);
+
+            //把选择转换为特征
+            var swFeat = (Feature)swSelMgr.GetSelectedObject6(1, -1);
+
+            swModel.ClearSelection();
+
+            //把特征转换为草图
+            var swSketch = (Sketch)swFeat.GetSpecificFeature2();
+
+            //获取轮廓数量
+            var sketchContoursCount = swSketch.GetSketchContourCount();
+            var sketchContours = (object[])swSketch.GetSketchContours();
+
+            //选择所有轮廓
+            for (int i = 0; i < sketchContoursCount; i++)
+            {
+                var skContous = (SketchContour)sketchContours[i];
+                skContous.Select(true, 0);
+            }
+
+            var swFeatureManager = (FeatureManager)swModel.FeatureManager;
+            //做一个简单的拉伸
+            var swFeature = (Feature)swFeatureManager.FeatureExtrusion2(true, false, false, 0, 0, 0.01, 0.01, false, false, false,
+            false, 0, 0, false, false, false, false, true, true, true, 0, 0, false);
+        }
     }
 
     public class PictureDispConverter : System.Windows.Forms.AxHost
