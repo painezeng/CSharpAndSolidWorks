@@ -265,6 +265,20 @@ namespace CSharpAndSolidWorks
                     Note note = (Note)actionView.GetFirstNote();
 
                     Debug.Print(noteCount.ToString());
+
+                    //这里要判断类型之后 才能转成组件，才能获取 名字
+                    //var anno = (Annotation)note.GetAnnotation();
+
+                    //var types= (int[])anno.GetAttachedEntityTypes();
+
+                    //var attOjbect = (object[])anno.GetAttachedEntities3();
+
+                    //var attEntity = (Entity)attOjbect[0];
+
+                    //var attComp = (Component2)(attEntity.GetComponent());
+
+                    //Debug.Print(attComp.Name2);
+
                     // note.GetBalloonStyle
                     Debug.Print(note.GetText());
 

@@ -86,6 +86,9 @@
             this.btnExportBodyToFile = new System.Windows.Forms.Button();
             this.butGetSketchContour = new System.Windows.Forms.Button();
             this.btnAttribute = new System.Windows.Forms.Button();
+            this.btnGetRayPoints = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -718,11 +721,47 @@
             this.btnAttribute.UseVisualStyleBackColor = true;
             this.btnAttribute.Click += new System.EventHandler(this.btnAttribute_Click);
             // 
+            // btnGetRayPoints
+            // 
+            this.btnGetRayPoints.BackColor = System.Drawing.Color.Gray;
+            this.btnGetRayPoints.Location = new System.Drawing.Point(671, 273);
+            this.btnGetRayPoints.Name = "btnGetRayPoints";
+            this.btnGetRayPoints.Size = new System.Drawing.Size(137, 29);
+            this.btnGetRayPoints.TabIndex = 46;
+            this.btnGetRayPoints.Text = "51.求射线穿透长度";
+            this.btnGetRayPoints.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnGetRayPoints.UseVisualStyleBackColor = false;
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.Gray;
+            this.button1.Location = new System.Drawing.Point(670, 312);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(137, 29);
+            this.button1.TabIndex = 46;
+            this.button1.Text = "52.通过标注找到零件";
+            this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button1.UseVisualStyleBackColor = false;
+            // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.Color.Gray;
+            this.button2.Location = new System.Drawing.Point(671, 350);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(137, 29);
+            this.button2.TabIndex = 46;
+            this.button2.Text = "53.导入Dxf到草图";
+            this.button2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button2.UseVisualStyleBackColor = false;
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1280, 397);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnGetRayPoints);
             this.Controls.Add(this.btnAttribute);
             this.Controls.Add(this.butGetSketchContour);
             this.Controls.Add(this.btnExportBodyToFile);
@@ -845,6 +884,9 @@
         private System.Windows.Forms.Button btnExportBodyToFile;
         private System.Windows.Forms.Button butGetSketchContour;
         private System.Windows.Forms.Button btnAttribute;
+        private System.Windows.Forms.Button btnGetRayPoints;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
     }
 }
 
