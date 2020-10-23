@@ -3035,6 +3035,55 @@ namespace CSharpAndSolidWorks
             var swFeature = (Feature)swFeatureManager.FeatureExtrusion2(true, false, false, 0, 0, 0.01, 0.01, false, false, false,
             false, 0, 0, false, false, false, false, true, true, true, 0, 0, false);
         }
+
+        /// <summary>
+        /// 增加属性特征，完整过程可参考博客内容 ,这里只是完全复制api中的例子。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnAttribute_Click(object sender, EventArgs e)
+        {
+            SldWorks swApp = PStandAlone.GetSolidWorks();
+
+            ModelDoc2 swModel = default(ModelDoc2);
+            ModelDocExtension swModelDocExt = default(ModelDocExtension);
+            SelectionMgr swSelectionMgr = default(SelectionMgr);
+            Feature swFeature = default(Feature);
+            SolidWorks.Interop.sldworks.Attribute swAttribute = default(SolidWorks.Interop.sldworks.Attribute);
+            AttributeDef swAttributeDef = default(AttributeDef);
+            Face2 swFace = default(Face2);
+            Parameter swParameter = default(Parameter);
+            Object[] Faces = null;
+            bool @bool = false;
+
+            swModel = (ModelDoc2)swApp.ActiveDoc;
+            swModelDocExt = swModel.Extension;
+            swSelectionMgr = (SelectionMgr)swModel.SelectionManager;
+
+            // Create attribute 创建一个属性的定义
+            swAttributeDef = (AttributeDef)swApp.DefineAttribute("TestPropagationOfAttribute");
+            @bool = swAttributeDef.AddParameter("TestAttribute", (int)swParamType_e.swParamTypeDouble, 2.0, 0);// 增加一个属性值
+            @bool = swAttributeDef.Register();//注册
+
+            // Select the feature to which to add the attribute 择要附加属性的特征， 这里选择中的是Cut-Extrude1
+            @bool = swModelDocExt.SelectByID2("Cut-Extrude1", "BODYFEATURE", 0, 0, 0, false, 0, null, 0);
+            swFeature = (Feature)swSelectionMgr.GetSelectedObject6(1, -1);//把选中的对象转特征
+            Debug.Print("Name of feature to which to add attribute: " + swFeature.Name);
+
+            // Add the attribute to one of the feature's faces   把属性附加到特征的一个面上。
+            Faces = (Object[])swFeature.GetFaces(); //获取特征的所有面
+            swFace = (Face2)Faces[0];//得到第一个面
+            swAttribute = swAttributeDef.CreateInstance5(swModel, swFace, "TestAttribute", 0, (int)swInConfigurationOpts_e.swAllConfiguration);//创建属性
+            //设置属性包括在库特征中
+            swAttribute.IncludeInLibraryFeature = true;
+            Debug.Print("Include attribute in library feature? " + swAttribute.IncludeInLibraryFeature);
+            Debug.Print("Name of attribute: " + swAttribute.GetName());
+            // Get name of parameter 读取之前设定的属性值
+            swParameter = (Parameter)swAttribute.GetParameter("TestAttribute");
+            Debug.Print("Parameter name: " + swParameter.GetName());
+
+            swModel.ForceRebuild3(false);
+        }
     }
 
     public class PictureDispConverter : System.Windows.Forms.AxHost

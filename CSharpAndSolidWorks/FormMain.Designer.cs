@@ -85,6 +85,7 @@
             this.btnShowTemplateBody = new System.Windows.Forms.Button();
             this.btnExportBodyToFile = new System.Windows.Forms.Button();
             this.butGetSketchContour = new System.Windows.Forms.Button();
+            this.btnAttribute = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -666,7 +667,7 @@
             // 
             this.btnJoinKeepBodyColor.Location = new System.Drawing.Point(522, 237);
             this.btnJoinKeepBodyColor.Name = "btnJoinKeepBodyColor";
-            this.btnJoinKeepBodyColor.Size = new System.Drawing.Size(141, 31);
+            this.btnJoinKeepBodyColor.Size = new System.Drawing.Size(141, 29);
             this.btnJoinKeepBodyColor.TabIndex = 43;
             this.btnJoinKeepBodyColor.Text = "46.组合后保留颜色";
             this.btnJoinKeepBodyColor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -677,7 +678,7 @@
             // 
             this.btnShowTemplateBody.Location = new System.Drawing.Point(523, 312);
             this.btnShowTemplateBody.Name = "btnShowTemplateBody";
-            this.btnShowTemplateBody.Size = new System.Drawing.Size(141, 31);
+            this.btnShowTemplateBody.Size = new System.Drawing.Size(141, 29);
             this.btnShowTemplateBody.TabIndex = 43;
             this.btnShowTemplateBody.Text = "48.显示临时实体";
             this.btnShowTemplateBody.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -688,7 +689,7 @@
             // 
             this.btnExportBodyToFile.Location = new System.Drawing.Point(523, 273);
             this.btnExportBodyToFile.Name = "btnExportBodyToFile";
-            this.btnExportBodyToFile.Size = new System.Drawing.Size(141, 31);
+            this.btnExportBodyToFile.Size = new System.Drawing.Size(141, 29);
             this.btnExportBodyToFile.TabIndex = 43;
             this.btnExportBodyToFile.Text = "47.导出实体到文件";
             this.btnExportBodyToFile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -699,18 +700,30 @@
             // 
             this.butGetSketchContour.Location = new System.Drawing.Point(523, 350);
             this.butGetSketchContour.Name = "butGetSketchContour";
-            this.butGetSketchContour.Size = new System.Drawing.Size(141, 31);
+            this.butGetSketchContour.Size = new System.Drawing.Size(141, 29);
             this.butGetSketchContour.TabIndex = 44;
             this.butGetSketchContour.Text = "49.草图闭环遍历与选择";
             this.butGetSketchContour.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.butGetSketchContour.UseVisualStyleBackColor = true;
             this.butGetSketchContour.Click += new System.EventHandler(this.butGetSketchContour_Click);
             // 
+            // btnAttribute
+            // 
+            this.btnAttribute.Location = new System.Drawing.Point(670, 237);
+            this.btnAttribute.Name = "btnAttribute";
+            this.btnAttribute.Size = new System.Drawing.Size(138, 29);
+            this.btnAttribute.TabIndex = 45;
+            this.btnAttribute.Text = "50.Attribute的操作实例";
+            this.btnAttribute.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAttribute.UseVisualStyleBackColor = true;
+            this.btnAttribute.Click += new System.EventHandler(this.btnAttribute_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1280, 397);
+            this.Controls.Add(this.btnAttribute);
             this.Controls.Add(this.butGetSketchContour);
             this.Controls.Add(this.btnExportBodyToFile);
             this.Controls.Add(this.btnShowTemplateBody);
@@ -831,6 +844,7 @@
         private System.Windows.Forms.Button btnShowTemplateBody;
         private System.Windows.Forms.Button btnExportBodyToFile;
         private System.Windows.Forms.Button butGetSketchContour;
+        private System.Windows.Forms.Button btnAttribute;
     }
 }
 
