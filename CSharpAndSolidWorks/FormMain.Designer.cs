@@ -88,7 +88,7 @@
             this.btnAttribute = new System.Windows.Forms.Button();
             this.btnGetRayPoints = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnImpotDxfToSketch = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -743,23 +743,24 @@
             this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button1.UseVisualStyleBackColor = false;
             // 
-            // button2
+            // btnImpotDxfToSketch
             // 
-            this.button2.BackColor = System.Drawing.Color.Gray;
-            this.button2.Location = new System.Drawing.Point(671, 350);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(137, 29);
-            this.button2.TabIndex = 46;
-            this.button2.Text = "53.导入Dxf到草图";
-            this.button2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button2.UseVisualStyleBackColor = false;
+            this.btnImpotDxfToSketch.BackColor = System.Drawing.SystemColors.Control;
+            this.btnImpotDxfToSketch.Location = new System.Drawing.Point(671, 350);
+            this.btnImpotDxfToSketch.Name = "btnImpotDxfToSketch";
+            this.btnImpotDxfToSketch.Size = new System.Drawing.Size(137, 29);
+            this.btnImpotDxfToSketch.TabIndex = 46;
+            this.btnImpotDxfToSketch.Text = "53.导入Dxf到草图";
+            this.btnImpotDxfToSketch.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnImpotDxfToSketch.UseVisualStyleBackColor = false;
+            this.btnImpotDxfToSketch.Click += new System.EventHandler(this.btnImpotDxfToSketch_Click);
             // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1280, 397);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.btnImpotDxfToSketch);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnGetRayPoints);
             this.Controls.Add(this.btnAttribute);
@@ -886,7 +887,7 @@
         private System.Windows.Forms.Button btnAttribute;
         private System.Windows.Forms.Button btnGetRayPoints;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnImpotDxfToSketch;
     }
 }
 

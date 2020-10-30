@@ -3139,7 +3139,49 @@ namespace CSharpAndSolidWorks
 
             Debug.Print("Parameter name: " + attDefSpc.GetName());
 
-            var attValue = attDefSpc.GetParameter("TestAttribute");
+            var attValue = (Parameter)attDefSpc.GetParameter("TestAttribute");
+
+            attValue.SetDoubleValue(5);
+        }
+
+        /// <summary>
+        /// 导入dxf到 sketch
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnImpotDxfToSketch_Click(object sender, EventArgs e)
+        {
+            SldWorks swApp = PStandAlone.GetSolidWorks();
+
+            //确保文件存在
+            string filename = @"C:\Users\Public\Documents\SOLIDWORKS\SOLIDWORKS 2018\samples\tutorial\importexport\rainbow.DXF";
+
+            ImportDxfDwgData importData = (ImportDxfDwgData)swApp.GetImportFileData(filename);
+
+            importData.ImportMethod[""] = (int)swImportDxfDwg_ImportMethod_e.swImportDxfDwg_ImportToPartSketch;
+
+            int longerrors = 0;
+
+            var newDoc = swApp.LoadFile4(filename, "", importData, ref longerrors);
+
+            //Gets
+            Debug.Print("Part Sketch Gets:");
+            Debug.Print("  Add constraints:   " + importData.AddSketchConstraints[""]);
+            Debug.Print("  Merge points:      " + importData.GetMergePoints(""));
+            Debug.Print("  Merge distance:    " + (importData.GetMergeDistance("") * 1000));
+            Debug.Print("  Import dimensions: " + importData.ImportDimensions[""]);
+            Debug.Print("  Import hatch:      " + importData.ImportHatch[""]);
+            //Sets
+            Debug.Print("Part Sketch Sets:");
+            importData.AddSketchConstraints[""] = true;
+            Debug.Print("  Add constraints:   " + importData.AddSketchConstraints[""]);
+            var retVal = importData.SetMergePoints("", true, 0.000002);
+            Debug.Print("  Merge points:      " + retVal);
+            Debug.Print("  Merge distance:    " + (importData.GetMergeDistance("") * 1000));
+            importData.ImportDimensions[""] = true;
+            Debug.Print("  Import dimensions: " + importData.ImportDimensions[""]);
+            importData.ImportHatch[""] = false;
+            Debug.Print("  Import hatch:      " + importData.ImportHatch[""]);
         }
     }
 
