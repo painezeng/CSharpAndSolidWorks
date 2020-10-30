@@ -14,6 +14,8 @@ using View = SolidWorks.Interop.sldworks.View;
 using SolidWorks.Interop.swdocumentmgr;
 using PSWStandalon;
 using Microsoft.VisualBasic;
+using System.Linq;
+using Attribute = SolidWorks.Interop.sldworks.Attribute;
 
 namespace CSharpAndSolidWorks
 {
@@ -2939,6 +2941,14 @@ namespace CSharpAndSolidWorks
 
             //var faceNormalDou = (double[])faceNormal;
 
+            PartDoc partDoc = (PartDoc)swModel;
+
+            var vBodies = (Object[])partDoc.GetBodies2((int)swBodyType_e.swAllBodies, true);
+
+            Debug.Print(vBodies.Length.ToString());
+
+            vBodies = null;
+
             if (swModel != null)
             {
                 IBody2 body = BodyHelper.LoadBodyFromFile(swApp, @"D:\smallball.dat");
@@ -2996,9 +3006,30 @@ namespace CSharpAndSolidWorks
                     body.ApplyTransform(MathXform);
 
                     //显示实体，并设置为可选中。
-                    body.Display3(swModel, refcolor2, (int)swTempBodySelectOptions_e.swTempBodySelectable);
+                    body.Display3(swModel, refcolor2, (int)swTempBodySelectOptions_e.swTempBodySelectOptionNone);
 
-                    body.CreateBaseFeature(body); //把实体变成导入特征。
+                    vBodies = (Object[])partDoc.GetBodies2((int)swBodyType_e.swAllBodies, false);
+
+                    Debug.Print(vBodies.Length.ToString());
+
+                    vBodies = null;
+
+                    // body.CreateBaseFeature(body); //把实体变成导入特征。
+
+                    body.DisableDisplay = true;
+                    swModel.WindowRedraw();
+
+                    body.DisableDisplay = false;
+                    swModel.WindowRedraw();
+
+                    body = null;
+                    swModel.WindowRedraw();
+                    swModel.GraphicsRedraw2();
+                    //vBodies = (Object[])partDoc.GetBodies2((int)swBodyType_e.swAllBodies, true);
+
+                    //Debug.Print(vBodies.Length.ToString());
+
+                    //vBodies = null;
 
                     //vb.net 写法  body.Display3(swModel, Information.RGB(255, 255, 0), swTempBodySelectOptions_e.swTempBodySelectOptionNone);
                 }
@@ -3097,6 +3128,18 @@ namespace CSharpAndSolidWorks
             Debug.Print("Parameter name: " + swParameter.GetName());
 
             swModel.ForceRebuild3(false);
+
+            //直接通过特征读取到属性，然后获取值
+
+            PartDoc partDoc = (PartDoc)swModel;
+
+            var attFea = partDoc.IFeatureByName("TestAttribute");
+
+            var attDefSpc = (Attribute)attFea.GetSpecificFeature2();
+
+            Debug.Print("Parameter name: " + attDefSpc.GetName());
+
+            var attValue = attDefSpc.GetParameter("TestAttribute");
         }
     }
 
