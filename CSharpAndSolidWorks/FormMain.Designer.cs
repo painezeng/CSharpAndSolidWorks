@@ -89,6 +89,7 @@
             this.btnGetRayPoints = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.btnImpotDxfToSketch = new System.Windows.Forms.Button();
+            this.btnConvertEntities = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -755,11 +756,23 @@
             this.btnImpotDxfToSketch.UseVisualStyleBackColor = false;
             this.btnImpotDxfToSketch.Click += new System.EventHandler(this.btnImpotDxfToSketch_Click);
             // 
+            // btnConvertEntities
+            // 
+            this.btnConvertEntities.Location = new System.Drawing.Point(815, 237);
+            this.btnConvertEntities.Name = "btnConvertEntities";
+            this.btnConvertEntities.Size = new System.Drawing.Size(142, 29);
+            this.btnConvertEntities.TabIndex = 47;
+            this.btnConvertEntities.Text = "54.草图中引用实体";
+            this.btnConvertEntities.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnConvertEntities.UseVisualStyleBackColor = true;
+            this.btnConvertEntities.Click += new System.EventHandler(this.btnConvertEntities_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1280, 397);
+            this.Controls.Add(this.btnConvertEntities);
             this.Controls.Add(this.btnImpotDxfToSketch);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnGetRayPoints);
@@ -888,6 +901,7 @@
         private System.Windows.Forms.Button btnGetRayPoints;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btnImpotDxfToSketch;
+        private System.Windows.Forms.Button btnConvertEntities;
     }
 }
 

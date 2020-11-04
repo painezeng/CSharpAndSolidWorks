@@ -3183,6 +3183,44 @@ namespace CSharpAndSolidWorks
             importData.ImportHatch[""] = false;
             Debug.Print("  Import hatch:      " + importData.ImportHatch[""]);
         }
+
+        /// <summary>
+        /// 引用实体到草图中
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnConvertEntities_Click(object sender, EventArgs e)
+        {
+            //先打开54_ConvertEntitiesToSketch.SLDPRT
+            SldWorks swApp = PStandAlone.GetSolidWorks();
+
+            var swModel = swApp.IActiveDoc2;
+
+            var partDoc = (PartDoc)swModel;
+
+            //通过名字得到特征
+            var baseSketchFeature = partDoc.IFeatureByName("BaseSketch");
+
+            Sketch baseSketch = (Sketch)baseSketchFeature.GetSpecificFeature2();
+
+            baseSketchFeature.Select(false);
+
+            swModel.EditSketch();
+
+            //选择已经命名的面
+
+            Face2 face1 = (Face2)partDoc.GetEntityByName("MyNamedFace", (int)swSelectType_e.swSelFACES);
+
+            Entity entity1 = (Entity)face1;
+
+            entity1.Select(false);
+
+            //引用实体
+            swModel.SketchManager.SketchUseEdge3(false, false);
+
+            //保存退出草图
+            swModel.SketchManager.InsertSketch(true);
+        }
     }
 
     public class PictureDispConverter : System.Windows.Forms.AxHost
