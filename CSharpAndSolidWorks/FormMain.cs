@@ -3221,6 +3221,63 @@ namespace CSharpAndSolidWorks
             //保存退出草图
             swModel.SketchManager.InsertSketch(true);
         }
+
+        private void btnCamera_Click(object sender, EventArgs e)
+        {
+            //先打开一个零件，打开哪个请随意。
+
+            SldWorks swApp = PStandAlone.GetSolidWorks();
+
+            int fileerror = 0;
+
+            int filewarning = 0;
+
+            bool boolstatus = false;
+
+            var swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            var swModelDocExt = (ModelDocExtension)swModel.Extension;
+
+            // Insert a camera  插入相机
+
+            var swCamera = (Camera)swModelDocExt.InsertCamera();
+
+            // Set camera type to floating  设置为浮动
+
+            swCamera.Type = (int)swCameraType_e.swCameraType_Floating;
+
+            // Show camera 显示相机
+
+            boolstatus = swModelDocExt.SelectByID2("Camera1", "CAMERAS", 0, 0, 0, false, 0, null, 0);  //注意如果是中文系统，可能名称为相机1
+
+            boolstatus = swModel.SetUserPreferenceToggle((int)swUserPreferenceToggle_e.swDisplayCameras, true);
+
+            swModel.GraphicsRedraw2();
+
+            // Get camera's pitch and yaw settings  获取相机的角度位置 设置
+
+            // 1 radian = 180º/p = 57.295779513º or approximately 57.3º
+
+            Debug.Print("Original pitch (up or down angle) = " + swCamera.Pitch * 57.3 + " deg");
+
+            Debug.Print("Original yaw (side-to-side angle) = " + swCamera.Yaw * 57.3 + " deg");
+
+            Debug.Print(" ");
+
+            // Rotate camera   旋转相机
+
+            swCamera.Pitch = -25;
+
+            swCamera.Yaw = 150;
+
+            // New pitch and yaw settings   新的位置
+
+            Debug.Print("New pitch (up or down angle) = " + swCamera.Pitch * 57.3 + " deg");
+
+            Debug.Print("New yaw (side-to-side angle) = " + swCamera.Yaw * 57.3 + " deg");
+
+            swModel.GraphicsRedraw2();
+        }
     }
 
     public class PictureDispConverter : System.Windows.Forms.AxHost

@@ -90,6 +90,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.btnImpotDxfToSketch = new System.Windows.Forms.Button();
             this.btnConvertEntities = new System.Windows.Forms.Button();
+            this.btnCamera = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -767,11 +768,23 @@
             this.btnConvertEntities.UseVisualStyleBackColor = true;
             this.btnConvertEntities.Click += new System.EventHandler(this.btnConvertEntities_Click);
             // 
+            // btnCamera
+            // 
+            this.btnCamera.Location = new System.Drawing.Point(814, 273);
+            this.btnCamera.Name = "btnCamera";
+            this.btnCamera.Size = new System.Drawing.Size(143, 29);
+            this.btnCamera.TabIndex = 48;
+            this.btnCamera.Text = "55.相机视角";
+            this.btnCamera.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCamera.UseVisualStyleBackColor = true;
+            this.btnCamera.Click += new System.EventHandler(this.btnCamera_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1280, 397);
+            this.Controls.Add(this.btnCamera);
             this.Controls.Add(this.btnConvertEntities);
             this.Controls.Add(this.btnImpotDxfToSketch);
             this.Controls.Add(this.button1);
@@ -902,6 +915,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btnImpotDxfToSketch;
         private System.Windows.Forms.Button btnConvertEntities;
+        private System.Windows.Forms.Button btnCamera;
     }
 }
 
