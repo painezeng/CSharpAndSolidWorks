@@ -1289,6 +1289,8 @@ namespace CSharpAndSolidWorks
             Face2 swSelFace = default(Face2);
             SelectionMgr swSelMgr = (SelectionMgr)swModel.SelectionManager;
 
+            Component2 selectPartComponent2 = swSelMgr.GetSelectedObjectsComponent3(1, -1);
+
             //获取选择数据
             SelectData swSelData = default(SelectData);
 
@@ -1296,16 +1298,32 @@ namespace CSharpAndSolidWorks
 
             swSelFace = (Face2)swSelMgr.GetSelectedObject6(1, 0);
 
-            var t = (double[])swSelFace.Normal;
+            var t = (double[])swSelFace.Normal;  //这里是零件中面的向量
+
+            object vVectort = null;
+
+            vVectort = t;
+
+            var swMathUtilT = (MathUtility)swApp.GetMathUtility();
+
+            MathVector tVector1 = (MathVector)swMathUtilT.CreateVector((vVectort));
+
+            var swNormalVector = (MathVector)tVector1.MultiplyTransform(selectPartComponent2.Transform2);
+
+            var t2 = (double[])swNormalVector.ArrayData;
 
             //获取屏幕鼠标选择的那个点
-            var mousePoint = (double[])swSelMgr.GetSelectionPoint2(1, 0);
+            var mousePoint = (double[])swSelMgr.GetSelectionPoint2(1, 0);  //装配中
 
             swModel.ClearSelection2(true);
 
             //创建Ray选择
 
-            var boolstatus = swModel.Extension.SelectByRay(mousePoint[0], mousePoint[1], mousePoint[2], t[0], t[1], t[2], 0.1, 2, false, 0, 0);
+            mousePoint[0] = mousePoint[0] - t2[0] * 0.001;
+            mousePoint[1] = mousePoint[1] - t2[1] * 0.001;
+            mousePoint[2] = mousePoint[2] - t2[2] * 0.001;
+
+            var boolstatus = swModel.Extension.SelectByRay(mousePoint[0], mousePoint[1], mousePoint[2], t2[0], t2[1], t2[2], 0.1, 2, false, 0, 0);
 
             if (boolstatus == true)
             {
