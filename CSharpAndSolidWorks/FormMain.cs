@@ -3318,6 +3318,74 @@ namespace CSharpAndSolidWorks
 
             swModel.GraphicsRedraw2();
         }
+
+        private void btnReplaceReference_Click(object sender, EventArgs e)
+        {
+            const string sLicenseKey = "Axemble:swdocmgr_general-11785-02051-00064-50177-08535-34307-00007-37408-17094-12655-31529-39909-49477-26312-14336-58516-10910-42487-02022-02562-54862-24526-57604-46485-45449-00405-25144-23144-51942-23264-24676-28258-7,swdocmgr_previews-11785-02051-00064-50177-08535-34307-00007-48008-04931-27155-53105-52081-64048-22699-38918-23742-63202-30008-58372-23951-37726-23245-57604-46485-45449-00405-25144-23144-51942-23264-24676-28258-1,swdocmgr_dimxpert-11785-02051-00064-50177-08535-34307-00007-16848-46744-46507-43004-11310-13037-46891-59394-52990-24983-00932-12744-51214-03249-23667-57604-46485-45449-00405-25144-23144-51942-23264-24676-28258-8,swdocmgr_geometry-11785-02051-00064-50177-08535-34307-00007-39720-42733-27008-07782-55416-16059-24823-59395-22410-04359-65370-60348-06678-16765-23356-57604-46485-45449-00405-25144-23144-51942-23264-24676-28258-3,swdocmgr_xml-11785-02051-00064-50177-08535-34307-00007-51816-63406-17453-09481-48159-24258-10263-28674-28856-61649-06436-41925-13932-52097-22614-57604-46485-45449-00405-25144-23144-51942-23264-24676-28258-7,swdocmgr_tessellation-11785-02051-00064-50177-08535-34307-00007-13440-59803-19007-55358-48373-41599-14912-02050-07716-07769-29894-19369-42867-36378-24376-57604-46485-45449-00405-25144-23144-51942-23264-24676-28258-0";//如果正版用户，请联系代理商申请。
+
+            string sDocFileName = @"E:\01_Work\22_Gitee\CSharpAndSolidWorks\CSharpAndSolidWorks\TemplateModel\repleaceReference\part1.SLDDRW";
+
+            SwDMClassFactory swClassFact = default(SwDMClassFactory);
+            SwDMApplication swDocMgr = default(SwDMApplication);
+            SwDMDocument swDoc = default(SwDMDocument);
+            SwDMDocument10 swDoc10 = default(SwDMDocument10);
+            SwDMDocument22 swDoc22 = default(SwDMDocument22);
+
+            SwDmDocumentType nDocType = 0;
+            SwDmDocumentOpenError nRetVal = 0;
+            SwDmPreviewError nError = 0;
+
+            // Determine type of SOLIDWORKS file based on file extension
+            if (sDocFileName.ToLower().EndsWith("sldprt"))
+            {
+                nDocType = SwDmDocumentType.swDmDocumentPart;
+            }
+            else if (sDocFileName.ToLower().EndsWith("sldasm"))
+            {
+                nDocType = SwDmDocumentType.swDmDocumentAssembly;
+            }
+            else if (sDocFileName.ToLower().EndsWith("slddrw"))
+            {
+                nDocType = SwDmDocumentType.swDmDocumentDrawing;
+            }
+            else
+            {
+                // Probably not a SOLIDWORKS file,
+                // so cannot open
+                nDocType = SwDmDocumentType.swDmDocumentUnknown;
+                return;
+            }
+
+            swClassFact = new SwDMClassFactory();
+            swDocMgr = (SwDMApplication)swClassFact.GetApplication(sLicenseKey);
+            swDoc = (SwDMDocument)swDocMgr.GetDocument(sDocFileName, nDocType, false, out nRetVal);
+
+            swDoc10 = (SwDMDocument10)swDoc;
+            swDoc22 = (SwDMDocument22)swDoc;
+
+            object vBrokenRefs = null;
+            object vIsVirtuals = null;
+            object vTimeStamps = null;
+            object vIsImported = null;
+
+            string[] vDependArr = null;
+
+            SwDMSearchOption swSearchOpt = default(SwDMSearchOption);
+
+            swSearchOpt = swDocMgr.GetSearchOptionObject();
+
+            vDependArr = (string[])swDoc22.GetAllExternalReferences5(swSearchOpt, out vBrokenRefs, out vIsVirtuals, out vTimeStamps, out vIsImported);
+
+            if ((vDependArr == null)) return;
+
+            var doc16 = (SwDMDocument16)swDoc;
+
+            doc16.ReplaceReference(vDependArr[0], @"E:\01_Work\22_Gitee\CSharpAndSolidWorks\CSharpAndSolidWorks\TemplateModel\repleaceReference\part1new.SLDPRT");
+
+            swDoc.Save();
+
+            swDoc.CloseDoc();
+        }
     }
 
     public class PictureDispConverter : System.Windows.Forms.AxHost
