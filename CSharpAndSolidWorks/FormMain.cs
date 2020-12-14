@@ -3386,6 +3386,51 @@ namespace CSharpAndSolidWorks
 
             swDoc.CloseDoc();
         }
+
+        private void btnGetRayPoints_Click(object sender, EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// 删除草图中的错误关系
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnDeleteRelation_Click(object sender, EventArgs e)
+        {
+            SldWorks swApp = PStandAlone.GetSolidWorks();
+
+            var swModel = swApp.IActiveDoc2;
+
+            //请先打开 D:\09_Study\CSharpAndSolidWorks\CSharpAndSolidWorks\TemplateModel\57_DeleteRelation.sldprt
+
+            swModel.Extension.SelectByID2("Sketch11", "SKETCH", 0, 0, 0, false, 1, null, 0);
+            swModel.EditSketch();
+
+            swModel.ClearSelection2(true);
+
+            var swSketch = swModel.IGetActiveSketch2();
+
+            var skRelMgr = swSketch.RelationManager;
+
+            //这里可以过滤掉你想找到哪些类型的参考
+            var vRel = (object[])skRelMgr.GetRelations((int)swSketchRelationFilterType_e.swDangling + (int)swSketchRelationFilterType_e.swOverDefining);
+
+            if (vRel != null)
+            {
+                for (int j = vRel.Length - 1; j >= 0; j--)
+                {
+                    var swSkRel = (SketchRelation)vRel[j];
+
+                    //这一句是删除
+                    skRelMgr.DeleteRelation(swSkRel);
+
+                    //这一句是压缩掉 swSkRel.Suppressed = true;
+                }
+            }
+
+            swModel.ForceRebuild3(true);
+        }
     }
 
     public class PictureDispConverter : System.Windows.Forms.AxHost
