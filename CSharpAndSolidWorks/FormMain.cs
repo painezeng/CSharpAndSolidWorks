@@ -3431,6 +3431,60 @@ namespace CSharpAndSolidWorks
 
             swModel.ForceRebuild3(true);
         }
+
+        /// <summary>
+        /// 这里有两种代码，一个是直接在工程图中选中了零件，另一个在工程图中选中了注释 或者球标(有引线指向零件)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnGetCompFromBalloon_Click(object sender, EventArgs e)
+        {
+            SldWorks swApp = PStandAlone.GetSolidWorks();
+
+            var swModel = swApp.IActiveDoc2;
+
+            //var drawingDoc = (DrawingDoc)swModel;
+
+            //选择管理器
+            var swSelMgr = (SelectionMgr)swModel.SelectionManager;
+
+            //检查是否有选择对象
+            if (swSelMgr.GetSelectedObjectCount2(-1) == 0)
+            {
+                MessageBox.Show("还有没选择对象");
+                return;
+            }
+
+            //遍历选中对象 (经验觉得第一个选中对象一直是视图，第二个开始才是要选中的对象)
+            //所以下在的循环应该可以从2开始
+            for (int i = 1; i <= swSelMgr.GetSelectedObjectCount(); i++)
+            {
+                //获取选中的对象，转为DrawingComponent
+                var swDrawingComponent = (DrawingComponent)swSelMgr.GetSelectedObjectsComponent4(i, -1);
+
+                if (swDrawingComponent != null)
+                {
+                    var swComponent = (Component2)swDrawingComponent.Component;
+
+                    MessageBox.Show(swComponent.Name2);
+                }
+
+                //如果选择的是球标 或者 注释
+                if (swSelMgr.GetSelectedObjectType3(i, -1) == (int)swSelectType_e.swSelNOTES)
+                {
+                    //获取Note
+                    var thisNote = (Note)swSelMgr.GetSelectedObject6(i, -1);
+                    //获取Annotation
+                    var ann = (Annotation)thisNote.GetAnnotation();
+                    //获取关联实体
+                    var attEntity = (Entity)ann.IGetAttachedEntities();
+                    //获取实体所对应的Component
+                    var comp = attEntity.IGetComponent2();
+
+                    MessageBox.Show(comp.Name2);
+                }
+            }
+        }
     }
 
     public class PictureDispConverter : System.Windows.Forms.AxHost
