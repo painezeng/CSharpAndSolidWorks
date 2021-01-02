@@ -3485,6 +3485,50 @@ namespace CSharpAndSolidWorks
                 }
             }
         }
+
+        private void btnMovePart_Click(object sender, EventArgs e)
+        {
+            SldWorks swApp = PStandAlone.GetSolidWorks();
+
+            var swModel = swApp.IActiveDoc2;
+
+            //选择管理器
+            var swSelMgr = (SelectionMgr)swModel.SelectionManager;
+
+            //检查是否有选择对象
+            if (swSelMgr.GetSelectedObjectCount2(-1) == 4)
+            {
+                var tempPart = (Component2)swSelMgr.IGetSelectedObjectsComponent2(1);
+                var tempLine1 = (SketchLine)swSelMgr.GetSelectedObject(2);
+                var tempLine2 = (SketchLine)swSelMgr.GetSelectedObject(3);
+                var tempLine3 = (SketchLine)swSelMgr.GetSelectedObject(4);
+
+                var MathUtility = (MathUtility)swApp.GetMathUtility();
+
+                var swAxisVerX = (MathVector)MathUtility.CreateVector(new double[] { tempLine1.IGetEndPoint2().X - tempLine1.IGetStartPoint2().X, tempLine1.IGetEndPoint2().Y - tempLine1.IGetStartPoint2().Y, tempLine1.IGetEndPoint2().Z - tempLine1.IGetStartPoint2().Z });
+                var swAxisVerY = (MathVector)MathUtility.CreateVector(new double[] { tempLine2.IGetEndPoint2().X - tempLine2.IGetStartPoint2().X, tempLine2.IGetEndPoint2().Y - tempLine2.IGetStartPoint2().Y, tempLine2.IGetEndPoint2().Z - tempLine2.IGetStartPoint2().Z });
+                var swAxisVerZ = (MathVector)MathUtility.CreateVector(new double[] { tempLine3.IGetEndPoint2().X - tempLine3.IGetStartPoint2().X, tempLine3.IGetEndPoint2().Y - tempLine3.IGetStartPoint2().Y, tempLine3.IGetEndPoint2().Z - tempLine3.IGetStartPoint2().Z });
+
+                var swAxisVerM = (MathVector)MathUtility.CreateVector(new double[] { tempLine1.IGetStartPoint2().X, tempLine1.IGetStartPoint2().Y, tempLine1.IGetStartPoint2().Z });
+
+                var MathXform = (MathTransform)MathUtility.ComposeTransform(swAxisVerX, swAxisVerY, swAxisVerZ, swAxisVerM, 1);
+
+                //tempPart.Transform2 = MathXform;
+
+                tempPart.Transform = MathXform;
+
+                //(swModel as AssemblyDoc).UpdateBox();
+            }
+
+            //这里可以通过轴来创建变换，相当于坐标系的配合
+            //var MathUtility = (MathUtility)swApp.GetMathUtility();
+            //var swAxisVerX = (MathVector)MathUtility.CreateVector(new double[] { 0, 0, -1 });
+            //var swAxisVerY = (MathVector)MathUtility.CreateVector(new double[] { 0, 1, 0 });
+            //var swAxisVerZ = (MathVector)MathUtility.CreateVector(faceNormalDou);
+            //var swAxisVerM = (MathVector)MathUtility.CreateVector(new double[] { 0.094, 0.142, 0.012 });
+            // var MathXform = (MathTransform)MathUtility.ComposeTransform(swAxisVerX, swAxisVerY, swAxisVerZ, swAxisVerM, 1);
+            // tempPart.Transform2 = MathXform;
+        }
     }
 
     public class PictureDispConverter : System.Windows.Forms.AxHost
