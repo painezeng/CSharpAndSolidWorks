@@ -16,6 +16,7 @@ using PSWStandalon;
 using Microsoft.VisualBasic;
 using System.Linq;
 using Attribute = SolidWorks.Interop.sldworks.Attribute;
+using GetRayIntersectionWithBody;
 
 namespace CSharpAndSolidWorks
 {
@@ -3389,6 +3390,9 @@ namespace CSharpAndSolidWorks
 
         private void btnGetRayPoints_Click(object sender, EventArgs e)
         {
+            FrmMain frmMain = new FrmMain();
+
+            frmMain.Show();
         }
 
         /// <summary>

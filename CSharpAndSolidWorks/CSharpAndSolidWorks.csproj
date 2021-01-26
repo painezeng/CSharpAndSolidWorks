@@ -178,6 +178,10 @@
       <Project>{3595e4ae-c36f-4690-a423-3f2192c94bc0}</Project>
       <Name>MyeDrawing</Name>
     </ProjectReference>
+    <ProjectReference Include="GetRayIntersectionWithBody\GetRayIntersectionWithBody.csproj">
+      <Project>{0e54076a-0241-409a-b787-33d7738d75b1}</Project>
+      <Name>GetRayIntersectionWithBody</Name>
+    </ProjectReference>
     <ProjectReference Include="InsertDrawingNote\InsertDrawingNote.csproj">
       <Project>{1645944c-40e0-4a01-aca3-d62a35e01a97}</Project>
       <Name>InsertDrawingNote</Name>

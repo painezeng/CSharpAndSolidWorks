@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComparePart", "CSharpAndSol
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "PSWStandalone", "CSharpAndSolidWorks\PSWStandalone\PSWStandalone.vbproj", "{20A47175-69C7-445E-B4D7-DC16A95B7684}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetRayIntersectionWithBody", "CSharpAndSolidWorks\GetRayIntersectionWithBody\GetRayIntersectionWithBody.csproj", "{0E54076A-0241-409A-B787-33D7738D75B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,14 @@ Global
 		{20A47175-69C7-445E-B4D7-DC16A95B7684}.Release|Any CPU.Build.0 = Release|Any CPU
 		{20A47175-69C7-445E-B4D7-DC16A95B7684}.Release|x64.ActiveCfg = Release|Any CPU
 		{20A47175-69C7-445E-B4D7-DC16A95B7684}.Release|x64.Build.0 = Release|Any CPU
+		{0E54076A-0241-409A-B787-33D7738D75B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E54076A-0241-409A-B787-33D7738D75B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E54076A-0241-409A-B787-33D7738D75B1}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0E54076A-0241-409A-B787-33D7738D75B1}.Debug|x64.Build.0 = Debug|Any CPU
+		{0E54076A-0241-409A-B787-33D7738D75B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E54076A-0241-409A-B787-33D7738D75B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E54076A-0241-409A-B787-33D7738D75B1}.Release|x64.ActiveCfg = Release|Any CPU
+		{0E54076A-0241-409A-B787-33D7738D75B1}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
