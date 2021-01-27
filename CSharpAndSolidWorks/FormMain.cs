@@ -3533,6 +3533,21 @@ namespace CSharpAndSolidWorks
             // var MathXform = (MathTransform)MathUtility.ComposeTransform(swAxisVerX, swAxisVerY, swAxisVerZ, swAxisVerM, 1);
             // tempPart.Transform2 = MathXform;
         }
+
+        private void btnGetDisMateInfo_Click(object sender, EventArgs e)
+        {
+            //打开一个装配，并选中一个距离配合
+
+            var swApp = PStandAlone.GetSolidWorks();
+
+            var swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            var featureObject = (Feature)swModel.ISelectionManager.GetSelectedObject6(1, -1);
+
+            var featureData = (DistanceMateFeatureData)featureObject.GetDefinition();
+
+            MessageBox.Show((featureData.Distance * 1000).ToString());
+        }
     }
 
     public class PictureDispConverter : System.Windows.Forms.AxHost

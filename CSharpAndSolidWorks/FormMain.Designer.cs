@@ -94,6 +94,7 @@
             this.btnReplaceReference = new System.Windows.Forms.Button();
             this.btnDeleteRelation = new System.Windows.Forms.Button();
             this.btnMovePart = new System.Windows.Forms.Button();
+            this.btnGetDisMateInfo = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -273,7 +274,8 @@
             this.btn_LoadThrid.Name = "btn_LoadThrid";
             this.btn_LoadThrid.Size = new System.Drawing.Size(142, 29);
             this.btn_LoadThrid.TabIndex = 12;
-            this.btn_LoadThrid.Text = "15.2.读取第三方数据";
+            this.btn_LoadThrid.Text = "16.读取第三方数据";
+            this.btn_LoadThrid.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btn_LoadThrid.UseVisualStyleBackColor = true;
             this.btn_LoadThrid.Click += new System.EventHandler(this.btn_LoadThrid_Click);
             // 
@@ -283,7 +285,7 @@
             this.btn_Tips.Name = "btn_Tips";
             this.btn_Tips.Size = new System.Drawing.Size(142, 29);
             this.btn_Tips.TabIndex = 13;
-            this.btn_Tips.Text = "16.提示信息与进度条";
+            this.btn_Tips.Text = "17.提示信息与进度条";
             this.btn_Tips.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btn_Tips.UseVisualStyleBackColor = true;
             this.btn_Tips.Click += new System.EventHandler(this.btn_Tips_Click);
@@ -294,7 +296,7 @@
             this.btn_Adv_Select.Name = "btn_Adv_Select";
             this.btn_Adv_Select.Size = new System.Drawing.Size(142, 29);
             this.btn_Adv_Select.TabIndex = 14;
-            this.btn_Adv_Select.Text = "17.高级选择";
+            this.btn_Adv_Select.Text = "18.高级选择";
             this.btn_Adv_Select.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btn_Adv_Select.UseVisualStyleBackColor = true;
             this.btn_Adv_Select.Click += new System.EventHandler(this.btn_Adv_Select_Click);
@@ -305,7 +307,7 @@
             this.btnBounding.Name = "btnBounding";
             this.btnBounding.Size = new System.Drawing.Size(142, 29);
             this.btnBounding.TabIndex = 15;
-            this.btnBounding.Text = "18.包围盒";
+            this.btnBounding.Text = "19.包围盒";
             this.btnBounding.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnBounding.UseVisualStyleBackColor = true;
             this.btnBounding.Click += new System.EventHandler(this.btnBounding_Click);
@@ -316,7 +318,7 @@
             this.btn_Measure.Name = "btn_Measure";
             this.btn_Measure.Size = new System.Drawing.Size(142, 29);
             this.btn_Measure.TabIndex = 16;
-            this.btn_Measure.Text = "19.通过测量获取数据";
+            this.btn_Measure.Text = "20.通过测量获取数据";
             this.btn_Measure.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btn_Measure.UseVisualStyleBackColor = true;
             this.btn_Measure.Click += new System.EventHandler(this.btn_Measure_Click);
@@ -327,7 +329,7 @@
             this.btn_GetMass.Name = "btn_GetMass";
             this.btn_GetMass.Size = new System.Drawing.Size(142, 29);
             this.btn_GetMass.TabIndex = 17;
-            this.btn_GetMass.Text = "20.获取质量属性";
+            this.btn_GetMass.Text = "21.获取质量属性";
             this.btn_GetMass.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btn_GetMass.UseVisualStyleBackColor = true;
             this.btn_GetMass.Click += new System.EventHandler(this.btn_GetMass_Click);
@@ -338,7 +340,7 @@
             this.btn_Pane.Name = "btn_Pane";
             this.btn_Pane.Size = new System.Drawing.Size(142, 29);
             this.btn_Pane.TabIndex = 18;
-            this.btn_Pane.Text = "21. Pane页预览BOM";
+            this.btn_Pane.Text = "22. Pane页预览BOM";
             this.btn_Pane.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btn_Pane.UseVisualStyleBackColor = true;
             this.btn_Pane.Click += new System.EventHandler(this.btn_Pane_Click);
@@ -349,7 +351,7 @@
             this.btn_SetMaterial.Name = "btn_SetMaterial";
             this.btn_SetMaterial.Size = new System.Drawing.Size(142, 29);
             this.btn_SetMaterial.TabIndex = 19;
-            this.btn_SetMaterial.Text = "22.设定零件材质";
+            this.btn_SetMaterial.Text = "23.设定零件材质";
             this.btn_SetMaterial.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btn_SetMaterial.UseVisualStyleBackColor = true;
             this.btn_SetMaterial.Click += new System.EventHandler(this.btn_SetMaterial_Click);
@@ -360,7 +362,7 @@
             this.btnSetColor.Name = "btnSetColor";
             this.btnSetColor.Size = new System.Drawing.Size(142, 29);
             this.btnSetColor.TabIndex = 20;
-            this.btnSetColor.Text = "23.给指定面上色";
+            this.btnSetColor.Text = "24.给指定面上色";
             this.btnSetColor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSetColor.UseVisualStyleBackColor = true;
             this.btnSetColor.Click += new System.EventHandler(this.btnSetColor_Click);
@@ -817,11 +819,23 @@
             this.btnMovePart.UseVisualStyleBackColor = true;
             this.btnMovePart.Click += new System.EventHandler(this.btnMovePart_Click);
             // 
+            // btnGetDisMateInfo
+            // 
+            this.btnGetDisMateInfo.Location = new System.Drawing.Point(802, 366);
+            this.btnGetDisMateInfo.Name = "btnGetDisMateInfo";
+            this.btnGetDisMateInfo.Size = new System.Drawing.Size(142, 29);
+            this.btnGetDisMateInfo.TabIndex = 52;
+            this.btnGetDisMateInfo.Text = "59.获取距离配合信息";
+            this.btnGetDisMateInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnGetDisMateInfo.UseVisualStyleBackColor = true;
+            this.btnGetDisMateInfo.Click += new System.EventHandler(this.btnGetDisMateInfo_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1008, 675);
+            this.Controls.Add(this.btnGetDisMateInfo);
             this.Controls.Add(this.btnMovePart);
             this.Controls.Add(this.btnDeleteRelation);
             this.Controls.Add(this.btnReplaceReference);
@@ -960,6 +974,7 @@
         private System.Windows.Forms.Button btnReplaceReference;
         private System.Windows.Forms.Button btnDeleteRelation;
         private System.Windows.Forms.Button btnMovePart;
+        private System.Windows.Forms.Button btnGetDisMateInfo;
     }
 }
 
