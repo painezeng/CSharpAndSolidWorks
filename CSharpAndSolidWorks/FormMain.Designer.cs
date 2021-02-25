@@ -95,6 +95,7 @@
             this.btnDeleteRelation = new System.Windows.Forms.Button();
             this.btnMovePart = new System.Windows.Forms.Button();
             this.btnGetDisMateInfo = new System.Windows.Forms.Button();
+            this.btnGetFeatureNodes = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -830,11 +831,23 @@
             this.btnGetDisMateInfo.UseVisualStyleBackColor = true;
             this.btnGetDisMateInfo.Click += new System.EventHandler(this.btnGetDisMateInfo_Click);
             // 
+            // btnGetFeatureNodes
+            // 
+            this.btnGetFeatureNodes.Location = new System.Drawing.Point(802, 410);
+            this.btnGetFeatureNodes.Name = "btnGetFeatureNodes";
+            this.btnGetFeatureNodes.Size = new System.Drawing.Size(142, 29);
+            this.btnGetFeatureNodes.TabIndex = 53;
+            this.btnGetFeatureNodes.Text = "60.特征树节点操作";
+            this.btnGetFeatureNodes.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnGetFeatureNodes.UseVisualStyleBackColor = true;
+            this.btnGetFeatureNodes.Click += new System.EventHandler(this.btnGetFeatureNodes_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1008, 675);
+            this.Controls.Add(this.btnGetFeatureNodes);
             this.Controls.Add(this.btnGetDisMateInfo);
             this.Controls.Add(this.btnMovePart);
             this.Controls.Add(this.btnDeleteRelation);
@@ -975,6 +988,7 @@
         private System.Windows.Forms.Button btnDeleteRelation;
         private System.Windows.Forms.Button btnMovePart;
         private System.Windows.Forms.Button btnGetDisMateInfo;
+        private System.Windows.Forms.Button btnGetFeatureNodes;
     }
 }
 

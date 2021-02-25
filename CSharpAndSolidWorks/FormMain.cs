@@ -3548,6 +3548,231 @@ namespace CSharpAndSolidWorks
 
             MessageBox.Show((featureData.Distance * 1000).ToString());
         }
+
+        /// <summary>
+        /// 遍历的层级
+        /// </summary>
+        private int traverseLevel;
+
+        /// <summary>
+        /// 展开此项
+        /// </summary>
+        private bool expandThis;
+
+        /// <summary>
+        /// 遍历节点
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnGetFeatureNodes_Click(object sender, EventArgs e)
+        {
+            var swApp = PStandAlone.GetSolidWorks();
+
+            var swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            FeatureManager featureMgr = default(FeatureManager);
+            TreeControlItem rootNode = default(TreeControlItem);
+
+            featureMgr = swModel.FeatureManager;
+
+            //通过特征树获取根节点
+            rootNode = featureMgr.GetFeatureTreeRootItem2((int)swFeatMgrPane_e.swFeatMgrPaneBottom);
+
+            int i = 0;
+
+            for (i = 0; i <= 1; i++)
+            {
+                if ((rootNode != null))
+                {
+                    Debug.Print("");
+                    traverseLevel = 0;
+                    traverse_node(rootNode);
+                }
+
+                expandThis = false;
+
+                if (i == 0)
+                {
+                    MessageBox.Show(" OK to collapse all nodes?");
+                }
+            }
+        }
+
+        /// <summary>
+        /// 遍历节点
+        /// </summary>
+        /// <param name="node"></param>
+        private void traverse_node(TreeControlItem node)
+        {
+            TreeControlItem childNode = default(TreeControlItem);
+            Feature featureNode = default(Feature);
+            Component2 componentNode = default(Component2);
+            int nodeObjectType = 0;
+            object nodeObject = null;
+            string restOfString = "";
+            string indent = "";
+            int i = 0;
+            bool displayNodeInfo = false;
+            string compName = null;
+            int suppr = 0;
+            string supprString = "";
+            int vis = 0;
+            string visString = "";
+            string notfloatingString = "";
+            bool notfloating = false;
+            object componentDoc = null;
+            string docString = "";
+            string refConfigName = "";
+
+            displayNodeInfo = false;
+
+            nodeObjectType = node.ObjectType; //节点对象类型
+            nodeObject = node.Object; //节点对象   目前只支持 Feature 和 Component对象转换
+
+            switch (nodeObjectType)
+            {
+                case (int)swTreeControlItemType_e.swFeatureManagerItem_Feature:
+
+                    displayNodeInfo = true;
+                    if ((nodeObject != null))
+                    {
+                        featureNode = (Feature)nodeObject;
+                        restOfString = "[FEATURE: " + featureNode.Name + "]";
+                    }
+                    else
+                    {
+                        restOfString = "[FEATURE: object Null?!]";
+                    }
+
+                    break;
+
+                case (int)swTreeControlItemType_e.swFeatureManagerItem_Component:
+
+                    displayNodeInfo = true;
+
+                    if ((nodeObject != null))
+                    {
+                        componentNode = (Component2)nodeObject;
+                        compName = componentNode.Name2;
+
+                        if ((string.IsNullOrEmpty(compName)))
+                        {
+                            compName = "???";
+                        }
+                        //组件节点状态
+                        suppr = componentNode.GetSuppression();
+
+                        switch ((suppr))
+                        {
+                            case (int)swComponentSuppressionState_e.swComponentFullyResolved:
+                                supprString = "Resolved";
+
+                                break;
+
+                            case (int)swComponentSuppressionState_e.swComponentLightweight:
+                                supprString = "Lightweight";
+
+                                break;
+
+                            case (int)swComponentSuppressionState_e.swComponentSuppressed:
+                                supprString = "Suppressed";
+
+                                break;
+                        }
+                        //组件节点可见
+                        vis = componentNode.Visible;
+
+                        switch ((vis))
+                        {
+                            case (int)swComponentVisibilityState_e.swComponentHidden:
+                                visString = "Hidden";
+
+                                break;
+
+                            case (int)swComponentVisibilityState_e.swComponentVisible:
+                                visString = "Visible";
+
+                                break;
+                        }
+                        //组件节点完全定义？
+                        notfloating = componentNode.IsFixed();
+
+                        if (notfloating == false)
+                        {
+                            notfloatingString = "Floating";
+                        }
+                        else
+                        {
+                            notfloatingString = "Fixed";
+                        }
+
+                        componentDoc = componentNode.GetModelDoc2();
+
+                        if (componentDoc == null)
+                        {
+                            docString = "NotLoaded";
+                        }
+                        else
+                        {
+                            docString = "Loaded";
+                        }
+                        //组件节点配置
+                        refConfigName = componentNode.ReferencedConfiguration;
+
+                        if ((string.IsNullOrEmpty(refConfigName)))
+                        {
+                            refConfigName = "???";
+                        }
+
+                        restOfString = "[COMPONENT: " + compName + " " + docString + " " + supprString + " " + visString + " " + refConfigName + "]";
+                    }
+                    else
+                    {
+                        restOfString = "[COMPONENT: object Null?!]";
+                    }
+
+                    break;
+
+                default:
+
+                    displayNodeInfo = true;
+
+                    if ((nodeObject != null))
+                    {
+                        restOfString = "[object type not handled]";
+                    }
+                    else
+                    {
+                        restOfString = "[object Null?!]";
+                    }
+
+                    break;
+            }
+
+            for (i = 1; i <= traverseLevel; i++)
+            {
+                indent = indent + "  ";
+            }
+
+            if ((displayNodeInfo))
+            {
+                Debug.Print(indent + node.Text + " : " + restOfString);
+            }
+
+            // Expand the node
+            node.Expanded = expandThis;
+            traverseLevel = traverseLevel + 1;
+            childNode = node.GetFirstChild();
+
+            while ((childNode != null))
+            {
+                Debug.Print(indent + "Node is expanded: " + childNode.Expanded);
+                traverse_node(childNode);
+                childNode = childNode.GetNext();
+            }
+
+            traverseLevel = traverseLevel - 1;
+        }
     }
 
     public class PictureDispConverter : System.Windows.Forms.AxHost
