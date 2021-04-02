@@ -96,6 +96,7 @@
             this.btnMovePart = new System.Windows.Forms.Button();
             this.btnGetDisMateInfo = new System.Windows.Forms.Button();
             this.btnGetFeatureNodes = new System.Windows.Forms.Button();
+            this.btnProfileCenter = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -842,11 +843,22 @@
             this.btnGetFeatureNodes.UseVisualStyleBackColor = true;
             this.btnGetFeatureNodes.Click += new System.EventHandler(this.btnGetFeatureNodes_Click);
             // 
+            // btnProfileCenter
+            // 
+            this.btnProfileCenter.Location = new System.Drawing.Point(961, 14);
+            this.btnProfileCenter.Name = "btnProfileCenter";
+            this.btnProfileCenter.Size = new System.Drawing.Size(133, 29);
+            this.btnProfileCenter.TabIndex = 54;
+            this.btnProfileCenter.Text = "61.高级配合(轮廓中心)";
+            this.btnProfileCenter.UseVisualStyleBackColor = true;
+            this.btnProfileCenter.Click += new System.EventHandler(this.btnProfileCenter_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1008, 675);
+            this.ClientSize = new System.Drawing.Size(1121, 675);
+            this.Controls.Add(this.btnProfileCenter);
             this.Controls.Add(this.btnGetFeatureNodes);
             this.Controls.Add(this.btnGetDisMateInfo);
             this.Controls.Add(this.btnMovePart);
@@ -989,6 +1001,7 @@
         private System.Windows.Forms.Button btnMovePart;
         private System.Windows.Forms.Button btnGetDisMateInfo;
         private System.Windows.Forms.Button btnGetFeatureNodes;
+        private System.Windows.Forms.Button btnProfileCenter;
     }
 }
 

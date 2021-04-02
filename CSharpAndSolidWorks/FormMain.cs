@@ -3773,6 +3773,59 @@ namespace CSharpAndSolidWorks
 
             traverseLevel = traverseLevel - 1;
         }
+
+        private void btnProfileCenter_Click(object sender, EventArgs e)
+        {
+            //请先分别在两个零件中选中用于轮廓配合的面。
+            //连接到Solidworks
+            SldWorks swApp = Utility.ConnectToSolidWorks();
+
+            ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            Face2 swSelFace = default(Face2);
+            Face2 swSelFace2 = default(Face2);
+
+            SelectionMgr swSelMgr = (SelectionMgr)swModel.SelectionManager;
+
+            //获取选择数据
+            SelectData swSelData = default(SelectData);
+
+            swSelData = swSelMgr.CreateSelectData();
+
+            swSelFace = (Face2)swSelMgr.GetSelectedObject6(1, 0);
+            swSelFace2 = (Face2)swSelMgr.GetSelectedObject6(2, 0);
+
+            var swAsmembly = swModel as AssemblyDoc;
+
+            ProfileCenterMateFeatureData profileCenterMateFeatureData =
+                (ProfileCenterMateFeatureData)swAsmembly.CreateMateData((int)swMateType_e.swMatePROFILECENTER);
+
+            object[] mateFaces = new object[2];
+
+            mateFaces[0] = swSelFace;
+            mateFaces[1] = swSelFace2;
+
+            var lisFaces = (DispatchWrapper[])ObjectArrayToDispatchWrapperArray((mateFaces));
+
+            profileCenterMateFeatureData.EntitiesToMate = lisFaces;
+
+            profileCenterMateFeatureData.MateAlignment = 0;
+
+            profileCenterMateFeatureData.LockRotation = false;
+
+            profileCenterMateFeatureData.FlipDimension = false;
+
+            profileCenterMateFeatureData.OffsetDistance = 0;
+
+            Feature newMateFeature = (Feature)swAsmembly.CreateMate(profileCenterMateFeatureData);
+
+            swModel.EditRebuild3();
+
+            if (newMateFeature != null)
+            {
+                MessageBox.Show("配合完成。");
+            }
+        }
     }
 
     public class PictureDispConverter : System.Windows.Forms.AxHost
