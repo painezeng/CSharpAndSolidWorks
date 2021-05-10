@@ -3826,6 +3826,132 @@ namespace CSharpAndSolidWorks
                 MessageBox.Show("配合完成。");
             }
         }
+
+        private void btnOutWithCoordSystem_Click(object sender, EventArgs e)
+        {
+            SldWorks swApp = Utility.ConnectToSolidWorks();
+
+            ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            //设置用来导出文件的坐标系名称(需要装配体中有这个名称的坐标系)
+            var setRes = swModel.Extension.SetUserPreferenceString(16, 0, "Coordinate System1");
+
+            //设置导出版本
+
+            int error = 0;
+
+            int warnings = 0;
+            //x_t的版本设置
+            //swApp.SetUserPreferenceIntegerValue((int)swUserPreferenceIntegerValue_e.swParasolidOutputVersion, (int)swParasolidOutputVersion_e.swParasolidOutputVersion_161);
+
+            swModel.Extension.SaveAs(@"D:\export.igs", (int)swSaveAsVersion_e.swSaveAsCurrentVersion, (int)swSaveAsOptions_e.swSaveAsOptions_Silent, null, ref error, ref warnings);
+            swModel.Extension.SaveAs(@"D:\export.x_t", (int)swSaveAsVersion_e.swSaveAsCurrentVersion, (int)swSaveAsOptions_e.swSaveAsOptions_Silent, null, ref error, ref warnings);
+            //Mark:SolidWorks 2018版本导出 step 用坐标系导出有bug！！！ x_t igs没有问题
+            //swModel.Extension.SaveAs(@"D:\export.step", (int)swSaveAsVersion_e.swSaveAsCurrentVersion, (int)swSaveAsOptions_e.swSaveAsOptions_Silent, null, ref error, ref warnings);
+
+            MessageBox.Show("输出成功");
+        }
+
+        private void btnCreateDrawing_Click(object sender, EventArgs e)
+        {
+            SldWorks swApp = Utility.ConnectToSolidWorks();
+
+            ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
+        }
+
+        private void btnTraverseFace_Click(object sender, EventArgs e)
+        {
+            SldWorks swApp = Utility.ConnectToSolidWorks();
+
+            ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            PartDoc partDoc2 = (PartDoc)swModel;
+
+            var feat1 = (Feature)partDoc2.FeatureByName("EBox");
+            var featPlaneSeg = (Feature)partDoc2.FeatureByName("Plane_Seg");
+
+            object PlaneBox = null;
+
+            featPlaneSeg.GetBox(ref PlaneBox);
+
+            var PlaneBoxXYZ = (double[])PlaneBox;
+
+            var faceCount = feat1.GetFaceCount();
+
+            if (faceCount > 0)
+            {
+                var faces = (object[])feat1.GetFaces();
+
+                for (int i = 0; i < faces.Length; i++)
+                {
+                    var thisFace = (Face2)faces[i];
+                    object thisFaceBox = null;
+
+                    thisFaceBox = thisFace.GetBox();
+
+                    var thisFaceBoxXYZ = (double[])thisFaceBox;
+
+                    if (Math.Abs(thisFaceBoxXYZ[5] - thisFaceBoxXYZ[2]) < 0.0001 && Math.Abs(thisFaceBoxXYZ[2] - PlaneBoxXYZ[2]) < 0.0001)
+                    {
+                        ((Entity)thisFace).Select(false);
+                    }
+                }
+            }
+        }
+
+        private void btnGetView_Click(object sender, EventArgs e)
+        {
+            SldWorks swApp = Utility.ConnectToSolidWorks();
+
+            ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            SelectionMgr selectionMgr = (SelectionMgr)swModel.SelectionManager;
+
+            //获取选择的视图对象
+            View view = (View)selectionMgr.GetSelectedObject5(1);
+
+            //获取视图的草图
+            var viewSketch = view.IGetSketch();
+
+            //var pointsCount = viewSketch.GetSketchPointsCount2();
+
+            var points = (object[])viewSketch.GetSketchPoints2();
+
+            var skSegs = (object[])viewSketch.GetSketchSegments();
+
+            List<SketchPoint> segmentPoints = new List<SketchPoint>();
+            if (points != null)
+            {
+                for (int i = 0; i < points.Length; i++)
+                {
+                    var thisPoint = (SketchPoint)points[i];
+
+                    Debug.Print(thisPoint.Type.ToString());
+
+                    if (thisPoint.Type == 1)
+                    {
+                        // thisPoint.Select(true);
+
+                        segmentPoints.Add(thisPoint);
+                    }
+                }
+            }
+            List<SketchSegment> segmentCenterLines = new List<SketchSegment>();
+
+            if (skSegs != null)
+            {
+                for (int i = 0; i < skSegs.Length; i++)
+                {
+                    var thisSeg = (SketchSegment)skSegs[i];
+                    // thisSeg.Select(false);
+                    if (thisSeg.Style == (int)swLineStyles_e.swLineCENTER)
+                    {
+                        //thisSeg.Select(true);
+                        segmentCenterLines.Add(thisSeg);
+                    }
+                }
+            }
+        }
     }
 
     public class PictureDispConverter : System.Windows.Forms.AxHost

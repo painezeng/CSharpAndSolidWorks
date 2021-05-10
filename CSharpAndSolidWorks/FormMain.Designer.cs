@@ -97,6 +97,10 @@
             this.btnGetDisMateInfo = new System.Windows.Forms.Button();
             this.btnGetFeatureNodes = new System.Windows.Forms.Button();
             this.btnProfileCenter = new System.Windows.Forms.Button();
+            this.btnOutWithCoordSystem = new System.Windows.Forms.Button();
+            this.btnCreateDrawing = new System.Windows.Forms.Button();
+            this.btnTraverseFace = new System.Windows.Forms.Button();
+            this.btnGetView = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -853,11 +857,59 @@
             this.btnProfileCenter.UseVisualStyleBackColor = true;
             this.btnProfileCenter.Click += new System.EventHandler(this.btnProfileCenter_Click);
             // 
+            // btnOutWithCoordSystem
+            // 
+            this.btnOutWithCoordSystem.Location = new System.Drawing.Point(961, 59);
+            this.btnOutWithCoordSystem.Name = "btnOutWithCoordSystem";
+            this.btnOutWithCoordSystem.Size = new System.Drawing.Size(133, 29);
+            this.btnOutWithCoordSystem.TabIndex = 55;
+            this.btnOutWithCoordSystem.Text = " 62.特定坐标系输出";
+            this.btnOutWithCoordSystem.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnOutWithCoordSystem.UseVisualStyleBackColor = true;
+            this.btnOutWithCoordSystem.Click += new System.EventHandler(this.btnOutWithCoordSystem_Click);
+            // 
+            // btnCreateDrawing
+            // 
+            this.btnCreateDrawing.Location = new System.Drawing.Point(961, 102);
+            this.btnCreateDrawing.Name = "btnCreateDrawing";
+            this.btnCreateDrawing.Size = new System.Drawing.Size(133, 29);
+            this.btnCreateDrawing.TabIndex = 56;
+            this.btnCreateDrawing.Text = "63.工程图-预定义视图";
+            this.btnCreateDrawing.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCreateDrawing.UseVisualStyleBackColor = true;
+            this.btnCreateDrawing.Click += new System.EventHandler(this.btnCreateDrawing_Click);
+            // 
+            // btnTraverseFace
+            // 
+            this.btnTraverseFace.Location = new System.Drawing.Point(961, 146);
+            this.btnTraverseFace.Name = "btnTraverseFace";
+            this.btnTraverseFace.Size = new System.Drawing.Size(133, 29);
+            this.btnTraverseFace.TabIndex = 57;
+            this.btnTraverseFace.Text = "64.遍历面";
+            this.btnTraverseFace.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnTraverseFace.UseVisualStyleBackColor = true;
+            this.btnTraverseFace.Click += new System.EventHandler(this.btnTraverseFace_Click);
+            // 
+            // btnGetView
+            // 
+            this.btnGetView.Location = new System.Drawing.Point(961, 190);
+            this.btnGetView.Name = "btnGetView";
+            this.btnGetView.Size = new System.Drawing.Size(133, 29);
+            this.btnGetView.TabIndex = 58;
+            this.btnGetView.Text = "65.遍历视图中的草图";
+            this.btnGetView.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnGetView.UseVisualStyleBackColor = true;
+            this.btnGetView.Click += new System.EventHandler(this.btnGetView_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1121, 675);
+            this.Controls.Add(this.btnGetView);
+            this.Controls.Add(this.btnTraverseFace);
+            this.Controls.Add(this.btnCreateDrawing);
+            this.Controls.Add(this.btnOutWithCoordSystem);
             this.Controls.Add(this.btnProfileCenter);
             this.Controls.Add(this.btnGetFeatureNodes);
             this.Controls.Add(this.btnGetDisMateInfo);
@@ -1002,6 +1054,10 @@
         private System.Windows.Forms.Button btnGetDisMateInfo;
         private System.Windows.Forms.Button btnGetFeatureNodes;
         private System.Windows.Forms.Button btnProfileCenter;
+        private System.Windows.Forms.Button btnOutWithCoordSystem;
+        private System.Windows.Forms.Button btnCreateDrawing;
+        private System.Windows.Forms.Button btnTraverseFace;
+        private System.Windows.Forms.Button btnGetView;
     }
 }
 
