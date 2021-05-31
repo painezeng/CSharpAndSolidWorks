@@ -3952,6 +3952,98 @@ namespace CSharpAndSolidWorks
                 }
             }
         }
+
+        private void btnOpenWithHide_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void btnAutoFillet_Click(object sender, EventArgs e)
+        {
+            //遍历Z轴方向的直线
+            SldWorks swApp = PStandAlone.GetSolidWorks();//连接solidworks
+            swApp.CommandInProgress = true; //因为是exe测试，所以启动该选项，加快速度
+            ModelDoc2 swModel = default(ModelDoc2);
+            ModelDocExtension swModelDocExt = default(ModelDocExtension);
+            SelectionMgr swSelMgr = default(SelectionMgr);
+            Feature swFeature = null;
+
+            swModel = (ModelDoc2)swApp.ActiveDoc; //获取当前零件
+
+            swModelDocExt = (ModelDocExtension)swModel.Extension;
+
+            //选择所有，零件中是选中所有的边。
+            swModelDocExt.SelectAll();
+
+            swSelMgr = (SelectionMgr)swModel.SelectionManager;
+
+            var edgeCount = swSelMgr.GetSelectedObjectCount();  //获取 已经选中的边数
+
+            Debug.Print("总边数：" + edgeCount);
+
+            int faceidStart = 10000;  //设定一个面的起始id,用于识别该面是否已经被获取到。
+
+            //List<Face2> face2sList001 = new List<Face2>();
+            //List<Face2> face2sList002 = new List<Face2>();
+
+            List<Edge> ZEdges = new List<Edge>();
+
+            for (int i = 1; i <= edgeCount; i++)
+            {
+                var thisEdge = (Edge)swSelMgr.GetSelectedObject(i);
+
+                var swCurve = (Curve)thisEdge.GetCurve();
+
+                var thisCurveP = thisEdge.GetCurveParams3();
+
+                if (swCurve.IsLine() == true)
+                {
+                    var lineV = (double[])swCurve.LineParams;
+
+                    Debug.Print($"Root Point-> X {lineV[0].ToString()} ,Y {lineV[1].ToString()} ,Z {lineV[2].ToString()}");
+                    Debug.Print($"Direction Point-> X {lineV[3].ToString()} ,Y {lineV[4].ToString()} ,Z {lineV[5].ToString()}");
+
+                    if (lineV[3] == 0 && lineV[4] == 0)
+                    {
+                        ZEdges.Add(thisEdge);
+                    }
+                }
+            }
+
+            swModel.ClearSelection();//清除掉所有选择的边
+
+            // 重新选中 需要处理掉0.001的面
+            for (int i = 0; i < ZEdges.Count; i++)
+            {
+                var faceEntity = (Entity)ZEdges[i];
+
+                // faceEntity.Select4(true, selectData);
+
+                faceEntity.SelectByMark(true, 1);
+            }
+            double AsyRadius1;
+            double AsyRadius2;
+            double AsyRadius3;
+            double AsyRadius4;
+            bool boolstatus;
+            double[] radiis = new double[2];
+            object radiiArray0;
+            object conicRhosArray0;
+            object setBackArray0;
+            object pointArray0;
+            object pointRhoArray0;
+            object dist2Array0;
+            object pointDist2Array0;
+
+            conicRhosArray0 = 0;
+            setBackArray0 = 0;
+            pointArray0 = 0;
+            pointRhoArray0 = 0;
+            pointDist2Array0 = 0;
+
+            var FilletFea = (Feature)swModel.FeatureManager.FeatureFillet3(195, 0.002, 0.010, 0, (int)swFeatureFilletType_e.swFeatureFilletType_Simple, (int)swFilletOverFlowType_e.swFilletOverFlowType_Default, (int)swFeatureFilletProfileType_e.swFeatureFilletCircular, 0, 0, 0,
+            (setBackArray0), (pointArray0), (pointDist2Array0), (pointRhoArray0));
+            FilletFea.Name = "AutoFillet";
+        }
     }
 
     public class PictureDispConverter : System.Windows.Forms.AxHost
