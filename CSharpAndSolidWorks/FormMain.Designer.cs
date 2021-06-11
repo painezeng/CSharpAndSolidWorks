@@ -873,13 +873,14 @@
             // 
             // btnCreateDrawing
             // 
+            this.btnCreateDrawing.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.btnCreateDrawing.Location = new System.Drawing.Point(961, 102);
             this.btnCreateDrawing.Name = "btnCreateDrawing";
             this.btnCreateDrawing.Size = new System.Drawing.Size(133, 29);
             this.btnCreateDrawing.TabIndex = 56;
             this.btnCreateDrawing.Text = "63.工程图-预定义视图";
             this.btnCreateDrawing.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCreateDrawing.UseVisualStyleBackColor = true;
+            this.btnCreateDrawing.UseVisualStyleBackColor = false;
             this.btnCreateDrawing.Click += new System.EventHandler(this.btnCreateDrawing_Click);
             // 
             // btnTraverseFace
@@ -906,24 +907,27 @@
             // 
             // btnOpenWithHide
             // 
+            this.btnOpenWithHide.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.btnOpenWithHide.Location = new System.Drawing.Point(961, 234);
             this.btnOpenWithHide.Name = "btnOpenWithHide";
             this.btnOpenWithHide.Size = new System.Drawing.Size(133, 29);
             this.btnOpenWithHide.TabIndex = 59;
             this.btnOpenWithHide.Text = "66.隐藏打开零件";
             this.btnOpenWithHide.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnOpenWithHide.UseVisualStyleBackColor = true;
+            this.btnOpenWithHide.UseVisualStyleBackColor = false;
             this.btnOpenWithHide.Click += new System.EventHandler(this.btnOpenWithHide_Click);
             // 
             // btnCreate3thSTDView
             // 
+            this.btnCreate3thSTDView.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.btnCreate3thSTDView.Location = new System.Drawing.Point(961, 278);
             this.btnCreate3thSTDView.Name = "btnCreate3thSTDView";
             this.btnCreate3thSTDView.Size = new System.Drawing.Size(133, 29);
             this.btnCreate3thSTDView.TabIndex = 60;
             this.btnCreate3thSTDView.Text = "67. 创建标准三视图";
             this.btnCreate3thSTDView.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCreate3thSTDView.UseVisualStyleBackColor = true;
+            this.btnCreate3thSTDView.UseVisualStyleBackColor = false;
+            this.btnCreate3thSTDView.Click += new System.EventHandler(this.btnCreate3thSTDView_Click);
             // 
             // btnAutoFillet
             // 
@@ -931,7 +935,7 @@
             this.btnAutoFillet.Name = "btnAutoFillet";
             this.btnAutoFillet.Size = new System.Drawing.Size(133, 29);
             this.btnAutoFillet.TabIndex = 61;
-            this.btnAutoFillet.Text = "68.自动导圆角";
+            this.btnAutoFillet.Text = "68.自动倒圆角";
             this.btnAutoFillet.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnAutoFillet.UseVisualStyleBackColor = true;
             this.btnAutoFillet.Click += new System.EventHandler(this.btnAutoFillet_Click);

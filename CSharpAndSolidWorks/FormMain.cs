@@ -4044,6 +4044,10 @@ namespace CSharpAndSolidWorks
             (setBackArray0), (pointArray0), (pointDist2Array0), (pointRhoArray0));
             FilletFea.Name = "AutoFillet";
         }
+
+        private void btnCreate3thSTDView_Click(object sender, EventArgs e)
+        {
+        }
     }
 
     public class PictureDispConverter : System.Windows.Forms.AxHost
