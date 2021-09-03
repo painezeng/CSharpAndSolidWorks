@@ -2659,7 +2659,9 @@ namespace CSharpAndSolidWorks
             //swApp.RunCommand((int)swCommands_e.swCommands_Options, "");
 
             //开始3d草图
-            swApp.RunCommand((int)swCommands_e.swCommands_3DSketch, "");
+           // swApp.RunCommand((int)swCommands_e.swCommands_3DSketch, "");
+            swApp.RunCommand((int)swCommands_e.swCommands_Fixed_Length_Route, "");
+            swApp.RunCommand((int)swCommands_e.swCommands_Dve_Rmb_Ok, "");
 
             //单击右键
             //swApp.RunCommand((int)swMouse_e.swMouse_Click, "");
@@ -3825,6 +3827,157 @@ namespace CSharpAndSolidWorks
             {
                 MessageBox.Show("配合完成。");
             }
+        }
+
+        private void btnCheckInterference_Click(object sender, EventArgs e)
+        {
+
+            SldWorks swApp = Utility.ConnectToSolidWorks();
+
+            ModelDoc2 swModelDoc = default(ModelDoc2);
+            AssemblyDoc swAssemblyDoc = default(AssemblyDoc);
+            InterferenceDetectionMgr pIntMgr = default(InterferenceDetectionMgr);
+            object[] vInts = null;
+            long i = 0;
+            long j = 0;
+            IInterference interference = default(IInterference);
+            object vIntComps = null;
+            object[] vComps = null;
+            Component2 comp = default(Component2);
+            double vol = 0;
+            object vTrans = null;
+            bool ret = false;
+
+
+            swModelDoc = (ModelDoc2)swApp.ActiveDoc;
+            swAssemblyDoc = (AssemblyDoc)swModelDoc;
+
+            
+            
+            
+            //var intCount = Modeler.ICheckInterferenceCount3(2,r);
+            //Modeler.ICheckInterference3()
+
+
+
+
+             pIntMgr = swAssemblyDoc.InterferenceDetectionManager;
+
+
+            // Specify the interference detection settings and options
+            pIntMgr.TreatCoincidenceAsInterference = true;
+            pIntMgr.TreatSubAssembliesAsComponents = true;
+            pIntMgr.IncludeMultibodyPartInterferences = true;
+            pIntMgr.MakeInterferingPartsTransparent = false;
+            pIntMgr.CreateFastenersFolder = true;
+            pIntMgr.IgnoreHiddenBodies = true;
+            pIntMgr.ShowIgnoredInterferences = false;
+            pIntMgr.UseTransform = true;
+
+
+            // Specify how to display non-interfering components
+            pIntMgr.NonInterferingComponentDisplay = (int)swNonInterferingComponentDisplay_e.swNonInterferingComponentDisplay_Wireframe;
+
+
+            // Run interference detection
+            vInts = (object[])pIntMgr.GetInterferences();
+            Debug.Print("Number of interferences: " + pIntMgr.GetInterferenceCount());
+
+
+            // Get interfering components and transforms
+            ret = pIntMgr.GetComponentsAndTransforms(out vIntComps, out vTrans);
+            // Get interference information
+            for (i = 0; i <= vInts.GetUpperBound(0); i++)
+            {
+
+                Debug.Print("Interference " + (i + 1));
+                interference = (IInterference)vInts[i];
+                Debug.Print("  Number of components in this interference: " + interference.GetComponentCount());
+                vComps = (object[])interference.Components;
+
+                // var interferenceBodies = interference.GetInterferenceBody();
+
+                var vc = vComps.ToList().ConvertAll(x => { return (Component2)x; }).ToArray();
+
+                List<Body2> listBody1 = new List<Body2>();
+                List<Body2> listBody2 = new List<Body2>();
+
+               var t=(object[]) vc[0].GetBodies((int) swBodyType_e.swSolidBody);
+                foreach (var o in t)
+                {
+                    listBody1.Add((Body2)o);
+                }
+
+
+                var t2 = (object[])vc[1].GetBodies((int)swBodyType_e.swSolidBody);
+                foreach (var o in t2)
+                {
+                    listBody2.Add((Body2)o);
+                }
+                
+
+                //for (j = 0; j <= vComps.GetUpperBound(0); j++)
+                //{
+                //    comp = (Component2)vComps[j];
+                //    Debug.Print("   " + comp.Name2);
+
+                //}
+
+                int body1Count = 0;
+                int body2Count = 0;
+                int intser = 0;
+
+                var Modeler = swApp.IGetModeler();
+                
+                var v1 = vc[0].IGetBody();
+                var v2 = vc[1].IGetBody();
+
+                var swTransF1 = vc[0].Transform;
+                var swTransF2 = vc[1].Transform;
+                v1.ApplyTransform(swTransF1);
+                v2.ApplyTransform(swTransF2);
+                Modeler.ICheckInterferenceCount3(1, ref v1, 1, ref v2,
+                    (int) swCheckInterferenceOption_e.swBodyInterference_IncludeCoincidentFaces+(int)swCheckInterferenceOption_e.swBodyInterference_ReturnInterferingObject, ref  body1Count,
+                    ref  body2Count, ref  intser);
+
+                Face2 face21=null;
+                Face2 face22 = null;
+                Body2 body21 = null;
+
+                Modeler.ICheckInterference3(ref face21,ref face22,ref body21);
+
+                vol = interference.Volume;
+                Debug.Print("  Interference volume is " + (vol * 1000000000) + " mm^3");
+
+
+    
+                
+                //swAssemblyDoc.ToolsCheckInterference2(2, vc, true, out object objPcomp, out object Pface);
+
+              
+
+                //if (Pface != null)
+                //{
+                //    object[] fObjects = (object[])Pface;
+
+
+                //    for (int k = 0; k < fObjects.Length; k++)
+                //    {
+                //        Face2 thisFace2 = (Face2)fObjects[k];
+
+                //        (thisFace2 as Entity).Select(false);
+
+
+                //    }
+
+
+                //}
+            }
+            // Stop interference detection
+            pIntMgr.Done();
+
+
+
         }
     }
 
