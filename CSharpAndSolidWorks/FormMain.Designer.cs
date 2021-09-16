@@ -873,7 +873,7 @@
             // 
             // btnCreateDrawing
             // 
-            this.btnCreateDrawing.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.btnCreateDrawing.BackColor = System.Drawing.SystemColors.Control;
             this.btnCreateDrawing.Location = new System.Drawing.Point(961, 102);
             this.btnCreateDrawing.Name = "btnCreateDrawing";
             this.btnCreateDrawing.Size = new System.Drawing.Size(133, 29);
