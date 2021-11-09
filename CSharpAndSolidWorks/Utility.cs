@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using SolidWorks.Interop.swconst;
 
 namespace CSharpAndSolidWorks
 {
@@ -123,7 +124,7 @@ namespace CSharpAndSolidWorks
         /// </summary>
         /// <param name="swComp"></param>
         /// <param name="nLevel"></param>
-        public static void TraverseCompXform(Component2 swComp, long nLevel, bool setcolor = false)
+        public static void TraverseCompXform(Component2 swComp, long nLevel, bool setcolor = false , bool DisableCutList=false)
         {
             object[] vChild;
             Component2 swChildComp;
@@ -141,6 +142,13 @@ namespace CSharpAndSolidWorks
             {
                 ModelDoc2 swModel;
                 swModel = (ModelDoc2)swComp.GetModelDoc2();
+
+                if (DisableCutList)
+                {
+                    //swModel.Extension.SetUserPreferenceToggle((int)swUserPreferenceToggle_e.swWeldmentEnableAutomaticCutList,(int)swUserPreferenceOption_e.swDetailingNoOptionSpecified, false);
+                    swModel.Extension.SetUserPreferenceToggle((int)swUserPreferenceToggle_e.swWeldmentEnableAutomaticCutList,(int)swUserPreferenceOption_e.swDetailingNoOptionSpecified, false);
+
+                }
 
                 try
                 {
@@ -181,6 +189,13 @@ namespace CSharpAndSolidWorks
 
                         swModel.WindowRedraw();
                     }
+
+                    if (DisableCutList)
+                    {
+                        //swModel.Extension.SetUserPreferenceToggle((int)swUserPreferenceToggle_e.swWeldmentEnableAutomaticCutList,(int)swUserPreferenceOption_e.swDetailingNoOptionSpecified, false);
+                        swModel.Extension.SetUserPreferenceToggle((int)swUserPreferenceToggle_e.swWeldmentEnableAutomaticCutList, (int)swUserPreferenceOption_e.swDetailingNoOptionSpecified, false);
+
+                    }
                 }
             }
             else
@@ -193,7 +208,7 @@ namespace CSharpAndSolidWorks
             for (i = 0; i <= (vChild.Length - 1); i++)
             {
                 swChildComp = (Component2)vChild[i];
-                TraverseCompXform(swChildComp, nLevel + 1, setcolor);
+                TraverseCompXform(swChildComp, nLevel + 1, setcolor,DisableCutList);
             }
         }
 

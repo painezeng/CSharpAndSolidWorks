@@ -64,10 +64,11 @@ namespace CSharpAndSolidWorks
                     bool boolstatus = swModel.Extension.SelectByID2("Plane1", "PLANE", 0, 0, 0, false, 0, null, 0);
 
                     //创建一个2d草图
-                    swModel.SketchManager.InsertSketch(true);
+                   // swModel.SketchManager.InsertSketch(true);
+                    swModel.SketchManager.Insert3DSketch(true);
 
                     //画一条线 长度100mm  (solidworks 中系统单位是米,所以这里写0.1)
-                    swModel.SketchManager.CreateLine(0, 0, 0, 0, 0.1, 0);
+                    swModel.SketchManager.CreateLine(0, 0, 0, 0.1, 0.1, 0.1);
 
                     //关闭草图
                     swModel.SketchManager.InsertSketch(true);
@@ -2659,9 +2660,7 @@ namespace CSharpAndSolidWorks
             //swApp.RunCommand((int)swCommands_e.swCommands_Options, "");
 
             //开始3d草图
-           // swApp.RunCommand((int)swCommands_e.swCommands_3DSketch, "");
-            swApp.RunCommand((int)swCommands_e.swCommands_Fixed_Length_Route, "");
-            swApp.RunCommand((int)swCommands_e.swCommands_Dve_Rmb_Ok, "");
+            swApp.RunCommand((int)swCommands_e.swCommands_3DSketch, "");
 
             //单击右键
             //swApp.RunCommand((int)swMouse_e.swMouse_Click, "");
@@ -3609,6 +3608,7 @@ namespace CSharpAndSolidWorks
             TreeControlItem childNode = default(TreeControlItem);
             Feature featureNode = default(Feature);
             Component2 componentNode = default(Component2);
+           
             int nodeObjectType = 0;
             object nodeObject = null;
             string restOfString = "";
@@ -3829,157 +3829,481 @@ namespace CSharpAndSolidWorks
             }
         }
 
-        private void btnCheckInterference_Click(object sender, EventArgs e)
+        private void btnOutWithCoordSystem_Click(object sender, EventArgs e)
         {
-
             SldWorks swApp = Utility.ConnectToSolidWorks();
 
-            ModelDoc2 swModelDoc = default(ModelDoc2);
-            AssemblyDoc swAssemblyDoc = default(AssemblyDoc);
-            InterferenceDetectionMgr pIntMgr = default(InterferenceDetectionMgr);
-            object[] vInts = null;
-            long i = 0;
-            long j = 0;
-            IInterference interference = default(IInterference);
-            object vIntComps = null;
-            object[] vComps = null;
-            Component2 comp = default(Component2);
-            double vol = 0;
-            object vTrans = null;
-            bool ret = false;
+            ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
 
+            //设置用来导出文件的坐标系名称(需要装配体中有这个名称的坐标系)
+            var setRes = swModel.Extension.SetUserPreferenceString(16, 0, "Coordinate System1");
 
-            swModelDoc = (ModelDoc2)swApp.ActiveDoc;
-            swAssemblyDoc = (AssemblyDoc)swModelDoc;
+            //设置导出版本
 
-            
-            
-            
-            //var intCount = Modeler.ICheckInterferenceCount3(2,r);
-            //Modeler.ICheckInterference3()
+            int error = 0;
 
+            int warnings = 0;
+            //x_t的版本设置
+            //swApp.SetUserPreferenceIntegerValue((int)swUserPreferenceIntegerValue_e.swParasolidOutputVersion, (int)swParasolidOutputVersion_e.swParasolidOutputVersion_161);
 
+            swModel.Extension.SaveAs(@"D:\export.igs", (int)swSaveAsVersion_e.swSaveAsCurrentVersion, (int)swSaveAsOptions_e.swSaveAsOptions_Silent, null, ref error, ref warnings);
+            swModel.Extension.SaveAs(@"D:\export.x_t", (int)swSaveAsVersion_e.swSaveAsCurrentVersion, (int)swSaveAsOptions_e.swSaveAsOptions_Silent, null, ref error, ref warnings);
+            //Mark:SolidWorks 2018版本导出 step 用坐标系导出有bug！！！ x_t igs没有问题
+            //swModel.Extension.SaveAs(@"D:\export.step", (int)swSaveAsVersion_e.swSaveAsCurrentVersion, (int)swSaveAsOptions_e.swSaveAsOptions_Silent, null, ref error, ref warnings);
 
+            MessageBox.Show("输出成功");
+        }
 
-             pIntMgr = swAssemblyDoc.InterferenceDetectionManager;
+        private void btnCreateDrawing_Click(object sender, EventArgs e)
+        {
+            SldWorks swApp = Utility.ConnectToSolidWorks();
 
+            ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
+        }
 
-            // Specify the interference detection settings and options
-            pIntMgr.TreatCoincidenceAsInterference = true;
-            pIntMgr.TreatSubAssembliesAsComponents = true;
-            pIntMgr.IncludeMultibodyPartInterferences = true;
-            pIntMgr.MakeInterferingPartsTransparent = false;
-            pIntMgr.CreateFastenersFolder = true;
-            pIntMgr.IgnoreHiddenBodies = true;
-            pIntMgr.ShowIgnoredInterferences = false;
-            pIntMgr.UseTransform = true;
+        private void btnTraverseFace_Click(object sender, EventArgs e)
+        {
+            SldWorks swApp = Utility.ConnectToSolidWorks();
 
+            ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
 
-            // Specify how to display non-interfering components
-            pIntMgr.NonInterferingComponentDisplay = (int)swNonInterferingComponentDisplay_e.swNonInterferingComponentDisplay_Wireframe;
+            PartDoc partDoc2 = (PartDoc)swModel;
 
+            var feat1 = (Feature)partDoc2.FeatureByName("EBox");
+            var featPlaneSeg = (Feature)partDoc2.FeatureByName("Plane_Seg");
 
-            // Run interference detection
-            vInts = (object[])pIntMgr.GetInterferences();
-            Debug.Print("Number of interferences: " + pIntMgr.GetInterferenceCount());
+            object PlaneBox = null;
 
+            featPlaneSeg.GetBox(ref PlaneBox);
 
-            // Get interfering components and transforms
-            ret = pIntMgr.GetComponentsAndTransforms(out vIntComps, out vTrans);
-            // Get interference information
-            for (i = 0; i <= vInts.GetUpperBound(0); i++)
+            var PlaneBoxXYZ = (double[])PlaneBox;
+
+            var faceCount = feat1.GetFaceCount();
+
+            if (faceCount > 0)
             {
+                var faces = (object[])feat1.GetFaces();
 
-                Debug.Print("Interference " + (i + 1));
-                interference = (IInterference)vInts[i];
-                Debug.Print("  Number of components in this interference: " + interference.GetComponentCount());
-                vComps = (object[])interference.Components;
-
-                // var interferenceBodies = interference.GetInterferenceBody();
-
-                var vc = vComps.ToList().ConvertAll(x => { return (Component2)x; }).ToArray();
-
-                List<Body2> listBody1 = new List<Body2>();
-                List<Body2> listBody2 = new List<Body2>();
-
-               var t=(object[]) vc[0].GetBodies((int) swBodyType_e.swSolidBody);
-                foreach (var o in t)
+                for (int i = 0; i < faces.Length; i++)
                 {
-                    listBody1.Add((Body2)o);
+                    var thisFace = (Face2)faces[i];
+                    object thisFaceBox = null;
+
+                    thisFaceBox = thisFace.GetBox();
+
+                    var thisFaceBoxXYZ = (double[])thisFaceBox;
+
+                    if (Math.Abs(thisFaceBoxXYZ[5] - thisFaceBoxXYZ[2]) < 0.0001 && Math.Abs(thisFaceBoxXYZ[2] - PlaneBoxXYZ[2]) < 0.0001)
+                    {
+                        ((Entity)thisFace).Select(false);
+                    }
                 }
-
-
-                var t2 = (object[])vc[1].GetBodies((int)swBodyType_e.swSolidBody);
-                foreach (var o in t2)
-                {
-                    listBody2.Add((Body2)o);
-                }
-                
-
-                //for (j = 0; j <= vComps.GetUpperBound(0); j++)
-                //{
-                //    comp = (Component2)vComps[j];
-                //    Debug.Print("   " + comp.Name2);
-
-                //}
-
-                int body1Count = 0;
-                int body2Count = 0;
-                int intser = 0;
-
-                var Modeler = swApp.IGetModeler();
-                
-                var v1 = vc[0].IGetBody();
-                var v2 = vc[1].IGetBody();
-
-                var swTransF1 = vc[0].Transform;
-                var swTransF2 = vc[1].Transform;
-                v1.ApplyTransform(swTransF1);
-                v2.ApplyTransform(swTransF2);
-                Modeler.ICheckInterferenceCount3(1, ref v1, 1, ref v2,
-                    (int) swCheckInterferenceOption_e.swBodyInterference_IncludeCoincidentFaces+(int)swCheckInterferenceOption_e.swBodyInterference_ReturnInterferingObject, ref  body1Count,
-                    ref  body2Count, ref  intser);
-
-                Face2 face21=null;
-                Face2 face22 = null;
-                Body2 body21 = null;
-
-                Modeler.ICheckInterference3(ref face21,ref face22,ref body21);
-
-                vol = interference.Volume;
-                Debug.Print("  Interference volume is " + (vol * 1000000000) + " mm^3");
-
-
-    
-                
-                //swAssemblyDoc.ToolsCheckInterference2(2, vc, true, out object objPcomp, out object Pface);
-
-              
-
-                //if (Pface != null)
-                //{
-                //    object[] fObjects = (object[])Pface;
-
-
-                //    for (int k = 0; k < fObjects.Length; k++)
-                //    {
-                //        Face2 thisFace2 = (Face2)fObjects[k];
-
-                //        (thisFace2 as Entity).Select(false);
-
-
-                //    }
-
-
-                //}
             }
-            // Stop interference detection
-            pIntMgr.Done();
+        }
+
+        private void btnGetView_Click(object sender, EventArgs e)
+        {
+            SldWorks swApp = Utility.ConnectToSolidWorks();
+
+            ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            SelectionMgr selectionMgr = (SelectionMgr)swModel.SelectionManager;
+
+            //获取选择的视图对象
+            View view = (View)selectionMgr.GetSelectedObject5(1);
+
+            //获取视图的草图
+            var viewSketch = view.IGetSketch();
+
+            //var pointsCount = viewSketch.GetSketchPointsCount2();
+
+            var points = (object[])viewSketch.GetSketchPoints2();
+
+            var skSegs = (object[])viewSketch.GetSketchSegments();
+
+            List<SketchPoint> segmentPoints = new List<SketchPoint>();
+            if (points != null)
+            {
+                for (int i = 0; i < points.Length; i++)
+                {
+                    var thisPoint = (SketchPoint)points[i];
+
+                    Debug.Print(thisPoint.Type.ToString());
+
+                    if (thisPoint.Type == 1)
+                    {
+                        // thisPoint.Select(true);
+
+                        segmentPoints.Add(thisPoint);
+                    }
+                }
+            }
+            List<SketchSegment> segmentCenterLines = new List<SketchSegment>();
+
+            if (skSegs != null)
+            {
+                for (int i = 0; i < skSegs.Length; i++)
+                {
+                    var thisSeg = (SketchSegment)skSegs[i];
+                    // thisSeg.Select(false);
+                    if (thisSeg.Style == (int)swLineStyles_e.swLineCENTER)
+                    {
+                        //thisSeg.Select(true);
+                        segmentCenterLines.Add(thisSeg);
+                    }
+                }
+            }
+        }
+
+        private void btnOpenWithHide_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void btnAutoFillet_Click(object sender, EventArgs e)
+        {
+            //遍历Z轴方向的直线
+            SldWorks swApp = PStandAlone.GetSolidWorks();//连接solidworks
+            swApp.CommandInProgress = true; //因为是exe测试，所以启动该选项，加快速度
+            ModelDoc2 swModel = default(ModelDoc2);
+            ModelDocExtension swModelDocExt = default(ModelDocExtension);
+            SelectionMgr swSelMgr = default(SelectionMgr);
+            Feature swFeature = null;
+
+            swModel = (ModelDoc2)swApp.ActiveDoc; //获取当前零件
+
+            swModelDocExt = (ModelDocExtension)swModel.Extension;
+
+            //选择所有，零件中是选中所有的边。
+            swModelDocExt.SelectAll();
+
+            swSelMgr = (SelectionMgr)swModel.SelectionManager;
+
+            var edgeCount = swSelMgr.GetSelectedObjectCount();  //获取 已经选中的边数
+
+            Debug.Print("总边数：" + edgeCount);
+
+            int faceidStart = 10000;  //设定一个面的起始id,用于识别该面是否已经被获取到。
+
+            //List<Face2> face2sList001 = new List<Face2>();
+            //List<Face2> face2sList002 = new List<Face2>();
+
+            List<Edge> ZEdges = new List<Edge>();
+
+            for (int i = 1; i <= edgeCount; i++)
+            {
+                var thisEdge = (Edge)swSelMgr.GetSelectedObject(i);
+
+                var swCurve = (Curve)thisEdge.GetCurve();
+
+                var thisCurveP = thisEdge.GetCurveParams3();
+
+                if (swCurve.IsLine() == true)
+                {
+                    var lineV = (double[])swCurve.LineParams;
+
+                    Debug.Print($"Root Point-> X {lineV[0].ToString()} ,Y {lineV[1].ToString()} ,Z {lineV[2].ToString()}");
+                    Debug.Print($"Direction Point-> X {lineV[3].ToString()} ,Y {lineV[4].ToString()} ,Z {lineV[5].ToString()}");
+
+                    if (lineV[3] == 0 && lineV[4] == 0)
+                    {
+                        ZEdges.Add(thisEdge);
+                    }
+                }
+            }
+
+            swModel.ClearSelection();//清除掉所有选择的边
+
+            // 重新选中 需要处理掉0.001的面
+            for (int i = 0; i < ZEdges.Count; i++)
+            {
+                var faceEntity = (Entity)ZEdges[i];
+
+                // faceEntity.Select4(true, selectData);
+
+                faceEntity.SelectByMark(true, 1);
+            }
+            double AsyRadius1;
+            double AsyRadius2;
+            double AsyRadius3;
+            double AsyRadius4;
+            bool boolstatus;
+            double[] radiis = new double[2];
+            object radiiArray0;
+            object conicRhosArray0;
+            object setBackArray0;
+            object pointArray0;
+            object pointRhoArray0;
+            object dist2Array0;
+            object pointDist2Array0;
+
+            conicRhosArray0 = 0;
+            setBackArray0 = 0;
+            pointArray0 = 0;
+            pointRhoArray0 = 0;
+            pointDist2Array0 = 0;
+
+            var FilletFea = (Feature)swModel.FeatureManager.FeatureFillet3(195, 0.002, 0.010, 0, (int)swFeatureFilletType_e.swFeatureFilletType_Simple, (int)swFilletOverFlowType_e.swFilletOverFlowType_Default, (int)swFeatureFilletProfileType_e.swFeatureFilletCircular, 0, 0, 0,
+            (setBackArray0), (pointArray0), (pointDist2Array0), (pointRhoArray0));
+            FilletFea.Name = "AutoFillet";
+        }
+
+        private void btnCreate3thSTDView_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void btnAddRel_Click(object sender, EventArgs e)
+        {
+
+            //Step1: 取消所有零件固定
+            //Step2: 遍历所有零件
+            //Step3: 循环查找每个零件与其它零件的最小距离 。
+            //Step4: 最小距离为0时，再通过遍历面来查找哪些面距离 为0 并且法向平行 。
+            //Step5: 选中两个面增加重合关系。
+
+
+
+
+            SldWorks swApp = PStandAlone.GetSolidWorks();//连接solidworks
+            swApp.CommandInProgress = true; //因为是exe测试，所以启动该选项，加快速度
+          
+            ModelDocExtension swModelDocExt = default(ModelDocExtension);
+            SelectionMgr swSelMgr = default(SelectionMgr);
+            Feature swFeature = null;
+           
+
+
+            ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            Configuration swConf = (Configuration)swModel.GetActiveConfiguration();
+
+            Component2 swRootComp = (Component2)swConf.GetRootComponent();
+
+            swSelMgr = (SelectionMgr)swModel.SelectionManager;
+
+            var vChild = (object[])swRootComp.GetChildren();
+
+            List<Component2> listcComponent2s = new List<Component2>();
+
+            for (int i = 0; i <= (vChild.Length - 1); i++)
+            {
+                listcComponent2s.Add((Component2)vChild[i]);
+               
+            }
+
+
+
+            var compCount = swSelMgr.GetSelectedObjectCount();  //获取 已经选中的边数
+
+            AssemblyDoc assemblyDoc= (AssemblyDoc)swModel;
+
+         
+
+          
+
+         
+
+            swModel.ClearSelection();
+
+            for (int i = 1; i < listcComponent2s.Count; i++)
+            {
+                listcComponent2s[i].Select(true);
+
+            }
+
+            assemblyDoc.UnfixComponent();
+
+            swModel.ClearSelection();
+            for (int i = 0; i < listcComponent2s.Count; i++)
+            {
+                var AComp = listcComponent2s[i];
+
+                for (int j = i+1; j < listcComponent2s.Count; j++)
+                {
+                    var BComp = listcComponent2s[j];
+
+
+                  var d=  swModel.ClosestDistance(AComp, BComp, out object p1, out object p2);
+
+                    if (d*1000<0.001 && -0.001 < d* 1000)
+                    {
+                        
+                        Debug.Print($@"{AComp.Name} 与 {BComp.Name} -->距离 为{d}");
+                        CheckFaceStatus(AComp, BComp,swModel,swApp);
+                    }
+
+
+                }
+
+
+            }
+
+            swModel.EditRebuild3();
+            swApp.CommandInProgress = false;
+            MessageBox.Show("Done");
+
+
+        }
+
+        private void CheckFaceStatus(Component2 aComp, Component2 bComp,ModelDoc2 swModel,SldWorks swApp)
+        {
+            List<Face2> listFace21 = new List<Face2>();
+            List<Face2> listFace22 = new List<Face2>();
+
+
+            var bodys1 = (object[])aComp.GetBodies((int) swBodyType_e.swSolidBody);
+
+            var bodys2 = (object[])bComp.GetBodies((int) swBodyType_e.swSolidBody);
+
+
+            for (int i = 0; i < bodys1.Length; i++)
+            {
+                var thisBody = (Body2)bodys1[i];
+                var thisBodyFaces= (object[])thisBody.GetFaces();
+
+                for (int j = 0; j < thisBodyFaces.Length; j++)
+                {
+                    listFace21.Add((Face2)thisBodyFaces[j]);
+                }
+            }
+
+
+            for (int i = 0; i < bodys2.Length; i++)
+            {
+                var thisBody = (Body2)bodys2[i];
+                var thisBodyFaces = (object[])thisBody.GetFaces();
+
+                for (int j = 0; j < thisBodyFaces.Length; j++)
+                {
+                    listFace22.Add((Face2)thisBodyFaces[j]);
+                }
+            }
+
+            for (int i = 0; i < listFace21.Count; i++)
+            {
+                var face1 = listFace21[i];
+
+
+                for (int j = 0; j < listFace22.Count; j++)
+                {
+                      var face2 = listFace22[j];
+
+                    var d = swModel.ClosestDistance(face1, face2, out object p1, out object p2);
+
+                    
+
+                    if (d * 1000 < 0.001 && -0.001 < d * 1000)
+                    {
+                        var part1Staus = aComp.GetConstrainedStatus();
+                        var part2Staus = bComp.GetConstrainedStatus();
+
+                        if (part1Staus == (int)swConstrainedStatus_e.swFullyConstrained && part2Staus == (int)swConstrainedStatus_e.swFullyConstrained)
+                        {
+                            return;
+                        }
+
+                        //(face1 as Entity).Select(false);
+                        //(face2 as Entity).Select(true);
+
+                        var norm1 = (double[])face1.Normal;
+                        var norm2 = (double[])face2.Normal;
+
+                        //要转换到装配体中
+
+
+                        var swMathUtil = (MathUtility)swApp.GetMathUtility();
+                        var trans1 = aComp.Transform;
+                        var trans2 = bComp.Transform;
+
+                        MathVector tVector1 = (MathVector)swMathUtil.CreateVector((norm1));
+                        MathVector tVector2 = (MathVector)swMathUtil.CreateVector((norm2));
+
+                        var swNormalVector1 = (MathVector)tVector1.MultiplyTransform(aComp.Transform2);
+                        var swNormalVector2 = (MathVector)tVector2.MultiplyTransform(bComp.Transform2);
+
+                        GeometRi.Vector3d v1 = new GeometRi.Vector3d((double[])swNormalVector1.ArrayData);
+
+
+                        GeometRi.Vector3d v2 = new GeometRi.Vector3d((double[])swNormalVector2.ArrayData);
+
+                        if (v1.Normalized.IsParallelTo(v2.Normalized))
+                        if (v1.Normalized.X== v2.Normalized.X && v1.Normalized.Y== v2.Normalized.Y && v1.Normalized.Z== v2.Normalized.Z)
+                        {
+                            //(face1 as Entity).Select(false);
+                            //(face2 as Entity).Select(true);
+
+                                ////var swMathUtil = (MathUtility)swApp.GetMathUtility();
+                                ////var n1= swMathUtil.ICreateVector().Normalise();
+                                ////n1.ArrayData
+                                ////  var swVector = (MathVector)swMathUtil.CreateVector(vectorPoint);
+
+                                int longstatus = 0;
+                                //重合
+
+                                //swApp.RunCommand((int)swCommands_e.swCommands_Addedit_Mate, "");
+                                //swApp.RunCommand((int)swCommands_e.swCommands_PmOK, "");
+
+                                (swModel as AssemblyDoc).AddMate5(0, 0, false, 0, 0.001, 0.001, 0.001, 0.001, 0, 0, 0, false, true, 0, out longstatus);
+                                swModel.EditRebuild3();
+
+                                
+                                // MessageBox.Show("重合关系");
+                            }
+                        else
+                        {
+                            (face1 as Entity).Select(false);
+                            (face2 as Entity).Select(true);
+
+                            //var swMathUtil = (MathUtility)swApp.GetMathUtility();
+                            //var n1= swMathUtil.ICreateVector().Normalise();
+                            //n1.ArrayData
+                            //  var swVector = (MathVector)swMathUtil.CreateVector(vectorPoint);
+
+                            int longstatus = 0;
+                            //重合
+
+                            //swApp.RunCommand((int)swCommands_e.swCommands_Addedit_Mate, "");
+                            //swApp.RunCommand((int)swCommands_e.swCommands_PmOK, "");
+
+                            (swModel as AssemblyDoc).AddMate5(0, 2, false, 0, 0.001, 0.001, 0.001, 0.001, 0, 0, 0, false, true, 0, out longstatus);
+                            swModel.EditRebuild3();
+                            }
+
+                    }
+
+                }
+
+
+
+            }
+
 
 
 
         }
+
+        private void btnSettingAutoCutList_Click(object sender, EventArgs e)
+        {
+            SldWorks swApp = Utility.ConnectToSolidWorks();
+
+            if (swApp != null)
+            {
+                ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
+
+                Configuration swConf = (Configuration)swModel.GetActiveConfiguration();
+
+                Component2 swRootComp = (Component2)swConf.GetRootComponent();
+
+                //遍历
+                Utility.TraverseCompXform(swRootComp, 0,false,true);
+            }
+
+        }
     }
+
+
+
+
+
 
     public class PictureDispConverter : System.Windows.Forms.AxHost
     {
