@@ -3858,7 +3858,27 @@ namespace CSharpAndSolidWorks
         {
             SldWorks swApp = Utility.ConnectToSolidWorks();
 
+            string dotPath = @"D:\09_Study\CSharpAndSolidWorks\CSharpAndSolidWorks\TemplateModel\DrawingTemplate.DRWDOT";
+
+            //用我们的模板新建一个工程图
+            var Part = swApp.NewDocument(dotPath, 12, 0, 0);
+
             ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
+            //选中视图，并获取
+            var boolstatus = swModel.Extension.SelectByID2("MyView1", "DRAWINGVIEW", 0, 0, 0, false, 0, null, 0);
+
+            var thisView = (View)swModel.ISelectionManager.GetSelectedObject5(1);
+
+            DrawingDoc drawingDoc = (DrawingDoc)swModel;
+
+            string partPath = @"D:\09_Study\CSharpAndSolidWorks\CSharpAndSolidWorks\TemplateModel\globalvariable.SLDPRT";
+            //给预定义视图插入模型
+            drawingDoc.InsertModelInPredefinedView(partPath);
+
+            //设置视图的比例
+            thisView.ScaleDecimal = 0.2;
+
+            swModel.EditRebuild3();
         }
 
         private void btnTraverseFace_Click(object sender, EventArgs e)
