@@ -4318,6 +4318,38 @@ namespace CSharpAndSolidWorks
             }
 
         }
+
+        private void btnModifyTemplate_Click(object sender, EventArgs e)
+        {
+            //先打开Measure.slddrw
+            SldWorks swApp = Utility.ConnectToSolidWorks();
+
+            if (swApp != null)
+            {
+                ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc; //当前文档
+
+                var swDrawing = (DrawingDoc)swModel; //转换成工程图对象
+
+                //当前图纸的信息。
+                //var pageSetup = swDrawing.Sheet["Sheet1"].IPageSetup;
+
+
+                //var res=  swDrawing.SetupSheet6("Sheet1", (int)swDwgPaperSizes_e.swDwgPaperA3size,
+                //    (int)swDwgTemplates_e.swDwgTemplateA3size, 1, 5, true, "a3 - din.slddrt", 0, 0, "默认", false, 0, 0, 0, 0, 0, 0);
+                //if (res)
+                //{
+                //    MessageBox.Show("更换成功。");
+                //}
+
+                var res = swDrawing.SetupSheet6("Sheet1", (int)swDwgPaperSizes_e.swDwgPaperA4size,
+                    (int)swDwgTemplates_e.swDwgTemplateA4size, 1, 5, true, @"E:\01_Work\22_Gitee\CSharpAndSolidWorks\CSharpAndSolidWorks\TemplateModel\sheetformat\a4 - gb.slddrt", 0, 0, "默认", true, 0, 0, 0, 0, 0, 0);
+                if (res)
+                {
+                    MessageBox.Show("更换成功。");
+                }
+
+            }
+        }
     }
 
 

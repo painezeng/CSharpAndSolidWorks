@@ -106,6 +106,7 @@
             this.btnAutoFillet = new System.Windows.Forms.Button();
             this.btnAddRel = new System.Windows.Forms.Button();
             this.btnSettingAutoCutList = new System.Windows.Forms.Button();
+            this.btnModifyTemplate = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -876,7 +877,7 @@
             // btnCreateDrawing
             // 
             this.btnCreateDrawing.BackColor = System.Drawing.SystemColors.Control;
-            this.btnCreateDrawing.Location = new System.Drawing.Point(961, 102);
+            this.btnCreateDrawing.Location = new System.Drawing.Point(961, 94);
             this.btnCreateDrawing.Name = "btnCreateDrawing";
             this.btnCreateDrawing.Size = new System.Drawing.Size(133, 27);
             this.btnCreateDrawing.TabIndex = 56;
@@ -962,11 +963,22 @@
             this.btnSettingAutoCutList.UseVisualStyleBackColor = true;
             this.btnSettingAutoCutList.Click += new System.EventHandler(this.btnSettingAutoCutList_Click);
             // 
+            // btnModifyTemplate
+            // 
+            this.btnModifyTemplate.Location = new System.Drawing.Point(1111, 13);
+            this.btnModifyTemplate.Name = "btnModifyTemplate";
+            this.btnModifyTemplate.Size = new System.Drawing.Size(125, 27);
+            this.btnModifyTemplate.TabIndex = 64;
+            this.btnModifyTemplate.Text = "71.替换工程图模板";
+            this.btnModifyTemplate.UseVisualStyleBackColor = true;
+            this.btnModifyTemplate.Click += new System.EventHandler(this.btnModifyTemplate_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1121, 623);
+            this.ClientSize = new System.Drawing.Size(1264, 623);
+            this.Controls.Add(this.btnModifyTemplate);
             this.Controls.Add(this.btnSettingAutoCutList);
             this.Controls.Add(this.btnAddRel);
             this.Controls.Add(this.btnAutoFillet);
@@ -1129,6 +1141,7 @@
         private System.Windows.Forms.Button btnAutoFillet;
         private System.Windows.Forms.Button btnAddRel;
         private System.Windows.Forms.Button btnSettingAutoCutList;
+        private System.Windows.Forms.Button btnModifyTemplate;
     }
 }
 
