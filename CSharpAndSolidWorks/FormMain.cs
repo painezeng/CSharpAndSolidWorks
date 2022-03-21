@@ -64,7 +64,7 @@ namespace CSharpAndSolidWorks
                     bool boolstatus = swModel.Extension.SelectByID2("Plane1", "PLANE", 0, 0, 0, false, 0, null, 0);
 
                     //创建一个2d草图
-                   // swModel.SketchManager.InsertSketch(true);
+                    // swModel.SketchManager.InsertSketch(true);
                     swModel.SketchManager.Insert3DSketch(true);
 
                     //画一条线 长度100mm  (solidworks 中系统单位是米,所以这里写0.1)
@@ -3608,7 +3608,7 @@ namespace CSharpAndSolidWorks
             TreeControlItem childNode = default(TreeControlItem);
             Feature featureNode = default(Feature);
             Component2 componentNode = default(Component2);
-           
+
             int nodeObjectType = 0;
             object nodeObject = null;
             string restOfString = "";
@@ -3977,6 +3977,15 @@ namespace CSharpAndSolidWorks
 
         private void btnOpenWithHide_Click(object sender, EventArgs e)
         {
+            SldWorks swApp = PStandAlone.GetSolidWorks();//连接solidworks
+
+            //设置零件不显示
+            swApp.DocumentVisible(false, (int)swDocumentTypes_e.swDocPART);
+
+            //你的操作....
+
+            //设置零件为正常的显示
+            swApp.DocumentVisible(true, (int)swDocumentTypes_e.swDocPART);
         }
 
         private void btnAutoFillet_Click(object sender, EventArgs e)
@@ -4073,24 +4082,18 @@ namespace CSharpAndSolidWorks
 
         private void btnAddRel_Click(object sender, EventArgs e)
         {
-
             //Step1: 取消所有零件固定
             //Step2: 遍历所有零件
             //Step3: 循环查找每个零件与其它零件的最小距离 。
             //Step4: 最小距离为0时，再通过遍历面来查找哪些面距离 为0 并且法向平行 。
             //Step5: 选中两个面增加重合关系。
 
-
-
-
             SldWorks swApp = PStandAlone.GetSolidWorks();//连接solidworks
             swApp.CommandInProgress = true; //因为是exe测试，所以启动该选项，加快速度
-          
+
             ModelDocExtension swModelDocExt = default(ModelDocExtension);
             SelectionMgr swSelMgr = default(SelectionMgr);
             Feature swFeature = null;
-           
-
 
             ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
 
@@ -4107,27 +4110,17 @@ namespace CSharpAndSolidWorks
             for (int i = 0; i <= (vChild.Length - 1); i++)
             {
                 listcComponent2s.Add((Component2)vChild[i]);
-               
             }
-
-
 
             var compCount = swSelMgr.GetSelectedObjectCount();  //获取 已经选中的边数
 
-            AssemblyDoc assemblyDoc= (AssemblyDoc)swModel;
-
-         
-
-          
-
-         
+            AssemblyDoc assemblyDoc = (AssemblyDoc)swModel;
 
             swModel.ClearSelection();
 
             for (int i = 1; i < listcComponent2s.Count; i++)
             {
                 listcComponent2s[i].Select(true);
-
             }
 
             assemblyDoc.UnfixComponent();
@@ -4137,55 +4130,44 @@ namespace CSharpAndSolidWorks
             {
                 var AComp = listcComponent2s[i];
 
-                for (int j = i+1; j < listcComponent2s.Count; j++)
+                for (int j = i + 1; j < listcComponent2s.Count; j++)
                 {
                     var BComp = listcComponent2s[j];
 
+                    var d = swModel.ClosestDistance(AComp, BComp, out object p1, out object p2);
 
-                  var d=  swModel.ClosestDistance(AComp, BComp, out object p1, out object p2);
-
-                    if (d*1000<0.001 && -0.001 < d* 1000)
+                    if (d * 1000 < 0.001 && -0.001 < d * 1000)
                     {
-                        
                         Debug.Print($@"{AComp.Name} 与 {BComp.Name} -->距离 为{d}");
-                        CheckFaceStatus(AComp, BComp,swModel,swApp);
+                        CheckFaceStatus(AComp, BComp, swModel, swApp);
                     }
-
-
                 }
-
-
             }
 
             swModel.EditRebuild3();
             swApp.CommandInProgress = false;
             MessageBox.Show("Done");
-
-
         }
 
-        private void CheckFaceStatus(Component2 aComp, Component2 bComp,ModelDoc2 swModel,SldWorks swApp)
+        private void CheckFaceStatus(Component2 aComp, Component2 bComp, ModelDoc2 swModel, SldWorks swApp)
         {
             List<Face2> listFace21 = new List<Face2>();
             List<Face2> listFace22 = new List<Face2>();
 
+            var bodys1 = (object[])aComp.GetBodies((int)swBodyType_e.swSolidBody);
 
-            var bodys1 = (object[])aComp.GetBodies((int) swBodyType_e.swSolidBody);
-
-            var bodys2 = (object[])bComp.GetBodies((int) swBodyType_e.swSolidBody);
-
+            var bodys2 = (object[])bComp.GetBodies((int)swBodyType_e.swSolidBody);
 
             for (int i = 0; i < bodys1.Length; i++)
             {
                 var thisBody = (Body2)bodys1[i];
-                var thisBodyFaces= (object[])thisBody.GetFaces();
+                var thisBodyFaces = (object[])thisBody.GetFaces();
 
                 for (int j = 0; j < thisBodyFaces.Length; j++)
                 {
                     listFace21.Add((Face2)thisBodyFaces[j]);
                 }
             }
-
 
             for (int i = 0; i < bodys2.Length; i++)
             {
@@ -4202,14 +4184,11 @@ namespace CSharpAndSolidWorks
             {
                 var face1 = listFace21[i];
 
-
                 for (int j = 0; j < listFace22.Count; j++)
                 {
-                      var face2 = listFace22[j];
+                    var face2 = listFace22[j];
 
                     var d = swModel.ClosestDistance(face1, face2, out object p1, out object p2);
-
-                    
 
                     if (d * 1000 < 0.001 && -0.001 < d * 1000)
                     {
@@ -4229,7 +4208,6 @@ namespace CSharpAndSolidWorks
 
                         //要转换到装配体中
 
-
                         var swMathUtil = (MathUtility)swApp.GetMathUtility();
                         var trans1 = aComp.Transform;
                         var trans2 = bComp.Transform;
@@ -4242,14 +4220,13 @@ namespace CSharpAndSolidWorks
 
                         GeometRi.Vector3d v1 = new GeometRi.Vector3d((double[])swNormalVector1.ArrayData);
 
-
                         GeometRi.Vector3d v2 = new GeometRi.Vector3d((double[])swNormalVector2.ArrayData);
 
                         if (v1.Normalized.IsParallelTo(v2.Normalized))
-                        if (v1.Normalized.X== v2.Normalized.X && v1.Normalized.Y== v2.Normalized.Y && v1.Normalized.Z== v2.Normalized.Z)
-                        {
-                            //(face1 as Entity).Select(false);
-                            //(face2 as Entity).Select(true);
+                            if (v1.Normalized.X == v2.Normalized.X && v1.Normalized.Y == v2.Normalized.Y && v1.Normalized.Z == v2.Normalized.Z)
+                            {
+                                //(face1 as Entity).Select(false);
+                                //(face2 as Entity).Select(true);
 
                                 ////var swMathUtil = (MathUtility)swApp.GetMathUtility();
                                 ////var n1= swMathUtil.ICreateVector().Normalise();
@@ -4265,40 +4242,30 @@ namespace CSharpAndSolidWorks
                                 (swModel as AssemblyDoc).AddMate5(0, 0, false, 0, 0.001, 0.001, 0.001, 0.001, 0, 0, 0, false, true, 0, out longstatus);
                                 swModel.EditRebuild3();
 
-                                
                                 // MessageBox.Show("重合关系");
                             }
-                        else
-                        {
-                            (face1 as Entity).Select(false);
-                            (face2 as Entity).Select(true);
+                            else
+                            {
+                                (face1 as Entity).Select(false);
+                                (face2 as Entity).Select(true);
 
-                            //var swMathUtil = (MathUtility)swApp.GetMathUtility();
-                            //var n1= swMathUtil.ICreateVector().Normalise();
-                            //n1.ArrayData
-                            //  var swVector = (MathVector)swMathUtil.CreateVector(vectorPoint);
+                                //var swMathUtil = (MathUtility)swApp.GetMathUtility();
+                                //var n1= swMathUtil.ICreateVector().Normalise();
+                                //n1.ArrayData
+                                //  var swVector = (MathVector)swMathUtil.CreateVector(vectorPoint);
 
-                            int longstatus = 0;
-                            //重合
+                                int longstatus = 0;
+                                //重合
 
-                            //swApp.RunCommand((int)swCommands_e.swCommands_Addedit_Mate, "");
-                            //swApp.RunCommand((int)swCommands_e.swCommands_PmOK, "");
+                                //swApp.RunCommand((int)swCommands_e.swCommands_Addedit_Mate, "");
+                                //swApp.RunCommand((int)swCommands_e.swCommands_PmOK, "");
 
-                            (swModel as AssemblyDoc).AddMate5(0, 2, false, 0, 0.001, 0.001, 0.001, 0.001, 0, 0, 0, false, true, 0, out longstatus);
-                            swModel.EditRebuild3();
+                                (swModel as AssemblyDoc).AddMate5(0, 2, false, 0, 0.001, 0.001, 0.001, 0.001, 0, 0, 0, false, true, 0, out longstatus);
+                                swModel.EditRebuild3();
                             }
-
                     }
-
                 }
-
-
-
             }
-
-
-
-
         }
 
         private void btnSettingAutoCutList_Click(object sender, EventArgs e)
@@ -4314,9 +4281,8 @@ namespace CSharpAndSolidWorks
                 Component2 swRootComp = (Component2)swConf.GetRootComponent();
 
                 //遍历
-                Utility.TraverseCompXform(swRootComp, 0,false,true);
+                Utility.TraverseCompXform(swRootComp, 0, false, true);
             }
-
         }
 
         private void btnModifyTemplate_Click(object sender, EventArgs e)
@@ -4333,7 +4299,6 @@ namespace CSharpAndSolidWorks
                 //当前图纸的信息。
                 //var pageSetup = swDrawing.Sheet["Sheet1"].IPageSetup;
 
-
                 //var res=  swDrawing.SetupSheet6("Sheet1", (int)swDwgPaperSizes_e.swDwgPaperA3size,
                 //    (int)swDwgTemplates_e.swDwgTemplateA3size, 1, 5, true, "a3 - din.slddrt", 0, 0, "默认", false, 0, 0, 0, 0, 0, 0);
                 //if (res)
@@ -4347,15 +4312,9 @@ namespace CSharpAndSolidWorks
                 {
                     MessageBox.Show("更换成功。");
                 }
-
             }
         }
     }
-
-
-
-
-
 
     public class PictureDispConverter : System.Windows.Forms.AxHost
     {
