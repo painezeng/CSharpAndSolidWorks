@@ -107,6 +107,7 @@
             this.btnAddRel = new System.Windows.Forms.Button();
             this.btnSettingAutoCutList = new System.Windows.Forms.Button();
             this.btnModifyTemplate = new System.Windows.Forms.Button();
+            this.btnModifyWeldment = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -973,11 +974,23 @@
             this.btnModifyTemplate.UseVisualStyleBackColor = true;
             this.btnModifyTemplate.Click += new System.EventHandler(this.btnModifyTemplate_Click);
             // 
+            // btnModifyWeldment
+            // 
+            this.btnModifyWeldment.Location = new System.Drawing.Point(1111, 59);
+            this.btnModifyWeldment.Name = "btnModifyWeldment";
+            this.btnModifyWeldment.Size = new System.Drawing.Size(125, 29);
+            this.btnModifyWeldment.TabIndex = 65;
+            this.btnModifyWeldment.Text = "72.修改焊件轮廓";
+            this.btnModifyWeldment.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnModifyWeldment.UseVisualStyleBackColor = true;
+            this.btnModifyWeldment.Click += new System.EventHandler(this.btnModifyWeldment_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 675);
+            this.Controls.Add(this.btnModifyWeldment);
             this.Controls.Add(this.btnModifyTemplate);
             this.Controls.Add(this.btnSettingAutoCutList);
             this.Controls.Add(this.btnAddRel);
@@ -1142,6 +1155,7 @@
         private System.Windows.Forms.Button btnAddRel;
         private System.Windows.Forms.Button btnSettingAutoCutList;
         private System.Windows.Forms.Button btnModifyTemplate;
+        private System.Windows.Forms.Button btnModifyWeldment;
     }
 }
 

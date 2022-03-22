@@ -4314,6 +4314,34 @@ namespace CSharpAndSolidWorks
                 }
             }
         }
+
+        private void btnModifyWeldment_Click(object sender, EventArgs e)
+        {
+            //请先打开WeldmentTest.sldprt
+            //下面的功能是把原有的特征数据从020x020换成030x030.SLDLFP
+
+            var swApp = PStandAlone.GetSolidWorks();
+
+            var swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            var swWeldFeat = (Feature)(swModel as PartDoc).FeatureByName("ABC");
+
+            var swWeldFeatData = (StructuralMemberFeatureData)swWeldFeat.GetDefinition();
+
+            swWeldFeatData.AccessSelections(swModel, null);
+
+            var profilePath = swWeldFeatData.WeldmentProfilePath;
+
+            var newPath = profilePath.Replace("020x020", "030x030");
+
+            swWeldFeatData.WeldmentProfilePath = newPath;
+
+            var boolstatus = swWeldFeat.ModifyDefinition(swWeldFeatData, swModel, null);
+
+            swWeldFeatData.ReleaseSelectionAccess();
+
+            swModel.EditRebuild3();
+        }
     }
 
     public class PictureDispConverter : System.Windows.Forms.AxHost
