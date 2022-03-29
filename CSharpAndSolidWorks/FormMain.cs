@@ -4342,6 +4342,64 @@ namespace CSharpAndSolidWorks
 
             swModel.EditRebuild3();
         }
+
+        private void btnGetCutList_Click(object sender, EventArgs e)
+        {
+            var swApp = PStandAlone.GetSolidWorks();
+
+            var swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            var cutListPro = GetCutListPropertyManager(swModel);
+
+            for (int i = 0; i < cutListPro.Count; i++)
+            {
+                var cutListName = (string[])cutListPro[i].GetNames();
+
+                for (int j = 0; j < cutListName.Length; j++)
+                {
+                    var tempProName = cutListName[j];
+
+                    bool resolved;
+                    cutListPro[i].Get5(tempProName, false, out string prpVal, out string prpResVal, out resolved);
+                    if (tempProName.Contains("LENGTH"))
+                    {
+                        Debug.Print($"{tempProName}->{prpVal}---->{prpResVal}");
+                    }
+                }
+            }
+
+            MessageBox.Show("获取完成");
+        }
+
+        private List<CustomPropertyManager> GetCutListPropertyManager(ModelDoc2 swModel)
+        {
+            List<CustomPropertyManager> customPropertyManagers = new List<CustomPropertyManager>();
+
+            var swFeat = (Feature)swModel.FirstFeature();
+
+            while (swFeat != null)
+            {
+                if (swFeat.GetTypeName2() == "CutListFolder")
+                {
+                    customPropertyManagers.Add(swFeat.CustomPropertyManager);
+
+                    var bodyFolder = (BodyFolder)swFeat.GetSpecificFeature2();
+
+                    var bodies = (object[])bodyFolder.GetBodies();
+
+                    var tempBody = (Body2)bodies[0];
+
+                    var fea = (object[])tempBody.GetFeatures();
+
+                    var tempBodyFea = (Feature)fea[0];
+
+                    Debug.Print(tempBodyFea.Name);
+                }
+                swFeat = (Feature)swFeat.GetNextFeature();
+            }
+
+            return customPropertyManagers;
+        }
     }
 
     public class PictureDispConverter : System.Windows.Forms.AxHost

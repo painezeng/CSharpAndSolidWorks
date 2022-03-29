@@ -108,6 +108,7 @@
             this.btnSettingAutoCutList = new System.Windows.Forms.Button();
             this.btnModifyTemplate = new System.Windows.Forms.Button();
             this.btnModifyWeldment = new System.Windows.Forms.Button();
+            this.btnGetCutList = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -985,11 +986,22 @@
             this.btnModifyWeldment.UseVisualStyleBackColor = true;
             this.btnModifyWeldment.Click += new System.EventHandler(this.btnModifyWeldment_Click);
             // 
+            // btnGetCutList
+            // 
+            this.btnGetCutList.Location = new System.Drawing.Point(1111, 102);
+            this.btnGetCutList.Name = "btnGetCutList";
+            this.btnGetCutList.Size = new System.Drawing.Size(125, 29);
+            this.btnGetCutList.TabIndex = 66;
+            this.btnGetCutList.Text = "73.获取切割清单";
+            this.btnGetCutList.UseVisualStyleBackColor = true;
+            this.btnGetCutList.Click += new System.EventHandler(this.btnGetCutList_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 675);
+            this.Controls.Add(this.btnGetCutList);
             this.Controls.Add(this.btnModifyWeldment);
             this.Controls.Add(this.btnModifyTemplate);
             this.Controls.Add(this.btnSettingAutoCutList);
@@ -1156,6 +1168,7 @@
         private System.Windows.Forms.Button btnSettingAutoCutList;
         private System.Windows.Forms.Button btnModifyTemplate;
         private System.Windows.Forms.Button btnModifyWeldment;
+        private System.Windows.Forms.Button btnGetCutList;
     }
 }
 
