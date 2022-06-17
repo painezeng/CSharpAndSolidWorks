@@ -109,6 +109,7 @@
             this.btnModifyTemplate = new System.Windows.Forms.Button();
             this.btnModifyWeldment = new System.Windows.Forms.Button();
             this.btnGetCutList = new System.Windows.Forms.Button();
+            this.btnCreateDimXpert = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -993,14 +994,27 @@
             this.btnGetCutList.Size = new System.Drawing.Size(125, 29);
             this.btnGetCutList.TabIndex = 66;
             this.btnGetCutList.Text = "73.获取切割清单";
+            this.btnGetCutList.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnGetCutList.UseVisualStyleBackColor = true;
             this.btnGetCutList.Click += new System.EventHandler(this.btnGetCutList_Click);
+            // 
+            // btnCreateDimXpert
+            // 
+            this.btnCreateDimXpert.Location = new System.Drawing.Point(1111, 146);
+            this.btnCreateDimXpert.Name = "btnCreateDimXpert";
+            this.btnCreateDimXpert.Size = new System.Drawing.Size(125, 29);
+            this.btnCreateDimXpert.TabIndex = 67;
+            this.btnCreateDimXpert.Text = "74.DimXpert";
+            this.btnCreateDimXpert.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCreateDimXpert.UseVisualStyleBackColor = true;
+            this.btnCreateDimXpert.Click += new System.EventHandler(this.btnCreateDimXpert_Click);
             // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 675);
+            this.Controls.Add(this.btnCreateDimXpert);
             this.Controls.Add(this.btnGetCutList);
             this.Controls.Add(this.btnModifyWeldment);
             this.Controls.Add(this.btnModifyTemplate);
@@ -1169,6 +1183,7 @@
         private System.Windows.Forms.Button btnModifyTemplate;
         private System.Windows.Forms.Button btnModifyWeldment;
         private System.Windows.Forms.Button btnGetCutList;
+        private System.Windows.Forms.Button btnCreateDimXpert;
     }
 }
 

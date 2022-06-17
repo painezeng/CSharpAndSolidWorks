@@ -17,6 +17,7 @@ using Microsoft.VisualBasic;
 using System.Linq;
 using Attribute = SolidWorks.Interop.sldworks.Attribute;
 using GetRayIntersectionWithBody;
+using SolidWorks.Interop.swdimxpert;
 
 namespace CSharpAndSolidWorks
 {
@@ -4400,6 +4401,101 @@ namespace CSharpAndSolidWorks
 
             return customPropertyManagers;
         }
+
+        private void btnCreateDimXpert_Click(object sender, EventArgs e)
+        {
+
+            var swApp = PStandAlone.GetSolidWorks();
+
+            var swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            #region 读取一个选中的3d尺寸
+
+            //var selectedObject = (object)swModel.ISelectionManager.GetSelectedObject6(1, -1);
+
+            //var dimXpertFeature = selectedObject as DimXpertFeature;
+
+            //Debug.Print(dimXpertFeature.Name);
+
+            //var dimType = dimXpertFeature.Type;
+
+            //Debug.Print("XpertFeature Type" + dimType);
+
+            //var dimAnnotations = (object[])dimXpertFeature.GetAppliedAnnotations();
+
+            //for (int i = 0; i < dimAnnotations.Length; i++)
+            //{
+            //    var tempAnno = (DimXpertAnnotation)dimAnnotations[i];
+
+            //    Debug.Print(tempAnno.Type.ToString());
+
+
+            //    Debug.Print(tempAnno.Name);
+
+            //    var dimTol = tempAnno as DimXpertDimensionTolerance;
+
+            //    //获取公差请参考https://help.solidworks.com/2018/english/api/swdocmgrapi/get_dimxpert_tolerance5_example_csharp.htm
+
+            //    MessageBox.Show($"{dimTol.ToString()}");
+
+            //}
+            #endregion
+
+            //通过先选中基准面，来执行自动尺寸方案。
+
+            //这里选中的标记的动作后面需要用程序去选择，利用SelectByRay选择太局限了。
+
+            #region VBA可运行版本
+            //boolstatus = Part.Extension.SelectByRay(-0.199999999999932, 7.99159865590582E-03, 2.08147507191825E-03, 0.388737791327055, 0.42257073135628, -0.81872883581512, 1.1566601033182E-03, 2, False, 0, 0)
+            //boolstatus = Part.Extension.SelectByRay(-0.193540180170828, 0, 7.74886573458389E-03, 0.388737791327055, 0.42257073135628, -0.81872883581512, 1.1566601033182E-03, 2, True, 0, 0)
+            //boolstatus = Part.Extension.SelectByRay(-8.93087496499163E-02, 7.75246027125149E-02, 6.27227943436992E-03, 0.388737791327055, 0.42257073135628, -0.81872883581512, 1.1566601033182E-03, 2, True, 0, 0)
+            //boolstatus = Part.SelectionManager.SetSelectedObjectMark(3, 51, swSelectionMarkSet)
+            //boolstatus = Part.Extension.SelectByRay(-0.117784661174085, 3.60124267366473E-02, 4.68486280385605E-03, 0.388737791327055, 0.42257073135628, -0.81872883581512, 1.1566601033182E-03, 2, True, 0, 0)
+            //boolstatus = Part.SelectionManager.SetSelectedObjectMark(4, 52, swSelectionMarkSet)
+            //Dim swConfig As Object
+            //Dim swDimXPertMgr As Object
+            //Dim swDimXPertPart As Object
+            //Dim swADSOpt As Object
+            //Set swConfig = Part.ConfigurationManager.ActiveConfiguration
+            //Set swDimXPertMgr = Part.Extension.DimXpertManager(swConfig.Name, True)
+            //Set swDimXPertPart = swDimXPertMgr.DimXpertPart
+            //Set swADSOpt = swDimXPertPart.GetAutoDimSchemeOption()
+            //swADSOpt.PartType = swDimXpertAutoDimSchemePartType_Prismatic
+            //swADSOpt.ToleranceType = swDimXpertAutoDimSchemeToleranceType_PlusMinus
+            //swADSOpt.PatternType = swDimXpertAutoDimSchemePatternType_Linear
+            //swADSOpt.PolarPatternHoleCount = 5
+            //swADSOpt.ScopeAllFeature = False
+            //boolstatus = swDimXPertPart.AutoDimensionScheme(swADSOpt)
+            //Part.ClearSelection2 True
+            #endregion
+
+            //先打开 MBDTest_Clear.SLDPRT
+            #region C#转换版
+            var boolstatus = swModel.Extension.SelectByRay(-0.199999999999932, 7.99159865590582E-03, 2.08147507191825E-03, 0.388737791327055, 0.42257073135628, -0.81872883581512, 1.1566601033182E-03, 2, false, 0, 0);
+            boolstatus =swModel.Extension.SelectByRay(-0.193540180170828, 0, 7.74886573458389E-03, 0.388737791327055, 0.42257073135628, -0.81872883581512, 1.1566601033182E-03, 2, true, 0, 0);
+            boolstatus =swModel.Extension.SelectByRay(-8.93087496499163E-02, 7.75246027125149E-02, 6.27227943436992E-03, 0.388737791327055, 0.42257073135628, -0.81872883581512, 1.1566601033182E-03, 2, true, 0, 0);
+            boolstatus =swModel.ISelectionManager.SetSelectedObjectMark(3, 51,(int)swSelectionMarkAction_e.swSelectionMarkSet);
+            boolstatus =swModel.Extension.SelectByRay(-0.117784661174085, 3.60124267366473E-02, 4.68486280385605E-03, 0.388737791327055, 0.42257073135628, -0.81872883581512, 1.1566601033182E-03, 2, true, 0, 0);
+            boolstatus =swModel.ISelectionManager.SetSelectedObjectMark(4, 52, (int)swSelectionMarkAction_e.swSelectionMarkSet);
+            var swConfig = swModel.ConfigurationManager.ActiveConfiguration;
+
+            var swDimXPertMgr = swModel.Extension.DimXpertManager[swConfig.Name, true];
+            var swDimXPertPart = (DimXpertPart)swDimXPertMgr.DimXpertPart;
+            var swADSOpt = swDimXPertPart.GetAutoDimSchemeOption();
+
+            swADSOpt.PartType = (int)swDimXpertAutoDimSchemePartType_e.swDimXpertAutoDimSchemePartType_Prismatic;
+            swADSOpt.ToleranceType = (int)swDimXpertAutoDimSchemeToleranceType_e.swDimXpertAutoDimSchemeToleranceType_PlusMinus;
+            swADSOpt.PatternType = (int)swDimXpertAutoDimSchemePatternType_e.swDimXpertAutoDimSchemePatternType_Linear;
+            swADSOpt.PolarPatternHoleCount = 5;
+            swADSOpt.ScopeAllFeature = false;
+            boolstatus = swDimXPertPart.AutoDimensionScheme(swADSOpt);
+
+            swModel.ClearSelection2(true);
+
+            #endregion
+
+        }
+
     }
 
     public class PictureDispConverter : System.Windows.Forms.AxHost
