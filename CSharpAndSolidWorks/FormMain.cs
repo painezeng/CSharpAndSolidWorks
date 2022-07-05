@@ -3326,7 +3326,7 @@ namespace CSharpAndSolidWorks
         {
             const string sLicenseKey = "Axemble:swdocmgr_general-11785-02051-00064-50177-08535-34307-00007-37408-17094-12655-31529-39909-49477-26312-14336-58516-10910-42487-02022-02562-54862-24526-57604-46485-45449-00405-25144-23144-51942-23264-24676-28258-7,swdocmgr_previews-11785-02051-00064-50177-08535-34307-00007-48008-04931-27155-53105-52081-64048-22699-38918-23742-63202-30008-58372-23951-37726-23245-57604-46485-45449-00405-25144-23144-51942-23264-24676-28258-1,swdocmgr_dimxpert-11785-02051-00064-50177-08535-34307-00007-16848-46744-46507-43004-11310-13037-46891-59394-52990-24983-00932-12744-51214-03249-23667-57604-46485-45449-00405-25144-23144-51942-23264-24676-28258-8,swdocmgr_geometry-11785-02051-00064-50177-08535-34307-00007-39720-42733-27008-07782-55416-16059-24823-59395-22410-04359-65370-60348-06678-16765-23356-57604-46485-45449-00405-25144-23144-51942-23264-24676-28258-3,swdocmgr_xml-11785-02051-00064-50177-08535-34307-00007-51816-63406-17453-09481-48159-24258-10263-28674-28856-61649-06436-41925-13932-52097-22614-57604-46485-45449-00405-25144-23144-51942-23264-24676-28258-7,swdocmgr_tessellation-11785-02051-00064-50177-08535-34307-00007-13440-59803-19007-55358-48373-41599-14912-02050-07716-07769-29894-19369-42867-36378-24376-57604-46485-45449-00405-25144-23144-51942-23264-24676-28258-0";//如果正版用户，请联系代理商申请。
 
-            string sDocFileName = @"E:\01_Work\22_Gitee\CSharpAndSolidWorks\CSharpAndSolidWorks\TemplateModel\repleaceReference\part1.SLDDRW";
+            string sDocFileName = @"D:\14_Model Test\dimension test\nt22v01v70-lf-02 ref.SLDDRW";
 
             SwDMClassFactory swClassFact = default(SwDMClassFactory);
             SwDMApplication swDocMgr = default(SwDMApplication);
@@ -3383,7 +3383,7 @@ namespace CSharpAndSolidWorks
 
             var doc16 = (SwDMDocument16)swDoc;
 
-            doc16.ReplaceReference(vDependArr[0], @"E:\01_Work\22_Gitee\CSharpAndSolidWorks\CSharpAndSolidWorks\TemplateModel\repleaceReference\part1new.SLDPRT");
+            doc16.ReplaceReference(vDependArr[0], @"D:\14_Model Test\dimension test\nt22v01v70-lf-02 ref.SLDPRT");
 
             swDoc.Save();
 
@@ -3981,12 +3981,15 @@ namespace CSharpAndSolidWorks
             SldWorks swApp = PStandAlone.GetSolidWorks();//连接solidworks
 
             //设置零件不显示
-            swApp.DocumentVisible(false, (int)swDocumentTypes_e.swDocPART);
+            swApp.DocumentVisible(false, (int)swDocumentTypes_e.swDocDRAWING);
 
             //你的操作....
 
+            swApp.OpenDoc(@"D:\14_Model Test\206093-610\Models\57972-610b1-00(without filter)-2316.SLDDRW", (int)swDocumentTypes_e.swDocDRAWING);
+
+
             //设置零件为正常的显示
-            swApp.DocumentVisible(true, (int)swDocumentTypes_e.swDocPART);
+            swApp.DocumentVisible(true, (int)swDocumentTypes_e.swDocDRAWING);
         }
 
         private void btnAutoFillet_Click(object sender, EventArgs e)
@@ -4496,6 +4499,16 @@ namespace CSharpAndSolidWorks
 
         }
 
+        private void butAddSize_Click(object sender, EventArgs e)
+        {
+            var swApp = PStandAlone.GetSolidWorks();
+
+            var swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            AddSizeDimensionForDrawing addSizeDimensionForDrawing = new AddSizeDimensionForDrawing(swApp, swModel);
+            addSizeDimensionForDrawing.AutoAddSize(false,false);
+
+        }
     }
 
     public class PictureDispConverter : System.Windows.Forms.AxHost

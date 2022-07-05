@@ -99,6 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddCenterPointForSketch.cs" />
+    <Compile Include="AddSizeDimensionForDrawing.cs" />
     <Compile Include="BodyHelper.cs" />
     <Compile Include="ComStream.cs" />
     <Compile Include="ExportForm.cs">

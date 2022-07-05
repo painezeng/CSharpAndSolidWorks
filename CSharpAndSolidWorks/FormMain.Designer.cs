@@ -110,6 +110,7 @@
             this.btnModifyWeldment = new System.Windows.Forms.Button();
             this.btnGetCutList = new System.Windows.Forms.Button();
             this.btnCreateDimXpert = new System.Windows.Forms.Button();
+            this.AddSizeDim = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -1009,11 +1010,23 @@
             this.btnCreateDimXpert.UseVisualStyleBackColor = true;
             this.btnCreateDimXpert.Click += new System.EventHandler(this.btnCreateDimXpert_Click);
             // 
+            // AddSizeDim
+            // 
+            this.AddSizeDim.Location = new System.Drawing.Point(1111, 190);
+            this.AddSizeDim.Name = "AddSizeDim";
+            this.AddSizeDim.Size = new System.Drawing.Size(125, 29);
+            this.AddSizeDim.TabIndex = 68;
+            this.AddSizeDim.Text = "75.工程图标注长宽";
+            this.AddSizeDim.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.AddSizeDim.UseVisualStyleBackColor = true;
+            this.AddSizeDim.Click += new System.EventHandler(this.butAddSize_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 675);
+            this.Controls.Add(this.AddSizeDim);
             this.Controls.Add(this.btnCreateDimXpert);
             this.Controls.Add(this.btnGetCutList);
             this.Controls.Add(this.btnModifyWeldment);
@@ -1184,6 +1197,7 @@
         private System.Windows.Forms.Button btnModifyWeldment;
         private System.Windows.Forms.Button btnGetCutList;
         private System.Windows.Forms.Button btnCreateDimXpert;
+        private System.Windows.Forms.Button AddSizeDim;
     }
 }
 
