@@ -20,12 +20,23 @@ namespace CSharpAndSolidWorks
 
         //public string Options = "Two";
 
+        /// <summary>
+        /// 尺寸标注上方
+        /// </summary>
         public bool DimOnTop = true;
 
+        /// <summary>
+        /// 尺寸标注左侧
+        /// </summary>
         public bool DimOnLeft = true;
 
-
+        /// <summary>
+        /// 尺寸位置偏移量
+        /// </summary>
         public double HorOffset = 0.005;
+        /// <summary>
+        /// 尺寸位置偏移量
+        /// </summary>
         public double VerOffset = 0.005;
 
 
@@ -59,21 +70,26 @@ namespace CSharpAndSolidWorks
         
         }
 
+        /// <summary>
+        /// 标注
+        /// </summary>
         public void AutoOveralDimensions() {
-
-          
+                     
 
             var swDraw = swModel as DrawingDoc;
 
             if (swDraw != null) 
             {
+                //当前图纸
                 Sheet swSheet = (Sheet)swDraw.GetCurrentSheet();
-
+                //所有视图
                 var swViews = (object[])swSheet.GetViews();
 
+                //循环
                 for (int i = 0; i < swViews.Length; i++) {
 
                     View swView = (View)swViews[i];
+                    //可以排除关联视图
                     if (swView.Type==(int)swDrawingViewTypes_e.swDrawingNamedView)
                     {
                         if (swView.GetOrientationName() != "*Isometric" && swView.GetOrientationName() != "*Trimetric" && swView.GetOrientationName() != "*Dimetric")
@@ -81,6 +97,7 @@ namespace CSharpAndSolidWorks
 
                             ProcessView(swDraw, swView, true, true);
 
+                            //找关联视图
                             var depHorView = GetAlignedDependantView(swView, 0);
 
                             if (depHorView != null)
@@ -106,6 +123,12 @@ namespace CSharpAndSolidWorks
 
         }
 
+        /// <summary>
+        /// 找关联视图
+        /// </summary>
+        /// <param name="swParentView"></param>
+        /// <param name="intOrientation">方向，横向/纵向</param>
+        /// <returns></returns>
         private View GetAlignedDependantView(View swParentView, int intOrientation)
         {
             var delta = 0.00001;
@@ -132,7 +155,13 @@ namespace CSharpAndSolidWorks
         }
 
 
-
+       /// <summary>
+       /// 遍历 点 ，计算再标注
+       /// </summary>
+       /// <param name="swDraw"></param>
+       /// <param name="swView"></param>
+       /// <param name="PlaceHorDim"></param>
+       /// <param name="PlaceVerDim"></param>
         private void ProcessView(DrawingDoc swDraw, View swView, bool PlaceHorDim, bool PlaceVerDim)
         {
 
@@ -293,6 +322,15 @@ namespace CSharpAndSolidWorks
 
         }
 
+        /// <summary>
+        /// 找极点
+        /// </summary>
+        /// <param name="axis"></param>
+        /// <param name="MinMax"></param>
+        /// <param name="swPcoll"></param>
+        /// <param name="swViewType"></param>
+        /// <param name="swViewXform"></param>
+        /// <returns></returns>
         private Entity FindExtremun(int axis, string MinMax, List<Vertex> swPcoll, int swViewType, MathTransform swViewXform)
         {
             var swVertex = swPcoll[0];
@@ -322,6 +360,13 @@ namespace CSharpAndSolidWorks
       
         }
 
+        /// <summary>
+        /// 坐标系转换
+        /// </summary>
+        /// <param name="swVertex"></param>
+        /// <param name="swViewType"></param>
+        /// <param name="swViewXform"></param>
+        /// <returns></returns>
         private double[] PointCoordinates(Vertex swVertex, int swViewType, MathTransform swViewXform)
         {
             var swMathUtils = swApp.IGetMathUtility();
@@ -352,7 +397,12 @@ namespace CSharpAndSolidWorks
 
 
         }
-
+        /// <summary>
+        /// 视图转换
+        /// </summary>
+        /// <param name="swDraw"></param>
+        /// <param name="swView"></param>
+        /// <returns></returns>
         private MathTransform ViewMathTransform(DrawingDoc swDraw, View swView)
         {
             try

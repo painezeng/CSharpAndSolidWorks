@@ -111,6 +111,7 @@
             this.btnGetCutList = new System.Windows.Forms.Button();
             this.btnCreateDimXpert = new System.Windows.Forms.Button();
             this.AddSizeDim = new System.Windows.Forms.Button();
+            this.btnAddDimForHoles = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -1021,11 +1022,23 @@
             this.AddSizeDim.UseVisualStyleBackColor = true;
             this.AddSizeDim.Click += new System.EventHandler(this.butAddSize_Click);
             // 
+            // btnAddDimForHoles
+            // 
+            this.btnAddDimForHoles.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAddDimForHoles.Location = new System.Drawing.Point(1111, 234);
+            this.btnAddDimForHoles.Name = "btnAddDimForHoles";
+            this.btnAddDimForHoles.Size = new System.Drawing.Size(125, 29);
+            this.btnAddDimForHoles.TabIndex = 69;
+            this.btnAddDimForHoles.Text = "76.标注孔坐标";
+            this.btnAddDimForHoles.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAddDimForHoles.UseVisualStyleBackColor = true;
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 675);
+            this.Controls.Add(this.btnAddDimForHoles);
             this.Controls.Add(this.AddSizeDim);
             this.Controls.Add(this.btnCreateDimXpert);
             this.Controls.Add(this.btnGetCutList);
@@ -1198,6 +1211,7 @@
         private System.Windows.Forms.Button btnGetCutList;
         private System.Windows.Forms.Button btnCreateDimXpert;
         private System.Windows.Forms.Button AddSizeDim;
+        private System.Windows.Forms.Button btnAddDimForHoles;
     }
 }
 
