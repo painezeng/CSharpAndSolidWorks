@@ -4509,6 +4509,16 @@ namespace CSharpAndSolidWorks
             addSizeDimensionForDrawing.AutoAddSize(false,false);
 
         }
+
+        private void btnAddDimForHoles_Click(object sender, EventArgs e)
+        {
+
+            var swApp = PStandAlone.GetSolidWorks();
+
+            var swModel = (ModelDoc2)swApp.ActiveDoc;
+            AddSizeDimensionForDrawing addSizeDimensionForDrawing = new AddSizeDimensionForDrawing(swApp, swModel);
+            addSizeDimensionForDrawing.AutoAddHoleDimesnions("");
+        }
     }
 
     public class PictureDispConverter : System.Windows.Forms.AxHost

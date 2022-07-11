@@ -40,6 +40,28 @@ namespace CSharpAndSolidWorks
         public double VerOffset = 0.005;
 
 
+        #region Holes相关
+            
+        /// <summary>
+        /// 孔边集合
+        /// </summary>
+        List<Edge> swHoleList = new List<Edge>();
+
+        /// <summary>
+        /// 边集合
+        /// </summary>
+        List<Edge> swEdgesList = new List<Edge>();
+
+        /// <summary>
+        /// 点集合
+        /// </summary>
+        List<Vertex> swPointList = new List<Vertex>();
+
+
+
+        #endregion
+
+
         public AddSizeDimensionForDrawing(SldWorks App, ModelDoc2 model)
         {
 
@@ -47,6 +69,541 @@ namespace CSharpAndSolidWorks
             swModel = model;
 
         }
+
+        double AllowAutoArrange = 0;
+
+        /// <summary>
+        /// 自动增加孔尺寸
+        /// </summary>
+        /// <param name="s"></param>
+        public void AutoAddHoleDimesnions(string s) {
+
+ 
+            var swDraw = swModel as DrawingDoc;
+
+            if (swDraw != null)
+            {
+                HorOffset = 0;
+                VerOffset = 0;
+
+
+
+                var swModelDocExt = (ModelDocExtension)swModel.Extension;
+                var swSelMgr = (SelectionMgr)swModel.SelectionManager;
+
+
+                swModel.SetUserPreferenceToggle((int)swUserPreferenceToggle_e.swViewDisplayHideAllTypes, true);
+
+
+                //当前图纸
+                Sheet swSheet = (Sheet)swDraw.GetCurrentSheet();
+                //所有视图
+                var swViews = (object[])swSheet.GetViews();
+
+                swModel.ClearSelection2(true);
+                //循环
+                for (int i = 0; i < swViews.Length; i++)
+                {
+
+                    View swView = (View)swViews[i];
+
+                    if (swView.GetOrientationName() != "*Isometric" && swView.GetOrientationName() != "*Trimetric" && swView.GetOrientationName() != "*Dimetric")
+                    {
+                        var vBounds = (double[])swView.GetOutline();
+
+                        var swViewType = System.IO.Path.GetExtension(swView.GetReferencedModelName());
+
+                        var vComps = (object[])swView.GetVisibleComponents();
+
+                        if ( swView.GetVisibleComponentCount() > 0 )
+                        {
+                            var vEdges = (object[])swView.GetVisibleEntities((Component2)vComps[0], (int)swViewEntityType_e.swViewEntityType_Edge);
+                            swSelData = (SelectData)swModel.ISelectionManager.CreateSelectData();
+                            swSelData.View = swView;                         
+                            MathTransform swViewXform = ViewMathTransform(swDraw, swView);
+                            for (int itr = 0; itr < vEdges.Length; itr++)
+                            {
+                                var swCurve = (Curve)((Edge)vEdges[itr]).GetCurve();
+                                if (swCurve.IsCircle()) {
+
+                                    var swCircleParam = swCurve.GetEndParams(out double StartP, out double EndP, out bool IsClosedP, out bool IsPeriodicP);
+
+                                    if (IsClosedP)
+                                    {
+
+                                        swHoleList.Add((Edge)vEdges[itr]);
+
+                                    }
+
+                                }
+
+                                else {
+
+                                    swEdgesList.Add((Edge)vEdges[itr]);
+                                    var startVertex = ((Edge)vEdges[itr]).GetStartVertex();
+
+                                    swPointList.Add((Vertex)startVertex);
+
+                                }
+
+
+
+
+
+
+                            }
+
+                            Entity swEntXmax = null, swEntXmin = null, swEntYmax = null, swEntYmin =null;
+
+                            var refModel = swView.ReferencedDocument;
+
+                            if (swViewType.ToString().ToLower()==".sldprt")
+                            {
+                              
+                                if (swPointList.Count>0)
+                                {
+
+                                    swEntXmax = FindExtremun(0, "max", swPointList, refModel.GetType(), swViewXform);
+                                    swEntXmin = FindExtremun(0, "min", swPointList, refModel.GetType(), swViewXform);
+                                    swEntYmax = FindExtremun(1, "max", swPointList, refModel.GetType(), swViewXform);
+                                    swEntYmin = FindExtremun(1, "min", swPointList, refModel.GetType(), swViewXform);
+
+                                }
+
+                                if (swHoleList.Count>0)
+                                {
+                                    AllowAutoArrange = 0;
+                                    HorOffset = HorOffset + 0.01;
+                                    VerOffset = VerOffset + 0.001;
+                                    var swHcollSortX = SortHoles(0, swHoleList, swViewType, "CleanYes", swViewXform);//            ' 0 = X ,1 = Y
+                                    PlaceHoleDimension((Vertex)swEntXmin , swHcollSortX, "Horizontal", vBounds, swViewType, swViewXform);
+                                    var swHcollSortY = SortHoles(1, swHoleList, swViewType, "CleanYes", swViewXform);      //     ' 0 = X ,1 = Y
+                                    PlaceHoleDimension((Vertex)swEntYmax, swHcollSortY, "Vertical", vBounds, swViewType, swViewXform);
+                                    PlaceHoleLocationDimension(swHoleList, vBounds, swViewType, swViewXform);
+
+
+                                }
+
+                                if (AllowAutoArrange > 0 && AllowAutoArrange< 0.005 )
+                                {
+                                   var swViewAnnot = (object[])swView.GetAnnotations();
+                                    Annotation annotation;
+                                    foreach (var item in swViewAnnot)
+                                    {
+                                        annotation = (Annotation)item;
+
+                                        annotation.Select3(true, null);
+                                    }
+
+
+                                    swModelDocExt.AlignDimensions((int)swAlignDimensionType_e.swAlignDimensionType_AutoArrange, 0.001);
+
+                                }
+
+
+                            }
+
+
+
+                        }
+
+
+
+                    }
+
+
+
+                }
+
+            }
+            swModel.ClearSelection2(true);
+            swModel.GraphicsRedraw2();
+
+
+
+
+        }
+
+        /// <summary>
+        /// 标注孔位置尺寸
+        /// </summary>
+        /// <param name="swHcoll"></param>
+        /// <param name="vBounds"></param>
+        /// <param name="swViewType"></param>
+        /// <param name="swViewXform"></param>
+        private void PlaceHoleLocationDimension(List<Edge> swHcoll, double[] vBounds, string swViewType, MathTransform swViewXform)
+        {
+            try
+            {
+
+                var swColl = new List<Edge>();
+                var swTempColl = new List<Edge>();
+                swColl.AddRange(swHcoll);
+
+                for (int n = swColl.Count - 1; n >= 0; n--)
+                {
+                    swTempColl.Clear();
+
+                    (swColl[n] as Entity).Select4(false, swSelData);
+                    var swCircleCurve = (Curve)swColl[n].GetCurve();
+                    var swCircleParams = (double[])swCircleCurve.CircleParams;
+                    var swTempRadius = swCircleParams[6];
+                    swTempColl.Add(swColl[n]);
+                    swColl.Remove(swColl[n]);
+
+                    for (int j = swColl.Count - 1; j >= 0; j--)
+                    {
+                        swCircleCurve = (Curve)swColl[j].GetCurve();
+                        (swHcoll[j] as Entity).Select4(false, swSelData);
+
+                        swCircleParams = (double[])swCircleCurve.CircleParams;
+
+                        if (Math.Abs(swTempRadius-swCircleParams[6])<0.001) {
+                            swTempColl.Add(swColl[j]);
+                            swColl.Remove(swColl[j]);
+                        }              
+       
+
+                    }
+
+                    swTempColl = SortHoles(1, swTempColl, swViewType, "CleanNo", swViewXform);
+                    swTempColl = SortHoles(0, swTempColl, swViewType, "CleanNo", swViewXform);
+
+                    swCircleParams = CircleCoordinates(swTempColl[0], swViewType, swViewXform);
+
+                    var Xpos = swCircleParams[0] - 0.025;
+                   var  Ypos = vBounds[3];
+                    (swTempColl[0] as Entity).Select4(false, swSelData);
+
+                    var myDisplayDim = (DisplayDimension)swModel.AddDimension2(Xpos, Ypos, 0);
+                    if (swTempColl.Count > 2)
+                    {
+
+                        myDisplayDim.SetBrokenLeader2(false, (int)swDisplayDimensionLeaderText_e.swBrokenLeaderHorizontalText);
+                        var oldText = myDisplayDim.GetText((int)swDimensionTextParts_e.swDimensionTextPrefix);
+                        myDisplayDim.SetText((int)swDimensionTextParts_e.swDimensionTextPrefix, $"{swTempColl.Count}x{oldText}");
+
+                    }
+                    n = swColl.Count;
+
+            }
+
+
+
+            }
+            catch (Exception ex )
+            {
+                swApp.SendMsgToUser(ex.StackTrace);
+                throw;
+            }
+
+
+
+
+        }
+
+        /// <summary>
+        /// 标注孔尺寸
+        /// </summary>
+        /// <param name="swVertex"></param>
+        /// <param name="swHcoll"></param>
+        /// <param name="DimOrientation"></param>
+        /// <param name="vBounds"></param>
+        /// <param name="swViewType"></param>
+        /// <param name="swViewXform"></param>
+        private void PlaceHoleDimension(Vertex swVertex, List<Edge> swHcoll, string DimOrientation, double[] vBounds, string swViewType, MathTransform swViewXform)
+        {
+            try
+            {
+      
+               swModel.ClearSelection2(true);
+
+                var vPt = PointCoordinates(swApp,swVertex, swViewType, swViewXform);
+                var vPt2 = CircleCoordinates(swHcoll[0], swViewType, swViewXform);
+                double Xpos, Ypos;
+
+                (swVertex as Entity).Select4(true, swSelData);
+
+                //double dblConvFactor = GetUnitConvFactor("");
+
+                if (DimOrientation == "Horizontal")
+                {
+                    (swHcoll[0] as Entity).Select4(true, swSelData);
+                    vPt2 = CircleCoordinates(swHcoll[0], swViewType, swViewXform);
+                    Xpos = (vPt[0] + vPt2[0]) / 2;
+
+                    Ypos = (vBounds[3] + HorOffset);
+
+                    if (AllowAutoArrange == 0 || AllowAutoArrange > (Math.Abs(vPt[0] - vPt2[0]))) 
+                    {
+
+                        AllowAutoArrange = Math.Abs(vPt[0] - vPt2[0]);
+                    }
+
+                    var myDisplayDim = swModel.AddHorizontalDimension2(Xpos, Ypos, 0);
+
+                }
+                if (DimOrientation == "Vertical")
+                {
+                    (swHcoll[0] as Entity).Select4(true, swSelData);
+
+                    vPt2 = CircleCoordinates(swHcoll[0], swViewType, swViewXform);
+                    Xpos = (vBounds[0] - VerOffset);
+
+                    Ypos = (vPt[1] + vPt2[1]) / 2; ;
+
+                    if (AllowAutoArrange == 0 || AllowAutoArrange > (Math.Abs(vPt[1] - vPt2[1])))
+                    {
+
+                        AllowAutoArrange = Math.Abs(vPt[1] - vPt2[1]);
+                    }
+
+                    var myDisplayDim = swModel.AddVerticalDimension2(Xpos, Ypos, 0);
+
+                }
+                swModel.ClearSelection2(true);
+
+                for (int i = 0; i < swHcoll.Count-1; i++)
+                {
+                    swModel.ClearSelection2(true);
+                    (swHcoll[i+1] as Entity).Select4(true, swSelData);
+                    var vPt1 = CircleCoordinates(swHcoll[i], swViewType, swViewXform);
+                    vPt2 = CircleCoordinates(swHcoll[i + 1], swViewType, swViewXform);
+
+                    if (DimOrientation == "Horizontal")
+                    {
+                        if (Math.Round(vPt1[1],10)!= Math.Round(vPt2[1], 10))
+                        {
+                            (swVertex as Entity).Select4(true, swSelData);
+                            HorOffset = HorOffset + 0.005;
+                            Xpos = (vPt[0] + vPt2[0]) / 2;
+                            Ypos = (vBounds[3] + HorOffset);
+
+                        }
+                        else
+                        {
+                            (swHcoll[i] as Entity).Select4(true, swSelData);
+
+                            Xpos = (vPt1[0] + vPt2[0]) / 2;
+                            Ypos = (vBounds[3] + HorOffset);
+
+                            if (AllowAutoArrange == 0 || AllowAutoArrange > (Math.Abs(vPt[0] - vPt2[0])))
+                            {
+
+                                AllowAutoArrange = Math.Abs(vPt[0] - vPt2[0]);
+                            }
+                        }
+                        var myDisplayDim = swModel.AddHorizontalDimension2(Xpos, Ypos, 0);
+
+
+                    }else  if (DimOrientation == "Vertical") {
+
+                        (swHcoll[i] as Entity).Select4(true, swSelData);
+
+                        //vPt2 = CircleCoordinates(swHcoll[0], swViewType, swViewXform);
+
+                        Xpos = (vBounds[0] - VerOffset);
+
+                        Ypos = (vPt[1] + vPt2[1]) / 2; ;
+
+                        if (AllowAutoArrange == 0 || AllowAutoArrange > (Math.Abs(vPt[1] - vPt2[1])))
+                        {
+
+                            AllowAutoArrange = Math.Abs(vPt[1] - vPt2[1]);
+                        }
+
+                        var myDisplayDim = swModel.AddVerticalDimension2(Xpos, Ypos, 0);
+                    }
+
+
+                }
+
+
+
+            }
+            catch (Exception ex )
+            {
+                swApp.SendMsgToUser(ex.StackTrace.ToString());
+                throw;
+            }
+
+        }
+
+        /// <summary>
+        /// 排序孔
+        /// </summary>
+        /// <param name="axis"></param>
+        /// <param name="swHcoll"></param>
+        /// <param name="swViewType"></param>
+        /// <param name="swNeedToClean"></param>
+        /// <param name="swViewXform"></param>
+        /// <returns></returns>
+        private List<Edge> SortHoles(int axis, List<Edge> swHcoll, string swViewType, string swNeedToClean, MathTransform swViewXform)
+        {
+            try
+            {
+                var swColl = new List<Edge>();
+                swColl.AddRange(swHcoll);
+
+                for (int i = 0; i < swColl.Count; i++)
+                {
+
+                    for (int j = 0; j < swColl.Count-i-1; j++)
+                    {
+                       double[] swCircleParams1 = CircleCoordinates(swColl[j], swViewType, swViewXform);
+                       double[] swCircleParams2 = CircleCoordinates(swColl[j+1], swViewType, swViewXform);
+                        if (axis==0)
+                        {
+                            if (swCircleParams1[axis]>swCircleParams2[axis])
+                            {
+                                var vTemp = swColl[j + 1];
+                                swColl.Remove(swColl[j + 1]);
+                                swColl.Insert(j, vTemp);
+                            }
+
+
+                        }
+                        else if (axis==1)
+                        {
+                            if (swCircleParams1[axis] < swCircleParams2[axis])
+                            {
+                                var vTemp = swColl[j + 1];
+                                swColl.Remove(swColl[j + 1]);
+                                swColl.Insert(j, vTemp);
+                            }
+
+                        }
+                    }      
+                }
+
+                if (swNeedToClean== "CleanYes")
+                {
+                    return CleanSortedHoles(axis, swColl, swViewType, swViewXform);
+
+                }
+                else if (swNeedToClean == "CleanNo")
+                {
+                    return swColl;
+                }
+
+
+                return null;
+            }
+            catch (Exception ex )
+            {
+                swApp.SendMsgToUser(ex.StackTrace);
+                return null;
+            }
+
+
+
+         
+        }
+
+        /// <summary>
+        /// 清理排序过的孔，比如X值 一样， Y值 一样的
+        /// </summary>
+        /// <param name="axis"></param>
+        /// <param name="swColl"></param>
+        /// <param name="swViewType"></param>
+        /// <param name="swViewXform"></param>
+        /// <returns></returns>
+        private List<Edge> CleanSortedHoles(int axis, List<Edge> swColl, string swViewType, MathTransform swViewXform)
+        {
+            try
+            {
+                for (int k = 0; k < swColl.Count-2; k++)
+                {
+
+                    for (int n = swColl.Count - 1; n >= 1; n--)
+                    {
+                        double[] swCircleParams1 = CircleCoordinates(swColl[n], swViewType, swViewXform);
+                        double[] swCircleParams2 = CircleCoordinates(swColl[n - 1], swViewType, swViewXform);
+
+                        if (Math.Abs(swCircleParams1[axis]- swCircleParams2[axis])<0.000001)
+                        {
+
+
+                            if (axis == 0)
+                            {
+                                if (swCircleParams1[Math.Abs(axis-1)] > swCircleParams2[Math.Abs(axis - 1)])
+                                {
+                                   
+                                    swColl.Remove(swColl[n - 1]);
+                        
+                                }
+                                else
+                                {
+                                    swColl.Remove(swColl[n]);
+                                }
+
+
+                            }
+                            else if (axis == 1)
+                            {
+                                if (swCircleParams1[Math.Abs(axis - 1)] < swCircleParams2[Math.Abs(axis - 1)])
+                                {
+
+                                    swColl.Remove(swColl[n - 1]);
+
+                                }
+                                else
+                                {
+                                    swColl.Remove(swColl[n]);
+                                }
+                            }
+
+                        }
+
+
+                    }
+                }
+
+
+                return swColl;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// 圆点坐标
+        /// </summary>
+        /// <param name="swCircle"></param>
+        /// <param name="swViewType"></param>
+        /// <param name="swViewXform"></param>
+        /// <returns></returns>
+        private double[] CircleCoordinates(Edge swCircle, string swViewType, MathTransform swViewXform)
+        {
+
+            Curve swCircleCurve = (Curve)swCircle.GetCurve();
+            var swCircleParams = (double[])swCircleCurve.CircleParams;
+            var vPt = new double[3];
+            vPt[0] = swCircleParams[0];
+            vPt[1] = swCircleParams[1];
+            vPt[2] = swCircleParams[2];
+
+            var swMathUtils =(MathUtility) swApp.GetMathUtility();
+            var swMathPt = (MathPoint)swMathUtils.CreatePoint(vPt);
+            var swComp =(Component2) (swCircle as Entity).GetComponent();
+
+            if (swViewType.ToUpper()==".SLDASM")
+            {
+                var swCompXform = swComp.Transform2;
+                var swTotalXForm = swCompXform.Multiply(swViewXform);
+                swMathPt = (MathPoint)swMathPt.MultiplyTransform(swTotalXForm);
+            }
+            else
+            {
+                swMathPt = (MathPoint)swMathPt.MultiplyTransform(swViewXform);
+            }
+            return (double[])swMathPt.ArrayData;
+
+        }
+
 
         /// <summary>
         /// 增加长宽尺寸
@@ -397,6 +954,47 @@ namespace CSharpAndSolidWorks
 
 
         }
+
+        /// <summary>
+        /// 坐标系转换
+        /// </summary>
+        /// <param name="swVertex"></param>
+        /// <param name="swViewType"></param>
+        /// <param name="swViewXform"></param>
+        /// <returns></returns>
+        private double[] PointCoordinates(SldWorks swApp,Vertex swVertex, string swViewType, MathTransform swViewXform)
+        {
+            var swMathUtils = swApp.IGetMathUtility();
+            var vPt = (double[])swVertex.GetPoint();
+            var swMathPt = (MathPoint)swMathUtils.CreatePoint(vPt);
+
+            if (swViewType == "SLDASM")
+            {
+                var swComp = (Component2)(swVertex as Entity).GetComponent();
+
+                if (swComp != null)
+                {
+                    MathTransform swCompXform = swComp.Transform2;
+
+                    MathTransform swTotalXForm = (MathTransform)swCompXform.Multiply(swViewXform);
+
+                    swMathPt = (MathPoint)swMathPt.MultiplyTransform(swTotalXForm);
+
+                }
+
+            }
+            else
+            {
+                swMathPt = (MathPoint)swMathPt.MultiplyTransform(swViewXform);
+            }
+
+            return (double[])swMathPt.ArrayData;
+
+
+        }
+
+
+
         /// <summary>
         /// 视图转换
         /// </summary>

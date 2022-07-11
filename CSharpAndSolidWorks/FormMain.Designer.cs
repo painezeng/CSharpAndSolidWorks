@@ -1032,6 +1032,7 @@
             this.btnAddDimForHoles.Text = "76.标注孔坐标";
             this.btnAddDimForHoles.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnAddDimForHoles.UseVisualStyleBackColor = true;
+            this.btnAddDimForHoles.Click += new System.EventHandler(this.btnAddDimForHoles_Click);
             // 
             // Btn_Filter
             // 
