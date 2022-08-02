@@ -112,6 +112,7 @@
             this.btnCreateDimXpert = new System.Windows.Forms.Button();
             this.AddSizeDim = new System.Windows.Forms.Button();
             this.btnAddDimForHoles = new System.Windows.Forms.Button();
+            this.btnKeepView = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -1034,11 +1035,23 @@
             this.btnAddDimForHoles.UseVisualStyleBackColor = true;
             this.btnAddDimForHoles.Click += new System.EventHandler(this.btnAddDimForHoles_Click);
             // 
+            // btnKeepView
+            // 
+            this.btnKeepView.Location = new System.Drawing.Point(1111, 278);
+            this.btnKeepView.Name = "btnKeepView";
+            this.btnKeepView.Size = new System.Drawing.Size(125, 29);
+            this.btnKeepView.TabIndex = 70;
+            this.btnKeepView.Text = "77.打开时保持姿势";
+            this.btnKeepView.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnKeepView.UseVisualStyleBackColor = true;
+            this.btnKeepView.Click += new System.EventHandler(this.btnKeepView_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 675);
+            this.Controls.Add(this.btnKeepView);
             this.Controls.Add(this.btnAddDimForHoles);
             this.Controls.Add(this.AddSizeDim);
             this.Controls.Add(this.btnCreateDimXpert);
@@ -1120,7 +1133,6 @@
             this.Name = "Btn_Filter";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Solidworks二次开发 API";
-            this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Btn_Filter_FormClosing);
             this.Load += new System.EventHandler(this.Btn_Filter_Load);
             this.GroupExample.ResumeLayout(false);
@@ -1213,6 +1225,7 @@
         private System.Windows.Forms.Button btnCreateDimXpert;
         private System.Windows.Forms.Button AddSizeDim;
         private System.Windows.Forms.Button btnAddDimForHoles;
+        private System.Windows.Forms.Button btnKeepView;
     }
 }
 

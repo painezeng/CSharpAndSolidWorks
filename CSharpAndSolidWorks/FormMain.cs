@@ -18,6 +18,7 @@ using System.Linq;
 using Attribute = SolidWorks.Interop.sldworks.Attribute;
 using GetRayIntersectionWithBody;
 using SolidWorks.Interop.swdimxpert;
+using GeometRi;
 
 namespace CSharpAndSolidWorks
 {
@@ -4518,6 +4519,68 @@ namespace CSharpAndSolidWorks
             var swModel = (ModelDoc2)swApp.ActiveDoc;
             AddSizeDimensionForDrawing addSizeDimensionForDrawing = new AddSizeDimensionForDrawing(swApp, swModel);
             addSizeDimensionForDrawing.AutoAddHoleDimesnions("");
+        }
+
+        private void btnKeepView_Click(object sender, EventArgs e)
+        {
+            var swApp = PStandAlone.GetSolidWorks();
+
+            var swModel = (ModelDoc2)swApp.ActiveDoc;                     
+
+            var oldView = swApp.IActiveDoc2.IActiveView;
+
+            var oldAsmOrientation = oldView.Orientation3; //矩阵向量
+            var oldAsmsc = oldView.Scale2; //矩阵向量
+
+            var swModelAsm = (AssemblyDoc)swModel; //获取当前零件
+                                 
+            var baseComp = swModel.ISelectionManager.GetSelectedObjectsComponent3(1, -1);
+
+            var PartTransform2 = baseComp.Transform2;//零件与装配体坐标完全重合 变换到安装位置的变换
+                           
+            baseComp.Select(false);
+            
+            swModelAsm.OpenCompFile();
+
+            swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            var newView = swApp.IActiveDoc2.IActiveView;
+
+            newView.Orientation3 = PartTransform2.IMultiply(oldAsmOrientation);
+           
+            //newView.Scale2 = oldAsmsc;  
+
+            swModel.ViewZoomtofit();
+
+            newView.GraphicsRedraw(null);
+
+        }
+
+
+        private static MathTransform MatrixToTransform(SldWorks swApp, Matrix3d changeMatrix)
+        {
+            double[] mathArray1 = new double[16];
+            mathArray1[0] = changeMatrix.Row1.X;
+            mathArray1[1] = changeMatrix.Row1.Y;
+            mathArray1[2] = changeMatrix.Row1.Z;
+            mathArray1[3] = changeMatrix.Row2.X;
+            mathArray1[4] = changeMatrix.Row2.Y;
+            mathArray1[5] = changeMatrix.Row2.Z;
+            mathArray1[6] = changeMatrix.Row3.X;
+            mathArray1[7] = changeMatrix.Row3.Y;
+            mathArray1[8] = changeMatrix.Row3.Z;
+            mathArray1[9] = 0;
+            mathArray1[10] = 0;
+            mathArray1[11] = 0;
+            mathArray1[12] = 0;
+            mathArray1[13] = 0;
+            mathArray1[14] = 0;
+            mathArray1[15] = 0;
+
+            //double[] mathArray = new double[16] { 1, 0, 0, 0,1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 };
+
+            MathTransform mathTransform = (MathTransform)swApp.IGetMathUtility().CreateTransform(mathArray1);
+            return mathTransform;
         }
     }
 
