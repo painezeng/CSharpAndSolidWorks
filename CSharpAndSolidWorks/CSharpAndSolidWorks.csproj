@@ -72,9 +72,10 @@
       <HintPath>..\dll\SolidWorks.Interop.swconst.dll</HintPath>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
-    <Reference Include="SolidWorks.Interop.swdimxpert">
-      <HintPath>..\..\..\01_Synventive Work\Other\UpdateFittings\UpdateFittings\packages\SolidWorks2018.Interop.1.0.0\lib\SolidWorks.Interop.swdimxpert.dll</HintPath>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
+    <Reference Include="SolidWorks.Interop.swdimxpert, Version=26.0.1.1, Culture=neutral, PublicKeyToken=5e9cf5ab4ebec26a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\dll\SolidWorks.Interop.swdimxpert.dll</HintPath>
     </Reference>
     <Reference Include="SolidWorks.Interop.swdocumentmgr, Version=26.0.1.1, Culture=neutral, PublicKeyToken=e52dfa2d3a1e978a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

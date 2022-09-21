@@ -113,6 +113,8 @@
             this.AddSizeDim = new System.Windows.Forms.Button();
             this.btnAddDimForHoles = new System.Windows.Forms.Button();
             this.btnKeepView = new System.Windows.Forms.Button();
+            this.btnAddCenterMark = new System.Windows.Forms.Button();
+            this.btnGetSketchDim = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -1046,11 +1048,35 @@
             this.btnKeepView.UseVisualStyleBackColor = true;
             this.btnKeepView.Click += new System.EventHandler(this.btnKeepView_Click);
             // 
+            // btnAddCenterMark
+            // 
+            this.btnAddCenterMark.Location = new System.Drawing.Point(1111, 322);
+            this.btnAddCenterMark.Name = "btnAddCenterMark";
+            this.btnAddCenterMark.Size = new System.Drawing.Size(125, 29);
+            this.btnAddCenterMark.TabIndex = 71;
+            this.btnAddCenterMark.Text = "78.中心标记操作";
+            this.btnAddCenterMark.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAddCenterMark.UseVisualStyleBackColor = true;
+            this.btnAddCenterMark.Click += new System.EventHandler(this.btnAddCenterMark_Click);
+            // 
+            // btnGetSketchDim
+            // 
+            this.btnGetSketchDim.Location = new System.Drawing.Point(1111, 366);
+            this.btnGetSketchDim.Name = "btnGetSketchDim";
+            this.btnGetSketchDim.Size = new System.Drawing.Size(125, 29);
+            this.btnGetSketchDim.TabIndex = 72;
+            this.btnGetSketchDim.Text = "79.获取直线的尺寸";
+            this.btnGetSketchDim.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnGetSketchDim.UseVisualStyleBackColor = true;
+            this.btnGetSketchDim.Click += new System.EventHandler(this.btnGetSketchDim_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 675);
+            this.Controls.Add(this.btnGetSketchDim);
+            this.Controls.Add(this.btnAddCenterMark);
             this.Controls.Add(this.btnKeepView);
             this.Controls.Add(this.btnAddDimForHoles);
             this.Controls.Add(this.AddSizeDim);
@@ -1226,6 +1252,8 @@
         private System.Windows.Forms.Button AddSizeDim;
         private System.Windows.Forms.Button btnAddDimForHoles;
         private System.Windows.Forms.Button btnKeepView;
+        private System.Windows.Forms.Button btnAddCenterMark;
+        private System.Windows.Forms.Button btnGetSketchDim;
     }
 }
 

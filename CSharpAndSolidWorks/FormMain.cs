@@ -4582,6 +4582,89 @@ namespace CSharpAndSolidWorks
             MathTransform mathTransform = (MathTransform)swApp.IGetMathUtility().CreateTransform(mathArray1);
             return mathTransform;
         }
+
+        private void btnAddCenterMark_Click(object sender, EventArgs e)
+        {
+
+            //请先打开HolePlate.slddrw文件
+
+            var swApp = PStandAlone.GetSolidWorks();
+
+            var swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            var swDrawing = (DrawingDoc)swModel;
+
+            //这里改成工程图中的视图名称
+
+            swDrawing.ActivateView("Drawing View1");
+
+            #region 遍历并删除
+            //得到视图对象
+            var swView = (View)swDrawing.ActiveDrawingView;
+
+            //获取所有注释
+            var annos = (object[])swView.GetAnnotations();
+
+            //清空选择
+            swModel.ClearSelection();
+
+            //遍历中心标记
+            foreach (var anno in annos)
+            {
+                var tempAnno = (Annotation)anno;
+                if (tempAnno.GetType() == (int)swAnnotationType_e.swCenterMarkSym)
+                {
+                    //选中
+                    tempAnno.Select(true);
+
+                }
+
+            }
+
+            //删除选中
+            swModel.EditDelete();
+            #endregion
+
+
+            #region 自动增加
+            //增加中心标记
+
+            swView.AutoInsertCenterMarks2((int)swAutoInsertCenterMarkTypes_e.swAutoInsertCenterMarkType_Slots| (int)swAutoInsertCenterMarkTypes_e.swAutoInsertCenterMarkType_Hole , (int)swCenterMarkConnectionLine_e.swCenterMark_ShowLinearConnectLines, true, true, true, 0.0025, 0.0025, true, true, 0);
+
+            #endregion
+
+
+
+            MessageBox.Show("操作完成");
+
+        }
+
+        private void btnGetSketchDim_Click(object sender, EventArgs e)
+        {
+
+            var swApp = PStandAlone.GetSolidWorks();
+
+            var swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            var selMgr = swModel.ISelectionManager;
+
+            var displayDim = (Dimension)selMgr.GetSelectedObject(1);
+
+            
+
+            //获取尺寸的参考点对象
+            var pObjs = (object[])displayDim.ReferencePoints;
+
+            var p1 =(MathPoint) pObjs[0];
+
+            var p2 =(MathPoint) pObjs[1];
+
+
+            MessageBox.Show("");
+
+
+
+        }
     }
 
     public class PictureDispConverter : System.Windows.Forms.AxHost
