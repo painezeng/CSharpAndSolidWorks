@@ -22,8 +22,10 @@ using GeometRi;
 
 namespace CSharpAndSolidWorks
 {
+  
     public partial class Btn_Filter : Form
     {
+        
         public Btn_Filter()
         {
             InitializeComponent();
@@ -4664,6 +4666,99 @@ namespace CSharpAndSolidWorks
 
 
 
+        }
+        /// <summary>
+        /// 获取工程图中的图片对象，删除后插入一个已经存在的二维码
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnOLEObject_Click(object sender, EventArgs e)
+        {
+            var swApp = PStandAlone.GetSolidWorks();
+
+            var swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            //old对象数量
+            var oleCountOnThisSheet= swModel.Extension.GetOLEObjectCount((int)swOleObjectOptions_e.swOleObjectOptions_GetOnCurrentSheet);
+            //获取 old对象
+            var oleObjects = (object[])swModel.Extension.GetOLEObjects((int)swOleObjectOptions_e.swOleObjectOptions_GetOnCurrentSheet);
+
+            //var buf1 = new object();
+
+            //循环 按顺序 选中后删除
+            for (int i = 0; i < oleObjects.Count(); i++)
+            {
+                var oldObj=(SwOLEObject)oleObjects[i];
+
+                Debug.Print(oldObj.Clsid);
+                //oldObj.IGetBuffer(oldObj.BufferSize, out byte bData);
+                Debug.Print(oldObj.Aspect.ToString());
+         
+                //buf1 = oldObj.Buffer;
+
+                //选中
+                oldObj.Select(false);
+               
+                //删除
+                swModel.EditDelete();
+               
+            }
+
+            //重新插入一张图片
+            //var picPath = @"D:\09_Study\CSharpAndSolidWorks\8888.png";
+            ////swModel.Extension.InsertObjectFromFile(picPath, false, 1, 0.1, 0.1, 0);
+
+            //var pos = new double[] { 0, 0.2, 0.03,0.23};
+
+            //Todo: 如何把文件变成Buffer 
+
+            //var impBuf = imageToByte(image);
+
+            //var newOleObj=  swModel.Extension.CreateOLEObject(1, pos, impBuf, out int Err);
+
+            //newOleObj.Refresh();
+
+
+            #region 利用草图里的插入图片功能
+
+            var picPath = @"D:\09_Study\CSharpAndSolidWorks\v.png";
+
+            var skPic = swModel.SketchManager.InsertSketchPicture(picPath);
+
+            skPic.SetOrigin(0.2, 0.2); //坐标
+
+            skPic.SetSize(0.05, 0.05, true); //大小
+
+            //取消属性显示页
+            swApp.RunCommand(-2, "");
+
+
+
+            #endregion
+
+
+            MessageBox.Show("操作完成");
+
+        }
+
+        [DllImport("ole32.dll",
+     EntryPoint = "GetHGlobalFromILockBytes",
+     ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Ansi,
+     CallingConvention = CallingConvention.StdCall)]
+        static extern int GetHGlobalFromILockBytes([MarshalAs(UnmanagedType.Interface)] object /* ILockBytes* */pLkbyt, out IntPtr /* HGLOBAL* */ phglobal);
+        //将image转换成byte[]数据
+        private byte[] imageToByte(System.Drawing.Image _image)
+        {
+            MemoryStream ms = new MemoryStream();
+            _image.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+            return ms.ToArray();
+        }
+        //将byte[]数据转换成image
+        private Image byteToImage(byte[] myByte)
+        {
+            MemoryStream ms = new MemoryStream(myByte);
+            Image _Image = Image.FromStream(ms);
+            return _Image;
         }
     }
 

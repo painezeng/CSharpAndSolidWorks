@@ -115,6 +115,7 @@
             this.btnKeepView = new System.Windows.Forms.Button();
             this.btnAddCenterMark = new System.Windows.Forms.Button();
             this.btnGetSketchDim = new System.Windows.Forms.Button();
+            this.btnOLEObject = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -1070,11 +1071,23 @@
             this.btnGetSketchDim.UseVisualStyleBackColor = true;
             this.btnGetSketchDim.Click += new System.EventHandler(this.btnGetSketchDim_Click);
             // 
+            // btnOLEObject
+            // 
+            this.btnOLEObject.Location = new System.Drawing.Point(1111, 410);
+            this.btnOLEObject.Name = "btnOLEObject";
+            this.btnOLEObject.Size = new System.Drawing.Size(125, 29);
+            this.btnOLEObject.TabIndex = 73;
+            this.btnOLEObject.Text = "80.工程图中的图片";
+            this.btnOLEObject.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnOLEObject.UseVisualStyleBackColor = true;
+            this.btnOLEObject.Click += new System.EventHandler(this.btnOLEObject_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 675);
+            this.Controls.Add(this.btnOLEObject);
             this.Controls.Add(this.btnGetSketchDim);
             this.Controls.Add(this.btnAddCenterMark);
             this.Controls.Add(this.btnKeepView);
@@ -1254,6 +1267,7 @@
         private System.Windows.Forms.Button btnKeepView;
         private System.Windows.Forms.Button btnAddCenterMark;
         private System.Windows.Forms.Button btnGetSketchDim;
+        private System.Windows.Forms.Button btnOLEObject;
     }
 }
 
