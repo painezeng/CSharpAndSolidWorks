@@ -4760,6 +4760,80 @@ namespace CSharpAndSolidWorks
             Image _Image = Image.FromStream(ms);
             return _Image;
         }
+
+
+        /// <summary>
+        /// 工程图替换文件引用
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnReplaceModelForView_Click(object sender, EventArgs e)
+        {
+
+            var oldPartName = @"..\CSharpAndSolidWorks\TemplateModel\replaceDrawingRef\AA(BB).SLDPRT";
+
+            var newPartName = @"..\CSharpAndSolidWorks\TemplateModel\replaceDrawingRef\AA(BB) - 副本.SLDPRT";
+
+            var swApp = PStandAlone.GetSolidWorks();
+
+            var swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            var docModel = swModel as DrawingDoc;
+
+            var views = (object[])docModel.GetViews();
+
+            List<View> views1 = new List<View>();
+            List<Component2> comps1 = new List<Component2>();
+
+
+            for (int i = 0; i < views.Length; i++)
+            {
+                var tempV = (object[])views[i];
+
+                if (tempV.Length>1)
+                {
+                    for (int j =1; j < tempV.Length; j++)
+                    {
+                        var tempView = (View)tempV[j];
+                        if (tempView.RootDrawingComponent.Component!=null)
+                        {
+                            if (tempView.RootDrawingComponent.Component.IGetModelDoc().GetPathName().ToUpper() == oldPartName.ToUpper())
+                            {
+                                views1.Add(tempView);
+                                comps1.Add(tempView.RootDrawingComponent.Component);
+                            }
+
+                        }
+                        else
+                        {
+                            var visComps = (object[])tempView.GetVisibleComponents();
+
+                            if (tempView.GetVisibleComponentCount()==1 && ((visComps[0] as Component2).IGetModelDoc().GetPathName().ToUpper() == oldPartName.ToUpper()))
+                            {
+                                views1.Add(tempView);
+                                comps1.Add(visComps[0] as Component2);
+                            }
+
+                        }
+
+                    }
+
+                }
+
+
+            }
+
+    
+
+            //DispatchWrapper[] viewsIn = new DispatchWrapper[views1.Count];
+            //DispatchWrapper[] instancesIn = new DispatchWrapper[views1.Count];
+
+
+
+
+            var res= docModel.ReplaceViewModel(newPartName, views1.ToArray(), comps1.ToArray());
+
+        }
     }
 
     public class PictureDispConverter : System.Windows.Forms.AxHost
