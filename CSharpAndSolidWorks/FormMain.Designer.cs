@@ -117,6 +117,7 @@
             this.btnGetSketchDim = new System.Windows.Forms.Button();
             this.btnOLEObject = new System.Windows.Forms.Button();
             this.btnReplaceModelForView = new System.Windows.Forms.Button();
+            this.btnSimStudy = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -1090,14 +1091,27 @@
             this.btnReplaceModelForView.Size = new System.Drawing.Size(142, 29);
             this.btnReplaceModelForView.TabIndex = 74;
             this.btnReplaceModelForView.Text = "81.替换工程图模型";
+            this.btnReplaceModelForView.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnReplaceModelForView.UseVisualStyleBackColor = true;
             this.btnReplaceModelForView.Click += new System.EventHandler(this.btnReplaceModelForView_Click);
+            // 
+            // btnSimStudy
+            // 
+            this.btnSimStudy.Location = new System.Drawing.Point(644, 473);
+            this.btnSimStudy.Name = "btnSimStudy";
+            this.btnSimStudy.Size = new System.Drawing.Size(142, 31);
+            this.btnSimStudy.TabIndex = 75;
+            this.btnSimStudy.Text = "82.Simulation修改参数";
+            this.btnSimStudy.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSimStudy.UseVisualStyleBackColor = true;
+            this.btnSimStudy.Click += new System.EventHandler(this.btnSimStudy_Click);
             // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 623);
+            this.Controls.Add(this.btnSimStudy);
             this.Controls.Add(this.btnReplaceModelForView);
             this.Controls.Add(this.btnOLEObject);
             this.Controls.Add(this.btnGetSketchDim);
@@ -1281,6 +1295,7 @@
         private System.Windows.Forms.Button btnGetSketchDim;
         private System.Windows.Forms.Button btnOLEObject;
         private System.Windows.Forms.Button btnReplaceModelForView;
+        private System.Windows.Forms.Button btnSimStudy;
     }
 }
 
