@@ -118,6 +118,10 @@
             this.btnOLEObject = new System.Windows.Forms.Button();
             this.btnReplaceModelForView = new System.Windows.Forms.Button();
             this.btnSimStudy = new System.Windows.Forms.Button();
+            this.btnImportDwg = new System.Windows.Forms.Button();
+            this.btnAddCallout = new System.Windows.Forms.Button();
+            this.btnRename = new System.Windows.Forms.Button();
+            this.btnSketchContour = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -1088,7 +1092,7 @@
             // 
             this.btnReplaceModelForView.Location = new System.Drawing.Point(644, 438);
             this.btnReplaceModelForView.Name = "btnReplaceModelForView";
-            this.btnReplaceModelForView.Size = new System.Drawing.Size(142, 29);
+            this.btnReplaceModelForView.Size = new System.Drawing.Size(142, 27);
             this.btnReplaceModelForView.TabIndex = 74;
             this.btnReplaceModelForView.Text = "81.替换工程图模型";
             this.btnReplaceModelForView.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1097,20 +1101,68 @@
             // 
             // btnSimStudy
             // 
-            this.btnSimStudy.Location = new System.Drawing.Point(644, 473);
+            this.btnSimStudy.Location = new System.Drawing.Point(644, 474);
             this.btnSimStudy.Name = "btnSimStudy";
-            this.btnSimStudy.Size = new System.Drawing.Size(142, 31);
+            this.btnSimStudy.Size = new System.Drawing.Size(142, 27);
             this.btnSimStudy.TabIndex = 75;
             this.btnSimStudy.Text = "82.Simulation修改参数";
             this.btnSimStudy.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSimStudy.UseVisualStyleBackColor = true;
             this.btnSimStudy.Click += new System.EventHandler(this.btnSimStudy_Click);
             // 
+            // btnImportDwg
+            // 
+            this.btnImportDwg.Location = new System.Drawing.Point(644, 510);
+            this.btnImportDwg.Name = "btnImportDwg";
+            this.btnImportDwg.Size = new System.Drawing.Size(142, 27);
+            this.btnImportDwg.TabIndex = 76;
+            this.btnImportDwg.Text = "83.导入dwg到草图";
+            this.btnImportDwg.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnImportDwg.UseVisualStyleBackColor = true;
+            this.btnImportDwg.Click += new System.EventHandler(this.btnImportDwg_Click);
+            // 
+            // btnAddCallout
+            // 
+            this.btnAddCallout.Location = new System.Drawing.Point(644, 546);
+            this.btnAddCallout.Name = "btnAddCallout";
+            this.btnAddCallout.Size = new System.Drawing.Size(142, 27);
+            this.btnAddCallout.TabIndex = 77;
+            this.btnAddCallout.Text = "84.增加Callout标志";
+            this.btnAddCallout.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAddCallout.UseVisualStyleBackColor = true;
+            this.btnAddCallout.Click += new System.EventHandler(this.btnAddCallout_Click);
+            // 
+            // btnRename
+            // 
+            this.btnRename.Location = new System.Drawing.Point(644, 582);
+            this.btnRename.Name = "btnRename";
+            this.btnRename.Size = new System.Drawing.Size(142, 27);
+            this.btnRename.TabIndex = 77;
+            this.btnRename.Text = "85.直接重命名";
+            this.btnRename.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnRename.UseVisualStyleBackColor = true;
+            this.btnRename.Click += new System.EventHandler(this.btnAddCallout_Click);
+            // 
+            // btnSketchContour
+            // 
+            this.btnSketchContour.Location = new System.Drawing.Point(802, 438);
+            this.btnSketchContour.Name = "btnSketchContour";
+            this.btnSketchContour.Size = new System.Drawing.Size(142, 27);
+            this.btnSketchContour.TabIndex = 77;
+            this.btnSketchContour.Text = "86.草图轮廓/形状";
+            this.btnSketchContour.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSketchContour.UseVisualStyleBackColor = true;
+            this.btnSketchContour.Click += new System.EventHandler(this.btnAddCallout_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 623);
+            this.Controls.Add(this.btnSketchContour);
+            this.Controls.Add(this.btnRename);
+            this.Controls.Add(this.btnAddCallout);
+            this.Controls.Add(this.btnImportDwg);
             this.Controls.Add(this.btnSimStudy);
             this.Controls.Add(this.btnReplaceModelForView);
             this.Controls.Add(this.btnOLEObject);
@@ -1296,6 +1348,10 @@
         private System.Windows.Forms.Button btnOLEObject;
         private System.Windows.Forms.Button btnReplaceModelForView;
         private System.Windows.Forms.Button btnSimStudy;
+        private System.Windows.Forms.Button btnImportDwg;
+        private System.Windows.Forms.Button btnAddCallout;
+        private System.Windows.Forms.Button btnRename;
+        private System.Windows.Forms.Button btnSketchContour;
     }
 }
 

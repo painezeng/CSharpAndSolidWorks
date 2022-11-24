@@ -21,6 +21,8 @@ using SolidWorks.Interop.swdimxpert;
 using GeometRi;
 using SolidWorks.Interop.cosworks;
 using System.Reflection;
+using System.Xml.Linq;
+using SolidWorks.Interop.swpublished;
 
 namespace CSharpAndSolidWorks
 {
@@ -4964,6 +4966,135 @@ namespace CSharpAndSolidWorks
             MessageBox.Show("'*** " + Message);
             MessageBox.Show("");
         }
+
+        private void btnImportDwg_Click(object sender, EventArgs e)
+        {
+            var swApp = PStandAlone.GetSolidWorks();
+
+            string partDefaultTemplate = swApp.GetDocumentTemplate((int)swDocumentTypes_e.swDocPART, "", 0, 0, 0);
+            
+            var newDoc = swApp.NewDocument(partDefaultTemplate, 0, 0, 0);
+                        
+            var swModel = (ModelDoc2)swApp.ActiveDoc;              
+
+
+            bool boolstatus = swModel.Extension.SelectByID2("前视基准面", "PLANE", 0, 0, 0, false, 0, null, 0);
+
+            var dwgPath = @"D:\xxxxx.DWG";
+
+            ImportDxfDwgData importData = default(ImportDxfDwgData);
+
+            importData = (ImportDxfDwgData)swApp.GetImportFileData(dwgPath);
+
+            importData.set_LengthUnit("", (int)swLengthUnit_e.swMM);
+
+            //Position
+            var bRet = importData.SetPosition("", (int)swDwgImportEntitiesPositioning_e.swDwgEntitiesCentered, 0, 0);
+
+            //Sheet scale
+            //bRet = importData.SetSheetScale("", 1.0, 2.0);
+
+            //Paper size
+            bRet = importData.SetPaperSize("", (int)swDwgPaperSizes_e.swDwgPaperAsize, 0.0, 0.0);
+
+            //Import method
+            importData.set_ImportMethod("", (int)swImportDxfDwg_ImportMethod_e.swImportDxfDwg_ImportToExistingPart);
+
+
+            importData.SetMergePoints("", true, 0.001);
+
+            importData.SetImportLayerVisibility(null, (int)swImportDxfDwg_LayerVisibility_e.swImportDxfDwg_LayerMaintain);
+   
+            var LayFea01 = swModel.FeatureManager.InsertDwgOrDxfFile2(dwgPath, importData);
+
+
+        }
+
+    
+        private void btnAddCallout_Click(object sender, EventArgs e)
+        {
+            var swApp = PStandAlone.GetSolidWorks();
+           
+
+            ModelDoc2 swModel;
+            ModelDocExtension swExt;
+            SelectionMgr swSelMgr;
+            MathUtility mathUtil;
+
+            swModel = (ModelDoc2)swApp.ActiveDoc;
+            swExt = swModel.Extension;
+            swSelMgr = (SelectionMgr)swModel.SelectionManager;
+            mathUtil = (MathUtility)swApp.GetMathUtility();
+            calloutHandler handle = new calloutHandler();
+            MathPoint mp;
+            double[] vPnt = new double[3];
+            vPnt[0] = 0.0;
+            vPnt[1] = 0.0;
+            vPnt[2] = 0.0;
+            mp = (MathPoint)mathUtil.CreatePoint(vPnt);
+            Callout myCallout;
+            myCallout = swExt.CreateCallout(2, handle);
+            myCallout.set_Value(1, "");
+            myCallout.set_IgnoreValue(1, true);
+            myCallout.set_Label2(1, "SldWorks API");
+            myCallout.SkipColon = false;
+            myCallout.TextColor[0] = 200;
+            myCallout.OpaqueColor = 6;
+
+            myCallout.SetLeader(true, true);
+            myCallout.SetTargetPoint(1, 0.001, 0.001, 0);
+            myCallout.SetTargetPoint(2, -0.001, 0.001, 0);
+            myCallout.Position = mp;
+            myCallout.set_ValueInactive(0, true);
+            myCallout.TextBox = false;
+            myCallout.Display(true);
+
+            TextFormat swTextFormat = myCallout.TextFormat;
+            ProcessTextFormat(swApp, swModel, swTextFormat);
+
+
+
+        }
+        public void ProcessTextFormat(SldWorks swApp, ModelDoc2 swModel, TextFormat swTextFormat)
+        {
+
+            Debug.Print("    BackWards                    = " + swTextFormat.BackWards);
+            Debug.Print("    Bold                         = " + swTextFormat.Bold);
+            Debug.Print("    CharHeight                   = " + swTextFormat.CharHeight);
+            Debug.Print("    CharHeightInPts              = " + swTextFormat.CharHeightInPts);
+            Debug.Print("    CharSpacingFactor            = " + swTextFormat.CharSpacingFactor);
+            Debug.Print("    Escapement                   = " + swTextFormat.Escapement);
+            Debug.Print("    IsHeightSpecifiedInPts       = " + swTextFormat.IsHeightSpecifiedInPts());
+            Debug.Print("    Italic                       = " + swTextFormat.Italic);
+            Debug.Print("    LineLength                   = " + swTextFormat.LineLength);
+            Debug.Print("    LineSpacing                  = " + swTextFormat.LineSpacing);
+            Debug.Print("    ObliqueAngle                 = " + swTextFormat.ObliqueAngle);
+            Debug.Print("    Strikeout                    = " + swTextFormat.Strikeout);
+            Debug.Print("    TypeFaceName                 = " + swTextFormat.TypeFaceName);
+            Debug.Print("    Underline                    = " + swTextFormat.Underline);
+            Debug.Print("    UpsideDown                   = " + swTextFormat.UpsideDown);
+            Debug.Print("    Vertical                     = " + swTextFormat.Vertical);
+            Debug.Print("    WidthFactor                  = " + swTextFormat.WidthFactor);
+
+            Debug.Print("");
+
+        }
+
+
+    }
+
+
+    [System.Runtime.InteropServices.ComVisible(true)]
+    public class calloutHandler : SwCalloutHandler
+    {
+        #region ISwCalloutHandler Members
+        bool ISwCalloutHandler.OnStringValueChanged(object pManipulator, int RowID, string Text)
+        {
+            Debug.Print("Text: " + Text);
+            Debug.Print("Row: " + RowID.ToString());
+            return true;
+        }
+        #endregion
     }
 
     public class PictureDispConverter : System.Windows.Forms.AxHost

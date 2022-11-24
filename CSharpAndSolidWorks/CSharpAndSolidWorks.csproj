@@ -86,6 +86,11 @@
       <EmbedInteropTypes>False</EmbedInteropTypes>
       <HintPath>..\dll\SolidWorks.Interop.swdocumentmgr.dll</HintPath>
     </Reference>
+    <Reference Include="SolidWorks.Interop.swpublished, Version=26.4.0.75, Culture=neutral, PublicKeyToken=89a97bdc5284e6d8, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\dll\SolidWorks.Interop.swpublished.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
