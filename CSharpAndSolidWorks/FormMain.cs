@@ -4871,30 +4871,25 @@ namespace CSharpAndSolidWorks
             var start = actPath.Substring(0,actPath.IndexOf("CSharpAndSolidWorks",0));
                     
 
-            var partPath = $@"{start}CSharpAndSolidWorks\CSharpAndSolidWorks\TemplateModel\ShuangLiangDuanLiang.SLDPRT";
+            var partPath = $@"{start}CSharpAndSolidWorks\CSharpAndSolidWorks\TemplateModel\Simulation API Demo.SLDPRT";
 
             SldWorks swApp = PStandAlone.GetSolidWorks();
 
-            ModelDoc2 swModel = default(ModelDoc2);
+        
             CWModelDoc swsActDoc = default(CWModelDoc);
             CWStudyManager swsStudyMngr = default(CWStudyManager);
             CWStudy swsStudy = default(CWStudy);
             CWLoadsAndRestraintsManager swsLBCMgr = default(CWLoadsAndRestraintsManager);
-            CWForce swsCWForce = default(CWForce);
-            object selBeam = null;
-            object selFace = null;
-
-            int rowNum = 0;
+            CWForce swsCWForce = default(CWForce); 
 
             int errors = 0;
             int warnings = 0;
-            int errCode = 0;
-            string forceType = null;
+       
 
             string fileName = partPath;
 
-            // Open document
-            swModel = (ModelDoc2)swApp.OpenDoc6(fileName, (int)swDocumentTypes_e.swDocPART, (int)swOpenDocOptions_e.swOpenDocOptions_Silent, "", ref errors, ref warnings);
+            // 打开模型
+            var swModel = (ModelDoc2)swApp.OpenDoc6(fileName, (int)swDocumentTypes_e.swDocPART, (int)swOpenDocOptions_e.swOpenDocOptions_Silent, "", ref errors, ref warnings);
 
             // Get the SOLIDWORKS Simulation object
             dynamic COSMOSWORKS = default(dynamic);
@@ -4921,26 +4916,32 @@ namespace CSharpAndSolidWorks
             // Create new static study
             swsStudyMngr = (CWStudyManager)swsActDoc.StudyManager;
             if (swsStudyMngr == null) ErrorMsg(swApp, "No CWStudyManager object");
+
+            //得到第一个算例对象
             swsStudy = (CWStudy)swsStudyMngr.GetStudy(0);
+
+            //算例名称，可以区分多个算例   swsStudy.Name
+
+
 
             if (swsStudy == null) ErrorMsg(swApp, "No CWStudy object");
 
             swsLBCMgr = (CWLoadsAndRestraintsManager)swsStudy.LoadsAndRestraintsManager;
 
             //get the Force Feature
-            var sCwForce = swsLBCMgr.GetLoadsAndRestraints(4, out int errcode);
+            //这是是第一个条件，所以参数写0
+            var sCwForce = swsLBCMgr.GetLoadsAndRestraints(0, out int errcode);
 
             if (sCwForce != null)
             {
                 var swForce = (CWForce)sCwForce;
-
-                swForce.GetForceComponentValues(out int b1, out int b2, out int b3, out double d1, out double d2, out double d3);
-
+            
                 swForce.ForceBeginEdit();
 
-                //change the value new 
-                swForce.SetForceComponentValues(b1, b2, b3, d1, d2, -2000);
+                
 
+                //修改值为150
+                swForce.NormalForceOrTorqueValue = 150;  
                 var res = swForce.ForceEndEdit();
 
             }
@@ -4952,7 +4953,7 @@ namespace CSharpAndSolidWorks
 
             CwMesh.Quality = 1;
             CwMesh.GetDefaultElementSizeAndTolerance(0, out double el, out double tl);
-            errCode = swsStudy.CreateMesh(0, el, tl);
+            var errCode = swsStudy.CreateMesh(0, el, tl);
             if (errCode != 0) ErrorMsg(swApp, "Mesh failed");
 
             //Run
