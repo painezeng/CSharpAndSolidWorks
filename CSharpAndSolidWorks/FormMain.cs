@@ -4975,38 +4975,65 @@ namespace CSharpAndSolidWorks
             
             var newDoc = swApp.NewDocument(partDefaultTemplate, 0, 0, 0);
                         
-            var swModel = (ModelDoc2)swApp.ActiveDoc;              
+            var swModel = (ModelDoc2)swApp.ActiveDoc;
 
+            var actPath = RegDllPath("");
+
+            var start = actPath.Substring(0, actPath.IndexOf("CSharpAndSolidWorks", 0));        
+
+            var dwgPath = $@"{start}CSharpAndSolidWorks\CSharpAndSolidWorks\TemplateModel\ImportDWG.dwg";
 
             bool boolstatus = swModel.Extension.SelectByID2("前视基准面", "PLANE", 0, 0, 0, false, 0, null, 0);
+            if (!boolstatus)
+            {
+                 boolstatus = swModel.Extension.SelectByID2("Front Plane", "PLANE", 0, 0, 0, false, 0, null, 0);
 
-            var dwgPath = @"D:\xxxxx.DWG";
+                if (!boolstatus)
+                {
+                    boolstatus = swModel.Extension.SelectByID2("Front", "PLANE", 0, 0, 0, false, 0, null, 0);
+
+                    if (!boolstatus)
+                    {
+                        boolstatus = swModel.Extension.SelectByID2("Plane1", "PLANE", 0, 0, 0, false, 0, null, 0);
+
+                        if (!boolstatus)
+                        {
+                            MessageBox.Show("请选中一个基准面，再点确定。");
+
+                        }           
+                        
+                    }
+                }
+            }
+         
+                       
 
             ImportDxfDwgData importData = default(ImportDxfDwgData);
 
             importData = (ImportDxfDwgData)swApp.GetImportFileData(dwgPath);
 
             importData.set_LengthUnit("", (int)swLengthUnit_e.swMM);
-
-            //Position
+                       
             var bRet = importData.SetPosition("", (int)swDwgImportEntitiesPositioning_e.swDwgEntitiesCentered, 0, 0);
-
-            //Sheet scale
-            //bRet = importData.SetSheetScale("", 1.0, 2.0);
-
-            //Paper size
-            bRet = importData.SetPaperSize("", (int)swDwgPaperSizes_e.swDwgPaperAsize, 0.0, 0.0);
-
-            //Import method
+               
             importData.set_ImportMethod("", (int)swImportDxfDwg_ImportMethod_e.swImportDxfDwg_ImportToExistingPart);
-
 
             importData.SetMergePoints("", true, 0.001);
 
-            importData.SetImportLayerVisibility(null, (int)swImportDxfDwg_LayerVisibility_e.swImportDxfDwg_LayerMaintain);
-   
+            importData.SetImportLayerVisibility(null, (int)swImportDxfDwg_LayerVisibility_e.swImportDxfDwg_LayerHidden);
+
+            var listLayerNames = new List<string>() { "2" };
+            var tempArray = listLayerNames.ToArray();
+            object layers = tempArray;
+            importData.SetImportLayerVisibility(layers, (int)swImportDxfDwg_LayerVisibility_e.swImportDxfDwg_LayerVisible);
+               
             var LayFea01 = swModel.FeatureManager.InsertDwgOrDxfFile2(dwgPath, importData);
 
+            if (LayFea01!=null)
+            {
+                LayFea01.Name = "导入的图层2";
+            }
+   
 
         }
 
@@ -5014,6 +5041,8 @@ namespace CSharpAndSolidWorks
         private void btnAddCallout_Click(object sender, EventArgs e)
         {
             var swApp = PStandAlone.GetSolidWorks();
+
+            var colortable = (ColorTable)swApp.GetColorTable();
            
 
             ModelDoc2 swModel;
@@ -5024,6 +5053,9 @@ namespace CSharpAndSolidWorks
             swModel = (ModelDoc2)swApp.ActiveDoc;
             swExt = swModel.Extension;
             swSelMgr = (SelectionMgr)swModel.SelectionManager;
+
+            var mousePoint = (double[])swSelMgr.GetSelectionPoint2(1, -1);
+
             mathUtil = (MathUtility)swApp.GetMathUtility();
             calloutHandler handle = new calloutHandler();
             MathPoint mp;
@@ -5031,19 +5063,19 @@ namespace CSharpAndSolidWorks
             vPnt[0] = 0.0;
             vPnt[1] = 0.0;
             vPnt[2] = 0.0;
-            mp = (MathPoint)mathUtil.CreatePoint(vPnt);
+            mp = (MathPoint)mathUtil.CreatePoint(mousePoint);
             Callout myCallout;
             myCallout = swExt.CreateCallout(2, handle);
-            myCallout.set_Value(1, "");
+            myCallout.set_Value(1, "-");
             myCallout.set_IgnoreValue(1, true);
             myCallout.set_Label2(1, "SldWorks API");
-            myCallout.SkipColon = false;
-            myCallout.TextColor[0] = 200;
-            myCallout.OpaqueColor = 6;
+            //myCallout.SkipColon = true;
+            //myCallout.TextColor[0] = t.GetColorRefAtIndex(0);
+            //myCallout.OpaqueColor = t.GetColorRefAtIndex(1);
 
-            myCallout.SetLeader(true, true);
-            myCallout.SetTargetPoint(1, 0.001, 0.001, 0);
-            myCallout.SetTargetPoint(2, -0.001, 0.001, 0);
+            myCallout.SetLeader(true, false);
+            myCallout.SetTargetPoint(0, mousePoint[0], mousePoint[1], mousePoint[2]);
+            //myCallout.SetTargetPoint(2, -0.001, 0.001, 0);
             myCallout.Position = mp;
             myCallout.set_ValueInactive(0, true);
             myCallout.TextBox = false;
