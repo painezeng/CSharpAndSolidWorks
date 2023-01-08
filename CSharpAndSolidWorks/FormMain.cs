@@ -5113,7 +5113,36 @@ namespace CSharpAndSolidWorks
 
         }
 
+        private void btnRename_Click(object sender, EventArgs e)
+        {
 
+            var swApp = PStandAlone.GetSolidWorks();
+
+            var currentLang= swApp.GetCurrentLanguage();
+
+            var swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            var boolstatus = swModel.Extension.SelectByID2("bodies-零件2-1@bodies", "COMPONENT", 0, 0, 0, false, 0, null, 0);
+
+            var longstatus = swModel.Extension.RenameDocument("bodies-零件2-newName");
+
+            if (longstatus==0)
+            {
+                swApp.SendMsgToUser("已经重命名！保存后生效。");
+             }
+            else
+            {
+                swApp.SendMsgToUser("失败了！");
+            }
+
+
+
+        }
+
+        private void btnSketchContour_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 
 
