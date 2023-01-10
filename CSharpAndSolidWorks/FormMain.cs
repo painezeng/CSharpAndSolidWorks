@@ -5115,7 +5115,7 @@ namespace CSharpAndSolidWorks
 
         private void btnRename_Click(object sender, EventArgs e)
         {
-
+            //这个要先打开 bodies.sldasm
             var swApp = PStandAlone.GetSolidWorks();
 
             var currentLang= swApp.GetCurrentLanguage();
@@ -5139,10 +5139,198 @@ namespace CSharpAndSolidWorks
 
         }
 
-        private void btnSketchContour_Click(object sender, EventArgs e)
+  
+        private void btnOrdinateDimension_Click(object sender, EventArgs e)
         {
 
+            //请先打开HolePlate-2.slddrw文件
+
+            var swApp = PStandAlone.GetSolidWorks();
+
+            var swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            var swDrawing = (DrawingDoc)swModel;
+
+            //这里改成工程图中的视图名称
+
+            swDrawing.ActivateView("Drawing View1");
+
+
+
+            #region 遍历并删除
+            //得到视图对象
+            var swView = (View)swDrawing.ActiveDrawingView;
+
+
+            //找最小点
+            var baseOrigin = FindOriginVertex(swApp, swView);
+
+            var circleEdges = AddCenterPointForCircle(swApp, swView);
+
+            //视图的外围位置 
+
+            var viewLoc = (double[])swView.GetOutline();
+
+
+            (baseOrigin as Entity).Select(false);
+
+            // 这里还有个坐标相同的处理可以优化。
+
+            foreach (var item in circleEdges)
+            {
+                (item as Entity).Select(true);
+
+            }
+
+
+            swDrawing.AddOrdinateDimension2((int)swAddOrdinateDims_e.swHorizontalOrdinate, 0, viewLoc[1] - 0.01, 0);
+
+
+            (baseOrigin as Entity).Select(false);
+
+            foreach (var item in circleEdges)
+            {
+                (item as Entity).Select(true);
+
+            }
+
+            swDrawing.AddOrdinateDimension2((int)swAddOrdinateDims_e.swVerticalOrdinate, viewLoc[0] - 0.01, 0, 0);
+
+            #endregion
+
+
+
+
+            MessageBox.Show("操作完成");
+
+
+
         }
+
+        public Vertex FindOriginVertex(SldWorks swApp, View view)
+        {
+            Vertex resVertex = null;
+
+            var vComps = (object[])view.GetVisibleComponents();
+
+            foreach (var Comp in vComps)
+            {
+                var swComp = (Component2)Comp;
+                //所以可见点
+                var visbaleEnts = (object[])view.GetVisibleEntities2(swComp, (int)swViewEntityType_e.swViewEntityType_Vertex);
+
+                for (int i = 0; i < visbaleEnts.Count(); i++)
+                {
+                    var swVertex = (Vertex)visbaleEnts[i];
+                    (swVertex as Entity).Select(false);
+                    if (resVertex == null)
+                    {
+                        resVertex = swVertex;
+
+                    }
+                    else
+                    {
+                        var vCurOrigCoord = GetVertexCoordinate(swApp, resVertex, view.ModelToViewTransform);
+                        var vCoord = GetVertexCoordinate(swApp, swVertex, view.ModelToViewTransform);
+
+                        if (vCoord[0] < vCurOrigCoord[0] && vCoord[1] < vCurOrigCoord[1])
+                        {
+
+                            resVertex = swVertex;
+                        }
+
+
+
+                    }
+
+
+                }
+
+
+
+            }
+
+            return resVertex;
+
+        }
+
+        public List<Edge> AddCenterPointForCircle(SldWorks swApp, View view)
+        {
+            List<Edge> res = new List<Edge>();
+
+
+
+            var vComps = (object[])view.GetVisibleComponents();
+
+            foreach (var Comp in vComps)
+            {
+                var swComp = (Component2)Comp;
+                //所有可见面
+                var visbaleEnts = (object[])view.GetVisibleEntities2(swComp, (int)swViewEntityType_e.swViewEntityType_Face);
+
+                for (int i = 0; i < visbaleEnts.Count(); i++)
+                {
+                    var swFace = (Face2)visbaleEnts[i];
+
+                    var swThisLoop = (Loop2)swFace.GetFirstLoop();
+                    while ((swThisLoop != null))
+                    {
+                        // Hole is inner loop
+                        // Circular or elliptical hole has only one edge
+                        bool bCount;
+                        var bRet = swThisLoop.IsOuter();  //外环
+                        var count = swThisLoop.GetEdgeCount(); //边数
+                        if (count != 1 && count != 4)
+                        {
+                            bCount = false;
+                        }
+                        else
+                        {
+                            var edges = (object[])swThisLoop.GetEdges();
+
+                            foreach (var e in edges)
+                            {
+                                var tempEdge = e as Edge;
+
+                                if (tempEdge.IGetCurve().IsCircle())
+                                {
+                                    res.Add(tempEdge);
+                                }
+                            }
+
+                            bCount = true;
+                        }
+
+
+                        // Move on to the next
+                        swThisLoop = (Loop2)swThisLoop.GetNext();
+                    }
+
+
+
+
+                }
+
+
+
+            }
+
+
+            return res;
+
+        }
+
+
+
+        private double[] GetVertexCoordinate(SldWorks swApp, Vertex resVertex, MathTransform swViewTransform)
+        {
+            var vCoorPt = resVertex.GetPoint();
+            var swMathPt = (MathPoint)swApp.IGetMathUtility().CreatePoint(vCoorPt);
+            swMathPt = (MathPoint)swMathPt.MultiplyTransform(swViewTransform);
+            return (double[])swMathPt.ArrayData;
+        }
+
+
     }
 
 
