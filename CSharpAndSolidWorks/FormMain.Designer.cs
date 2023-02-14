@@ -123,6 +123,7 @@
             this.btnRename = new System.Windows.Forms.Button();
             this.btnSketchContour = new System.Windows.Forms.Button();
             this.btnAddLineDims = new System.Windows.Forms.Button();
+            this.btnCommandManagerTab = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -1152,7 +1153,8 @@
             this.btnSketchContour.TabIndex = 77;
             this.btnSketchContour.Text = "86.草图轮廓/形状";
             this.btnSketchContour.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSketchContour.UseVisualStyleBackColor = true;          
+            this.btnSketchContour.UseVisualStyleBackColor = true;
+            this.btnSketchContour.Click += new System.EventHandler(this.btnSketchContour_Click);
             // 
             // btnAddLineDims
             // 
@@ -1165,11 +1167,23 @@
             this.btnAddLineDims.UseVisualStyleBackColor = true;
             this.btnAddLineDims.Click += new System.EventHandler(this.btnOrdinateDimension_Click);
             // 
+            // btnCommandManagerTab
+            // 
+            this.btnCommandManagerTab.Location = new System.Drawing.Point(802, 552);
+            this.btnCommandManagerTab.Name = "btnCommandManagerTab";
+            this.btnCommandManagerTab.Size = new System.Drawing.Size(142, 29);
+            this.btnCommandManagerTab.TabIndex = 78;
+            this.btnCommandManagerTab.Text = "88. 切换命令组";
+            this.btnCommandManagerTab.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCommandManagerTab.UseVisualStyleBackColor = true;
+            this.btnCommandManagerTab.Click += new System.EventHandler(this.btnCommandManagerTab_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 675);
+            this.Controls.Add(this.btnCommandManagerTab);
             this.Controls.Add(this.btnAddLineDims);
             this.Controls.Add(this.btnSketchContour);
             this.Controls.Add(this.btnRename);
@@ -1365,6 +1379,7 @@
         private System.Windows.Forms.Button btnRename;
         private System.Windows.Forms.Button btnSketchContour;
         private System.Windows.Forms.Button btnAddLineDims;
+        private System.Windows.Forms.Button btnCommandManagerTab;
     }
 }
 

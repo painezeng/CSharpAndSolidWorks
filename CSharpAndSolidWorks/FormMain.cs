@@ -5330,7 +5330,37 @@ namespace CSharpAndSolidWorks
             return (double[])swMathPt.ArrayData;
         }
 
+        private void btnSketchContour_Click(object sender, EventArgs e)
+        {
 
+        }
+
+        private void btnCommandManagerTab_Click(object sender, EventArgs e)
+        {
+            var swApp = PStandAlone.GetSolidWorks();
+            var swModelDoc = (ModelDoc2)swApp.ActiveDoc;
+            var swModelDocExt = swModelDoc.Extension;
+
+            //获取所有标签页
+            var  cmdTabs = swModelDocExt.GetCommandTabs();      
+            var activeTab = swModelDocExt.ActiveCommandTab;
+            Debug.Print("当前标签是" + activeTab);
+            var activeTabIndex = swModelDocExt.ActiveCommandTabIndex;
+            Debug.Print("当前标签页序号是 " + activeTabIndex);
+         
+            var retval = swModelDocExt.get_CommandTabVisible(5);
+            Debug.Print("序号为5的标签页是否显示  " + retval);
+
+            //设置Sketch（草图）为当前标签页
+            swModelDocExt.ActiveCommandTab = "Sketch";
+            activeTabIndex = swModelDocExt.ActiveCommandTabIndex;
+            //让标签序号为5的激活可见
+            swModelDocExt.set_CommandTabVisible(5, true);
+
+
+
+
+        }
     }
 
 
