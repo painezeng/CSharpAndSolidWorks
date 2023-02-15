@@ -5361,6 +5361,37 @@ namespace CSharpAndSolidWorks
 
 
         }
+
+        private void btnUndoOrRedo_Click(object sender, EventArgs e)
+        {
+
+            var swApp = PStandAlone.GetSolidWorks();
+            var swModelDoc = (ModelDoc2)swApp.ActiveDoc;
+            var swModelDocExt = swModelDoc.Extension;
+
+
+            //开始记录可以退回的步骤
+            swModelDocExt.StartRecordingUndoObject();      
+
+            Dimension dimension = (Dimension)swModelDoc.Parameter("D1@Extrude2");
+            dimension.SetValue3(0.21, 1,null) ; 
+          
+            dimension = (Dimension)swModelDoc.Parameter("D4@Sketch1");
+            dimension.SetValue3(0.56, 1, null);   
+            
+            swModelDoc.EditRebuild3();
+
+            //记录结束 ，是否显示在退回列表中。
+            swModelDocExt.FinishRecordingUndoObject2("修改长和宽", false);
+
+            //撤销
+            swModelDoc.EditUndo2(1);
+
+            //重新执行
+            swModelDoc.EditRedo2(1);
+
+
+        }
     }
 
 

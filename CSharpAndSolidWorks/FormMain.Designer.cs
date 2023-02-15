@@ -124,6 +124,7 @@
             this.btnSketchContour = new System.Windows.Forms.Button();
             this.btnAddLineDims = new System.Windows.Forms.Button();
             this.btnCommandManagerTab = new System.Windows.Forms.Button();
+            this.btnUndoOrRedo = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -1178,11 +1179,23 @@
             this.btnCommandManagerTab.UseVisualStyleBackColor = true;
             this.btnCommandManagerTab.Click += new System.EventHandler(this.btnCommandManagerTab_Click);
             // 
+            // btnUndoOrRedo
+            // 
+            this.btnUndoOrRedo.Location = new System.Drawing.Point(802, 592);
+            this.btnUndoOrRedo.Name = "btnUndoOrRedo";
+            this.btnUndoOrRedo.Size = new System.Drawing.Size(142, 29);
+            this.btnUndoOrRedo.TabIndex = 79;
+            this.btnUndoOrRedo.Text = "89.撤销与重做";
+            this.btnUndoOrRedo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnUndoOrRedo.UseVisualStyleBackColor = true;
+            this.btnUndoOrRedo.Click += new System.EventHandler(this.btnUndoOrRedo_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 675);
+            this.Controls.Add(this.btnUndoOrRedo);
             this.Controls.Add(this.btnCommandManagerTab);
             this.Controls.Add(this.btnAddLineDims);
             this.Controls.Add(this.btnSketchContour);
@@ -1380,6 +1393,7 @@
         private System.Windows.Forms.Button btnSketchContour;
         private System.Windows.Forms.Button btnAddLineDims;
         private System.Windows.Forms.Button btnCommandManagerTab;
+        private System.Windows.Forms.Button btnUndoOrRedo;
     }
 }
 
