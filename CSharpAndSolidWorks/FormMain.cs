@@ -5392,6 +5392,33 @@ namespace CSharpAndSolidWorks
 
 
         }
+
+        /// <summary>
+        /// 修改表格的图层
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnChangeLayer_Click(object sender, EventArgs e)
+        {
+            //这里需要自己打开一个工程图。 并存在名称为Red的图层 (代码新建在之前的章节里有写)
+
+            var swApp = PStandAlone.GetSolidWorks();
+            var swModelDoc = (ModelDoc2)swApp.ActiveDoc;
+
+            DrawingDoc drawingDoc = (DrawingDoc)swModelDoc;
+            Sheet drwSheet = (Sheet)drawingDoc.GetCurrentSheet();
+
+            var myRevisionTable = drwSheet.InsertRevisionTable2(true, 0, 0, (int)swBOMConfigurationAnchorType_e.swBOMConfigurationAnchor_TopLeft, @"C:\Program Files\SOLIDWORKS Corp\SOLIDWORKS\lang\English\standard revision block.sldrevtbt", (int)swRevisionTableSymbolShape_e.swRevisionTable_CircleSymbol, true);
+
+            var tableAnn = (TableAnnotation)myRevisionTable;
+
+            var Ann = tableAnn.GetAnnotation();
+
+            Ann.Layer = "Red";
+
+
+
+        }
     }
 
 

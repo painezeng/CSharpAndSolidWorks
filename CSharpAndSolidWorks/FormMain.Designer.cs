@@ -125,6 +125,7 @@
             this.btnAddLineDims = new System.Windows.Forms.Button();
             this.btnCommandManagerTab = new System.Windows.Forms.Button();
             this.btnUndoOrRedo = new System.Windows.Forms.Button();
+            this.btnChangeLayer = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -1190,11 +1191,23 @@
             this.btnUndoOrRedo.UseVisualStyleBackColor = true;
             this.btnUndoOrRedo.Click += new System.EventHandler(this.btnUndoOrRedo_Click);
             // 
+            // btnChangeLayer
+            // 
+            this.btnChangeLayer.Location = new System.Drawing.Point(802, 629);
+            this.btnChangeLayer.Name = "btnChangeLayer";
+            this.btnChangeLayer.Size = new System.Drawing.Size(142, 29);
+            this.btnChangeLayer.TabIndex = 79;
+            this.btnChangeLayer.Text = "90.修改表格对象图层";
+            this.btnChangeLayer.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnChangeLayer.UseVisualStyleBackColor = true;
+            this.btnChangeLayer.Click += new System.EventHandler(this.btnChangeLayer_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 675);
+            this.Controls.Add(this.btnChangeLayer);
             this.Controls.Add(this.btnUndoOrRedo);
             this.Controls.Add(this.btnCommandManagerTab);
             this.Controls.Add(this.btnAddLineDims);
@@ -1394,6 +1407,7 @@
         private System.Windows.Forms.Button btnAddLineDims;
         private System.Windows.Forms.Button btnCommandManagerTab;
         private System.Windows.Forms.Button btnUndoOrRedo;
+        private System.Windows.Forms.Button btnChangeLayer;
     }
 }
 
