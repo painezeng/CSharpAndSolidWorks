@@ -941,7 +941,7 @@
             // 
             // btnCreate3thSTDView
             // 
-            this.btnCreate3thSTDView.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.btnCreate3thSTDView.BackColor = System.Drawing.SystemColors.Control;
             this.btnCreate3thSTDView.Location = new System.Drawing.Point(961, 278);
             this.btnCreate3thSTDView.Name = "btnCreate3thSTDView";
             this.btnCreate3thSTDView.Size = new System.Drawing.Size(133, 29);

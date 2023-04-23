@@ -23,6 +23,7 @@ using SolidWorks.Interop.cosworks;
 using System.Reflection;
 using System.Xml.Linq;
 using SolidWorks.Interop.swpublished;
+using static System.Net.WebRequestMethods;
 
 namespace CSharpAndSolidWorks
 {
@@ -4111,6 +4112,45 @@ namespace CSharpAndSolidWorks
 
         private void btnCreate3thSTDView_Click(object sender, EventArgs e)
         {
+            SldWorks swApp = Utility.ConnectToSolidWorks();
+
+            string dotPath = @"D:\09_Study\CSharpAndSolidWorks\CSharpAndSolidWorks\TemplateModel\Drawing.drwdot";
+
+            //用我们的模板新建一个工程图
+            var Part = swApp.NewDocument(dotPath, 12, 0, 0);
+
+            ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;        
+        
+            DrawingDoc drawingDoc = (DrawingDoc)swModel;
+
+            string partPath = @"D:\09_Study\CSharpAndSolidWorks\CSharpAndSolidWorks\TemplateModel\bodies.sldasm";
+
+            //在右侧工程图窗体刷新所有视图
+            //drawingDoc.GenerateViewPaletteViews(partPath);
+
+            //给视图插入模型  参数指定视图方向  与坐标
+
+            var view1=  drawingDoc.CreateDrawViewFromModelView3(partPath, "*Front", 0.1, 0.1, 0);
+
+            var boolstatus = swModel.Extension.SelectByID2(view1.Name, "DRAWINGVIEW", 0, 0, 0, false, 0, null, 0);
+
+            //创建第一个关联视图
+            var view2 = drawingDoc.CreateUnfoldedViewAt3(0.25, 0.1, 0, false);
+
+             boolstatus = swModel.Extension.SelectByID2(view1.Name, "DRAWINGVIEW", 0, 0, 0, false, 0, null, 0);
+
+            //创建第二个关联视图
+            var view3 = drawingDoc.CreateUnfoldedViewAt3(0.1, 0.18, 0, false);
+
+            view1.ScaleDecimal = 0.25;
+
+
+            swModel.EditRebuild3();
+
+
+
+
+
         }
 
         private void btnAddRel_Click(object sender, EventArgs e)
