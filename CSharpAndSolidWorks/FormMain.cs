@@ -4112,6 +4112,8 @@ namespace CSharpAndSolidWorks
 
         private void btnCreate3thSTDView_Click(object sender, EventArgs e)
         {
+
+
             SldWorks swApp = Utility.ConnectToSolidWorks();
 
             string dotPath = @"D:\09_Study\CSharpAndSolidWorks\CSharpAndSolidWorks\TemplateModel\Drawing.drwdot";
@@ -4125,24 +4127,34 @@ namespace CSharpAndSolidWorks
 
             string partPath = @"D:\09_Study\CSharpAndSolidWorks\CSharpAndSolidWorks\TemplateModel\bodies.sldasm";
 
-            //在右侧工程图窗体刷新所有视图
-            //drawingDoc.GenerateViewPaletteViews(partPath);
+            #region 方案1
+
 
             //给视图插入模型  参数指定视图方向  与坐标
-
-            var view1=  drawingDoc.CreateDrawViewFromModelView3(partPath, "*Front", 0.1, 0.1, 0);
+            var view1 = drawingDoc.CreateDrawViewFromModelView3(partPath, "*Front", 0.1, 0.1, 0);
 
             var boolstatus = swModel.Extension.SelectByID2(view1.Name, "DRAWINGVIEW", 0, 0, 0, false, 0, null, 0);
 
             //创建第一个关联视图
             var view2 = drawingDoc.CreateUnfoldedViewAt3(0.25, 0.1, 0, false);
 
-             boolstatus = swModel.Extension.SelectByID2(view1.Name, "DRAWINGVIEW", 0, 0, 0, false, 0, null, 0);
+            boolstatus = swModel.Extension.SelectByID2(view1.Name, "DRAWINGVIEW", 0, 0, 0, false, 0, null, 0);
 
             //创建第二个关联视图
             var view3 = drawingDoc.CreateUnfoldedViewAt3(0.1, 0.18, 0, false);
 
+            //设定比例
             view1.ScaleDecimal = 0.25;
+
+            #endregion
+
+
+            #region 方案2
+            //虽然 能出来，但位置要再去重新设置。
+            //drawingDoc.Create3rdAngleViews2(partPath);
+
+            #endregion
+
 
 
             swModel.EditRebuild3();
