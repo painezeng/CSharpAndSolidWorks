@@ -5471,6 +5471,24 @@ namespace CSharpAndSolidWorks
 
 
         }
+
+        private void btnOpenedFiles_Click(object sender, EventArgs e)
+        {
+            //OpenDoc6 Method (ISldWorks)
+            var swApp = PStandAlone.GetSolidWorks();
+            var swModelDoc = (ModelDoc2)swApp.ActiveDoc;
+
+
+
+
+        }
+
+        private void btnGetDistance_Click(object sender, EventArgs e)
+        {
+            //This example shows how to get the minimum and maximum distances between face and edge entities.
+
+
+        }
     }
 
 

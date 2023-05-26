@@ -126,6 +126,8 @@
             this.btnCommandManagerTab = new System.Windows.Forms.Button();
             this.btnUndoOrRedo = new System.Windows.Forms.Button();
             this.btnChangeLayer = new System.Windows.Forms.Button();
+            this.btnOpenedFiles = new System.Windows.Forms.Button();
+            this.btnGetDistance = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -1202,6 +1204,28 @@
             this.btnChangeLayer.UseVisualStyleBackColor = true;
             this.btnChangeLayer.Click += new System.EventHandler(this.btnChangeLayer_Click);
             // 
+            // btnOpenedFiles
+            // 
+            this.btnOpenedFiles.Location = new System.Drawing.Point(961, 475);
+            this.btnOpenedFiles.Name = "btnOpenedFiles";
+            this.btnOpenedFiles.Size = new System.Drawing.Size(133, 29);
+            this.btnOpenedFiles.TabIndex = 77;
+            this.btnOpenedFiles.Text = "91.打开文件那些事";
+            this.btnOpenedFiles.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnOpenedFiles.UseVisualStyleBackColor = true;
+            this.btnOpenedFiles.Click += new System.EventHandler(this.btnOpenedFiles_Click);
+            // 
+            // btnGetDistance
+            // 
+            this.btnGetDistance.Location = new System.Drawing.Point(961, 514);
+            this.btnGetDistance.Name = "btnGetDistance";
+            this.btnGetDistance.Size = new System.Drawing.Size(133, 29);
+            this.btnGetDistance.TabIndex = 77;
+            this.btnGetDistance.Text = "92.获取距离";
+            this.btnGetDistance.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnGetDistance.UseVisualStyleBackColor = true;
+            this.btnGetDistance.Click += new System.EventHandler(this.btnGetDistance_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1211,6 +1235,8 @@
             this.Controls.Add(this.btnUndoOrRedo);
             this.Controls.Add(this.btnCommandManagerTab);
             this.Controls.Add(this.btnAddLineDims);
+            this.Controls.Add(this.btnGetDistance);
+            this.Controls.Add(this.btnOpenedFiles);
             this.Controls.Add(this.btnSketchContour);
             this.Controls.Add(this.btnRename);
             this.Controls.Add(this.btnAddCallout);
@@ -1408,6 +1434,8 @@
         private System.Windows.Forms.Button btnCommandManagerTab;
         private System.Windows.Forms.Button btnUndoOrRedo;
         private System.Windows.Forms.Button btnChangeLayer;
+        private System.Windows.Forms.Button btnOpenedFiles;
+        private System.Windows.Forms.Button btnGetDistance;
     }
 }
 
