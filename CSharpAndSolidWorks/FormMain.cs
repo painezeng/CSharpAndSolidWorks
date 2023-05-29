@@ -5476,8 +5476,20 @@ namespace CSharpAndSolidWorks
         {
             //OpenDoc6 Method (ISldWorks)
             var swApp = PStandAlone.GetSolidWorks();
-            var swModelDoc = (ModelDoc2)swApp.ActiveDoc;
 
+           // var swModelDoc = (ModelDoc2)swApp.ActiveDoc;
+
+            var partOpened = swApp.GetOpenDocumentByName(@"D:\09_Study\CSharpAndSolidWorks\CSharpAndSolidWorks\TemplateModel\clamp3.sldprt");
+
+
+            if (partOpened!=null)
+            {
+                MessageBox.Show("该文件已经被打开");
+            }
+            else
+            {
+                MessageBox.Show("该文件已经没有被打开。");
+            }
 
 
 
