@@ -5497,8 +5497,10 @@ namespace CSharpAndSolidWorks
 
         private void btnGetDistance_Click(object sender, EventArgs e)
         {
+            //Solidworks 2018测试下来不太好用。
             //This example shows how to get the minimum and maximum distances between face and edge entities.
             //打开一个零件，选中2个面。
+
             SldWorks swApp = Utility.ConnectToSolidWorks();
 
             ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
