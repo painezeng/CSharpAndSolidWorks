@@ -5498,6 +5498,52 @@ namespace CSharpAndSolidWorks
         private void btnGetDistance_Click(object sender, EventArgs e)
         {
             //This example shows how to get the minimum and maximum distances between face and edge entities.
+            //打开一个零件，选中2个面。
+            SldWorks swApp = Utility.ConnectToSolidWorks();
+
+            ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            SelectionMgr selectionMgr = (SelectionMgr)swModel.SelectionManager;
+            bool bMin;
+            long retval;
+            double dist;
+            double[] varParam=null;
+            object varPos1;
+            object varPos2;
+            double[] Pos1 = new double[3];
+            double[] Pos2 = new double[3];
+            if (selectionMgr.GetSelectedObjectCount()==2)
+            {
+                var swTop1 = (Entity)selectionMgr.GetSelectedObject6(1, -1);
+                var swTop2 = (Entity)selectionMgr.GetSelectedObject6(2, -1);
+                 bMin = true;
+                 retval = swTop1.GetDistance(swTop2, bMin, varParam, out varPos1, out varPos2, out dist);
+                 Pos1 = (double[])varPos1;
+                 Pos2 = (double[])varPos2;
+                Debug.Print("IEquity::GetDistance return value (0 = success; -1 = failure) : " + retval);
+                Debug.Print("Face1 coordinate: " + Pos1[0] + "," + Pos1[1] + "," + Pos1[2]);
+                Debug.Print("Face2 coordinate: " + Pos2[0] + "," + Pos2[1] + "," + Pos2[2]);
+                Debug.Print("Minimum distance between two faces = " + dist * 1000 + " mm");
+                Debug.Print("");
+                 Pos1 = new double[3];
+                 Pos2 = new double[3];
+                bMin = false;
+                retval = swTop1.GetDistance(swTop2, bMin, varParam, out varPos1, out varPos2, out dist);
+                Pos1 = (double[])varPos1;
+                Pos2 = (double[])varPos2;
+                Debug.Print("IEquity::GetDistance return value (0 = success; -1 = failure) : " + retval);
+                Debug.Print("Face coordinate: " + Pos1[0] + "," + Pos1[1] + "," + Pos1[2]);
+                Debug.Print("Edge coordinate: " + Pos2[0] + "," + Pos2[1] + "," + Pos2[2]);
+                Debug.Print("Maximum distance between face and edge = " + dist * 1000 + " mm");
+                Debug.Print("");
+
+
+            }
+            else
+            {
+                MessageBox.Show("请只选择面或者边，且总数量2个。");
+            }
+
 
 
         }
