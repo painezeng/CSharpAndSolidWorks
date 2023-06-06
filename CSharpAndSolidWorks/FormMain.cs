@@ -5549,10 +5549,152 @@ namespace CSharpAndSolidWorks
 
 
         }
-    }
+
+		private void btnPackAndGo_Click(object sender, EventArgs e)
+		{
+
+			SldWorks swApp = Utility.ConnectToSolidWorks();
+
+            string sourceAsmFile = @"D:\09_Study\CSharpAndSolidWorks\CSharpAndSolidWorks\TemplateModel\TempAssembly.sldasm";
+            string targetAsmFolder = @"D:\PackPath\";
+			Dictionary<string, string> replaceList= new Dictionary<string, string>();
+
+            replaceList.Add("TempAssembly", "我的新装配");
+            replaceList.Add("clamp1", "新零件1");
+            replaceList.Add("clamp3", "新零件6");
+            replaceList.Add("MateTest", "配合测试");
+
+			PackAndGo(swApp, sourceAsmFile, targetAsmFolder, true,replaceList,"SW-","");
 
 
-    [System.Runtime.InteropServices.ComVisible(true)]
+		}
+
+        /// <summary>
+        /// 利用solidworks打包
+        /// </summary>
+        /// <param name="swApp"></param>
+        /// <param name="sourceAsmFile">源装配体路径</param>
+        /// <param name="targetAsmFile">目标路径</param>
+        /// <param name="includeDwg">是否包含图纸</param>
+        /// <param name="replaceList">替换内容</param>
+        /// <param name="AddPrefix">前缀</param>
+        /// <param name="AddSuffix">后缀</param>
+        private void PackAndGo(SldWorks swApp, string sourceAsmFile,string targetAsmFolder,bool includeDwg, Dictionary<string,string> replaceList,string AddPrefix="",string AddSuffix="")
+        {
+			ModelDoc2 swModelDoc = default(ModelDoc2);
+			ModelDocExtension swModelDocExt = default(ModelDocExtension);
+			PackAndGo swPackAndGo = default(PackAndGo);			
+			bool status = false;
+			int warnings = 0;
+			int errors = 0;
+			int i = 0;
+			int namesCount = 0;
+			string myPath = null;
+			int[] statuses = null;
+
+			// Open assembly
+			
+			swModelDoc = (ModelDoc2)swApp.OpenDoc6(sourceAsmFile, (int)swDocumentTypes_e.swDocASSEMBLY, (int)swOpenDocOptions_e.swOpenDocOptions_Silent, "", ref errors, ref warnings);
+			swModelDocExt = (ModelDocExtension)swModelDoc.Extension;
+
+			// Get Pack and Go object
+			Debug.Print("Pack and Go");
+			swPackAndGo = (PackAndGo)swModelDocExt.GetPackAndGo();
+
+			// Get number of documents in assembly
+			namesCount = swPackAndGo.GetDocumentNamesCount();
+			Debug.Print("  Number of model documents: " + namesCount);
+
+			// Include any drawings, SOLIDWORKS Simulation results, and SOLIDWORKS Toolbox components
+			swPackAndGo.IncludeDrawings = includeDwg;
+			Debug.Print(" Include drawings: " + swPackAndGo.IncludeDrawings);
+			swPackAndGo.IncludeSimulationResults = true;
+			Debug.Print(" Include SOLIDWORKS Simulation results: " + swPackAndGo.IncludeSimulationResults);
+			swPackAndGo.IncludeToolboxComponents = true;
+			Debug.Print(" Include SOLIDWORKS Toolbox components: " + swPackAndGo.IncludeToolboxComponents);
+
+			// Get current paths and filenames of the assembly's documents
+			object fileNames;
+			object[] pgFileNames = new object[namesCount - 1];
+			status = swPackAndGo.GetDocumentNames(out fileNames);
+			pgFileNames = (object[])fileNames;
+
+			Debug.Print("");
+			Debug.Print("  Current path and filenames: ");
+			if ((pgFileNames != null))
+			{
+				for (i = 0; i <= pgFileNames.GetUpperBound(0); i++)
+				{
+					Debug.Print("    The path and filename is: " + pgFileNames[i]);
+				}
+			}
+
+			// Get current save-to paths and filenames of the assembly's documents
+			object pgFileStatus;
+			status = swPackAndGo.GetDocumentSaveToNames(out fileNames, out pgFileStatus);
+			pgFileNames = (object[])fileNames;
+			Debug.Print("");
+			Debug.Print("  Current default save-to filenames: ");
+			if ((pgFileNames != null))
+			{
+				for (i = 0; i <= pgFileNames.GetUpperBound(0); i++)
+				{
+					Debug.Print("   The path and filename is: " + pgFileNames[i]);
+				}
+			}
+
+			// Set folder where to save the files
+
+			status = swPackAndGo.SetSaveToName(true, targetAsmFolder);
+
+			// Flatten the Pack and Go folder structure; save all files to the root directory
+			swPackAndGo.FlattenToSingleFolder = true;
+
+			// Add a prefix and suffix to the filenames
+			swPackAndGo.AddPrefix = AddPrefix;
+			swPackAndGo.AddSuffix = AddSuffix;
+			
+			// Verify document paths and filenames after adding prefix and suffix
+			object getFileNames;
+			object getDocumentStatus;
+			string[] pgGetFileNames = new string[namesCount - 1];
+
+			status = swPackAndGo.GetDocumentSaveToNames(out getFileNames, out getDocumentStatus);
+			pgGetFileNames = (string[])getFileNames;
+			Debug.Print("");
+			Debug.Print("  My Pack and Go path and filenames after adding prefix and suffix: ");
+			for (i = 0; i <= pgGetFileNames.Count()-1; i++)
+			{
+
+				Debug.Print("  替换前  My path and filename is: " + pgGetFileNames[i]);
+
+				foreach (var replaceItem  in replaceList)
+                {
+					pgGetFileNames[i]= pgGetFileNames[i].Replace(replaceItem.Key, replaceItem.Value);
+				}
+
+				Debug.Print("  替换后  My path and filename is: " + pgGetFileNames[i]);
+
+             }
+
+
+            //重新保存名称
+            swPackAndGo.SetDocumentSaveToNames(pgGetFileNames);
+
+			// 执行打包。
+			statuses = (int[])swModelDocExt.SavePackAndGo(swPackAndGo);
+
+            swApp.CloseDoc(swApp.IActiveDoc2.GetPathName());
+
+
+		}
+
+
+
+	}
+
+
+	[System.Runtime.InteropServices.ComVisible(true)]
     public class calloutHandler : SwCalloutHandler
     {
         #region ISwCalloutHandler Members
