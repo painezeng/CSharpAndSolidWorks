@@ -34,9 +34,9 @@ namespace PaineTool
         private int registerID;
 
         public const int mainCmdGroupID = 5;
-        public const int mainItemID1 = 0;
-        public const int mainItemID2 = 1;
-        public const int mainItemID3 = 4;
+        public const int mainItemID1 = 2000;
+        public const int mainItemID2 = 2001;
+        public const int mainItemID3 = 2004;
         public const int flyoutGroupID = 91;
 
         private string[] mainIcons = new string[6];
@@ -282,12 +282,12 @@ namespace PaineTool
 
             bool bResult;
 
-            FlyoutGroup flyGroup = iCmdMgr.CreateFlyoutGroup2(flyoutGroupID, "Dynamic Flyout", "Flyout Tooltip", "Flyout Hint",
-              cmdGroup.MainIconList, cmdGroup.IconList, "FlyoutCallback", "FlyoutEnable");
+            //FlyoutGroup flyGroup = iCmdMgr.CreateFlyoutGroup2(flyoutGroupID, "Dynamic Flyout", "Flyout Tooltip", "Flyout Hint",
+            //  cmdGroup.MainIconList, cmdGroup.IconList, "FlyoutCallback", "FlyoutEnable");
 
-            flyGroup.AddCommandItem("FlyoutCommand 1", "test", 0, "FlyoutCommandItem1", "FlyoutEnableCommandItem1");
+            //flyGroup.AddCommandItem("FlyoutCommand 1", "test", 0, "FlyoutCommandItem1", "FlyoutEnableCommandItem1");
 
-            flyGroup.FlyoutType = (int)swCommandFlyoutStyle_e.swCommandFlyoutStyle_Simple;
+            //flyGroup.FlyoutType = (int)swCommandFlyoutStyle_e.swCommandFlyoutStyle_Simple;
 
             foreach (int type in docTypes)
             {
@@ -329,14 +329,14 @@ namespace PaineTool
 
                     bResult = cmdBox.AddCommands(cmdIDs, TextType);
 
-                    CommandTabBox cmdBox1 = cmdTab.AddCommandTabBox();
-                    cmdIDs = new int[1];
-                    TextType = new int[1];
+                    //CommandTabBox cmdBox1 = cmdTab.AddCommandTabBox();
+                    //cmdIDs = new int[1];
+                    //TextType = new int[1];
 
-                    cmdIDs[0] = flyGroup.CmdID;
-                    TextType[0] = (int)swCommandTabButtonTextDisplay_e.swCommandTabButton_TextBelow | (int)swCommandTabButtonFlyoutStyle_e.swCommandTabButton_ActionFlyout;
+                    //cmdIDs[0] = flyGroup.CmdID;
+                    //TextType[0] = (int)swCommandTabButtonTextDisplay_e.swCommandTabButton_TextBelow | (int)swCommandTabButtonFlyoutStyle_e.swCommandTabButton_ActionFlyout;
 
-                    bResult = cmdBox1.AddCommands(cmdIDs, TextType);
+                    //bResult = cmdBox1.AddCommands(cmdIDs, TextType);
 
                     // cmdTab.AddSeparator(cmdBox1, cmdIDs[0]);
                 }
@@ -344,30 +344,30 @@ namespace PaineTool
 
             // Create a third-party icon in the context-sensitive menus of faces in parts
             // To see this menu, right click on any face in the part
-            Frame swFrame;
+            //Frame swFrame;
 
-            swFrame = (Frame)iSwApp.Frame();
-            bResult = swFrame.AddMenuPopupIcon3((int)swDocumentTypes_e.swDocPART, (int)swSelectType_e.swSelFACES, "third-party context-sensitive CSharp", addinID,
-                                                "PopupCallbackFunction", "PopupEnable", "", cmdGroup.MainIconList);
+            //swFrame = (Frame)iSwApp.Frame();
+            //bResult = swFrame.AddMenuPopupIcon3((int)swDocumentTypes_e.swDocPART, (int)swSelectType_e.swSelFACES, "third-party context-sensitive CSharp", addinID,
+            //                                    "PopupCallbackFunction", "PopupEnable", "", cmdGroup.MainIconList);
 
-            // create and register the shortcut menu
-            registerID = iSwApp.RegisterThirdPartyPopupMenu();
+            //// create and register the shortcut menu
+            //registerID = iSwApp.RegisterThirdPartyPopupMenu();
 
-            // add a menu break at the top of the shortcut menu
-            bResult = iSwApp.AddItemToThirdPartyPopupMenu2(registerID, (int)swDocumentTypes_e.swDocPART, "Menu Break", addinID, "", "", "", "", "", (int)swMenuItemType_e.swMenuItemType_Break);
+            //// add a menu break at the top of the shortcut menu
+            //bResult = iSwApp.AddItemToThirdPartyPopupMenu2(registerID, (int)swDocumentTypes_e.swDocPART, "Menu Break", addinID, "", "", "", "", "", (int)swMenuItemType_e.swMenuItemType_Break);
 
-            // add a couple of items to the shortcut menu
-            bResult = iSwApp.AddItemToThirdPartyPopupMenu2(registerID, (int)swDocumentTypes_e.swDocPART, "Test1", addinID, "TestCallback", "EnableTest", "", "Test1", mainIcons[0], (int)swMenuItemType_e.swMenuItemType_Default);
-            bResult = iSwApp.AddItemToThirdPartyPopupMenu2(registerID, (int)swDocumentTypes_e.swDocPART, "Test2", addinID, "TestCallback", "EnableTest", "", "Test2", mainIcons[0], (int)swMenuItemType_e.swMenuItemType_Default);
+            //// add a couple of items to the shortcut menu
+            //bResult = iSwApp.AddItemToThirdPartyPopupMenu2(registerID, (int)swDocumentTypes_e.swDocPART, "Test1", addinID, "TestCallback", "EnableTest", "", "Test1", mainIcons[0], (int)swMenuItemType_e.swMenuItemType_Default);
+            //bResult = iSwApp.AddItemToThirdPartyPopupMenu2(registerID, (int)swDocumentTypes_e.swDocPART, "Test2", addinID, "TestCallback", "EnableTest", "", "Test2", mainIcons[0], (int)swMenuItemType_e.swMenuItemType_Default);
 
-            // add a separator bar to the shortcut menu
-            bResult = iSwApp.AddItemToThirdPartyPopupMenu2(registerID, (int)swDocumentTypes_e.swDocPART, "separator", addinID, "", "", "", "", "", (int)swMenuItemType_e.swMenuItemType_Separator);
+            //// add a separator bar to the shortcut menu
+            //bResult = iSwApp.AddItemToThirdPartyPopupMenu2(registerID, (int)swDocumentTypes_e.swDocPART, "separator", addinID, "", "", "", "", "", (int)swMenuItemType_e.swMenuItemType_Separator);
 
-            // add another item to the shortcut menu
-            bResult = iSwApp.AddItemToThirdPartyPopupMenu2(registerID, (int)swDocumentTypes_e.swDocPART, "Test3", addinID, "TestCallback", "EnableTest", "", "Test3", mainIcons[0], (int)swMenuItemType_e.swMenuItemType_Default);
+            //// add another item to the shortcut menu
+            //bResult = iSwApp.AddItemToThirdPartyPopupMenu2(registerID, (int)swDocumentTypes_e.swDocPART, "Test3", addinID, "TestCallback", "EnableTest", "", "Test3", mainIcons[0], (int)swMenuItemType_e.swMenuItemType_Default);
 
-            // add an icon to a menu bar of the shortcut menu
-            bResult = iSwApp.AddItemToThirdPartyPopupMenu2(registerID, (int)swDocumentTypes_e.swDocPART, "", addinID, "TestCallback", "EnableTest", "", "NoOp", mainIcons[0], (int)swMenuItemType_e.swMenuItemType_Default);
+            //// add an icon to a menu bar of the shortcut menu
+            //bResult = iSwApp.AddItemToThirdPartyPopupMenu2(registerID, (int)swDocumentTypes_e.swDocPART, "", addinID, "TestCallback", "EnableTest", "", "NoOp", mainIcons[0], (int)swMenuItemType_e.swMenuItemType_Default);
 
             thisAssembly = null;
         }

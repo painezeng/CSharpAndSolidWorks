@@ -24,6 +24,7 @@ using System.Reflection;
 using System.Xml.Linq;
 using SolidWorks.Interop.swpublished;
 using static System.Net.WebRequestMethods;
+using static System.Windows.Forms.AxHost;
 
 namespace CSharpAndSolidWorks
 {
@@ -5689,12 +5690,27 @@ namespace CSharpAndSolidWorks
 
 		}
 
+        private void btnVirtual_Click(object sender, EventArgs e)
+        {
+            SldWorks swApp = Utility.ConnectToSolidWorks();
+
+            ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            var swAssemblyDoc = (AssemblyDoc)swModel;
+
+            //从当前装配体中获取 一个零件组件 (注意后面的-1是solidworks 里面显示在两个尖括号里面的数字<>)
+            var comp = swAssemblyDoc.GetComponentByName(@"零件名称-1");
+
+            var makevirtualStatus = comp.MakeVirtual2(true);
+
+            swModel.EditRebuild3();
 
 
-	}
+        }
+    }
 
 
-	[System.Runtime.InteropServices.ComVisible(true)]
+    [System.Runtime.InteropServices.ComVisible(true)]
     public class calloutHandler : SwCalloutHandler
     {
         #region ISwCalloutHandler Members
