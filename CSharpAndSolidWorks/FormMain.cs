@@ -5747,10 +5747,31 @@ namespace CSharpAndSolidWorks
 
 
 		}
-	}
+
+        private void BtnInsertBOMTable_Click(object sender, EventArgs e)
+        {
+            //此处是介绍如何在工程图中插入BOM表(材料明细表)
+
+            //bomTemplatePath： sldbomtbt结尾的BOM表模板路径
+
+            //方法1: 用当前模型对象的扩展方法 只能通过坐标指定位置
+            //https://help.solidworks.com/2018/english/api/sldworksapi/solidworks.interop.sldworks~solidworks.interop.sldworks.imodeldocextension~insertbomtable3.html
+            //swModel.Extension.InsertBomTable3(bomTemplatePath, 0, 0, (int)swBomType_e.swBomType_PartsOnly,
+            //    bomConfigName, false, (int)swNumberingType_e.swNumberingType_None, false);
 
 
-	[System.Runtime.InteropServices.ComVisible(true)]
+            //方法2:用图的方法。 可以指定插入附加点
+            //https://help.solidworks.com/2018/english/api/sldworksapi/solidworks.interop.sldworks~solidworks.interop.sldworks.iview~insertbomtable4.html
+            //thisView.InsertBomTable4(true, 0, 0, (int)swBOMConfigurationAnchorType_e.swBOMConfigurationAnchor_BottomLeft, (int)swBomType_e.swBomType_PartsOnly,
+            //    bomConfigName, bomTemplatePath, false, (int)swNumberingType_e.swNumberingType_None, false);
+
+
+
+        }
+    }
+
+
+    [System.Runtime.InteropServices.ComVisible(true)]
 	public class calloutHandler : SwCalloutHandler
 	{
 		#region ISwCalloutHandler Members

@@ -131,6 +131,7 @@
             this.btnPackAndGo = new System.Windows.Forms.Button();
             this.btnVirtual = new System.Windows.Forms.Button();
             this.btnInsertBalloon = new System.Windows.Forms.Button();
+            this.BtnInsertBOMTable = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -1262,11 +1263,23 @@
             this.btnInsertBalloon.UseVisualStyleBackColor = true;
             this.btnInsertBalloon.Click += new System.EventHandler(this.btnInsertBalloon_Click);
             // 
+            // BtnInsertBOMTable
+            // 
+            this.BtnInsertBOMTable.Location = new System.Drawing.Point(1111, 438);
+            this.BtnInsertBOMTable.Name = "BtnInsertBOMTable";
+            this.BtnInsertBOMTable.Size = new System.Drawing.Size(125, 27);
+            this.BtnInsertBOMTable.TabIndex = 81;
+            this.BtnInsertBOMTable.Text = "96.插入材料明细表";
+            this.BtnInsertBOMTable.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BtnInsertBOMTable.UseVisualStyleBackColor = true;
+            this.BtnInsertBOMTable.Click += new System.EventHandler(this.BtnInsertBOMTable_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 623);
+            this.Controls.Add(this.BtnInsertBOMTable);
             this.Controls.Add(this.btnInsertBalloon);
             this.Controls.Add(this.btnChangeLayer);
             this.Controls.Add(this.btnUndoOrRedo);
@@ -1478,6 +1491,7 @@
 		private System.Windows.Forms.Button btnPackAndGo;
         private System.Windows.Forms.Button btnVirtual;
         private System.Windows.Forms.Button btnInsertBalloon;
+        private System.Windows.Forms.Button BtnInsertBOMTable;
     }
 }
 
