@@ -5565,6 +5565,146 @@ namespace CSharpAndSolidWorks
             //thisView.InsertBomTable4(true, 0, 0, (int)swBOMConfigurationAnchorType_e.swBOMConfigurationAnchor_BottomLeft, (int)swBomType_e.swBomType_PartsOnly,
             //    bomConfigName, bomTemplatePath, false, (int)swNumberingType_e.swNumberingType_None, false);
         }
+
+        /// <summary>
+        /// 极点坐标的获取
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnExtremePoint_Click(object sender, EventArgs e)
+        {
+            SldWorks swApp = Utility.ConnectToSolidWorks();
+
+            var swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            Vector3d vector = new Vector3d(1, 0, 0).Normalized;
+
+            //这里是针对零件。
+            if (swModel != null &&swModel.GetType()==(int)swDocumentTypes_e.swDocPART)
+            {
+
+                PartDoc part = (PartDoc)swModel;
+                var vBodies = GetBodyCopies(part);
+
+                for (int i = 0; i < vBodies.Length; i++)
+                {
+
+                    var body = vBodies[i];
+
+                  
+
+                    bool ExtPRes=  body.GetExtremePoint(vector.X,vector.Y,vector.Z,out double OutX,out double OutY,out double OutZ);
+
+                    if (ExtPRes)
+                    {
+
+                        MessageBox.Show($@"{vector.X},{vector.Y},{vector.Z}->{OutX},{OutY},{OutZ}");
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("未找到极点");
+                    }
+                 
+
+
+
+                }
+
+            }
+
+            //如果是装配体。
+
+            if (swModel != null && swModel.GetType() == (int)swDocumentTypes_e.swDocASSEMBLY)
+            {
+
+                var vcomps = (object[])(swModel as AssemblyDoc).GetComponents(false);
+                foreach ( var comp in vcomps)
+                {
+                    var tempComp=comp as Component2;
+
+                    if (tempComp == null) continue;
+
+                    if (tempComp.GetPathName().ToString().ToLower().EndsWith("sldprt"))
+                    {
+
+                        //把装配中的向量先转到该Comp中
+                        var swMathUtility = swApp.IGetMathUtility();
+                        var tempTrans = tempComp.Transform2.IInverse();
+                        var tempPointInASM1 = new double[3] { 0, 0, 0 };
+                        var tempPointInASM2 = new double[3] { vector.X, vector.Y, vector.Z };
+
+
+                        var mathPointASM1 = (MathPoint)swMathUtility.CreatePoint(tempPointInASM1);
+                        var mathPointASM2 = (MathPoint)swMathUtility.CreatePoint(tempPointInASM2);
+
+                        var swMathPtInPart1 = (MathPoint)mathPointASM1.MultiplyTransform(tempTrans);
+                        var swMathPtInPart2 = (MathPoint)mathPointASM2.MultiplyTransform(tempTrans);
+
+                        var PointArrayData1 = (double[])swMathPtInPart1.ArrayData;
+                        var PointArrayData2 = (double[])swMathPtInPart2.ArrayData;
+
+                        //向量在该Component中
+                        Vector3d vectorInPart = new Vector3d(new Point3d(PointArrayData1),new Point3d(PointArrayData2)).Normalized;
+
+
+                        PartDoc part = (PartDoc)tempComp.IGetModelDoc();
+                        if (part != null) {
+
+                            var vBodies = GetBodyCopies(part);
+
+                            for (int i = 0; i < vBodies.Length; i++)
+                            {
+
+                                var body = vBodies[i];
+                                               
+
+                                bool ExtPRes = body.GetExtremePoint(vectorInPart.X, vectorInPart.Y, vectorInPart.Z, out double OutX, out double OutY, out double OutZ);
+
+                                if (ExtPRes)
+                                {
+                                    MessageBox.Show($@"零件{tempComp.Name2}->方向{vectorInPart.X},{vectorInPart.Y},{vectorInPart.Z}->{OutX},{OutY},{OutZ}(零件中的坐标)");
+
+                                    //再转换到装配体中。
+                                   
+                                    var tempPointInPart = new double[3] { OutX, OutY, OutZ };
+
+                                    var mathPoint= (MathPoint)swMathUtility.CreatePoint(tempPointInPart);
+
+                                    var swMathPtInAsm = (MathPoint)mathPoint.MultiplyTransform(tempComp.Transform2);
+                                    
+                                    var arrayData = (double[])swMathPtInAsm.ArrayData;
+
+
+                                    MessageBox.Show($@"零件{tempComp.Name2}->方向{vector.X},{vector.Y},{vector.Z}->{arrayData[0]},{arrayData[1]},{arrayData[2]}(装配体)");
+
+
+                                }
+                                else
+                                {
+                                    MessageBox.Show("未找到极点");
+                                }
+
+
+
+                            }
+
+                        }
+
+                    }
+
+
+
+
+                }
+
+
+            }
+
+
+
+
+        }
     }
 
     [System.Runtime.InteropServices.ComVisible(true)]
