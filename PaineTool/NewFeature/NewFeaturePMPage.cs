@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic.CompilerServices;
-using SolidWorks.Interop.sldworks;
+﻿using SolidWorks.Interop.sldworks;
 using SolidWorks.Interop.swconst;
 using System;
 using System.Collections.Generic;

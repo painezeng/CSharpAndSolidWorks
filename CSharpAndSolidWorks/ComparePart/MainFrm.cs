@@ -1,14 +1,6 @@
 ﻿using SolidWorks.Interop.sldworks;
-using SolidWorks.Interop.swconst;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ComparePart

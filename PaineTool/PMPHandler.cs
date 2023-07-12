@@ -1,16 +1,14 @@
-using System;
 using SolidWorks.Interop.sldworks;
-using SolidWorks.Interop.swpublished;
 using SolidWorks.Interop.swconst;
+using SolidWorks.Interop.swpublished;
 
 namespace PaineTool
 {
-
     public class PMPHandler : IPropertyManagerPage2Handler9
     {
-        ISldWorks iSwApp;
-        SwAddin userAddin;
-        UserPMPage ppage;
+        private ISldWorks iSwApp;
+        private SwAddin userAddin;
+        private UserPMPage ppage;
 
         public PMPHandler(SwAddin addin, UserPMPage page)
         {
@@ -31,7 +29,6 @@ namespace PaineTool
 
         public void OnCheckboxCheck(int id, bool status)
         {
-
         }
 
         public void OnClose(int reason)
@@ -45,7 +42,6 @@ namespace PaineTool
 
         public void OnComboboxEditChanged(int id, string text)
         {
-
         }
 
         public int OnActiveXControlCreated(int id, bool status)
@@ -73,17 +69,14 @@ namespace PaineTool
 
         public void OnComboboxSelectionChanged(int id, int item)
         {
-
         }
 
         public void OnGroupCheck(int id, bool status)
         {
-
         }
 
         public void OnGroupExpand(int id, bool status)
         {
-
         }
 
         public bool OnHelp()
@@ -102,7 +95,6 @@ namespace PaineTool
 
         public void OnListboxSelectionChanged(int id, int item)
         {
-
         }
 
         public bool OnNextPage()
@@ -112,17 +104,14 @@ namespace PaineTool
 
         public void OnNumberboxChanged(int id, double val)
         {
-
         }
 
         public void OnNumberBoxTrackingCompleted(int id, double val)
         {
-
         }
 
         public void OnOptionCheck(int id)
         {
-
         }
 
         public bool OnPreviousPage()
@@ -132,17 +121,14 @@ namespace PaineTool
 
         public void OnSelectionboxCalloutCreated(int id)
         {
-
         }
 
         public void OnSelectionboxCalloutDestroyed(int id)
         {
-
         }
 
         public void OnSelectionboxFocusChanged(int id)
         {
-
         }
 
         public void OnSelectionboxListChanged(int id, int item)
@@ -153,12 +139,10 @@ namespace PaineTool
 
         public void OnTextboxChanged(int id, string text)
         {
-
         }
 
         public void AfterActivation()
         {
-
         }
 
         public bool OnKeystroke(int Wparam, int Message, int Lparam, int Id)
@@ -168,12 +152,10 @@ namespace PaineTool
 
         public void OnPopupMenuItem(int Id)
         {
-
         }
 
         public void OnPopupMenuItemUpdate(int Id, ref int retval)
         {
-
         }
 
         public bool OnPreview()
@@ -183,12 +165,10 @@ namespace PaineTool
 
         public void OnSliderPositionChanged(int Id, double Value)
         {
-
         }
 
         public void OnSliderTrackingCompleted(int Id, double Value)
         {
-
         }
 
         public bool OnSubmitSelection(int Id, object Selection, int SelType, ref string ItemText)
@@ -203,40 +183,31 @@ namespace PaineTool
 
         public void OnUndo()
         {
-
         }
 
         public void OnWhatsNew()
         {
-
         }
-
 
         public void OnGainedFocus(int Id)
         {
-
         }
 
         public void OnListboxRMBUp(int Id, int PosX, int PosY)
         {
-
         }
 
         public void OnLostFocus(int Id)
         {
-
         }
 
         public void OnRedo()
         {
-
         }
 
         public int OnWindowFromHandleControlCreated(int Id, bool Status)
         {
             return 0;
         }
-
-
     }
 }

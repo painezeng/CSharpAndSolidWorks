@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace PaineTool.NewFeature
 {
@@ -1428,11 +1425,11 @@ namespace PaineTool.NewFeature
         }
         Output: W = {W0,W1, ,Wk-1} = the k-vertex simplified polyline
         */
-          /********************\
-          *        *
-          * 补充    *
-          *     *
-          \********************/
+        /********************\
+        *        *
+        * 补充    *
+        *     *
+        \********************/
 
         //两圆关系：
         /* 两圆：

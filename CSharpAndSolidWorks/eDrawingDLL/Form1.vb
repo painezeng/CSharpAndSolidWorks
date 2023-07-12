@@ -1,5 +1,4 @@
-﻿Imports System.IO
-Imports EModelView
+﻿Imports EModelView
 
 Public Class Form1
     Public hostContainer As edDWHost = Nothing

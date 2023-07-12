@@ -1,7 +1,6 @@
-using System;
 using SolidWorks.Interop.sldworks;
-using SolidWorks.Interop.swpublished;
 using SolidWorks.Interop.swconst;
+using System;
 
 namespace PaineTool
 {

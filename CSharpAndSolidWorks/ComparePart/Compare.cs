@@ -1,12 +1,8 @@
-﻿using System;
+﻿using SolidWorks.Interop.sldworks;
+using SolidWorks.Interop.swconst;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using SolidWorks.Interop.sldworks;
-using SolidWorks.Interop.swconst;
 
 namespace ComparePart
 {
@@ -180,8 +176,6 @@ namespace ComparePart
             // Solid bodies
             object[] vBodyArr = null;
             Body2 swBody = default(Body2);
-
-            MathTransform swMathTrans = null;
             vBodyArr = (object[])swPart.GetBodies2((int)swBodyType_e.swSolidBody, true);
 
             if ((vBodyArr != null))
@@ -313,8 +307,6 @@ namespace ComparePart
             // Solid bodies
             object[] vBodyArr2 = null;
             Body2 swBody2 = default(Body2);
-
-            MathTransform swMathTrans2 = null;
             vBodyArr2 = (object[])swPart2.GetBodies2((int)swBodyType_e.swSolidBody, true);
 
             if ((vBodyArr2 != null))

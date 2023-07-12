@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using SolidWorks.Interop.sldworks;
+﻿using SolidWorks.Interop.sldworks;
 using SolidWorks.Interop.swconst;
 using SolidWorks.Interop.swpublished;
+using System.Diagnostics;
 
 namespace GetRayIntersectionWithBody
 {

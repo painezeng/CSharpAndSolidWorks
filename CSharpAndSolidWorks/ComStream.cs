@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSharpAndSolidWorks
 {
@@ -41,7 +37,7 @@ namespace CSharpAndSolidWorks
 
         // reads a specified number of bytes from the stream object
         // into memory starting at the current seek pointer
-        public unsafe override int Read(byte[] buffer, int offset, int count)
+        public override unsafe int Read(byte[] buffer, int offset, int count)
         {
             if (originalStream_ == null)
             {
@@ -82,7 +78,7 @@ namespace CSharpAndSolidWorks
         // changes the seek pointer to a new location relative to the beginning
         // of the stream, the end of the stream, or the current seek position
 
-        public unsafe override long Seek(long offset, SeekOrigin origin)
+        public override unsafe long Seek(long offset, SeekOrigin origin)
         {
             if (originalStream_ == null)
             {

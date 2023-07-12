@@ -1,11 +1,9 @@
-using System;
-using System.Collections;
 using SolidWorks.Interop.sldworks;
 using SolidWorks.Interop.swconst;
+using System.Collections;
 
 namespace PaineTool
 {
-
     public class DocumentEventHandler
     {
         protected ISldWorks iSwApp;
@@ -22,12 +20,12 @@ namespace PaineTool
             openModelViews = new Hashtable();
         }
 
-        virtual public bool AttachEventHandlers()
+        public virtual bool AttachEventHandlers()
         {
             return true;
         }
 
-        virtual public bool DetachEventHandlers()
+        public virtual bool DetachEventHandlers()
         {
             return true;
         }
@@ -62,7 +60,6 @@ namespace PaineTool
                 return false;
             }
 
-
             object[] keys = new object[numKeys];
 
             //Remove all ModelView event handlers
@@ -93,7 +90,7 @@ namespace PaineTool
 
     public class PartEventHandler : DocumentEventHandler
     {
-        PartDoc doc;
+        private PartDoc doc;
 
         public PartEventHandler(ModelDoc2 modDoc, SwAddin addin)
             : base(modDoc, addin)
@@ -101,7 +98,7 @@ namespace PaineTool
             doc = (PartDoc)document;
         }
 
-        override public bool AttachEventHandlers()
+        public override bool AttachEventHandlers()
         {
             doc.DestroyNotify += new DPartDocEvents_DestroyNotifyEventHandler(OnDestroy);
             doc.NewSelectionNotify += new DPartDocEvents_NewSelectionNotifyEventHandler(OnNewSelection);
@@ -111,7 +108,7 @@ namespace PaineTool
             return true;
         }
 
-        override public bool DetachEventHandlers()
+        public override bool DetachEventHandlers()
         {
             doc.DestroyNotify -= new DPartDocEvents_DestroyNotifyEventHandler(OnDestroy);
             doc.NewSelectionNotify -= new DPartDocEvents_NewSelectionNotifyEventHandler(OnNewSelection);
@@ -137,8 +134,8 @@ namespace PaineTool
 
     public class AssemblyEventHandler : DocumentEventHandler
     {
-        AssemblyDoc doc;
-        SwAddin swAddin;
+        private AssemblyDoc doc;
+        private SwAddin swAddin;
 
         public AssemblyEventHandler(ModelDoc2 modDoc, SwAddin addin)
             : base(modDoc, addin)
@@ -147,7 +144,7 @@ namespace PaineTool
             swAddin = addin;
         }
 
-        override public bool AttachEventHandlers()
+        public override bool AttachEventHandlers()
         {
             doc.DestroyNotify += new DAssemblyDocEvents_DestroyNotifyEventHandler(OnDestroy);
             doc.NewSelectionNotify += new DAssemblyDocEvents_NewSelectionNotifyEventHandler(OnNewSelection);
@@ -160,7 +157,7 @@ namespace PaineTool
             return true;
         }
 
-        override public bool DetachEventHandlers()
+        public override bool DetachEventHandlers()
         {
             doc.DestroyNotify -= new DAssemblyDocEvents_DestroyNotifyEventHandler(OnDestroy);
             doc.NewSelectionNotify -= new DAssemblyDocEvents_NewSelectionNotifyEventHandler(OnNewSelection);
@@ -192,10 +189,8 @@ namespace PaineTool
             ModelDoc2 modDoc = (ModelDoc2)componentModel;
             swComponentSuppressionState_e newState = (swComponentSuppressionState_e)newCompState;
 
-
             switch (newState)
             {
-
                 case swComponentSuppressionState_e.swComponentFullyResolved:
                     {
                         if ((modDoc != null) & !this.swAddin.OpenDocs.Contains(modDoc))
@@ -213,7 +208,6 @@ namespace PaineTool
                         }
                         break;
                     }
-
             }
             return 0;
         }
@@ -224,18 +218,17 @@ namespace PaineTool
             return 0;
         }
 
-
         public int ComponentStateChangeNotify2(object componentModel, string CompName, short oldCompState, short newCompState)
         {
             return ComponentStateChange(componentModel, newCompState);
         }
 
-        int ComponentStateChangeNotify(object componentModel, short oldCompState, short newCompState)
+        private int ComponentStateChangeNotify(object componentModel, short oldCompState, short newCompState)
         {
             return ComponentStateChange(componentModel, newCompState);
         }
 
-        int ComponentDisplayStateChangeNotify(object swObject)
+        private int ComponentDisplayStateChangeNotify(object swObject)
         {
             Component2 component = (Component2)swObject;
             ModelDoc2 modDoc = (ModelDoc2)component.GetModelDoc();
@@ -243,22 +236,18 @@ namespace PaineTool
             return ComponentStateChange(modDoc);
         }
 
-        int ComponentVisualPropertiesChangeNotify(object swObject)
+        private int ComponentVisualPropertiesChangeNotify(object swObject)
         {
             Component2 component = (Component2)swObject;
             ModelDoc2 modDoc = (ModelDoc2)component.GetModelDoc();
 
             return ComponentStateChange(modDoc);
         }
-
-
-
-
     }
 
     public class DrawingEventHandler : DocumentEventHandler
     {
-        DrawingDoc doc;
+        private DrawingDoc doc;
 
         public DrawingEventHandler(ModelDoc2 modDoc, SwAddin addin)
             : base(modDoc, addin)
@@ -266,7 +255,7 @@ namespace PaineTool
             doc = (DrawingDoc)document;
         }
 
-        override public bool AttachEventHandlers()
+        public override bool AttachEventHandlers()
         {
             doc.DestroyNotify += new DDrawingDocEvents_DestroyNotifyEventHandler(OnDestroy);
             doc.NewSelectionNotify += new DDrawingDocEvents_NewSelectionNotifyEventHandler(OnNewSelection);
@@ -276,7 +265,7 @@ namespace PaineTool
             return true;
         }
 
-        override public bool DetachEventHandlers()
+        public override bool DetachEventHandlers()
         {
             doc.DestroyNotify -= new DDrawingDocEvents_DestroyNotifyEventHandler(OnDestroy);
             doc.NewSelectionNotify -= new DDrawingDocEvents_NewSelectionNotifyEventHandler(OnNewSelection);
@@ -302,10 +291,10 @@ namespace PaineTool
 
     public class DocView
     {
-        ISldWorks iSwApp;
-        SwAddin userAddin;
-        ModelView mView;
-        DocumentEventHandler parent;
+        private ISldWorks iSwApp;
+        private SwAddin userAddin;
+        private ModelView mView;
+        private DocumentEventHandler parent;
 
         public DocView(SwAddin addin, IModelView mv, DocumentEventHandler doc)
         {
@@ -350,5 +339,4 @@ namespace PaineTool
             return 0;
         }
     }
-
 }
