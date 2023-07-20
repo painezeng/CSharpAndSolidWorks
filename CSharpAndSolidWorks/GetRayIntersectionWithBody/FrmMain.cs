@@ -1,4 +1,5 @@
-﻿using SolidWorks.Interop.sldworks;
+﻿using Paine.SolidWorks.Base;
+using SolidWorks.Interop.sldworks;
 using SolidWorks.Interop.swconst;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace GetRayIntersectionWithBody
         public FrmMain()
         {
             InitializeComponent();
-            swApp = ConnectToSolidworks.ConnectToSolidworks.GetSolidWorks();
+            swApp = Connect.GetRunningSolidWorks();
 
             if (swApp == null)
             {

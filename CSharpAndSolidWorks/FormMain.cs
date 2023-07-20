@@ -1,6 +1,6 @@
 ﻿using GeometRi;
 using GetRayIntersectionWithBody;
-using PSWStandalon;
+using Paine.SolidWorks.Base;
 using SolidWorks.Interop.cosworks;
 using SolidWorks.Interop.sldworks;
 using SolidWorks.Interop.swcommands;
@@ -17,6 +17,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Windows.Forms;
 using Attribute = SolidWorks.Interop.sldworks.Attribute;
@@ -37,7 +38,10 @@ namespace CSharpAndSolidWorks
 
             if (swApp != null)
             {
-                string msg = "This message from C#. solidworks version is " + swApp.RevisionNumber();
+
+                swApp.GetBuildNumbers2(out string baseV, out string _, out string _);
+
+                string msg = $@"This message from C#. solidworks version is {swApp.RevisionNumber()} ({baseV})";
                 //发一个消息给solidworks用户
                 swApp.SendMsgToUser(msg);
             }
@@ -2472,7 +2476,7 @@ namespace CSharpAndSolidWorks
         {
             //请先打开TemplateModel文件夹下的装配TempAssembly.sldasm  D:\09_Study\CSharpAndSolidWorks\CSharpAndSolidWorks\TemplateModel
 
-            var swApp = PStandAlone.GetSolidWorks();
+            var swApp = Connect.GetRunningSolidWorks();
 
             var swModel = (ModelDoc2)swApp.ActiveDoc;
 
@@ -2607,7 +2611,7 @@ namespace CSharpAndSolidWorks
 
         private void btnRoundPointLoc_Click(object sender, EventArgs e)
         {
-            SldWorks swApp = PStandAlone.GetSolidWorks();
+            SldWorks swApp = Connect.GetRunningSolidWorks();
 
             ModelDoc2 swModel = default(ModelDoc2);
             ModelDocExtension swModelDocExt = default(ModelDocExtension);
@@ -2657,7 +2661,7 @@ namespace CSharpAndSolidWorks
 
         private void btnRunCommand_Click(object sender, EventArgs e)
         {
-            SldWorks swApp = PStandAlone.GetSolidWorks();
+            SldWorks swApp = Connect.GetRunningSolidWorks();
 
             //执行命令监控
             swApp.CommandOpenPreNotify += SwApp_CommandOpenPreNotify;
@@ -2706,7 +2710,7 @@ namespace CSharpAndSolidWorks
         /// <param name="e"></param>
         private void btnInsertHole_Click(object sender, EventArgs e)
         {
-            SldWorks swApp = PStandAlone.GetSolidWorks();
+            SldWorks swApp = Connect.GetRunningSolidWorks();
 
             AddHoleForThisPoint("holePoints", 10, "异型孔测试");
         }
@@ -2743,7 +2747,7 @@ namespace CSharpAndSolidWorks
             double BotCsinkDiameter;
             double BotCsinkAngle;
 
-            SldWorks swApp = PStandAlone.GetSolidWorks();
+            SldWorks swApp = Connect.GetRunningSolidWorks();
 
             ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
 
@@ -2818,7 +2822,7 @@ namespace CSharpAndSolidWorks
         /// <param name="e"></param>
         private void butGetTextInSketch_Click(object sender, EventArgs e)
         {
-            SldWorks swApp = PStandAlone.GetSolidWorks();
+            SldWorks swApp = Connect.GetRunningSolidWorks();
 
             ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
             SelectionMgr swSelMgr = (SelectionMgr)swModel.SelectionManager;
@@ -2870,7 +2874,7 @@ namespace CSharpAndSolidWorks
         /// <returns></returns>
         private bool JoinPart(string BasePartSelectID, string JoinPartSelectId)
         {
-            SldWorks swApp = PStandAlone.GetSolidWorks();
+            SldWorks swApp = Connect.GetRunningSolidWorks();
             ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
             AssemblyDoc assemblyDoc = (AssemblyDoc)swModel;
 
@@ -2949,7 +2953,7 @@ namespace CSharpAndSolidWorks
         /// <param name="e"></param>
         private void btnExportBodyToFile_Click(object sender, EventArgs e)
         {
-            SldWorks swApp = PStandAlone.GetSolidWorks();
+            SldWorks swApp = Connect.GetRunningSolidWorks();
 
             ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
 
@@ -2969,7 +2973,7 @@ namespace CSharpAndSolidWorks
         /// <param name="e"></param>
         private void btnShowTemplateBody_Click_1(object sender, EventArgs e)
         {
-            SldWorks swApp = PStandAlone.GetSolidWorks();
+            SldWorks swApp = Connect.GetRunningSolidWorks();
 
             ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
 
@@ -3089,7 +3093,7 @@ namespace CSharpAndSolidWorks
         /// <param name="e"></param>
         private void butGetSketchContour_Click(object sender, EventArgs e)
         {
-            SldWorks swApp = PStandAlone.GetSolidWorks();
+            SldWorks swApp = Connect.GetRunningSolidWorks();
 
             ModelDoc2 swModel = (ModelDoc2)swApp.ActiveDoc;
 
@@ -3130,7 +3134,7 @@ namespace CSharpAndSolidWorks
         /// <param name="e"></param>
         private void btnAttribute_Click(object sender, EventArgs e)
         {
-            SldWorks swApp = PStandAlone.GetSolidWorks();
+            SldWorks swApp = Connect.GetRunningSolidWorks();
 
             ModelDoc2 swModel = default(ModelDoc2);
             ModelDocExtension swModelDocExt = default(ModelDocExtension);
@@ -3193,7 +3197,7 @@ namespace CSharpAndSolidWorks
         /// <param name="e"></param>
         private void btnImpotDxfToSketch_Click(object sender, EventArgs e)
         {
-            SldWorks swApp = PStandAlone.GetSolidWorks();
+            SldWorks swApp = Connect.GetRunningSolidWorks();
 
             //确保文件存在
             string filename = @"C:\Users\Public\Documents\SOLIDWORKS\SOLIDWORKS 2018\samples\tutorial\importexport\rainbow.DXF";
@@ -3234,7 +3238,7 @@ namespace CSharpAndSolidWorks
         private void btnConvertEntities_Click(object sender, EventArgs e)
         {
             //先打开54_ConvertEntitiesToSketch.SLDPRT
-            SldWorks swApp = PStandAlone.GetSolidWorks();
+            SldWorks swApp = Connect.GetRunningSolidWorks();
 
             var swModel = swApp.IActiveDoc2;
 
@@ -3268,7 +3272,7 @@ namespace CSharpAndSolidWorks
         {
             //先打开一个零件，打开哪个请随意。
 
-            SldWorks swApp = PStandAlone.GetSolidWorks();
+            SldWorks swApp = Connect.GetRunningSolidWorks();
 
             bool boolstatus = false;
 
@@ -3398,7 +3402,7 @@ namespace CSharpAndSolidWorks
         /// <param name="e"></param>
         private void btnDeleteRelation_Click(object sender, EventArgs e)
         {
-            SldWorks swApp = PStandAlone.GetSolidWorks();
+            SldWorks swApp = Connect.GetRunningSolidWorks();
 
             var swModel = swApp.IActiveDoc2;
 
@@ -3439,7 +3443,7 @@ namespace CSharpAndSolidWorks
         /// <param name="e"></param>
         private void btnGetCompFromBalloon_Click(object sender, EventArgs e)
         {
-            SldWorks swApp = PStandAlone.GetSolidWorks();
+            SldWorks swApp = Connect.GetRunningSolidWorks();
 
             var swModel = swApp.IActiveDoc2;
 
@@ -3488,7 +3492,7 @@ namespace CSharpAndSolidWorks
 
         private void btnMovePart_Click(object sender, EventArgs e)
         {
-            SldWorks swApp = PStandAlone.GetSolidWorks();
+            SldWorks swApp = Connect.GetRunningSolidWorks();
 
             var swModel = swApp.IActiveDoc2;
 
@@ -3534,7 +3538,7 @@ namespace CSharpAndSolidWorks
         {
             //打开一个装配，并选中一个距离配合
 
-            var swApp = PStandAlone.GetSolidWorks();
+            var swApp = Connect.GetRunningSolidWorks();
 
             var swModel = (ModelDoc2)swApp.ActiveDoc;
 
@@ -3562,7 +3566,7 @@ namespace CSharpAndSolidWorks
         /// <param name="e"></param>
         private void btnGetFeatureNodes_Click(object sender, EventArgs e)
         {
-            var swApp = PStandAlone.GetSolidWorks();
+            var swApp = Connect.GetRunningSolidWorks();
 
             var swModel = (ModelDoc2)swApp.ActiveDoc;
 
@@ -3969,7 +3973,7 @@ namespace CSharpAndSolidWorks
 
         private void btnOpenWithHide_Click(object sender, EventArgs e)
         {
-            SldWorks swApp = PStandAlone.GetSolidWorks();//连接solidworks
+            SldWorks swApp = Connect.GetRunningSolidWorks();//连接solidworks
 
             //设置零件不显示
             swApp.DocumentVisible(false, (int)swDocumentTypes_e.swDocDRAWING);
@@ -3985,7 +3989,7 @@ namespace CSharpAndSolidWorks
         private void btnAutoFillet_Click(object sender, EventArgs e)
         {
             //遍历Z轴方向的直线
-            SldWorks swApp = PStandAlone.GetSolidWorks();//连接solidworks
+            SldWorks swApp = Connect.GetRunningSolidWorks();//连接solidworks
             swApp.CommandInProgress = true; //因为是exe测试，所以启动该选项，加快速度
             ModelDoc2 swModel = default(ModelDoc2);
             ModelDocExtension swModelDocExt = default(ModelDocExtension);
@@ -4116,7 +4120,7 @@ namespace CSharpAndSolidWorks
             //Step4: 最小距离为0时，再通过遍历面来查找哪些面距离 为0 并且法向平行 。
             //Step5: 选中两个面增加重合关系。
 
-            SldWorks swApp = PStandAlone.GetSolidWorks();//连接solidworks
+            SldWorks swApp = Connect.GetRunningSolidWorks();//连接solidworks
             swApp.CommandInProgress = true; //因为是exe测试，所以启动该选项，加快速度
             SelectionMgr swSelMgr = default(SelectionMgr);
 
@@ -4345,7 +4349,7 @@ namespace CSharpAndSolidWorks
             //请先打开WeldmentTest.sldprt
             //下面的功能是把原有的特征数据从020x020换成030x030.SLDLFP
 
-            var swApp = PStandAlone.GetSolidWorks();
+            var swApp = Connect.GetRunningSolidWorks();
 
             var swModel = (ModelDoc2)swApp.ActiveDoc;
 
@@ -4370,7 +4374,7 @@ namespace CSharpAndSolidWorks
 
         private void btnGetCutList_Click(object sender, EventArgs e)
         {
-            var swApp = PStandAlone.GetSolidWorks();
+            var swApp = Connect.GetRunningSolidWorks();
 
             var swModel = (ModelDoc2)swApp.ActiveDoc;
 
@@ -4428,7 +4432,7 @@ namespace CSharpAndSolidWorks
 
         private void btnCreateDimXpert_Click(object sender, EventArgs e)
         {
-            var swApp = PStandAlone.GetSolidWorks();
+            var swApp = Connect.GetRunningSolidWorks();
 
             var swModel = (ModelDoc2)swApp.ActiveDoc;
 
@@ -4524,7 +4528,7 @@ namespace CSharpAndSolidWorks
 
         private void butAddSize_Click(object sender, EventArgs e)
         {
-            var swApp = PStandAlone.GetSolidWorks();
+            var swApp = Connect.GetRunningSolidWorks();
 
             var swModel = (ModelDoc2)swApp.ActiveDoc;
 
@@ -4534,7 +4538,7 @@ namespace CSharpAndSolidWorks
 
         private void btnAddDimForHoles_Click(object sender, EventArgs e)
         {
-            var swApp = PStandAlone.GetSolidWorks();
+            var swApp = Connect.GetRunningSolidWorks();
 
             var swModel = (ModelDoc2)swApp.ActiveDoc;
             AddSizeDimensionForDrawing addSizeDimensionForDrawing = new AddSizeDimensionForDrawing(swApp, swModel);
@@ -4543,7 +4547,7 @@ namespace CSharpAndSolidWorks
 
         private void btnKeepView_Click(object sender, EventArgs e)
         {
-            var swApp = PStandAlone.GetSolidWorks();
+            var swApp = Connect.GetRunningSolidWorks();
 
             var swModel = (ModelDoc2)swApp.ActiveDoc;
 
@@ -4605,7 +4609,7 @@ namespace CSharpAndSolidWorks
         {
             //请先打开HolePlate.slddrw文件
 
-            var swApp = PStandAlone.GetSolidWorks();
+            var swApp = Connect.GetRunningSolidWorks();
 
             var swModel = (ModelDoc2)swApp.ActiveDoc;
 
@@ -4655,7 +4659,7 @@ namespace CSharpAndSolidWorks
 
         private void btnGetSketchDim_Click(object sender, EventArgs e)
         {
-            var swApp = PStandAlone.GetSolidWorks();
+            var swApp = Connect.GetRunningSolidWorks();
 
             var swModel = (ModelDoc2)swApp.ActiveDoc;
 
@@ -4680,7 +4684,7 @@ namespace CSharpAndSolidWorks
         /// <param name="e"></param>
         private void btnOLEObject_Click(object sender, EventArgs e)
         {
-            var swApp = PStandAlone.GetSolidWorks();
+            var swApp = Connect.GetRunningSolidWorks();
 
             var swModel = (ModelDoc2)swApp.ActiveDoc;
 
@@ -4778,7 +4782,7 @@ namespace CSharpAndSolidWorks
 
             var newPartName = $@"{start}CSharpAndSolidWorks\CSharpAndSolidWorks\TemplateModel\replaceDrawingRef\AA(BB) - 副本.SLDPRT";
 
-            var swApp = PStandAlone.GetSolidWorks();
+            var swApp = Connect.GetRunningSolidWorks();
 
             var swModel = (ModelDoc2)swApp.ActiveDoc;
 
@@ -4834,7 +4838,7 @@ namespace CSharpAndSolidWorks
 
             var partPath = $@"{start}CSharpAndSolidWorks\CSharpAndSolidWorks\TemplateModel\Simulation API Demo.SLDPRT";
 
-            SldWorks swApp = PStandAlone.GetSolidWorks();
+            SldWorks swApp = Connect.GetRunningSolidWorks();
 
             CWModelDoc swsActDoc = default(CWModelDoc);
             CWStudyManager swsStudyMngr = default(CWStudyManager);
@@ -4923,7 +4927,7 @@ namespace CSharpAndSolidWorks
 
         private void btnImportDwg_Click(object sender, EventArgs e)
         {
-            var swApp = PStandAlone.GetSolidWorks();
+            var swApp = Connect.GetRunningSolidWorks();
 
             string partDefaultTemplate = swApp.GetDocumentTemplate((int)swDocumentTypes_e.swDocPART, "", 0, 0, 0);
 
@@ -4987,7 +4991,7 @@ namespace CSharpAndSolidWorks
 
         private void btnAddCallout_Click(object sender, EventArgs e)
         {
-            var swApp = PStandAlone.GetSolidWorks();
+            var swApp = Connect.GetRunningSolidWorks();
 
             var colortable = (ColorTable)swApp.GetColorTable();
 
@@ -5057,7 +5061,7 @@ namespace CSharpAndSolidWorks
         private void btnRename_Click(object sender, EventArgs e)
         {
             //这个要先打开 bodies.sldasm
-            var swApp = PStandAlone.GetSolidWorks();
+            var swApp = Connect.GetRunningSolidWorks();
 
             var currentLang = swApp.GetCurrentLanguage();
 
@@ -5081,7 +5085,7 @@ namespace CSharpAndSolidWorks
         {
             //请先打开HolePlate-2.slddrw文件
 
-            var swApp = PStandAlone.GetSolidWorks();
+            var swApp = Connect.GetRunningSolidWorks();
 
             var swModel = (ModelDoc2)swApp.ActiveDoc;
 
@@ -5228,7 +5232,7 @@ namespace CSharpAndSolidWorks
 
         private void btnCommandManagerTab_Click(object sender, EventArgs e)
         {
-            var swApp = PStandAlone.GetSolidWorks();
+            var swApp = Connect.GetRunningSolidWorks();
             var swModelDoc = (ModelDoc2)swApp.ActiveDoc;
             var swModelDocExt = swModelDoc.Extension;
 
@@ -5251,7 +5255,7 @@ namespace CSharpAndSolidWorks
 
         private void btnUndoOrRedo_Click(object sender, EventArgs e)
         {
-            var swApp = PStandAlone.GetSolidWorks();
+            var swApp = Connect.GetRunningSolidWorks();
             var swModelDoc = (ModelDoc2)swApp.ActiveDoc;
             var swModelDocExt = swModelDoc.Extension;
 
@@ -5285,7 +5289,7 @@ namespace CSharpAndSolidWorks
         {
             //这里需要自己打开一个工程图。 并存在名称为Red的图层 (代码新建在之前的章节里有写)
 
-            var swApp = PStandAlone.GetSolidWorks();
+            var swApp = Connect.GetRunningSolidWorks();
             var swModelDoc = (ModelDoc2)swApp.ActiveDoc;
 
             DrawingDoc drawingDoc = (DrawingDoc)swModelDoc;
@@ -5303,7 +5307,7 @@ namespace CSharpAndSolidWorks
         private void btnOpenedFiles_Click(object sender, EventArgs e)
         {
             //OpenDoc6 Method (ISldWorks)
-            var swApp = PStandAlone.GetSolidWorks();
+            var swApp = Connect.GetRunningSolidWorks();
 
             // var swModelDoc = (ModelDoc2)swApp.ActiveDoc;
 

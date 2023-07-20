@@ -1,4 +1,4 @@
-﻿using PSWStandalon;
+﻿using Paine.SolidWorks.Base;
 using SolidWorks.Interop.sldworks;
 using System;
 using System.IO;
@@ -16,7 +16,7 @@ namespace CSharpAndSolidWorks
 
         public static void ExportBodyToFile(string FILE_PATH)
         {
-            ISldWorks app = PStandAlone.GetSolidWorks();
+            ISldWorks app = Connect.GetRunningSolidWorks();
             app.Visible = true;
 
             IModelDoc2 swModel;

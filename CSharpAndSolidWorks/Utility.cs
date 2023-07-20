@@ -1,4 +1,5 @@
-﻿using SolidWorks.Interop.sldworks;
+﻿using Paine.SolidWorks.Base;
+using SolidWorks.Interop.sldworks;
 using SolidWorks.Interop.swconst;
 using System;
 using System.Diagnostics;
@@ -11,45 +12,8 @@ namespace CSharpAndSolidWorks
 
         public static SldWorks ConnectToSolidWorks()
         {
-            #region OldWay
 
-            //if (SwApp != null)
-            //{
-            //    return SwApp;
-            //}
-            //else
-            //{
-            //    Debug.Print("connect to solidworks on " + DateTime.Now);
-            //    try
-            //    {
-            //        SwApp = (SldWorks)Marshal.GetActiveObject("SldWorks.Application");
-            //    }
-            //    catch (COMException)
-            //    {
-            //        try
-            //        {
-            //            SwApp = (SldWorks)Marshal.GetActiveObject("SldWorks.Application.23");//2015
-            //        }
-            //        catch (COMException)
-            //        {
-            //            try
-            //            {
-            //                SwApp = (SldWorks)Marshal.GetActiveObject("SldWorks.Application.26");//2018
-            //            }
-            //            catch (COMException)
-            //            {
-            //                MessageBox.Show("Could not connect to SolidWorks.", "SolidWorks", MessageBoxButtons.OK, MessageBoxIcon.Hand);
-            //                SwApp = null;
-            //            }
-            //        }
-            //    }
-
-            //    return SwApp;
-            //}
-
-            #endregion OldWay
-
-            return PSWStandalon.PStandAlone.GetSolidWorks();
+            return Connect.GetRunningSolidWorks();
         }
 
         /// <summary>

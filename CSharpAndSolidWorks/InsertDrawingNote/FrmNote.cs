@@ -1,4 +1,5 @@
-﻿using SolidWorks.Interop.sldworks;
+﻿using Paine.SolidWorks.Base;
+using SolidWorks.Interop.sldworks;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -40,7 +41,7 @@ namespace CSharpAndSolidWorks
             activeNote = noteList[activeIndex];
             haveNextNote = true;
             // this.Visible = false;
-            swApp = Comm.ConnectToSolidWorks();
+            swApp = Connect.GetRunningSolidWorks();
 
             swModel = (ModelDoc2)swApp.ActiveDoc;
 

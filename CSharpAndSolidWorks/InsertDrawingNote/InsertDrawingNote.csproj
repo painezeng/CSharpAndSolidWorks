@@ -36,20 +36,16 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SolidWorks.Interop.sldworks">
-      <HintPath>..\..\dll\SolidWorks.Interop.sldworks.dll</HintPath>
+    <Reference Include="Paine.SolidWorks.Base, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Paine.SolidWorks.Base.2018.0.0.1\lib\Paine.SolidWorks.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="SolidWorks.Interop.sldworks, Version=26.5.0.66, Culture=neutral, PublicKeyToken=7c4797c3e4eeac03, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Paine.SolidWorks.Base.2018.0.0.1\lib\SolidWorks.Interop.sldworks.dll</HintPath>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
-    <Reference Include="SolidWorks.Interop.swcommands">
-      <HintPath>..\..\dll\SolidWorks.Interop.swcommands.dll</HintPath>
+    <Reference Include="SolidWorks.Interop.swconst, Version=26.5.0.66, Culture=neutral, PublicKeyToken=19f43e188e4269d8, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Paine.SolidWorks.Base.2018.0.0.1\lib\SolidWorks.Interop.swconst.dll</HintPath>
       <EmbedInteropTypes>False</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="SolidWorks.Interop.swconst">
-      <HintPath>..\..\dll\SolidWorks.Interop.swconst.dll</HintPath>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="SolidWorksTools">
-      <HintPath>..\..\dll\SolidWorksTools.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -64,7 +60,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Comm.cs" />
     <Compile Include="FrmNote.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -1,4 +1,5 @@
-﻿using SolidWorks.Interop.sldworks;
+﻿using Paine.SolidWorks.Base;
+using SolidWorks.Interop.sldworks;
 using SolidWorks.Interop.swconst;
 using System;
 using System.Diagnostics;
@@ -22,7 +23,7 @@ namespace CSharpAndSolidWorks
                 Debug.Print("Mouse loc ix = " + ix + " iy = " + iy + " x= " + X);
 
                 SldWorks swApp;
-                swApp = Comm.ConnectToSolidWorks();
+                swApp =  Connect.GetRunningSolidWorks();
 
                 bool boolstatus;
                 long longstatus;
