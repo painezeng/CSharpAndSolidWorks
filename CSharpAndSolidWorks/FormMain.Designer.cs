@@ -133,6 +133,8 @@
             this.btnInsertBalloon = new System.Windows.Forms.Button();
             this.BtnInsertBOMTable = new System.Windows.Forms.Button();
             this.BtnExtremePoint = new System.Windows.Forms.Button();
+            this.btnSplit = new System.Windows.Forms.Button();
+            this.BtnSaveAllBodies = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -1286,11 +1288,35 @@
             this.BtnExtremePoint.UseVisualStyleBackColor = true;
             this.BtnExtremePoint.Click += new System.EventHandler(this.BtnExtremePoint_Click);
             // 
+            // btnSplit
+            // 
+            this.btnSplit.Location = new System.Drawing.Point(1111, 552);
+            this.btnSplit.Name = "btnSplit";
+            this.btnSplit.Size = new System.Drawing.Size(125, 29);
+            this.btnSplit.TabIndex = 83;
+            this.btnSplit.Text = "98.分割实体";
+            this.btnSplit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSplit.UseVisualStyleBackColor = true;
+            this.btnSplit.Click += new System.EventHandler(this.btnSplit_Click);
+            // 
+            // BtnSaveAllBodies
+            // 
+            this.BtnSaveAllBodies.Location = new System.Drawing.Point(1111, 592);
+            this.BtnSaveAllBodies.Name = "BtnSaveAllBodies";
+            this.BtnSaveAllBodies.Size = new System.Drawing.Size(125, 29);
+            this.BtnSaveAllBodies.TabIndex = 84;
+            this.BtnSaveAllBodies.Text = "99.零件实体导装配";
+            this.BtnSaveAllBodies.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BtnSaveAllBodies.UseVisualStyleBackColor = true;
+            this.BtnSaveAllBodies.Click += new System.EventHandler(this.BtnSaveAllBodies_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 675);
+            this.Controls.Add(this.BtnSaveAllBodies);
+            this.Controls.Add(this.btnSplit);
             this.Controls.Add(this.BtnExtremePoint);
             this.Controls.Add(this.BtnInsertBOMTable);
             this.Controls.Add(this.btnInsertBalloon);
@@ -1506,6 +1532,8 @@
         private System.Windows.Forms.Button btnInsertBalloon;
         private System.Windows.Forms.Button BtnInsertBOMTable;
         private System.Windows.Forms.Button BtnExtremePoint;
+        private System.Windows.Forms.Button btnSplit;
+        private System.Windows.Forms.Button BtnSaveAllBodies;
     }
 }
 

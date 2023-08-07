@@ -5709,6 +5709,145 @@ namespace CSharpAndSolidWorks
 
 
         }
+
+        private void btnSplit_Click(object sender, EventArgs e)
+        {
+            SldWorks swApp = Utility.ConnectToSolidWorks();
+            var swModel = (ModelDoc2)swApp.ActiveDoc;
+            var swModelDocExt = swModel.Extension;
+            var swSelMgr = (SelectionMgr)swModel.SelectionManager;
+            var swFeatMgr = swModel.FeatureManager;
+
+            //Select the cutting tool
+            var boolstatus = swModelDocExt.SelectByID2("Top Plane", "PLANE", 0, 0, 0, true, 0, null, 0);
+
+            object vBodyNames = null;
+            object[] bodiesToMark = new Body2[2];
+            string[] bodyNames = new string[2];
+            object[] bodyOrigins = new Vertex[2];
+
+            //Get bodies that will result from the split operation
+            object[] vResultingBodies = null;
+            vResultingBodies = (object[])swFeatMgr.PreSplitBody2();
+
+            swModel.ClearSelection2(true);
+
+            //Set up the arrays for the post-split operation
+
+            //If you do not want to assign body origin, set it to nothing so that the default origin is used
+            bodyOrigins[0] = null;
+            bodyOrigins[1] = null;
+
+            bodiesToMark[0] = vResultingBodies[0];
+            bodiesToMark[1] = vResultingBodies[1];
+
+            //Save the first body to a separate part document
+            //Substitute the name of the actual folder where to save the body
+            bodyNames[0] = "d:\\temp\\Body1.sldprt";
+            //Do not save the second body
+            bodyNames[1] = "";
+
+            DispatchWrapper[] preSplitBodies = null;
+            preSplitBodies = (DispatchWrapper[])ObjectArrayToDispatchWrapperArray((bodiesToMark));
+            vBodyNames = bodyNames;
+            DispatchWrapper[] originsToUse = null;
+            originsToUse = (DispatchWrapper[])ObjectArrayToDispatchWrapperArray((bodyOrigins));
+
+            //Create the Split feature, consuming all split bodies
+            var swFeat = (Feature)swFeatMgr.PostSplitBody2((preSplitBodies), true, (originsToUse), (vBodyNames), "");
+
+            if (((swFeat != null)))
+            {
+                Debug.Print("Split feature: " + swFeat.Name);
+                var swSplitBodyFeat = (SplitBodyFeatureData)swFeat.GetDefinition();
+                swSplitBodyFeat.AccessSelections(swModel, null);
+                swSplitBodyFeat.GetSplitBodies(out object bodyVar, out object PathVar, out object FlagVar);
+                swSplitBodyFeat.ReleaseSelectionAccess();
+                Debug.Print("Bodies consumed? " + swSplitBodyFeat.Consume);
+                Debug.Print(" ");
+            }
+
+
+        }
+
+        private void BtnSaveAllBodies_Click(object sender, EventArgs e)
+        {
+
+            //初步判定API有问题，采取其它办法。
+
+            #region 无效代码
+
+
+            //SldWorks swApp = Utility.ConnectToSolidWorks();
+            //var swModel = (ModelDoc2)swApp.ActiveDoc;
+            //var swModelDocExt = swModel.Extension;
+            //var swSelMgr = (SelectionMgr)swModel.SelectionManager;
+            //var swFeatMgr = swModel.FeatureManager;
+
+            //if (swModel.GetType()!=(int)swDocumentTypes_e.swDocPART)
+            //{
+            //    return;
+            //}
+            //var swPart = swModel as PartDoc;
+            //if (swPart != null)
+            //{
+            //    var vBodies = (object[])swPart.GetBodies2((int)swBodyType_e.swAllBodies, true);
+            //    object vBodiesObj = vBodies;
+            //    string[] bodyNames = new string[vBodies.Length];            
+            //    swModel.ClearSelection2(true);
+
+            //    var saveFolder = @"D:\Temp\";
+
+            //    for (int i = 0; i < vBodies.Length; i++)
+            //    {
+            //       // var b= (Body2)vBodies[i];
+            //        bodyNames[i]= saveFolder +  $@"outsplit{i+1}.sldprt";
+            //    }
+            //    object bodiesNames = bodyNames;
+            //    //DispatchWrapper[] preSplitBodies = null;
+            //    //preSplitBodies = (DispatchWrapper[])ObjectArrayToDispatchWrapperArray(vBodies);
+            //    object vBodyNames = bodyNames;
+            //    //DispatchWrapper[] originsToUse = null;
+            //    //originsToUse = (DispatchWrapper[])ObjectArrayToDispatchWrapperArray((bodyOrigins));
+            //    string asmName = $@"{saveFolder}test.sldasm";
+            //    var swFeat= swFeatMgr.CreateSaveBodyFeature(vBodiesObj, vBodyNames, "", true, false);
+            //    //Create the Split feature, consuming all split bodies
+            //    //var swFeat = (Feature)swFeatMgr.PostSplitBody2((preSplitBodies), true, (originsToUse), (vBodyNames), "");
+
+            //    //if (((swFeat != null)))
+            //    //{
+            //    //    Debug.Print("Split feature: " + swFeat.Name);
+            //    //    var swSplitBodyFeat = (SplitBodyFeatureData)swFeat.GetDefinition();
+            //    //    swSplitBodyFeat.AccessSelections(swModel, null);
+            //    //    swSplitBodyFeat.GetSplitBodies(out object bodyVar, out object PathVar, out object FlagVar);
+            //    //    swSplitBodyFeat.ReleaseSelectionAccess();
+            //    //    Debug.Print("Bodies consumed? " + swSplitBodyFeat.Consume);
+            //    //    Debug.Print(" ");
+            //    //}
+            //}
+
+            #endregion
+
+
+            //解决方案: 
+            // 在2021中找到一个示例，18版本中测试ok.所以可以采用调用宏
+
+            //BodiesToAssembly.swp  保存到D\temp下面
+
+            SldWorks swApp = Utility.ConnectToSolidWorks();
+            var swModel = (ModelDoc2)swApp.ActiveDoc;
+            var swModelDocExt = swModel.Extension;
+            var swSelMgr = (SelectionMgr)swModel.SelectionManager;
+            var swFeatMgr = swModel.FeatureManager;
+
+            if (swModel.GetType() != (int)swDocumentTypes_e.swDocPART)
+            {
+                return;
+            }
+            int err=0;
+            var res= swApp.RunMacro2(RegDllPath("") + @"\BodiesToAssembly.swp", "Macro11", "main", 0, out err);
+
+        }
     }
 
     [System.Runtime.InteropServices.ComVisible(true)]
