@@ -135,6 +135,7 @@
             this.BtnExtremePoint = new System.Windows.Forms.Button();
             this.btnSplit = new System.Windows.Forms.Button();
             this.BtnSaveAllBodies = new System.Windows.Forms.Button();
+            this.btnRefreshPropertiesEditer = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -1310,11 +1311,23 @@
             this.BtnSaveAllBodies.UseVisualStyleBackColor = true;
             this.BtnSaveAllBodies.Click += new System.EventHandler(this.BtnSaveAllBodies_Click);
             // 
+            // btnRefreshPropertiesEditer
+            // 
+            this.btnRefreshPropertiesEditer.Location = new System.Drawing.Point(1111, 627);
+            this.btnRefreshPropertiesEditer.Name = "btnRefreshPropertiesEditer";
+            this.btnRefreshPropertiesEditer.Size = new System.Drawing.Size(125, 31);
+            this.btnRefreshPropertiesEditer.TabIndex = 85;
+            this.btnRefreshPropertiesEditer.Text = "100.刷新属性卡";
+            this.btnRefreshPropertiesEditer.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnRefreshPropertiesEditer.UseVisualStyleBackColor = true;
+            this.btnRefreshPropertiesEditer.Click += new System.EventHandler(this.btnRefreshPropertiesEditer_Click);
+            // 
             // Btn_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 675);
+            this.Controls.Add(this.btnRefreshPropertiesEditer);
             this.Controls.Add(this.BtnSaveAllBodies);
             this.Controls.Add(this.btnSplit);
             this.Controls.Add(this.BtnExtremePoint);
@@ -1534,6 +1547,7 @@
         private System.Windows.Forms.Button BtnExtremePoint;
         private System.Windows.Forms.Button btnSplit;
         private System.Windows.Forms.Button BtnSaveAllBodies;
+        private System.Windows.Forms.Button btnRefreshPropertiesEditer;
     }
 }
 

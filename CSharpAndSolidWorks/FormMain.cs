@@ -5848,6 +5848,36 @@ namespace CSharpAndSolidWorks
             var res= swApp.RunMacro2(RegDllPath("") + @"\BodiesToAssembly.swp", "Macro11", "main", 0, out err);
 
         }
+
+        private void btnRefreshPropertiesEditer_Click(object sender, EventArgs e)
+        {
+            //零件中
+            SldWorks swApp = Utility.ConnectToSolidWorks();
+            if (swApp.IActiveDoc2 != null)
+            {
+                var swModel = swApp.IActiveDoc2;
+                if (swModel != null)
+                {
+
+                    var configName = swModel.ConfigurationManager.ActiveConfiguration.Name;
+
+                    var swConfig = (Configuration)swModel.GetConfigurationByName(configName);
+
+                    var manger = swModel.Extension.CustomPropertyManager[configName];
+
+                    //增加一个属性到此配置
+                    manger.Add3("零件部件编码", (int)swCustomInfoType_e.swCustomInfoText, DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"), (int)swCustomPropertyAddOption_e.swCustomPropertyReplaceValue);
+                    
+                    
+                    //利用切换任务窗格来让solidworks刷新属性值到属性编辑卡
+                    swApp.ActivateTaskPane(1);
+                    swApp.ActivateTaskPane(5);
+
+                }
+
+            }
+
+        }
     }
 
     [System.Runtime.InteropServices.ComVisible(true)]
