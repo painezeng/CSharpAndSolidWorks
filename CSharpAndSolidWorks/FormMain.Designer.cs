@@ -136,14 +136,16 @@
             this.btnSplit = new System.Windows.Forms.Button();
             this.BtnSaveAllBodies = new System.Windows.Forms.Button();
             this.btnRefreshPropertiesEditer = new System.Windows.Forms.Button();
+            this.btnFeatureFaces = new System.Windows.Forms.Button();
+            this.btnTitleBlock = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnConnect
             // 
-            this.btnConnect.Location = new System.Drawing.Point(12, 14);
+            this.btnConnect.Location = new System.Drawing.Point(12, 13);
             this.btnConnect.Name = "btnConnect";
-            this.btnConnect.Size = new System.Drawing.Size(142, 29);
+            this.btnConnect.Size = new System.Drawing.Size(142, 27);
             this.btnConnect.TabIndex = 0;
             this.btnConnect.Text = "1.连接SolidWorks";
             this.btnConnect.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -152,9 +154,9 @@
             // 
             // btnOpenAndNew
             // 
-            this.btnOpenAndNew.Location = new System.Drawing.Point(12, 59);
+            this.btnOpenAndNew.Location = new System.Drawing.Point(12, 54);
             this.btnOpenAndNew.Name = "btnOpenAndNew";
-            this.btnOpenAndNew.Size = new System.Drawing.Size(142, 29);
+            this.btnOpenAndNew.Size = new System.Drawing.Size(142, 27);
             this.btnOpenAndNew.TabIndex = 1;
             this.btnOpenAndNew.Text = "2.打开和创建";
             this.btnOpenAndNew.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -163,9 +165,9 @@
             // 
             // BtnGetPartData
             // 
-            this.BtnGetPartData.Location = new System.Drawing.Point(12, 102);
+            this.BtnGetPartData.Location = new System.Drawing.Point(12, 94);
             this.BtnGetPartData.Name = "BtnGetPartData";
-            this.BtnGetPartData.Size = new System.Drawing.Size(142, 29);
+            this.BtnGetPartData.Size = new System.Drawing.Size(142, 27);
             this.BtnGetPartData.TabIndex = 2;
             this.BtnGetPartData.Text = "3.读取零件属性";
             this.BtnGetPartData.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -175,9 +177,9 @@
             // Btn_ChangeDim
             // 
             this.Btn_ChangeDim.BackColor = System.Drawing.SystemColors.Control;
-            this.Btn_ChangeDim.Location = new System.Drawing.Point(12, 146);
+            this.Btn_ChangeDim.Location = new System.Drawing.Point(12, 135);
             this.Btn_ChangeDim.Name = "Btn_ChangeDim";
-            this.Btn_ChangeDim.Size = new System.Drawing.Size(142, 29);
+            this.Btn_ChangeDim.Size = new System.Drawing.Size(142, 27);
             this.Btn_ChangeDim.TabIndex = 3;
             this.Btn_ChangeDim.Text = "4.修改零件";
             this.Btn_ChangeDim.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -186,9 +188,9 @@
             // 
             // Btn_Traverse_Feature
             // 
-            this.Btn_Traverse_Feature.Location = new System.Drawing.Point(12, 190);
+            this.Btn_Traverse_Feature.Location = new System.Drawing.Point(12, 175);
             this.Btn_Traverse_Feature.Name = "Btn_Traverse_Feature";
-            this.Btn_Traverse_Feature.Size = new System.Drawing.Size(142, 29);
+            this.Btn_Traverse_Feature.Size = new System.Drawing.Size(142, 27);
             this.Btn_Traverse_Feature.TabIndex = 4;
             this.Btn_Traverse_Feature.Text = "5.遍历零件特征";
             this.Btn_Traverse_Feature.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -197,9 +199,9 @@
             // 
             // Btn_Traverse_Comp
             // 
-            this.Btn_Traverse_Comp.Location = new System.Drawing.Point(12, 234);
+            this.Btn_Traverse_Comp.Location = new System.Drawing.Point(12, 216);
             this.Btn_Traverse_Comp.Name = "Btn_Traverse_Comp";
-            this.Btn_Traverse_Comp.Size = new System.Drawing.Size(142, 29);
+            this.Btn_Traverse_Comp.Size = new System.Drawing.Size(142, 27);
             this.Btn_Traverse_Comp.TabIndex = 5;
             this.Btn_Traverse_Comp.Text = "6.遍历装配体";
             this.Btn_Traverse_Comp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -209,9 +211,9 @@
             // btn_Traverse_Drawing
             // 
             this.btn_Traverse_Drawing.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Traverse_Drawing.Location = new System.Drawing.Point(12, 278);
+            this.btn_Traverse_Drawing.Location = new System.Drawing.Point(12, 257);
             this.btn_Traverse_Drawing.Name = "btn_Traverse_Drawing";
-            this.btn_Traverse_Drawing.Size = new System.Drawing.Size(142, 29);
+            this.btn_Traverse_Drawing.Size = new System.Drawing.Size(142, 27);
             this.btn_Traverse_Drawing.TabIndex = 6;
             this.btn_Traverse_Drawing.Text = "7.遍历视图与球标";
             this.btn_Traverse_Drawing.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -221,9 +223,9 @@
             // btn_InsertPart
             // 
             this.btn_InsertPart.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_InsertPart.Location = new System.Drawing.Point(12, 322);
+            this.btn_InsertPart.Location = new System.Drawing.Point(12, 297);
             this.btn_InsertPart.Name = "btn_InsertPart";
-            this.btn_InsertPart.Size = new System.Drawing.Size(142, 29);
+            this.btn_InsertPart.Size = new System.Drawing.Size(142, 27);
             this.btn_InsertPart.TabIndex = 6;
             this.btn_InsertPart.Text = "8.装配零件";
             this.btn_InsertPart.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -233,9 +235,9 @@
             // btnExport
             // 
             this.btnExport.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnExport.Location = new System.Drawing.Point(12, 366);
+            this.btnExport.Location = new System.Drawing.Point(12, 338);
             this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(142, 29);
+            this.btnExport.Size = new System.Drawing.Size(142, 27);
             this.btnExport.TabIndex = 6;
             this.btnExport.Text = "9.导出x_t/Dwg";
             this.btnExport.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -245,9 +247,9 @@
             // btnInsertLibF
             // 
             this.btnInsertLibF.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnInsertLibF.Location = new System.Drawing.Point(12, 410);
+            this.btnInsertLibF.Location = new System.Drawing.Point(12, 378);
             this.btnInsertLibF.Name = "btnInsertLibF";
-            this.btnInsertLibF.Size = new System.Drawing.Size(142, 29);
+            this.btnInsertLibF.Size = new System.Drawing.Size(142, 27);
             this.btnInsertLibF.TabIndex = 6;
             this.btnInsertLibF.Text = "10.插入库特征";
             this.btnInsertLibF.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -256,9 +258,9 @@
             // 
             // btnFilter
             // 
-            this.btnFilter.Location = new System.Drawing.Point(170, 14);
+            this.btnFilter.Location = new System.Drawing.Point(170, 13);
             this.btnFilter.Name = "btnFilter";
-            this.btnFilter.Size = new System.Drawing.Size(142, 29);
+            this.btnFilter.Size = new System.Drawing.Size(142, 27);
             this.btnFilter.TabIndex = 7;
             this.btnFilter.Text = "11. 选择过滤";
             this.btnFilter.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -267,9 +269,9 @@
             // 
             // btn_DeleteConstraints
             // 
-            this.btn_DeleteConstraints.Location = new System.Drawing.Point(170, 59);
+            this.btn_DeleteConstraints.Location = new System.Drawing.Point(170, 54);
             this.btn_DeleteConstraints.Name = "btn_DeleteConstraints";
-            this.btn_DeleteConstraints.Size = new System.Drawing.Size(142, 29);
+            this.btn_DeleteConstraints.Size = new System.Drawing.Size(142, 27);
             this.btn_DeleteConstraints.TabIndex = 8;
             this.btn_DeleteConstraints.Text = "12.删除草图的关系";
             this.btn_DeleteConstraints.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -278,9 +280,9 @@
             // 
             // btnSelectNamedFace
             // 
-            this.btnSelectNamedFace.Location = new System.Drawing.Point(170, 102);
+            this.btnSelectNamedFace.Location = new System.Drawing.Point(170, 94);
             this.btnSelectNamedFace.Name = "btnSelectNamedFace";
-            this.btnSelectNamedFace.Size = new System.Drawing.Size(142, 29);
+            this.btnSelectNamedFace.Size = new System.Drawing.Size(142, 27);
             this.btnSelectNamedFace.TabIndex = 9;
             this.btnSelectNamedFace.Text = "13.选择已命名的面";
             this.btnSelectNamedFace.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -289,9 +291,9 @@
             // 
             // Btn_T_sketchsegment
             // 
-            this.Btn_T_sketchsegment.Location = new System.Drawing.Point(170, 146);
+            this.Btn_T_sketchsegment.Location = new System.Drawing.Point(170, 135);
             this.Btn_T_sketchsegment.Name = "Btn_T_sketchsegment";
-            this.Btn_T_sketchsegment.Size = new System.Drawing.Size(142, 29);
+            this.Btn_T_sketchsegment.Size = new System.Drawing.Size(142, 27);
             this.Btn_T_sketchsegment.TabIndex = 10;
             this.Btn_T_sketchsegment.Text = "14.遍历草绘对象";
             this.Btn_T_sketchsegment.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -300,9 +302,9 @@
             // 
             // btn_ThridData
             // 
-            this.btn_ThridData.Location = new System.Drawing.Point(170, 190);
+            this.btn_ThridData.Location = new System.Drawing.Point(170, 175);
             this.btn_ThridData.Name = "btn_ThridData";
-            this.btn_ThridData.Size = new System.Drawing.Size(142, 29);
+            this.btn_ThridData.Size = new System.Drawing.Size(142, 27);
             this.btn_ThridData.TabIndex = 11;
             this.btn_ThridData.Text = "15.增加第三方数据";
             this.btn_ThridData.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -311,9 +313,9 @@
             // 
             // btn_LoadThrid
             // 
-            this.btn_LoadThrid.Location = new System.Drawing.Point(170, 234);
+            this.btn_LoadThrid.Location = new System.Drawing.Point(170, 216);
             this.btn_LoadThrid.Name = "btn_LoadThrid";
-            this.btn_LoadThrid.Size = new System.Drawing.Size(142, 29);
+            this.btn_LoadThrid.Size = new System.Drawing.Size(142, 27);
             this.btn_LoadThrid.TabIndex = 12;
             this.btn_LoadThrid.Text = "16.读取第三方数据";
             this.btn_LoadThrid.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -322,9 +324,9 @@
             // 
             // btn_Tips
             // 
-            this.btn_Tips.Location = new System.Drawing.Point(170, 278);
+            this.btn_Tips.Location = new System.Drawing.Point(170, 257);
             this.btn_Tips.Name = "btn_Tips";
-            this.btn_Tips.Size = new System.Drawing.Size(142, 29);
+            this.btn_Tips.Size = new System.Drawing.Size(142, 27);
             this.btn_Tips.TabIndex = 13;
             this.btn_Tips.Text = "17.提示信息与进度条";
             this.btn_Tips.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -333,9 +335,9 @@
             // 
             // btn_Adv_Select
             // 
-            this.btn_Adv_Select.Location = new System.Drawing.Point(170, 322);
+            this.btn_Adv_Select.Location = new System.Drawing.Point(170, 297);
             this.btn_Adv_Select.Name = "btn_Adv_Select";
-            this.btn_Adv_Select.Size = new System.Drawing.Size(142, 29);
+            this.btn_Adv_Select.Size = new System.Drawing.Size(142, 27);
             this.btn_Adv_Select.TabIndex = 14;
             this.btn_Adv_Select.Text = "18.高级选择";
             this.btn_Adv_Select.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -344,9 +346,9 @@
             // 
             // btnBounding
             // 
-            this.btnBounding.Location = new System.Drawing.Point(170, 366);
+            this.btnBounding.Location = new System.Drawing.Point(170, 338);
             this.btnBounding.Name = "btnBounding";
-            this.btnBounding.Size = new System.Drawing.Size(142, 29);
+            this.btnBounding.Size = new System.Drawing.Size(142, 27);
             this.btnBounding.TabIndex = 15;
             this.btnBounding.Text = "19.包围盒";
             this.btnBounding.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -355,9 +357,9 @@
             // 
             // btn_Measure
             // 
-            this.btn_Measure.Location = new System.Drawing.Point(170, 410);
+            this.btn_Measure.Location = new System.Drawing.Point(170, 378);
             this.btn_Measure.Name = "btn_Measure";
-            this.btn_Measure.Size = new System.Drawing.Size(142, 29);
+            this.btn_Measure.Size = new System.Drawing.Size(142, 27);
             this.btn_Measure.TabIndex = 16;
             this.btn_Measure.Text = "20.通过测量获取数据";
             this.btn_Measure.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -366,9 +368,9 @@
             // 
             // btn_GetMass
             // 
-            this.btn_GetMass.Location = new System.Drawing.Point(328, 14);
+            this.btn_GetMass.Location = new System.Drawing.Point(328, 13);
             this.btn_GetMass.Name = "btn_GetMass";
-            this.btn_GetMass.Size = new System.Drawing.Size(142, 29);
+            this.btn_GetMass.Size = new System.Drawing.Size(142, 27);
             this.btn_GetMass.TabIndex = 17;
             this.btn_GetMass.Text = "21.获取质量属性";
             this.btn_GetMass.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -377,9 +379,9 @@
             // 
             // btn_Pane
             // 
-            this.btn_Pane.Location = new System.Drawing.Point(328, 59);
+            this.btn_Pane.Location = new System.Drawing.Point(328, 54);
             this.btn_Pane.Name = "btn_Pane";
-            this.btn_Pane.Size = new System.Drawing.Size(142, 29);
+            this.btn_Pane.Size = new System.Drawing.Size(142, 27);
             this.btn_Pane.TabIndex = 18;
             this.btn_Pane.Text = "22. Pane页预览BOM";
             this.btn_Pane.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -388,9 +390,9 @@
             // 
             // btn_SetMaterial
             // 
-            this.btn_SetMaterial.Location = new System.Drawing.Point(328, 102);
+            this.btn_SetMaterial.Location = new System.Drawing.Point(328, 94);
             this.btn_SetMaterial.Name = "btn_SetMaterial";
-            this.btn_SetMaterial.Size = new System.Drawing.Size(142, 29);
+            this.btn_SetMaterial.Size = new System.Drawing.Size(142, 27);
             this.btn_SetMaterial.TabIndex = 19;
             this.btn_SetMaterial.Text = "23.设定零件材质";
             this.btn_SetMaterial.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -399,9 +401,9 @@
             // 
             // btnSetColor
             // 
-            this.btnSetColor.Location = new System.Drawing.Point(328, 146);
+            this.btnSetColor.Location = new System.Drawing.Point(328, 135);
             this.btnSetColor.Name = "btnSetColor";
-            this.btnSetColor.Size = new System.Drawing.Size(142, 29);
+            this.btnSetColor.Size = new System.Drawing.Size(142, 27);
             this.btnSetColor.TabIndex = 20;
             this.btnSetColor.Text = "24.给指定面上色";
             this.btnSetColor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -410,9 +412,9 @@
             // 
             // Btn_ReplacePart
             // 
-            this.Btn_ReplacePart.Location = new System.Drawing.Point(328, 190);
+            this.Btn_ReplacePart.Location = new System.Drawing.Point(328, 175);
             this.Btn_ReplacePart.Name = "Btn_ReplacePart";
-            this.Btn_ReplacePart.Size = new System.Drawing.Size(142, 29);
+            this.Btn_ReplacePart.Size = new System.Drawing.Size(142, 27);
             this.Btn_ReplacePart.TabIndex = 21;
             this.Btn_ReplacePart.Text = "25.替换零件";
             this.Btn_ReplacePart.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -427,18 +429,18 @@
             this.GroupExample.Controls.Add(this.btnPackFile);
             this.GroupExample.Controls.Add(this.btnInsertNote);
             this.GroupExample.Controls.Add(this.btn_Add_CenterPoint);
-            this.GroupExample.Location = new System.Drawing.Point(12, 475);
+            this.GroupExample.Location = new System.Drawing.Point(12, 438);
             this.GroupExample.Name = "GroupExample";
-            this.GroupExample.Size = new System.Drawing.Size(502, 153);
+            this.GroupExample.Size = new System.Drawing.Size(458, 173);
             this.GroupExample.TabIndex = 22;
             this.GroupExample.TabStop = false;
             this.GroupExample.Text = "开发实例";
             // 
             // btn_setcolor
             // 
-            this.btn_setcolor.Location = new System.Drawing.Point(255, 95);
+            this.btn_setcolor.Location = new System.Drawing.Point(255, 88);
             this.btn_setcolor.Name = "btn_setcolor";
-            this.btn_setcolor.Size = new System.Drawing.Size(198, 31);
+            this.btn_setcolor.Size = new System.Drawing.Size(198, 29);
             this.btn_setcolor.TabIndex = 4;
             this.btn_setcolor.Text = "随机上色";
             this.btn_setcolor.UseVisualStyleBackColor = true;
@@ -446,9 +448,9 @@
             // 
             // btn_Scale
             // 
-            this.btn_Scale.Location = new System.Drawing.Point(255, 56);
+            this.btn_Scale.Location = new System.Drawing.Point(255, 52);
             this.btn_Scale.Name = "btn_Scale";
-            this.btn_Scale.Size = new System.Drawing.Size(198, 32);
+            this.btn_Scale.Size = new System.Drawing.Size(198, 30);
             this.btn_Scale.TabIndex = 3;
             this.btn_Scale.Text = "屏幕1:1显示模型";
             this.btn_Scale.UseVisualStyleBackColor = true;
@@ -456,9 +458,9 @@
             // 
             // btn_Part_Export
             // 
-            this.btn_Part_Export.Location = new System.Drawing.Point(255, 20);
+            this.btn_Part_Export.Location = new System.Drawing.Point(255, 18);
             this.btn_Part_Export.Name = "btn_Part_Export";
-            this.btn_Part_Export.Size = new System.Drawing.Size(198, 31);
+            this.btn_Part_Export.Size = new System.Drawing.Size(198, 29);
             this.btn_Part_Export.TabIndex = 2;
             this.btn_Part_Export.Text = "多实体零件导出";
             this.btn_Part_Export.UseVisualStyleBackColor = true;
@@ -466,9 +468,9 @@
             // 
             // btnPackFile
             // 
-            this.btnPackFile.Location = new System.Drawing.Point(8, 95);
+            this.btnPackFile.Location = new System.Drawing.Point(8, 88);
             this.btnPackFile.Name = "btnPackFile";
-            this.btnPackFile.Size = new System.Drawing.Size(234, 31);
+            this.btnPackFile.Size = new System.Drawing.Size(234, 29);
             this.btnPackFile.TabIndex = 1;
             this.btnPackFile.Text = "打包文件";
             this.btnPackFile.UseVisualStyleBackColor = true;
@@ -476,9 +478,9 @@
             // 
             // btnInsertNote
             // 
-            this.btnInsertNote.Location = new System.Drawing.Point(7, 57);
+            this.btnInsertNote.Location = new System.Drawing.Point(7, 53);
             this.btnInsertNote.Name = "btnInsertNote";
-            this.btnInsertNote.Size = new System.Drawing.Size(235, 32);
+            this.btnInsertNote.Size = new System.Drawing.Size(235, 30);
             this.btnInsertNote.TabIndex = 0;
             this.btnInsertNote.Text = "自增标注插入";
             this.btnInsertNote.UseVisualStyleBackColor = true;
@@ -486,9 +488,9 @@
             // 
             // btn_Add_CenterPoint
             // 
-            this.btn_Add_CenterPoint.Location = new System.Drawing.Point(6, 20);
+            this.btn_Add_CenterPoint.Location = new System.Drawing.Point(6, 18);
             this.btn_Add_CenterPoint.Name = "btn_Add_CenterPoint";
-            this.btn_Add_CenterPoint.Size = new System.Drawing.Size(235, 32);
+            this.btn_Add_CenterPoint.Size = new System.Drawing.Size(235, 30);
             this.btn_Add_CenterPoint.TabIndex = 0;
             this.btn_Add_CenterPoint.Text = "创建草图中心点位置";
             this.btn_Add_CenterPoint.UseVisualStyleBackColor = true;
@@ -496,9 +498,9 @@
             // 
             // btn_SelectByRay
             // 
-            this.btn_SelectByRay.Location = new System.Drawing.Point(328, 234);
+            this.btn_SelectByRay.Location = new System.Drawing.Point(328, 216);
             this.btn_SelectByRay.Name = "btn_SelectByRay";
-            this.btn_SelectByRay.Size = new System.Drawing.Size(142, 29);
+            this.btn_SelectByRay.Size = new System.Drawing.Size(142, 27);
             this.btn_SelectByRay.TabIndex = 23;
             this.btn_SelectByRay.Text = "26.选择相对的面";
             this.btn_SelectByRay.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -507,9 +509,9 @@
             // 
             // GetDrawingModel
             // 
-            this.GetDrawingModel.Location = new System.Drawing.Point(328, 278);
+            this.GetDrawingModel.Location = new System.Drawing.Point(328, 257);
             this.GetDrawingModel.Name = "GetDrawingModel";
-            this.GetDrawingModel.Size = new System.Drawing.Size(142, 29);
+            this.GetDrawingModel.Size = new System.Drawing.Size(142, 27);
             this.GetDrawingModel.TabIndex = 24;
             this.GetDrawingModel.Text = "27.获取工程图模型";
             this.GetDrawingModel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -518,9 +520,9 @@
             // 
             // btn_Transform_PartToAsm
             // 
-            this.btn_Transform_PartToAsm.Location = new System.Drawing.Point(328, 322);
+            this.btn_Transform_PartToAsm.Location = new System.Drawing.Point(328, 297);
             this.btn_Transform_PartToAsm.Name = "btn_Transform_PartToAsm";
-            this.btn_Transform_PartToAsm.Size = new System.Drawing.Size(142, 29);
+            this.btn_Transform_PartToAsm.Size = new System.Drawing.Size(142, 27);
             this.btn_Transform_PartToAsm.TabIndex = 25;
             this.btn_Transform_PartToAsm.Text = "28.零件的坐标转换\r\n";
             this.btn_Transform_PartToAsm.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -529,9 +531,9 @@
             // 
             // btn_Insert_Block
             // 
-            this.btn_Insert_Block.Location = new System.Drawing.Point(328, 366);
+            this.btn_Insert_Block.Location = new System.Drawing.Point(328, 338);
             this.btn_Insert_Block.Name = "btn_Insert_Block";
-            this.btn_Insert_Block.Size = new System.Drawing.Size(142, 29);
+            this.btn_Insert_Block.Size = new System.Drawing.Size(142, 27);
             this.btn_Insert_Block.TabIndex = 26;
             this.btn_Insert_Block.Text = "29.插入块与属性块";
             this.btn_Insert_Block.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -540,9 +542,9 @@
             // 
             // butGlobalVariables
             // 
-            this.butGlobalVariables.Location = new System.Drawing.Point(328, 410);
+            this.butGlobalVariables.Location = new System.Drawing.Point(328, 378);
             this.butGlobalVariables.Name = "butGlobalVariables";
-            this.butGlobalVariables.Size = new System.Drawing.Size(142, 29);
+            this.butGlobalVariables.Size = new System.Drawing.Size(142, 27);
             this.butGlobalVariables.TabIndex = 27;
             this.butGlobalVariables.Text = "30.修改全局变量的值";
             this.butGlobalVariables.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -551,9 +553,9 @@
             // 
             // btnCreateSketch
             // 
-            this.btnCreateSketch.Location = new System.Drawing.Point(486, 14);
+            this.btnCreateSketch.Location = new System.Drawing.Point(486, 13);
             this.btnCreateSketch.Name = "btnCreateSketch";
-            this.btnCreateSketch.Size = new System.Drawing.Size(142, 29);
+            this.btnCreateSketch.Size = new System.Drawing.Size(142, 27);
             this.btnCreateSketch.TabIndex = 28;
             this.btnCreateSketch.Text = "31.修改草图";
             this.btnCreateSketch.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -562,9 +564,9 @@
             // 
             // btnSheetmetal
             // 
-            this.btnSheetmetal.Location = new System.Drawing.Point(486, 59);
+            this.btnSheetmetal.Location = new System.Drawing.Point(486, 54);
             this.btnSheetmetal.Name = "btnSheetmetal";
-            this.btnSheetmetal.Size = new System.Drawing.Size(142, 29);
+            this.btnSheetmetal.Size = new System.Drawing.Size(142, 27);
             this.btnSheetmetal.TabIndex = 29;
             this.btnSheetmetal.Text = "32.钣金信息提取";
             this.btnSheetmetal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -573,9 +575,9 @@
             // 
             // btnGetDimensionInfo
             // 
-            this.btnGetDimensionInfo.Location = new System.Drawing.Point(486, 102);
+            this.btnGetDimensionInfo.Location = new System.Drawing.Point(486, 94);
             this.btnGetDimensionInfo.Name = "btnGetDimensionInfo";
-            this.btnGetDimensionInfo.Size = new System.Drawing.Size(142, 29);
+            this.btnGetDimensionInfo.Size = new System.Drawing.Size(142, 27);
             this.btnGetDimensionInfo.TabIndex = 30;
             this.btnGetDimensionInfo.Text = "33. 读取尺寸信息";
             this.btnGetDimensionInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -584,9 +586,9 @@
             // 
             // btnLayoutMgr
             // 
-            this.btnLayoutMgr.Location = new System.Drawing.Point(486, 146);
+            this.btnLayoutMgr.Location = new System.Drawing.Point(486, 135);
             this.btnLayoutMgr.Name = "btnLayoutMgr";
-            this.btnLayoutMgr.Size = new System.Drawing.Size(142, 29);
+            this.btnLayoutMgr.Size = new System.Drawing.Size(142, 27);
             this.btnLayoutMgr.TabIndex = 31;
             this.btnLayoutMgr.Text = "34.图层管理";
             this.btnLayoutMgr.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -595,9 +597,9 @@
             // 
             // btnGetPreview
             // 
-            this.btnGetPreview.Location = new System.Drawing.Point(486, 190);
+            this.btnGetPreview.Location = new System.Drawing.Point(486, 175);
             this.btnGetPreview.Name = "btnGetPreview";
-            this.btnGetPreview.Size = new System.Drawing.Size(142, 29);
+            this.btnGetPreview.Size = new System.Drawing.Size(142, 27);
             this.btnGetPreview.TabIndex = 32;
             this.btnGetPreview.Text = "35.获取预览图";
             this.btnGetPreview.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -606,9 +608,9 @@
             // 
             // btnDeleteFeature
             // 
-            this.btnDeleteFeature.Location = new System.Drawing.Point(486, 234);
+            this.btnDeleteFeature.Location = new System.Drawing.Point(486, 216);
             this.btnDeleteFeature.Name = "btnDeleteFeature";
-            this.btnDeleteFeature.Size = new System.Drawing.Size(142, 29);
+            this.btnDeleteFeature.Size = new System.Drawing.Size(142, 27);
             this.btnDeleteFeature.TabIndex = 33;
             this.btnDeleteFeature.Text = "36.删除特征保留实体";
             this.btnDeleteFeature.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -617,9 +619,9 @@
             // 
             // btnSetPartTitle
             // 
-            this.btnSetPartTitle.Location = new System.Drawing.Point(486, 278);
+            this.btnSetPartTitle.Location = new System.Drawing.Point(486, 257);
             this.btnSetPartTitle.Name = "btnSetPartTitle";
-            this.btnSetPartTitle.Size = new System.Drawing.Size(142, 29);
+            this.btnSetPartTitle.Size = new System.Drawing.Size(142, 27);
             this.btnSetPartTitle.TabIndex = 34;
             this.btnSetPartTitle.Text = "37. 设定零件名称";
             this.btnSetPartTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -628,9 +630,9 @@
             // 
             // btnReload
             // 
-            this.btnReload.Location = new System.Drawing.Point(486, 322);
+            this.btnReload.Location = new System.Drawing.Point(486, 297);
             this.btnReload.Name = "btnReload";
-            this.btnReload.Size = new System.Drawing.Size(142, 29);
+            this.btnReload.Size = new System.Drawing.Size(142, 27);
             this.btnReload.TabIndex = 35;
             this.btnReload.Text = "38. 放弃零件的修改";
             this.btnReload.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -639,9 +641,9 @@
             // 
             // btnGetMateInfor
             // 
-            this.btnGetMateInfor.Location = new System.Drawing.Point(486, 366);
+            this.btnGetMateInfor.Location = new System.Drawing.Point(486, 338);
             this.btnGetMateInfor.Name = "btnGetMateInfor";
-            this.btnGetMateInfor.Size = new System.Drawing.Size(142, 29);
+            this.btnGetMateInfor.Size = new System.Drawing.Size(142, 27);
             this.btnGetMateInfor.TabIndex = 36;
             this.btnGetMateInfor.Text = "39.获取配合信息";
             this.btnGetMateInfor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -650,9 +652,9 @@
             // 
             // btnGetAllDim
             // 
-            this.btnGetAllDim.Location = new System.Drawing.Point(486, 410);
+            this.btnGetAllDim.Location = new System.Drawing.Point(486, 378);
             this.btnGetAllDim.Name = "btnGetAllDim";
-            this.btnGetAllDim.Size = new System.Drawing.Size(142, 29);
+            this.btnGetAllDim.Size = new System.Drawing.Size(142, 27);
             this.btnGetAllDim.TabIndex = 37;
             this.btnGetAllDim.Text = "40.遍历零件尺寸";
             this.btnGetAllDim.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -661,9 +663,9 @@
             // 
             // btnUserSelectFirst
             // 
-            this.btnUserSelectFirst.Location = new System.Drawing.Point(644, 14);
+            this.btnUserSelectFirst.Location = new System.Drawing.Point(644, 13);
             this.btnUserSelectFirst.Name = "btnUserSelectFirst";
-            this.btnUserSelectFirst.Size = new System.Drawing.Size(142, 29);
+            this.btnUserSelectFirst.Size = new System.Drawing.Size(142, 27);
             this.btnUserSelectFirst.TabIndex = 38;
             this.btnUserSelectFirst.Text = "41.让用户选择对象";
             this.btnUserSelectFirst.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -672,9 +674,9 @@
             // 
             // btnRoundPointLoc
             // 
-            this.btnRoundPointLoc.Location = new System.Drawing.Point(644, 59);
+            this.btnRoundPointLoc.Location = new System.Drawing.Point(644, 54);
             this.btnRoundPointLoc.Name = "btnRoundPointLoc";
-            this.btnRoundPointLoc.Size = new System.Drawing.Size(142, 29);
+            this.btnRoundPointLoc.Size = new System.Drawing.Size(142, 27);
             this.btnRoundPointLoc.TabIndex = 39;
             this.btnRoundPointLoc.Text = "42.坐标值取整";
             this.btnRoundPointLoc.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -683,9 +685,9 @@
             // 
             // btnRunCommand
             // 
-            this.btnRunCommand.Location = new System.Drawing.Point(644, 102);
+            this.btnRunCommand.Location = new System.Drawing.Point(644, 94);
             this.btnRunCommand.Name = "btnRunCommand";
-            this.btnRunCommand.Size = new System.Drawing.Size(142, 29);
+            this.btnRunCommand.Size = new System.Drawing.Size(142, 27);
             this.btnRunCommand.TabIndex = 40;
             this.btnRunCommand.Text = "43.调用Solidworks命令";
             this.btnRunCommand.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -694,9 +696,9 @@
             // 
             // btnInsertHole
             // 
-            this.btnInsertHole.Location = new System.Drawing.Point(644, 146);
+            this.btnInsertHole.Location = new System.Drawing.Point(644, 135);
             this.btnInsertHole.Name = "btnInsertHole";
-            this.btnInsertHole.Size = new System.Drawing.Size(142, 29);
+            this.btnInsertHole.Size = new System.Drawing.Size(142, 27);
             this.btnInsertHole.TabIndex = 41;
             this.btnInsertHole.Text = "44. 插入异形孔";
             this.btnInsertHole.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -705,9 +707,9 @@
             // 
             // butGetTextInSketch
             // 
-            this.butGetTextInSketch.Location = new System.Drawing.Point(644, 190);
+            this.butGetTextInSketch.Location = new System.Drawing.Point(644, 175);
             this.butGetTextInSketch.Name = "butGetTextInSketch";
-            this.butGetTextInSketch.Size = new System.Drawing.Size(142, 29);
+            this.butGetTextInSketch.Size = new System.Drawing.Size(142, 27);
             this.butGetTextInSketch.TabIndex = 42;
             this.butGetTextInSketch.Text = "45.读取草图中的文字";
             this.butGetTextInSketch.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -716,9 +718,9 @@
             // 
             // btnJoinKeepBodyColor
             // 
-            this.btnJoinKeepBodyColor.Location = new System.Drawing.Point(644, 234);
+            this.btnJoinKeepBodyColor.Location = new System.Drawing.Point(644, 216);
             this.btnJoinKeepBodyColor.Name = "btnJoinKeepBodyColor";
-            this.btnJoinKeepBodyColor.Size = new System.Drawing.Size(142, 29);
+            this.btnJoinKeepBodyColor.Size = new System.Drawing.Size(142, 27);
             this.btnJoinKeepBodyColor.TabIndex = 43;
             this.btnJoinKeepBodyColor.Text = "46.组合后保留颜色";
             this.btnJoinKeepBodyColor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -727,9 +729,9 @@
             // 
             // btnShowTemplateBody
             // 
-            this.btnShowTemplateBody.Location = new System.Drawing.Point(644, 322);
+            this.btnShowTemplateBody.Location = new System.Drawing.Point(644, 297);
             this.btnShowTemplateBody.Name = "btnShowTemplateBody";
-            this.btnShowTemplateBody.Size = new System.Drawing.Size(142, 29);
+            this.btnShowTemplateBody.Size = new System.Drawing.Size(142, 27);
             this.btnShowTemplateBody.TabIndex = 43;
             this.btnShowTemplateBody.Text = "48.显示临时实体";
             this.btnShowTemplateBody.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -738,9 +740,9 @@
             // 
             // btnExportBodyToFile
             // 
-            this.btnExportBodyToFile.Location = new System.Drawing.Point(644, 278);
+            this.btnExportBodyToFile.Location = new System.Drawing.Point(644, 257);
             this.btnExportBodyToFile.Name = "btnExportBodyToFile";
-            this.btnExportBodyToFile.Size = new System.Drawing.Size(142, 29);
+            this.btnExportBodyToFile.Size = new System.Drawing.Size(142, 27);
             this.btnExportBodyToFile.TabIndex = 43;
             this.btnExportBodyToFile.Text = "47.导出实体到文件";
             this.btnExportBodyToFile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -749,9 +751,9 @@
             // 
             // butGetSketchContour
             // 
-            this.butGetSketchContour.Location = new System.Drawing.Point(644, 366);
+            this.butGetSketchContour.Location = new System.Drawing.Point(644, 338);
             this.butGetSketchContour.Name = "butGetSketchContour";
-            this.butGetSketchContour.Size = new System.Drawing.Size(142, 29);
+            this.butGetSketchContour.Size = new System.Drawing.Size(142, 27);
             this.butGetSketchContour.TabIndex = 44;
             this.butGetSketchContour.Text = "49.草图闭环遍历与选择";
             this.butGetSketchContour.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -760,9 +762,9 @@
             // 
             // btnAttribute
             // 
-            this.btnAttribute.Location = new System.Drawing.Point(644, 410);
+            this.btnAttribute.Location = new System.Drawing.Point(644, 378);
             this.btnAttribute.Name = "btnAttribute";
-            this.btnAttribute.Size = new System.Drawing.Size(142, 29);
+            this.btnAttribute.Size = new System.Drawing.Size(142, 27);
             this.btnAttribute.TabIndex = 45;
             this.btnAttribute.Text = "50.Attribute的操作实例";
             this.btnAttribute.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -772,9 +774,9 @@
             // btnGetRayPoints
             // 
             this.btnGetRayPoints.BackColor = System.Drawing.SystemColors.Control;
-            this.btnGetRayPoints.Location = new System.Drawing.Point(802, 14);
+            this.btnGetRayPoints.Location = new System.Drawing.Point(802, 13);
             this.btnGetRayPoints.Name = "btnGetRayPoints";
-            this.btnGetRayPoints.Size = new System.Drawing.Size(142, 29);
+            this.btnGetRayPoints.Size = new System.Drawing.Size(142, 27);
             this.btnGetRayPoints.TabIndex = 46;
             this.btnGetRayPoints.Text = "51.求射线穿透长度";
             this.btnGetRayPoints.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -784,9 +786,9 @@
             // btnGetCompFromBalloon
             // 
             this.btnGetCompFromBalloon.BackColor = System.Drawing.SystemColors.Control;
-            this.btnGetCompFromBalloon.Location = new System.Drawing.Point(802, 59);
+            this.btnGetCompFromBalloon.Location = new System.Drawing.Point(802, 54);
             this.btnGetCompFromBalloon.Name = "btnGetCompFromBalloon";
-            this.btnGetCompFromBalloon.Size = new System.Drawing.Size(142, 29);
+            this.btnGetCompFromBalloon.Size = new System.Drawing.Size(142, 27);
             this.btnGetCompFromBalloon.TabIndex = 46;
             this.btnGetCompFromBalloon.Text = "52.通过标注找到零件";
             this.btnGetCompFromBalloon.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -796,9 +798,9 @@
             // btnImpotDxfToSketch
             // 
             this.btnImpotDxfToSketch.BackColor = System.Drawing.SystemColors.Control;
-            this.btnImpotDxfToSketch.Location = new System.Drawing.Point(802, 102);
+            this.btnImpotDxfToSketch.Location = new System.Drawing.Point(802, 94);
             this.btnImpotDxfToSketch.Name = "btnImpotDxfToSketch";
-            this.btnImpotDxfToSketch.Size = new System.Drawing.Size(142, 29);
+            this.btnImpotDxfToSketch.Size = new System.Drawing.Size(142, 27);
             this.btnImpotDxfToSketch.TabIndex = 46;
             this.btnImpotDxfToSketch.Text = "53.导入Dxf到草图";
             this.btnImpotDxfToSketch.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -807,9 +809,9 @@
             // 
             // btnConvertEntities
             // 
-            this.btnConvertEntities.Location = new System.Drawing.Point(802, 146);
+            this.btnConvertEntities.Location = new System.Drawing.Point(802, 135);
             this.btnConvertEntities.Name = "btnConvertEntities";
-            this.btnConvertEntities.Size = new System.Drawing.Size(142, 29);
+            this.btnConvertEntities.Size = new System.Drawing.Size(142, 27);
             this.btnConvertEntities.TabIndex = 47;
             this.btnConvertEntities.Text = "54.草图中引用实体";
             this.btnConvertEntities.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -818,9 +820,9 @@
             // 
             // btnCamera
             // 
-            this.btnCamera.Location = new System.Drawing.Point(802, 190);
+            this.btnCamera.Location = new System.Drawing.Point(802, 175);
             this.btnCamera.Name = "btnCamera";
-            this.btnCamera.Size = new System.Drawing.Size(142, 29);
+            this.btnCamera.Size = new System.Drawing.Size(142, 27);
             this.btnCamera.TabIndex = 48;
             this.btnCamera.Text = "55.相机视角";
             this.btnCamera.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -829,9 +831,9 @@
             // 
             // btnReplaceReference
             // 
-            this.btnReplaceReference.Location = new System.Drawing.Point(802, 234);
+            this.btnReplaceReference.Location = new System.Drawing.Point(802, 216);
             this.btnReplaceReference.Name = "btnReplaceReference";
-            this.btnReplaceReference.Size = new System.Drawing.Size(142, 29);
+            this.btnReplaceReference.Size = new System.Drawing.Size(142, 27);
             this.btnReplaceReference.TabIndex = 49;
             this.btnReplaceReference.Text = "56.修改工程图引用";
             this.btnReplaceReference.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -840,9 +842,9 @@
             // 
             // btnDeleteRelation
             // 
-            this.btnDeleteRelation.Location = new System.Drawing.Point(802, 278);
+            this.btnDeleteRelation.Location = new System.Drawing.Point(802, 257);
             this.btnDeleteRelation.Name = "btnDeleteRelation";
-            this.btnDeleteRelation.Size = new System.Drawing.Size(142, 29);
+            this.btnDeleteRelation.Size = new System.Drawing.Size(142, 27);
             this.btnDeleteRelation.TabIndex = 50;
             this.btnDeleteRelation.Text = "57.删除草图报错引用";
             this.btnDeleteRelation.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -851,9 +853,9 @@
             // 
             // btnMovePart
             // 
-            this.btnMovePart.Location = new System.Drawing.Point(802, 322);
+            this.btnMovePart.Location = new System.Drawing.Point(802, 297);
             this.btnMovePart.Name = "btnMovePart";
-            this.btnMovePart.Size = new System.Drawing.Size(142, 29);
+            this.btnMovePart.Size = new System.Drawing.Size(142, 27);
             this.btnMovePart.TabIndex = 51;
             this.btnMovePart.Text = "58.移动零件";
             this.btnMovePart.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -862,9 +864,9 @@
             // 
             // btnGetDisMateInfo
             // 
-            this.btnGetDisMateInfo.Location = new System.Drawing.Point(802, 366);
+            this.btnGetDisMateInfo.Location = new System.Drawing.Point(802, 338);
             this.btnGetDisMateInfo.Name = "btnGetDisMateInfo";
-            this.btnGetDisMateInfo.Size = new System.Drawing.Size(142, 29);
+            this.btnGetDisMateInfo.Size = new System.Drawing.Size(142, 27);
             this.btnGetDisMateInfo.TabIndex = 52;
             this.btnGetDisMateInfo.Text = "59.获取距离配合信息";
             this.btnGetDisMateInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -873,9 +875,9 @@
             // 
             // btnGetFeatureNodes
             // 
-            this.btnGetFeatureNodes.Location = new System.Drawing.Point(802, 410);
+            this.btnGetFeatureNodes.Location = new System.Drawing.Point(802, 378);
             this.btnGetFeatureNodes.Name = "btnGetFeatureNodes";
-            this.btnGetFeatureNodes.Size = new System.Drawing.Size(142, 29);
+            this.btnGetFeatureNodes.Size = new System.Drawing.Size(142, 27);
             this.btnGetFeatureNodes.TabIndex = 53;
             this.btnGetFeatureNodes.Text = "60.特征树节点操作";
             this.btnGetFeatureNodes.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -884,9 +886,9 @@
             // 
             // btnProfileCenter
             // 
-            this.btnProfileCenter.Location = new System.Drawing.Point(961, 14);
+            this.btnProfileCenter.Location = new System.Drawing.Point(961, 13);
             this.btnProfileCenter.Name = "btnProfileCenter";
-            this.btnProfileCenter.Size = new System.Drawing.Size(133, 29);
+            this.btnProfileCenter.Size = new System.Drawing.Size(133, 27);
             this.btnProfileCenter.TabIndex = 54;
             this.btnProfileCenter.Text = "61.高级配合(轮廓中心)";
             this.btnProfileCenter.UseVisualStyleBackColor = true;
@@ -894,9 +896,9 @@
             // 
             // btnOutWithCoordSystem
             // 
-            this.btnOutWithCoordSystem.Location = new System.Drawing.Point(961, 59);
+            this.btnOutWithCoordSystem.Location = new System.Drawing.Point(961, 54);
             this.btnOutWithCoordSystem.Name = "btnOutWithCoordSystem";
-            this.btnOutWithCoordSystem.Size = new System.Drawing.Size(133, 29);
+            this.btnOutWithCoordSystem.Size = new System.Drawing.Size(133, 27);
             this.btnOutWithCoordSystem.TabIndex = 55;
             this.btnOutWithCoordSystem.Text = " 62.特定坐标系输出";
             this.btnOutWithCoordSystem.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -906,9 +908,9 @@
             // btnCreateDrawing
             // 
             this.btnCreateDrawing.BackColor = System.Drawing.SystemColors.Control;
-            this.btnCreateDrawing.Location = new System.Drawing.Point(961, 102);
+            this.btnCreateDrawing.Location = new System.Drawing.Point(961, 94);
             this.btnCreateDrawing.Name = "btnCreateDrawing";
-            this.btnCreateDrawing.Size = new System.Drawing.Size(133, 29);
+            this.btnCreateDrawing.Size = new System.Drawing.Size(133, 27);
             this.btnCreateDrawing.TabIndex = 56;
             this.btnCreateDrawing.Text = "63.工程图-预定义视图";
             this.btnCreateDrawing.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -917,9 +919,9 @@
             // 
             // btnTraverseFace
             // 
-            this.btnTraverseFace.Location = new System.Drawing.Point(961, 146);
+            this.btnTraverseFace.Location = new System.Drawing.Point(961, 135);
             this.btnTraverseFace.Name = "btnTraverseFace";
-            this.btnTraverseFace.Size = new System.Drawing.Size(133, 29);
+            this.btnTraverseFace.Size = new System.Drawing.Size(133, 27);
             this.btnTraverseFace.TabIndex = 57;
             this.btnTraverseFace.Text = "64.遍历面";
             this.btnTraverseFace.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -928,9 +930,9 @@
             // 
             // btnGetView
             // 
-            this.btnGetView.Location = new System.Drawing.Point(961, 190);
+            this.btnGetView.Location = new System.Drawing.Point(961, 175);
             this.btnGetView.Name = "btnGetView";
-            this.btnGetView.Size = new System.Drawing.Size(133, 29);
+            this.btnGetView.Size = new System.Drawing.Size(133, 27);
             this.btnGetView.TabIndex = 58;
             this.btnGetView.Text = "65.遍历视图中的草图";
             this.btnGetView.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -940,9 +942,9 @@
             // btnOpenWithHide
             // 
             this.btnOpenWithHide.BackColor = System.Drawing.SystemColors.Control;
-            this.btnOpenWithHide.Location = new System.Drawing.Point(961, 234);
+            this.btnOpenWithHide.Location = new System.Drawing.Point(961, 216);
             this.btnOpenWithHide.Name = "btnOpenWithHide";
-            this.btnOpenWithHide.Size = new System.Drawing.Size(133, 29);
+            this.btnOpenWithHide.Size = new System.Drawing.Size(133, 27);
             this.btnOpenWithHide.TabIndex = 59;
             this.btnOpenWithHide.Text = "66.隐藏打开零件";
             this.btnOpenWithHide.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -952,9 +954,9 @@
             // btnCreate3thSTDView
             // 
             this.btnCreate3thSTDView.BackColor = System.Drawing.SystemColors.Control;
-            this.btnCreate3thSTDView.Location = new System.Drawing.Point(961, 278);
+            this.btnCreate3thSTDView.Location = new System.Drawing.Point(961, 257);
             this.btnCreate3thSTDView.Name = "btnCreate3thSTDView";
-            this.btnCreate3thSTDView.Size = new System.Drawing.Size(133, 29);
+            this.btnCreate3thSTDView.Size = new System.Drawing.Size(133, 27);
             this.btnCreate3thSTDView.TabIndex = 60;
             this.btnCreate3thSTDView.Text = "67. 创建标准三视图";
             this.btnCreate3thSTDView.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -963,9 +965,9 @@
             // 
             // btnAutoFillet
             // 
-            this.btnAutoFillet.Location = new System.Drawing.Point(961, 322);
+            this.btnAutoFillet.Location = new System.Drawing.Point(961, 297);
             this.btnAutoFillet.Name = "btnAutoFillet";
-            this.btnAutoFillet.Size = new System.Drawing.Size(133, 29);
+            this.btnAutoFillet.Size = new System.Drawing.Size(133, 27);
             this.btnAutoFillet.TabIndex = 61;
             this.btnAutoFillet.Text = "68.自动倒圆角";
             this.btnAutoFillet.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -974,9 +976,9 @@
             // 
             // btnAddRel
             // 
-            this.btnAddRel.Location = new System.Drawing.Point(961, 366);
+            this.btnAddRel.Location = new System.Drawing.Point(961, 338);
             this.btnAddRel.Name = "btnAddRel";
-            this.btnAddRel.Size = new System.Drawing.Size(133, 29);
+            this.btnAddRel.Size = new System.Drawing.Size(133, 27);
             this.btnAddRel.TabIndex = 62;
             this.btnAddRel.Text = "69.自动增加重合关系";
             this.btnAddRel.UseVisualStyleBackColor = true;
@@ -984,9 +986,9 @@
             // 
             // btnSettingAutoCutList
             // 
-            this.btnSettingAutoCutList.Location = new System.Drawing.Point(961, 410);
+            this.btnSettingAutoCutList.Location = new System.Drawing.Point(961, 378);
             this.btnSettingAutoCutList.Name = "btnSettingAutoCutList";
-            this.btnSettingAutoCutList.Size = new System.Drawing.Size(133, 29);
+            this.btnSettingAutoCutList.Size = new System.Drawing.Size(133, 27);
             this.btnSettingAutoCutList.TabIndex = 63;
             this.btnSettingAutoCutList.Text = "70.设置禁用切割清单";
             this.btnSettingAutoCutList.UseVisualStyleBackColor = true;
@@ -994,9 +996,9 @@
             // 
             // btnModifyTemplate
             // 
-            this.btnModifyTemplate.Location = new System.Drawing.Point(1111, 14);
+            this.btnModifyTemplate.Location = new System.Drawing.Point(1111, 13);
             this.btnModifyTemplate.Name = "btnModifyTemplate";
-            this.btnModifyTemplate.Size = new System.Drawing.Size(125, 29);
+            this.btnModifyTemplate.Size = new System.Drawing.Size(125, 27);
             this.btnModifyTemplate.TabIndex = 64;
             this.btnModifyTemplate.Text = "71.替换工程图模板";
             this.btnModifyTemplate.UseVisualStyleBackColor = true;
@@ -1004,9 +1006,9 @@
             // 
             // btnModifyWeldment
             // 
-            this.btnModifyWeldment.Location = new System.Drawing.Point(1111, 59);
+            this.btnModifyWeldment.Location = new System.Drawing.Point(1111, 54);
             this.btnModifyWeldment.Name = "btnModifyWeldment";
-            this.btnModifyWeldment.Size = new System.Drawing.Size(125, 29);
+            this.btnModifyWeldment.Size = new System.Drawing.Size(125, 27);
             this.btnModifyWeldment.TabIndex = 65;
             this.btnModifyWeldment.Text = "72.修改焊件轮廓";
             this.btnModifyWeldment.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1015,9 +1017,9 @@
             // 
             // btnGetCutList
             // 
-            this.btnGetCutList.Location = new System.Drawing.Point(1111, 102);
+            this.btnGetCutList.Location = new System.Drawing.Point(1111, 94);
             this.btnGetCutList.Name = "btnGetCutList";
-            this.btnGetCutList.Size = new System.Drawing.Size(125, 29);
+            this.btnGetCutList.Size = new System.Drawing.Size(125, 27);
             this.btnGetCutList.TabIndex = 66;
             this.btnGetCutList.Text = "73.获取切割清单";
             this.btnGetCutList.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1026,9 +1028,9 @@
             // 
             // btnCreateDimXpert
             // 
-            this.btnCreateDimXpert.Location = new System.Drawing.Point(1111, 146);
+            this.btnCreateDimXpert.Location = new System.Drawing.Point(1111, 135);
             this.btnCreateDimXpert.Name = "btnCreateDimXpert";
-            this.btnCreateDimXpert.Size = new System.Drawing.Size(125, 29);
+            this.btnCreateDimXpert.Size = new System.Drawing.Size(125, 27);
             this.btnCreateDimXpert.TabIndex = 67;
             this.btnCreateDimXpert.Text = "74.DimXpert";
             this.btnCreateDimXpert.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1037,9 +1039,9 @@
             // 
             // AddSizeDim
             // 
-            this.AddSizeDim.Location = new System.Drawing.Point(1111, 190);
+            this.AddSizeDim.Location = new System.Drawing.Point(1111, 175);
             this.AddSizeDim.Name = "AddSizeDim";
-            this.AddSizeDim.Size = new System.Drawing.Size(125, 29);
+            this.AddSizeDim.Size = new System.Drawing.Size(125, 27);
             this.AddSizeDim.TabIndex = 68;
             this.AddSizeDim.Text = "75.工程图标注长宽";
             this.AddSizeDim.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1049,9 +1051,9 @@
             // btnAddDimForHoles
             // 
             this.btnAddDimForHoles.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAddDimForHoles.Location = new System.Drawing.Point(1111, 234);
+            this.btnAddDimForHoles.Location = new System.Drawing.Point(1111, 216);
             this.btnAddDimForHoles.Name = "btnAddDimForHoles";
-            this.btnAddDimForHoles.Size = new System.Drawing.Size(125, 29);
+            this.btnAddDimForHoles.Size = new System.Drawing.Size(125, 27);
             this.btnAddDimForHoles.TabIndex = 69;
             this.btnAddDimForHoles.Text = "76.标注孔坐标";
             this.btnAddDimForHoles.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1060,9 +1062,9 @@
             // 
             // btnKeepView
             // 
-            this.btnKeepView.Location = new System.Drawing.Point(1111, 278);
+            this.btnKeepView.Location = new System.Drawing.Point(1111, 257);
             this.btnKeepView.Name = "btnKeepView";
-            this.btnKeepView.Size = new System.Drawing.Size(125, 29);
+            this.btnKeepView.Size = new System.Drawing.Size(125, 27);
             this.btnKeepView.TabIndex = 70;
             this.btnKeepView.Text = "77.打开时保持姿势";
             this.btnKeepView.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1071,9 +1073,9 @@
             // 
             // btnAddCenterMark
             // 
-            this.btnAddCenterMark.Location = new System.Drawing.Point(1111, 322);
+            this.btnAddCenterMark.Location = new System.Drawing.Point(1111, 297);
             this.btnAddCenterMark.Name = "btnAddCenterMark";
-            this.btnAddCenterMark.Size = new System.Drawing.Size(125, 29);
+            this.btnAddCenterMark.Size = new System.Drawing.Size(125, 27);
             this.btnAddCenterMark.TabIndex = 71;
             this.btnAddCenterMark.Text = "78.中心标记操作";
             this.btnAddCenterMark.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1082,9 +1084,9 @@
             // 
             // btnGetSketchDim
             // 
-            this.btnGetSketchDim.Location = new System.Drawing.Point(1111, 366);
+            this.btnGetSketchDim.Location = new System.Drawing.Point(1111, 338);
             this.btnGetSketchDim.Name = "btnGetSketchDim";
-            this.btnGetSketchDim.Size = new System.Drawing.Size(125, 29);
+            this.btnGetSketchDim.Size = new System.Drawing.Size(125, 27);
             this.btnGetSketchDim.TabIndex = 72;
             this.btnGetSketchDim.Text = "79.获取直线的尺寸";
             this.btnGetSketchDim.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1093,9 +1095,9 @@
             // 
             // btnOLEObject
             // 
-            this.btnOLEObject.Location = new System.Drawing.Point(1111, 410);
+            this.btnOLEObject.Location = new System.Drawing.Point(1111, 378);
             this.btnOLEObject.Name = "btnOLEObject";
-            this.btnOLEObject.Size = new System.Drawing.Size(125, 29);
+            this.btnOLEObject.Size = new System.Drawing.Size(125, 27);
             this.btnOLEObject.TabIndex = 73;
             this.btnOLEObject.Text = "80.工程图中的图片";
             this.btnOLEObject.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1104,9 +1106,9 @@
             // 
             // btnReplaceModelForView
             // 
-            this.btnReplaceModelForView.Location = new System.Drawing.Point(644, 475);
+            this.btnReplaceModelForView.Location = new System.Drawing.Point(485, 438);
             this.btnReplaceModelForView.Name = "btnReplaceModelForView";
-            this.btnReplaceModelForView.Size = new System.Drawing.Size(142, 29);
+            this.btnReplaceModelForView.Size = new System.Drawing.Size(142, 27);
             this.btnReplaceModelForView.TabIndex = 74;
             this.btnReplaceModelForView.Text = "81.替换工程图模型";
             this.btnReplaceModelForView.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1115,9 +1117,9 @@
             // 
             // btnSimStudy
             // 
-            this.btnSimStudy.Location = new System.Drawing.Point(644, 514);
+            this.btnSimStudy.Location = new System.Drawing.Point(485, 474);
             this.btnSimStudy.Name = "btnSimStudy";
-            this.btnSimStudy.Size = new System.Drawing.Size(142, 29);
+            this.btnSimStudy.Size = new System.Drawing.Size(142, 27);
             this.btnSimStudy.TabIndex = 75;
             this.btnSimStudy.Text = "82.Simulation修改参数";
             this.btnSimStudy.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1126,9 +1128,9 @@
             // 
             // btnImportDwg
             // 
-            this.btnImportDwg.Location = new System.Drawing.Point(644, 552);
+            this.btnImportDwg.Location = new System.Drawing.Point(485, 510);
             this.btnImportDwg.Name = "btnImportDwg";
-            this.btnImportDwg.Size = new System.Drawing.Size(142, 29);
+            this.btnImportDwg.Size = new System.Drawing.Size(142, 27);
             this.btnImportDwg.TabIndex = 76;
             this.btnImportDwg.Text = "83.草图导入指定图层";
             this.btnImportDwg.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1137,9 +1139,9 @@
             // 
             // btnAddCallout
             // 
-            this.btnAddCallout.Location = new System.Drawing.Point(644, 592);
+            this.btnAddCallout.Location = new System.Drawing.Point(485, 546);
             this.btnAddCallout.Name = "btnAddCallout";
-            this.btnAddCallout.Size = new System.Drawing.Size(142, 29);
+            this.btnAddCallout.Size = new System.Drawing.Size(142, 27);
             this.btnAddCallout.TabIndex = 77;
             this.btnAddCallout.Text = "84.增加Callout标志";
             this.btnAddCallout.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1148,9 +1150,9 @@
             // 
             // btnRename
             // 
-            this.btnRename.Location = new System.Drawing.Point(644, 630);
+            this.btnRename.Location = new System.Drawing.Point(485, 582);
             this.btnRename.Name = "btnRename";
-            this.btnRename.Size = new System.Drawing.Size(142, 29);
+            this.btnRename.Size = new System.Drawing.Size(142, 27);
             this.btnRename.TabIndex = 77;
             this.btnRename.Text = "85.直接重命名";
             this.btnRename.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1159,9 +1161,9 @@
             // 
             // btnSketchContour
             // 
-            this.btnSketchContour.Location = new System.Drawing.Point(802, 475);
+            this.btnSketchContour.Location = new System.Drawing.Point(643, 438);
             this.btnSketchContour.Name = "btnSketchContour";
-            this.btnSketchContour.Size = new System.Drawing.Size(142, 29);
+            this.btnSketchContour.Size = new System.Drawing.Size(142, 27);
             this.btnSketchContour.TabIndex = 77;
             this.btnSketchContour.Text = "86.草图轮廓/形状";
             this.btnSketchContour.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1170,9 +1172,9 @@
             // 
             // btnAddLineDims
             // 
-            this.btnAddLineDims.Location = new System.Drawing.Point(802, 514);
+            this.btnAddLineDims.Location = new System.Drawing.Point(643, 474);
             this.btnAddLineDims.Name = "btnAddLineDims";
-            this.btnAddLineDims.Size = new System.Drawing.Size(142, 29);
+            this.btnAddLineDims.Size = new System.Drawing.Size(142, 27);
             this.btnAddLineDims.TabIndex = 77;
             this.btnAddLineDims.Text = "87.尺寸链标注";
             this.btnAddLineDims.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1181,9 +1183,9 @@
             // 
             // btnCommandManagerTab
             // 
-            this.btnCommandManagerTab.Location = new System.Drawing.Point(802, 552);
+            this.btnCommandManagerTab.Location = new System.Drawing.Point(643, 510);
             this.btnCommandManagerTab.Name = "btnCommandManagerTab";
-            this.btnCommandManagerTab.Size = new System.Drawing.Size(142, 29);
+            this.btnCommandManagerTab.Size = new System.Drawing.Size(142, 27);
             this.btnCommandManagerTab.TabIndex = 78;
             this.btnCommandManagerTab.Text = "88. 切换命令组";
             this.btnCommandManagerTab.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1192,9 +1194,9 @@
             // 
             // btnUndoOrRedo
             // 
-            this.btnUndoOrRedo.Location = new System.Drawing.Point(802, 592);
+            this.btnUndoOrRedo.Location = new System.Drawing.Point(643, 546);
             this.btnUndoOrRedo.Name = "btnUndoOrRedo";
-            this.btnUndoOrRedo.Size = new System.Drawing.Size(142, 29);
+            this.btnUndoOrRedo.Size = new System.Drawing.Size(142, 27);
             this.btnUndoOrRedo.TabIndex = 79;
             this.btnUndoOrRedo.Text = "89.撤销与重做";
             this.btnUndoOrRedo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1203,9 +1205,9 @@
             // 
             // btnChangeLayer
             // 
-            this.btnChangeLayer.Location = new System.Drawing.Point(802, 629);
+            this.btnChangeLayer.Location = new System.Drawing.Point(643, 581);
             this.btnChangeLayer.Name = "btnChangeLayer";
-            this.btnChangeLayer.Size = new System.Drawing.Size(142, 29);
+            this.btnChangeLayer.Size = new System.Drawing.Size(142, 27);
             this.btnChangeLayer.TabIndex = 79;
             this.btnChangeLayer.Text = "90.修改表格对象图层";
             this.btnChangeLayer.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1214,9 +1216,9 @@
             // 
             // btnOpenedFiles
             // 
-            this.btnOpenedFiles.Location = new System.Drawing.Point(961, 475);
+            this.btnOpenedFiles.Location = new System.Drawing.Point(802, 438);
             this.btnOpenedFiles.Name = "btnOpenedFiles";
-            this.btnOpenedFiles.Size = new System.Drawing.Size(133, 29);
+            this.btnOpenedFiles.Size = new System.Drawing.Size(133, 27);
             this.btnOpenedFiles.TabIndex = 77;
             this.btnOpenedFiles.Text = "91.打开文件那些事";
             this.btnOpenedFiles.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1225,9 +1227,9 @@
             // 
             // btnGetDistance
             // 
-            this.btnGetDistance.Location = new System.Drawing.Point(961, 514);
+            this.btnGetDistance.Location = new System.Drawing.Point(802, 474);
             this.btnGetDistance.Name = "btnGetDistance";
-            this.btnGetDistance.Size = new System.Drawing.Size(133, 29);
+            this.btnGetDistance.Size = new System.Drawing.Size(133, 27);
             this.btnGetDistance.TabIndex = 77;
             this.btnGetDistance.Text = "92.获取距离";
             this.btnGetDistance.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1236,9 +1238,9 @@
             // 
             // btnPackAndGo
             // 
-            this.btnPackAndGo.Location = new System.Drawing.Point(961, 552);
+            this.btnPackAndGo.Location = new System.Drawing.Point(802, 510);
             this.btnPackAndGo.Name = "btnPackAndGo";
-            this.btnPackAndGo.Size = new System.Drawing.Size(133, 29);
+            this.btnPackAndGo.Size = new System.Drawing.Size(133, 27);
             this.btnPackAndGo.TabIndex = 77;
             this.btnPackAndGo.Text = "93.Pack And Go示例";
             this.btnPackAndGo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1247,9 +1249,9 @@
             // 
             // btnVirtual
             // 
-            this.btnVirtual.Location = new System.Drawing.Point(961, 592);
+            this.btnVirtual.Location = new System.Drawing.Point(802, 546);
             this.btnVirtual.Name = "btnVirtual";
-            this.btnVirtual.Size = new System.Drawing.Size(133, 29);
+            this.btnVirtual.Size = new System.Drawing.Size(133, 27);
             this.btnVirtual.TabIndex = 77;
             this.btnVirtual.Text = "94.使零件虚拟";
             this.btnVirtual.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1258,9 +1260,9 @@
             // 
             // btnInsertBalloon
             // 
-            this.btnInsertBalloon.Location = new System.Drawing.Point(961, 629);
+            this.btnInsertBalloon.Location = new System.Drawing.Point(802, 581);
             this.btnInsertBalloon.Name = "btnInsertBalloon";
-            this.btnInsertBalloon.Size = new System.Drawing.Size(133, 29);
+            this.btnInsertBalloon.Size = new System.Drawing.Size(133, 27);
             this.btnInsertBalloon.TabIndex = 80;
             this.btnInsertBalloon.Text = "95.插入BOM气泡球";
             this.btnInsertBalloon.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1269,9 +1271,9 @@
             // 
             // BtnInsertBOMTable
             // 
-            this.BtnInsertBOMTable.Location = new System.Drawing.Point(1111, 475);
+            this.BtnInsertBOMTable.Location = new System.Drawing.Point(952, 438);
             this.BtnInsertBOMTable.Name = "BtnInsertBOMTable";
-            this.BtnInsertBOMTable.Size = new System.Drawing.Size(125, 29);
+            this.BtnInsertBOMTable.Size = new System.Drawing.Size(125, 27);
             this.BtnInsertBOMTable.TabIndex = 81;
             this.BtnInsertBOMTable.Text = "96.插入材料明细表";
             this.BtnInsertBOMTable.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1280,9 +1282,9 @@
             // 
             // BtnExtremePoint
             // 
-            this.BtnExtremePoint.Location = new System.Drawing.Point(1111, 514);
+            this.BtnExtremePoint.Location = new System.Drawing.Point(952, 474);
             this.BtnExtremePoint.Name = "BtnExtremePoint";
-            this.BtnExtremePoint.Size = new System.Drawing.Size(125, 29);
+            this.BtnExtremePoint.Size = new System.Drawing.Size(125, 27);
             this.BtnExtremePoint.TabIndex = 82;
             this.BtnExtremePoint.Text = "97.极点坐标";
             this.BtnExtremePoint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1291,9 +1293,9 @@
             // 
             // btnSplit
             // 
-            this.btnSplit.Location = new System.Drawing.Point(1111, 552);
+            this.btnSplit.Location = new System.Drawing.Point(952, 510);
             this.btnSplit.Name = "btnSplit";
-            this.btnSplit.Size = new System.Drawing.Size(125, 29);
+            this.btnSplit.Size = new System.Drawing.Size(125, 27);
             this.btnSplit.TabIndex = 83;
             this.btnSplit.Text = "98.分割实体";
             this.btnSplit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1302,9 +1304,9 @@
             // 
             // BtnSaveAllBodies
             // 
-            this.BtnSaveAllBodies.Location = new System.Drawing.Point(1111, 592);
+            this.BtnSaveAllBodies.Location = new System.Drawing.Point(952, 546);
             this.BtnSaveAllBodies.Name = "BtnSaveAllBodies";
-            this.BtnSaveAllBodies.Size = new System.Drawing.Size(125, 29);
+            this.BtnSaveAllBodies.Size = new System.Drawing.Size(125, 27);
             this.BtnSaveAllBodies.TabIndex = 84;
             this.BtnSaveAllBodies.Text = "99.零件实体导装配";
             this.BtnSaveAllBodies.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1313,20 +1315,42 @@
             // 
             // btnRefreshPropertiesEditer
             // 
-            this.btnRefreshPropertiesEditer.Location = new System.Drawing.Point(1111, 627);
+            this.btnRefreshPropertiesEditer.Location = new System.Drawing.Point(952, 579);
             this.btnRefreshPropertiesEditer.Name = "btnRefreshPropertiesEditer";
-            this.btnRefreshPropertiesEditer.Size = new System.Drawing.Size(125, 31);
+            this.btnRefreshPropertiesEditer.Size = new System.Drawing.Size(125, 29);
             this.btnRefreshPropertiesEditer.TabIndex = 85;
             this.btnRefreshPropertiesEditer.Text = "100.刷新属性卡";
             this.btnRefreshPropertiesEditer.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnRefreshPropertiesEditer.UseVisualStyleBackColor = true;
             this.btnRefreshPropertiesEditer.Click += new System.EventHandler(this.btnRefreshPropertiesEditer_Click);
             // 
+            // btnFeatureFaces
+            // 
+            this.btnFeatureFaces.Location = new System.Drawing.Point(1098, 438);
+            this.btnFeatureFaces.Name = "btnFeatureFaces";
+            this.btnFeatureFaces.Size = new System.Drawing.Size(125, 27);
+            this.btnFeatureFaces.TabIndex = 86;
+            this.btnFeatureFaces.Text = "101.特征面信息";
+            this.btnFeatureFaces.UseVisualStyleBackColor = true;
+            this.btnFeatureFaces.Click += new System.EventHandler(this.btnFeatureFaces_Click);
+            // 
+            // btnTitleBlock
+            // 
+            this.btnTitleBlock.Location = new System.Drawing.Point(1098, 474);
+            this.btnTitleBlock.Name = "btnTitleBlock";
+            this.btnTitleBlock.Size = new System.Drawing.Size(125, 27);
+            this.btnTitleBlock.TabIndex = 86;
+            this.btnTitleBlock.Text = "102.标题块读取";
+            this.btnTitleBlock.UseVisualStyleBackColor = true;
+            this.btnTitleBlock.Click += new System.EventHandler(this.btnTitleBlock_Click);
+            // 
             // Btn_Filter
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1264, 675);
+            this.ClientSize = new System.Drawing.Size(1262, 623);
+            this.Controls.Add(this.btnTitleBlock);
+            this.Controls.Add(this.btnFeatureFaces);
             this.Controls.Add(this.btnRefreshPropertiesEditer);
             this.Controls.Add(this.BtnSaveAllBodies);
             this.Controls.Add(this.btnSplit);
@@ -1548,6 +1572,8 @@
         private System.Windows.Forms.Button btnSplit;
         private System.Windows.Forms.Button BtnSaveAllBodies;
         private System.Windows.Forms.Button btnRefreshPropertiesEditer;
+        private System.Windows.Forms.Button btnFeatureFaces;
+        private System.Windows.Forms.Button btnTitleBlock;
     }
 }
 

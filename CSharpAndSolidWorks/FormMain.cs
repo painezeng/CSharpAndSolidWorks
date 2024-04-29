@@ -5878,6 +5878,71 @@ namespace CSharpAndSolidWorks
             }
 
         }
+
+        /// <summary>
+        /// 读取指定特征的面
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnFeatureFaces_Click(object sender, EventArgs e)
+        {
+            SldWorks swApp = Utility.ConnectToSolidWorks();
+            if (swApp.IActiveDoc2 != null)
+            {
+                var swModel = swApp.IActiveDoc2;
+                if (swModel != null)
+                {
+                    var swPart = (PartDoc)swModel;
+
+
+
+                    var feature = (Feature)swPart.FeatureByName("凸台-拉伸2");
+
+                    var allFeaFaces = (object[])feature.GetFaces();
+
+
+
+                    foreach (var face in allFeaFaces)
+                    {
+                        ((face as Face2) as Entity).Select(true);
+                    }
+
+
+                }
+
+            }
+        }
+
+        /// <summary>
+        /// 工程图中标题块信息读取
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnTitleBlock_Click(object sender, EventArgs e)
+        {
+            SldWorks swApp = Utility.ConnectToSolidWorks();
+
+            var swModel = (ModelDoc2)swApp.ActiveDoc;
+
+            var boolstatus = swModel.Extension.SelectByID2("标题块表3", "TITLEBLOCK", 0, 0, 0, false, 0, null, 0);
+
+            if (boolstatus)
+            {
+                var selectFea = (TitleBlock)swModel.ISelectionManager.GetSelectedObject6(1, -1);
+
+                var allNotes = (object[])selectFea.GetNotes();
+
+                foreach (var note in allNotes)
+                {
+
+                    var anno = (Note)note;
+                    Debug.Print(anno.GetText());
+
+                }
+
+            }
+
+        }
     }
 
     [System.Runtime.InteropServices.ComVisible(true)]
