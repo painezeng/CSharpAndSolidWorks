@@ -25,9 +25,9 @@ using View = SolidWorks.Interop.sldworks.View;
 
 namespace CSharpAndSolidWorks
 {
-    public partial class Btn_Filter : Form
+    public partial class FormMain : Form
     {
-        public Btn_Filter()
+        public FormMain()
         {
             InitializeComponent();
         }
@@ -5941,6 +5941,13 @@ namespace CSharpAndSolidWorks
                 }
 
             }
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            FrmDragDrop frmDragDrop = new FrmDragDrop();
+            frmDragDrop.Show(this);
 
         }
     }

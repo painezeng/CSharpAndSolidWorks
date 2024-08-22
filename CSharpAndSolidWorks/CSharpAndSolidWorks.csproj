@@ -63,6 +63,8 @@
     <Reference Include="Paine.SolidWorks.Base, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Paine.SolidWorks.Base.2018.0.0.1\lib\Paine.SolidWorks.Base.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="SolidWorks.Interop.cosworks">
       <HintPath>..\dll\SolidWorks.Interop.cosworks.dll</HintPath>
       <EmbedInteropTypes>False</EmbedInteropTypes>
@@ -97,6 +99,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -106,9 +109,12 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationProvider" />
     <Reference Include="unvell.ReoGrid, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\unvell.ReoGrid.dll.2.1.0.0\lib\20\unvell.ReoGrid.dll</HintPath>
     </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddCenterPointForSketch.cs" />
@@ -132,6 +138,12 @@
     </Compile>
     <Compile Include="FrmCopy.designer.cs">
       <DependentUpon>FrmCopy.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmDragDrop.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmDragDrop.Designer.cs">
+      <DependentUpon>FrmDragDrop.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmScreen.cs">
       <SubType>Form</SubType>
@@ -162,6 +174,9 @@
     <EmbeddedResource Include="FrmCopy.resx">
       <DependentUpon>FrmCopy.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmDragDrop.resx">
+      <DependentUpon>FrmDragDrop.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmScreen.resx">
       <DependentUpon>FrmScreen.cs</DependentUpon>
     </EmbeddedResource>
@@ -191,6 +206,71 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="TemplateModel\01_CheckResult.sldprt" />
+    <None Include="TemplateModel\44_GetSketchText.SLDPRT" />
+    <None Include="TemplateModel\45_JoinTest.sldasm" />
+    <None Include="TemplateModel\54_ConvertEntitiesToSketch.SLDPRT" />
+    <None Include="TemplateModel\57_DeleteRelation.sldprt" />
+    <None Include="TemplateModel\68-AutoR.sldprt" />
+    <None Include="TemplateModel\Assembly.asmdot" />
+    <None Include="TemplateModel\bodies.sldasm" />
+    <None Include="TemplateModel\bodies.SLDPRT" />
+    <None Include="TemplateModel\bodies\bodies-零件1.sldprt" />
+    <None Include="TemplateModel\bodies\bodies-零件2.sldprt" />
+    <None Include="TemplateModel\bodies\bodies-零件3.sldprt" />
+    <None Include="TemplateModel\bodies\bodies-零件7.sldprt" />
+    <None Include="TemplateModel\bodies\复制-bodies-零件2-2.sldprt" />
+    <None Include="TemplateModel\bodies\复制-bodies-零件2-3.sldprt" />
+    <None Include="TemplateModel\bodies\复制-bodies-零件2.sldprt" />
+    <None Include="TemplateModel\CenterPoint.SLDPRT" />
+    <None Include="TemplateModel\clamp1.sldprt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="TemplateModel\clamp2.sldprt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="TemplateModel\clamp3.sldprt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="TemplateModel\Drawing.drwdot" />
+    <None Include="TemplateModel\DrawingTemplate.DRWDOT" />
+    <None Include="TemplateModel\drwdot\gb_a3.drwdot" />
+    <None Include="TemplateModel\drwdot\gb_a4.drwdot" />
+    <None Include="TemplateModel\globalvariable.SLDPRT" />
+    <None Include="TemplateModel\HoleAutoDimension1.SLDDRW" />
+    <None Include="TemplateModel\HoleAutoDimension1.SLDPRT" />
+    <None Include="TemplateModel\HolePlate-2.SLDDRW" />
+    <None Include="TemplateModel\HolePlate-2.SLDPRT" />
+    <None Include="TemplateModel\HolePlate.SLDDRW" />
+    <None Include="TemplateModel\HolePlate.SLDPRT" />
+    <None Include="TemplateModel\ImportDWG.dwg" />
+    <None Include="TemplateModel\InsertHole.SLDPRT" />
+    <None Include="TemplateModel\JoinPart2.SLDPRT" />
+    <None Include="TemplateModel\localBodies-1.sldprt" />
+    <None Include="TemplateModel\MateTest.sldprt" />
+    <None Include="TemplateModel\MBDTest.SLDPRT" />
+    <None Include="TemplateModel\MBDTest_Clear.SLDPRT" />
+    <None Include="TemplateModel\Measure.SLDDRW" />
+    <None Include="TemplateModel\Measure.SLDPRT" />
+    <None Include="TemplateModel\Measure_defeature.sldprt" />
+    <None Include="TemplateModel\Part.prtdot" />
+    <None Include="TemplateModel\PictureAndQRCode.SLDDRW" />
+    <None Include="TemplateModel\replaceDrawingRef\AA%28BB%29 - 副本.slddrw" />
+    <None Include="TemplateModel\replaceDrawingRef\AA%28BB%29 - 副本.SLDPRT" />
+    <None Include="TemplateModel\replaceDrawingRef\AA%28BB%29.slddrw" />
+    <None Include="TemplateModel\replaceDrawingRef\AA%28BB%29.SLDPRT" />
+    <None Include="TemplateModel\repleaceReference\part1.SLDDRW" />
+    <None Include="TemplateModel\repleaceReference\part1.SLDPRT" />
+    <None Include="TemplateModel\repleaceReference\part1new.SLDPRT" />
+    <None Include="TemplateModel\sendToCustomerBodies-1.sldprt" />
+    <None Include="TemplateModel\sheetformat\a4 - gb.slddrt" />
+    <None Include="TemplateModel\ShuangLiangDuanLiang.SLDPRT" />
+    <None Include="TemplateModel\Simulation API Demo.SLDPRT" />
+    <None Include="TemplateModel\smallball.dat" />
+    <None Include="TemplateModel\TempAssembly.sldasm" />
+    <None Include="TemplateModel\TempAssembly.SLDDRW" />
+    <None Include="TemplateModel\TestBlock.SLDBLK" />
+    <None Include="TemplateModel\WeldmentTest.SLDPRT" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -211,6 +291,10 @@
       <Project>{1645944c-40e0-4a01-aca3-d62a35e01a97}</Project>
       <Name>InsertDrawingNote</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TemplateModel\bodies.bmp" />
+    <Content Include="TemplateModel\oc0zwe3w.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

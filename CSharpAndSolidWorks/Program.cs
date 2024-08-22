@@ -13,7 +13,7 @@ namespace CSharpAndSolidWorks
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Btn_Filter());
+            Application.Run(new FormMain());
         }
     }
 }

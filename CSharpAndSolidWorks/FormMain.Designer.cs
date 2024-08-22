@@ -1,6 +1,6 @@
 ﻿namespace CSharpAndSolidWorks
 {
-    partial class Btn_Filter
+    partial class FormMain
     {
         /// <summary>
         /// 必需的设计器变量。
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Btn_Filter));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.btnConnect = new System.Windows.Forms.Button();
             this.btnOpenAndNew = new System.Windows.Forms.Button();
             this.BtnGetPartData = new System.Windows.Forms.Button();
@@ -138,6 +138,7 @@
             this.btnRefreshPropertiesEditer = new System.Windows.Forms.Button();
             this.btnFeatureFaces = new System.Windows.Forms.Button();
             this.btnTitleBlock = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.GroupExample.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -1344,11 +1345,22 @@
             this.btnTitleBlock.UseVisualStyleBackColor = true;
             this.btnTitleBlock.Click += new System.EventHandler(this.btnTitleBlock_Click);
             // 
-            // Btn_Filter
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(1098, 510);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(125, 27);
+            this.button1.TabIndex = 87;
+            this.button1.Text = "103.拖拽效果";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1262, 623);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.btnTitleBlock);
             this.Controls.Add(this.btnFeatureFaces);
             this.Controls.Add(this.btnRefreshPropertiesEditer);
@@ -1453,7 +1465,7 @@
             this.Controls.Add(this.btnOpenAndNew);
             this.Controls.Add(this.btnConnect);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "Btn_Filter";
+            this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Solidworks二次开发 API";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Btn_Filter_FormClosing);
@@ -1574,6 +1586,7 @@
         private System.Windows.Forms.Button btnRefreshPropertiesEditer;
         private System.Windows.Forms.Button btnFeatureFaces;
         private System.Windows.Forms.Button btnTitleBlock;
+        private System.Windows.Forms.Button button1;
     }
 }
 
